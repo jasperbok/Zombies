@@ -28,6 +28,7 @@ public class Player {
 	private float walkAcceleration = 0.0006f;
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 0.5f;
+	private boolean isBeingControlled = true;
 	private Rectangle box;
 	
 	private boolean wasOnGround = false;
@@ -128,38 +129,40 @@ public class Player {
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
 		
-		// Check player input.
-		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
-			velocity.x += walkAcceleration * delta;
-			if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
-		}
-		if (input.isKeyDown(Input.KEY_LEFT)) {
-			if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
-			velocity.x -= walkAcceleration * delta;
-			if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
-		}
-		if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT)) {
-			if (velocity.x < 0.0f) {
-				velocity.x += walkAcceleration * 2 * delta;
-				if (velocity.x > 0.0f) velocity.x = 0.0f;
-			} else if (velocity.x > 0.0f) {
-				velocity.x -= walkAcceleration * 2 * delta;
-				if (velocity.x < 0.0f) velocity.x = 0.0f;
+		if (isBeingControlled) {
+			// Check player input.
+			if (input.isKeyDown(Input.KEY_RIGHT)) {
+				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
+				velocity.x += walkAcceleration * delta;
+				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
 			}
-		}
-		if (input.isKeyDown(Input.KEY_UP)) {
-			if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
-					"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
-				if (isClimbing) velocity.y += climbSpeed;
-				wasClimbing = true;
+			if (input.isKeyDown(Input.KEY_LEFT)) {
+				if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
+				velocity.x -= walkAcceleration * delta;
+				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
 			}
-		}
-		if (input.isKeyDown(Input.KEY_DOWN)) {
-			if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
-					"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
-				if (isClimbing) velocity.y -= climbSpeed;
-				wasClimbing = true;
+			if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT)) {
+				if (velocity.x < 0.0f) {
+					velocity.x += walkAcceleration * 2 * delta;
+					if (velocity.x > 0.0f) velocity.x = 0.0f;
+				} else if (velocity.x > 0.0f) {
+					velocity.x -= walkAcceleration * 2 * delta;
+					if (velocity.x < 0.0f) velocity.x = 0.0f;
+				}
+			}
+			if (input.isKeyDown(Input.KEY_UP)) {
+				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
+						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
+					if (isClimbing) velocity.y += climbSpeed;
+					wasClimbing = true;
+				}
+			}
+			if (input.isKeyDown(Input.KEY_DOWN)) {
+				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
+						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
+					if (isClimbing) velocity.y -= climbSpeed;
+					wasClimbing = true;
+				}
 			}
 		}
 		
