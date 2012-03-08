@@ -21,6 +21,7 @@ import LightTest.Light;
 import LightTest.Vec2;
 
 import nl.timcommandeur.zombies.light.LightSource;
+import nl.timcommandeur.zombies.light.ShadowHull;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.gui.Hud;
@@ -44,11 +45,11 @@ public class Level {
     private FrameBufferObject fboLight;
     private FrameBufferObject fboLevel;
     private boolean addLight=true;
-	private List<ConvexHull> cHulls;
+	private List<ShadowHull> cHulls;
 	
 	public Level(String mapFileName) throws SlickException {
 		lights = new ArrayList<LightSource>();
-        cHulls = new ArrayList<ConvexHull>();
+        cHulls = new ArrayList<ShadowHull>();
         
 		init(mapFileName);
 	}
@@ -60,10 +61,11 @@ public class Level {
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		
-		LightSource l = new LightSource(new Vec2(400, 400), 200, 0, new Color(70, 70, 70));
+		LightSource l = new LightSource(new Vec2(400, 400), 900, 0, new Color(170, 170, 170));
 		lights.add(l);
-		l.setFlicker(0, 1);
+		//l.setFlicker(0, 1);
 		
+		addHull();
 		
         for(int i=0; i<30; i++) {
             //addRandomHull();
@@ -72,6 +74,15 @@ public class Level {
         for(int i=0; i<4; i++) {
             //addRandomLight();
         }
+	}
+	
+	public void addHull() {
+		Random gen = new Random();
+        Vec2 points[] = {new Vec2(0, 0), new Vec2(20, 0), new Vec2(20, 20), new Vec2(0, 20)};
+        ShadowHull hull = new ShadowHull(new Vec2(650, 300), Arrays.asList(points), 0.1f, Color.red);
+        //hull.rotate(1, 10, 10);
+        
+        cHulls.add(hull);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -193,7 +204,7 @@ public class Level {
     private void addRandomHull() {
         Random gen = new Random();
         Vec2 points[] = {new Vec2(0, 0), new Vec2(20, 0), new Vec2(20, 20), new Vec2(0, 20)};
-        cHulls.add(new ConvexHull(new Vec2(gen.nextInt(1024), gen.nextInt(768)), Arrays.asList(points), 0.1f, Color.white));
+        cHulls.add(new ShadowHull(new Vec2(gen.nextInt(1024), gen.nextInt(768)), Arrays.asList(points), 0.1f, Color.white));
     }
 
     private void addRandomLight() {

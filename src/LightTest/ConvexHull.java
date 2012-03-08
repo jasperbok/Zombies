@@ -15,8 +15,9 @@ import org.newdawn.slick.Color;
  */
 public class ConvexHull {
 
-    private List<Vec2> points;
-    private Vec2 pos;
+    protected List<Vec2> points;
+    protected Vec2 pos;
+    
     private float depth;
     private Color color;
     private static boolean renderShadowFins=true;
