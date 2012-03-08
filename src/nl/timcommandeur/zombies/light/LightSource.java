@@ -7,8 +7,7 @@ import org.newdawn.slick.Color;
 import LightTest.Light;
 import LightTest.Vec2;
 
-public class LightSource extends Light
-{
+public class LightSource extends Light {
 	public float intensity;
 	public float intensityFloor = 0;
 	public float intensityCeil = 0;
