@@ -27,7 +27,6 @@ public class LightSource extends Light {
 	
 	public void setPos(Vec2 pos) {
 		super.setPos(new Vec2(pos.x, (pos.y * -1) + screenHeight));
-		return;
 	}
 	
 	public void flicker() {
