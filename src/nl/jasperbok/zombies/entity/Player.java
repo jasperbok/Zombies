@@ -11,24 +11,22 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.gui.Notifications;
+import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
-public class Player {
+public class Player extends Entity {
 	private int health;
 	private int bandages;
 	
 	private TiledMap map;
 	private int tileWidth;
 
-	private float x = 390.0f;
-	private float y = 200.0f;
 	private Vector2 velocity = new Vector2(0.0f, 0.0f);
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.1f;
 	private float walkAcceleration = 0.0006f;
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 0.5f;
-	private boolean isBeingControlled = true;
 	private Rectangle box;
 	
 	private boolean wasOnGround = false;
@@ -46,16 +44,19 @@ public class Player {
 	private Animation climbAnimation;
 	private Animation currentAnimation;
 	
-	public Player(int health, int bandages, TiledMap map) throws SlickException {
+	public Player(int health, int bandages, TiledMap map, Level level) throws SlickException {
 		this.health = health;
 		this.bandages = bandages;
 		this.map = map;
-		this.box = new Rectangle(x, y, 10, 10);
 		this.tileWidth = map.getTileHeight();
+		super.init(level);
 		this.init();
 	}
 	
 	public void init() throws SlickException {
+		position = new Vector2(280.0f, 300.0f);
+		playerControlled = true;
+		box = new Rectangle(position.x, position.y, 10, 10);
 		sprites = new SpriteSheet("data/sprites/entity/peach.png", 16, 32);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
@@ -78,22 +79,22 @@ public class Player {
 		// Variables used for collision detection.
 		int height = currentAnimation.getCurrentFrame().getHeight();
 		int width = currentAnimation.getCurrentFrame().getWidth();
-		int centerX = (int)(x + width / 2);
-		int centerY = (int)(y + height / 2);
-		int rightX = (int)(x + width);
-		int bottomY = (int)(y + height);
+		int centerX = (int)(position.x + width / 2);
+		int centerY = (int)(position.y + height / 2);
+		int rightX = (int)(position.x + width);
+		int bottomY = (int)(position.y + height);
 		
 		box.setSize(width - 4, height - 4);
 		box.setCenterX(centerX);
 		box.setCenterY(centerY);
 		
 		// Positions in the tile system.
-		int yTiled = (int)(Math.floor(y / tileWidth));
-		int xTiled = (int)(Math.floor(x / tileWidth));
+		int yTiled = (int)(Math.floor(position.y / tileWidth));
+		int xTiled = (int)(Math.floor(position.x / tileWidth));
 		int centerXTiled = (int)(Math.floor(centerX / tileWidth));
 		int centerYTiled = (int)(Math.floor(centerY / tileWidth));
-		int rightXTiled = (int)(Math.floor((x + width) / tileWidth));
-		int bottomYTiled = (int)(Math.floor((y + height) / tileWidth));
+		int rightXTiled = (int)(Math.floor((position.x + width) / tileWidth));
+		int bottomYTiled = (int)(Math.floor((position.y + height) / tileWidth));
 		
 		int bottomTileId = map.getTileId(centerXTiled, bottomYTiled, 0);
 		int rightTileId = map.getTileId(rightXTiled, centerYTiled, 0);
@@ -129,7 +130,7 @@ public class Player {
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
 		
-		if (isBeingControlled) {
+		if (playerControlled) {
 			// Check player input.
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
@@ -164,29 +165,37 @@ public class Player {
 					wasClimbing = true;
 				}
 			}
+			/*
+			if (input.isKeyDown(Input.KEY_E)) {
+				Entity target = level.findUsableObject();
+				if (target != null) {
+					target.use();
+				}
+			}
+			*/
 		}
 		
 		if (isClimbing) currentAnimation = climbAnimation;
 		
-		x += velocity.x * delta;
-		y -= velocity.y * delta;
+		position.x += velocity.x * delta;
+		position.y -= velocity.y * delta;
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
 		if ("true".equals(map.getTileProperty(bottomTileId, "blocked", "false"))) {
 			if (velocity.y < 0) velocity.y = 0;
-			y -= bottomY % 32;
+			position.y -= bottomY % 32;
 		}
 		// Check for right collisions.
 		if ("true".equals(map.getTileProperty(rightTileId, "blocked", "false"))) {
 			if (velocity.x > 0) velocity.x = 0;
-			x -= rightX % 32;
+			position.x -= rightX % 32;
 			wasGoingRight = false;
 		}
 		// Check for left collisions.
 		if ("true".equals(map.getTileProperty(leftTileId, "blocked", "false"))) {
 			if (velocity.x < 0) velocity.x = 0;
-			x += tileWidth - (x % tileWidth);
+			position.x += tileWidth - (position.x % tileWidth);
 			wasGoingLeft = false;
 		}
 	}
@@ -197,6 +206,6 @@ public class Player {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw((int)x, (int)y);
+		currentAnimation.draw((int)position.x, (int)position.y);
 	}
 }

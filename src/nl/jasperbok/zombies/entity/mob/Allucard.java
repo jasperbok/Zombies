@@ -34,7 +34,24 @@ public class Allucard {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
-		
+		if (isBeingControlled) {
+			Input input = container.getInput();
+			if (input.isKeyDown(Input.KEY_E)) {
+				
+			}
+			if (input.isKeyDown(Input.KEY_D)) {
+				position.x += 5 * delta;
+			}
+			if (input.isKeyDown(Input.KEY_A)) {
+				position.x -= 5 * delta;
+			}
+			if (input.isKeyDown(Input.KEY_W)) {
+				position.y -= 5 * delta;
+			}
+			if (input.isKeyDown(Input.KEY_S)) {
+				position.y += 5 * delta;
+			}
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
