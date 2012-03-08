@@ -10,31 +10,25 @@ import org.newdawn.slick.SpriteSheet;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.gui.Notifications;
+import nl.jasperbok.zombies.level.Level;
 
 public class Zombies extends BasicGame {
-	public SpriteSheet playerSprites;
-	public Animation playerWalk;
-	public Player player;
+	public Level level;
 	
 	public Zombies() throws SlickException {
 		super("Zombies");
 	}
 	
 	public void init(GameContainer container) throws SlickException {
-		this.playerSprites = new SpriteSheet("data/sprites/entity/walk.png", 63, 82);
-		this.playerWalk = new Animation();
-		for (int i = 0; i < 3; i++) {
-			playerWalk.addFrame(playerSprites.getSprite(i, 0), 200);
-		}
-		player = new Player(playerWalk, 100, 0);
+		level = new Level("zombies_level_1.tmx");
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
-		player.update(delta);
+		level.update(container, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		player.render(container, g);
+		level.render(container, g);
 	}
 	
 	public static void main(String[] args) throws SlickException{

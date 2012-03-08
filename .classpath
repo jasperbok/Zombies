@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/slick.jar"/>
 	<classpathentry kind="lib" path="lib/phys2d.jar"/>
+	<classpathentry kind="lib" path="lib/jbox2d-library-2.1.2.2-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
