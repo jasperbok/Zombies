@@ -11,6 +11,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.gui.Notifications;
+import nl.jasperbok.zombies.math.Vector2;
 
 public class Player {
 	private int health;
@@ -21,18 +22,19 @@ public class Player {
 
 	private float x = 390.0f;
 	private float y = 200.0f;
-	private float vx = 0.0f;
-	private float vy = 0.0f;
-	private float walkSpeed = 0.2f;
+	private Vector2 velocity = new Vector2(0.0f, 0.0f);
+	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.1f;
+	private float walkAcceleration = 0.0006f;
+	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 0.5f;
 	private Rectangle box;
 	
+	private boolean wasOnGround = false;
+	private boolean wasFalling = false;
 	private boolean wasGoingLeft = false;
 	private boolean wasGoingRight = false;
-	private boolean wasClimbingUp = false;
-	private boolean wasClimbingDown = false;
-	private boolean facingLeft = false;
+	private boolean wasClimbing = false;
 	
 	// Animations
 	private SpriteSheet sprites;
@@ -64,6 +66,9 @@ public class Player {
 		}
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(3, 0), 500);
+		climbAnimation = new Animation();
+		climbAnimation.addFrame(sprites.getSprite(4, 0), 500);
+		climbAnimation.addFrame(sprites.getSprite(4, 0).getFlippedCopy(true, false), 500);
 		currentAnimation = idleAnimation;
 	}
 	
@@ -96,77 +101,91 @@ public class Player {
 		int topTileId = map.getTileId(centerXTiled, yTiled, 0);
 		int tileUnderneathId = map.getTileId(centerXTiled, yTiled + 1, 0);
 		
-		// Check if the player is falling down.
+		boolean isFalling = false;
+		boolean isJumping = false;
+		boolean isClimbing = false;
+		boolean isOnGround = false;
+		
+		// If the player isn't standing on something AND not climbing, apply gravity:
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
-			vy += 0.05f;
-			if (vy > maxFallSpeed) vy = maxFallSpeed;
-		} else {
-			vy = 0;
+			isFalling = true;
+			//if (velocity.y <= 0.05f) velocity.y += gravity.y;
 		}
-
+		
+		if ("true".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
+			isOnGround = true;
+			isFalling = false;
+		}
+		
+		// Climbing?
+		if (wasClimbing && ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
+					"true".equals(map.getTileProperty(bottomTileId, "climable", "false")))) {
+			isClimbing = true;
+			isFalling = false;
+		}
+		
+		// Apply vertical forces according to state.
+		if (isFalling) velocity.y += gravity.y * delta;
+		if (isOnGround || isClimbing) velocity.y = 0;
+		
 		// Check player input.
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			if (!wasGoingRight) {
-				currentAnimation = walkRightAnimation;
-				vx += walkSpeed;
-				wasGoingRight = true;
-			}
-		} else if (wasGoingRight) {
-			vx -= walkSpeed;
-			wasGoingRight = false;
+			if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
+			velocity.x += walkAcceleration * delta;
+			if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
 		}
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			if (!wasGoingLeft) {
-				currentAnimation = walkLeftAnimation;
-				vx -= walkSpeed;
-				wasGoingLeft = true;
+			if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
+			velocity.x -= walkAcceleration * delta;
+			if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
+		}
+		if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT)) {
+			if (velocity.x < 0.0f) {
+				velocity.x += walkAcceleration * 2 * delta;
+				if (velocity.x > 0.0f) velocity.x = 0.0f;
+			} else if (velocity.x > 0.0f) {
+				velocity.x -= walkAcceleration * 2 * delta;
+				if (velocity.x < 0.0f) velocity.x = 0.0f;
 			}
-		} else if (wasGoingLeft) {
-			vx += walkSpeed;
-			wasGoingLeft = false;
 		}
 		if (input.isKeyDown(Input.KEY_UP)) {
-			if (true) {
-				//currentAnimation = climbAnimation;
-				if (!wasClimbingUp) vy -= climbSpeed;
-				wasClimbingUp = true;
+			if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
+					"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
+				if (isClimbing) velocity.y += climbSpeed;
+				wasClimbing = true;
 			}
-		} else if (wasClimbingUp) {
-			vy += climbSpeed;
-			wasClimbingUp = false;
 		}
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			if (true) {
-				//currentAnimation = climbAnimation;
-				if (!wasClimbingDown) vy += climbSpeed;
-				wasClimbingDown = true;
+			if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
+					"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
+				if (isClimbing) velocity.y -= climbSpeed;
+				wasClimbing = true;
 			}
-		} else if (wasClimbingDown) {
-			vy -= climbSpeed;
-			wasClimbingDown = false;
 		}
+		
+		if (isClimbing) currentAnimation = climbAnimation;
+		
+		x += velocity.x * delta;
+		y -= velocity.y * delta;
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
 		if ("true".equals(map.getTileProperty(bottomTileId, "blocked", "false"))) {
-			if (vy < 0) vy = 0;
+			if (velocity.y < 0) velocity.y = 0;
 			y -= bottomY % 32;
 		}
 		// Check for right collisions.
 		if ("true".equals(map.getTileProperty(rightTileId, "blocked", "false"))) {
-			if (vx > 0) vx = 0;
+			if (velocity.x > 0) velocity.x = 0;
 			x -= rightX % 32;
 			wasGoingRight = false;
 		}
 		// Check for left collisions.
 		if ("true".equals(map.getTileProperty(leftTileId, "blocked", "false"))) {
-			if (vx < 0) vx = 0;
+			if (velocity.x < 0) velocity.x = 0;
 			x += tileWidth - (x % tileWidth);
 			wasGoingLeft = false;
 		}
-	
-		x += vx * delta;
-		y += vy * delta;
 	}
 	
 	public void hurt(int amount) {
