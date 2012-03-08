@@ -24,20 +24,14 @@ import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.light.ShadowHull;
 
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.mob.Allucard;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Block;
 
 public class Level {
 	public Player player;
 	public TiledMap map;
-	
-	// Animations and SpriteSheets.
-	public SpriteSheet playerSprites;
-	public Animation playerWalk;
-	public Animation playerIdle;
-	public Animation playerFall;
-	public Animation playerHit;
-	public Animation playerCrouch;
+	public Allucard allucard;
 	
 	// Lighting
     public static List<LightSource> lights;
@@ -57,6 +51,7 @@ public class Level {
 	public void init(String mapFileName) throws SlickException {
 		this.map = new TiledMap("/data/maps/" + mapFileName);
 		this.player = new Player(100, 0, map);
+		this.allucard = new Allucard();
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
@@ -112,6 +107,7 @@ public class Level {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		map.render(0, 0);
 		player.render(container, g);
+		allucard.render(container, g);
 		
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);

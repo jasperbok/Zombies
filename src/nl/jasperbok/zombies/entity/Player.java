@@ -59,11 +59,11 @@ public class Player {
 		sprites = new SpriteSheet("data/sprites/entity/peach.png", 16, 32);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
-			walkRightAnimation.addFrame(sprites.getSprite(i, 0), 200);
+			walkRightAnimation.addFrame(sprites.getSprite(i, 0), 150);
 		}
 		walkLeftAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
-			walkLeftAnimation.addFrame(sprites.getSprite(i, 0).getFlippedCopy(true, false), 200);
+			walkLeftAnimation.addFrame(sprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
 		}
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(3, 0), 500);
@@ -131,17 +131,17 @@ public class Player {
 		
 		if (isBeingControlled) {
 			// Check player input.
-			if (input.isKeyDown(Input.KEY_RIGHT)) {
+			if (input.isKeyDown(Input.KEY_D)) {
 				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
 				velocity.x += walkAcceleration * delta;
 				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
 			}
-			if (input.isKeyDown(Input.KEY_LEFT)) {
+			if (input.isKeyDown(Input.KEY_A)) {
 				if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
 				velocity.x -= walkAcceleration * delta;
 				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
 			}
-			if (!input.isKeyDown(Input.KEY_RIGHT) && !input.isKeyDown(Input.KEY_LEFT)) {
+			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
 				if (velocity.x < 0.0f) {
 					velocity.x += walkAcceleration * 2 * delta;
 					if (velocity.x > 0.0f) velocity.x = 0.0f;
@@ -150,14 +150,14 @@ public class Player {
 					if (velocity.x < 0.0f) velocity.x = 0.0f;
 				}
 			}
-			if (input.isKeyDown(Input.KEY_UP)) {
+			if (input.isKeyDown(Input.KEY_W)) {
 				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
 						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
 					if (isClimbing) velocity.y += climbSpeed;
 					wasClimbing = true;
 				}
 			}
-			if (input.isKeyDown(Input.KEY_DOWN)) {
+			if (input.isKeyDown(Input.KEY_S)) {
 				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
 						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
 					if (isClimbing) velocity.y -= climbSpeed;
