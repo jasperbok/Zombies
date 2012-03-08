@@ -68,8 +68,8 @@ public class Level {
 		player.update(container, delta);
 		Hud.getInstance().update(delta);
 		rot++;
-		fl.setPos(new Vec2(400, 280));
-		fl.rotate(rot);
+		fl.setPos(new Vec2(player.position.x + 10, player.position.y + 10));
+		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
