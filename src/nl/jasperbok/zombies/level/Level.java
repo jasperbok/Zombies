@@ -54,7 +54,7 @@ public class Level {
 	
 	public void init(String mapFileName) throws SlickException {
 		this.map = new TiledMap("/data/maps/" + mapFileName);
-		this.player = new Player(100, 0, map);
+		this.player = new Player(100, 0, map, this);
 		this.allucard = new Allucard();
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
