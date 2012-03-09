@@ -33,7 +33,7 @@ public class Zombies extends BasicGame {
 	
 	public static void main(String[] args) throws SlickException{
 		AppGameContainer app = new AppGameContainer(new Zombies());
-		app.setDisplayMode(1280, 720, false);
+		app.setDisplayMode(1280, 720, true);
 		app.start();
 	}
 }

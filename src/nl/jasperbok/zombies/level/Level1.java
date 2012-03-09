@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.level;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -15,6 +16,8 @@ import nl.jasperbok.zombies.math.Vector2;
 public class Level1 extends Level {
 	public Elevator elevator;
 	public MagneticCrane crane;
+	
+	private Music bgMusic;
 
 	public Level1() throws SlickException {
 		super("zombies_level_1.tmx");
@@ -26,6 +29,9 @@ public class Level1 extends Level {
 		entities.add(crane);
 		
 		usableObjects.add(crane);
+		
+		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		bgMusic.loop();
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
