@@ -45,7 +45,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="30" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9NkGBigP2rvqL2j9o7aO4ztdQViVSBWh2JNOtqrDcS6UEyOGQNlL0ifOhlYl4FyeynFo/aO2osOAAmS+j1gCQAA
+   H4sIAAAAAAAAC9NlYGDQHQCsz0B/oD1q76i9o/aOCHtVgVgdiDWB2JWO9oLUwso3etqLDEbtJR0MlL26JNgFS9PUwKTYC0vT1MKkuHGoYwDAi/MLYAkAAA==
   </data>
  </layer>
 </map>

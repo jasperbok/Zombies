@@ -56,7 +56,6 @@ public class Elevator extends Entity implements Usable {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		useBox.setLocation(position.x, position.y - 50);
-		if (useTimeOut > 0) useTimeOut -= delta;
 		
 		if (playerControlled) {
 			Input input = container.getInput();
@@ -75,7 +74,6 @@ public class Elevator extends Entity implements Usable {
 				playerControlled = false;
 				user.playerControlled = true;
 				user = null;
-				useTimeOut = 500;
 			}
 		} else {
 			if (moving) {
