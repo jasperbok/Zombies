@@ -1,5 +1,7 @@
 package nl.jasperbok.zombies.entity;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -56,7 +58,7 @@ public class Player extends Entity {
 	public void init() throws SlickException {
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
-		box = new Rectangle(position.x, position.y, 10, 10);
+		boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		sprites = new SpriteSheet("data/sprites/entity/peach.png", 16, 32);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
@@ -84,9 +86,7 @@ public class Player extends Entity {
 		int rightX = (int)(position.x + width);
 		int bottomY = (int)(position.y + height);
 		
-		box.setSize(width - 4, height - 4);
-		box.setCenterX(centerX);
-		box.setCenterY(centerY);
+		boundingBox.setBounds(position.x, position.y, width, height);
 		
 		// Positions in the tile system.
 		int yTiled = (int)(Math.floor(position.y / tileWidth));
@@ -112,9 +112,7 @@ public class Player extends Entity {
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
 			isFalling = true;
 			//if (velocity.y <= 0.05f) velocity.y += gravity.y;
-		}
-		
-		if ("true".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
+		} else {
 			isOnGround = true;
 			isFalling = false;
 		}
@@ -165,20 +163,32 @@ public class Player extends Entity {
 					wasClimbing = true;
 				}
 			}
-			/*
-			if (input.isKeyDown(Input.KEY_E)) {
-				Entity target = level.findUsableObject();
+			if (input.isKeyPressed(Input.KEY_E)) {
+				Usable target = level.findUsableObject(boundingBox);
 				if (target != null) {
-					target.use();
+					target.use(this);
 				}
 			}
-			*/
 		}
 		
 		if (isClimbing) currentAnimation = climbAnimation;
 		
 		position.x += velocity.x * delta;
 		position.y -= velocity.y * delta;
+		
+		/*
+		ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
+		for (Entity ent: touchingEnts) {
+			System.out.println("BLOCKING! :D");
+			boolean[] intersections = level.findIntersects(this, ent);
+			if (ent.isBlocking) {
+				if (intersections[0]) position.y += 1.0f;
+				if (intersections[1]) position.x -= 1.0f;
+				if (intersections[2]) position.y -= 1.0f;
+				if (intersections[3]) position.x += 1.0f;
+			}
+		}
+		*/
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
@@ -204,7 +214,7 @@ public class Player extends Entity {
 		health -= amount;
 		Hud.getInstance().setPlayerHealth(health);
 	}
-	
+
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		currentAnimation.draw((int)position.x, (int)position.y);
 	}

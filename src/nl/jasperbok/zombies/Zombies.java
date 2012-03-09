@@ -10,7 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.gui.Notifications;
-import nl.jasperbok.zombies.level.Level;
+import nl.jasperbok.zombies.level.*;
 
 public class Zombies extends BasicGame {
 	public Level level;
@@ -20,7 +20,7 @@ public class Zombies extends BasicGame {
 	}
 	
 	public void init(GameContainer container) throws SlickException {
-		level = new Level("zombies_level_1.tmx");
+		level = new Level1();
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {

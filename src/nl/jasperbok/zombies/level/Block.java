@@ -1,27 +1,30 @@
 package nl.jasperbok.zombies.level;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.tiled.TiledMap;
 
 import net.phys2d.raw.Body;
 import net.phys2d.raw.StaticBody;
 import net.phys2d.raw.shapes.Box;
+import nl.jasperbok.zombies.entity.Entity;
 
-public class Block {
-	public int x;
-	public int y;
-	public Body poly;
+public class Block extends Entity {
 	public int tileID;
 	
-	public Block(int x, int y, int tileID) throws SlickException {
-		this.x = x;
-		this.y = y;
-		this.tileID = tileID;
-		poly = new StaticBody("" + tileID, new Box(32, 32));
-		poly.setPosition(x,y);
-	}
+	public boolean isClimable = false;
 	
-	public void update(int delta) {
-		x = (int)poly.getPosition().getX() - 25;
-		y = (int)poly.getPosition().getY() - 25;
+	public Block(int x, int y, int tileID, int tileSize, TiledMap map) throws SlickException {
+		position.x = x * tileSize;
+		position.y = y * tileSize;
+		this.tileID = tileID;
+		boundingBox = new Rectangle(position.x, position.y, tileSize, tileSize);
+		
+		if ("false".equals(map.getTileProperty(tileID, "blocked", "true"))) {
+			isBlocking = false;
+		}
+		if ("true".equals(map.getTileProperty(tileID, "climable", "false"))) {
+			isClimable = true;
+		}
 	}
 }

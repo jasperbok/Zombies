@@ -41,7 +41,7 @@ public class ShadowHull extends ConvexHull {
 		
 		points = newPoints;
 		
-		System.out.println(pos.x + " | " + pos.y);
+		//System.out.println(pos.x + " | " + pos.y);
 	}
 
 	public void rotate(float angle, int originX, int originY)
@@ -55,7 +55,7 @@ public class ShadowHull extends ConvexHull {
 		int y_origin = (int) originY;
 		angle = (float) (angle * Math.PI) / 180;
 		
-		System.out.println("x: " + x_origin + " y: " + y_origin);
+		//System.out.println("x: " + x_origin + " y: " + y_origin);
 		
 		List<Vec2> newPoints = new LoopingList<Vec2>();
 		
@@ -68,7 +68,7 @@ public class ShadowHull extends ConvexHull {
 			
 			newPoints.add(new Vec2(Math.round(newPointX), Math.round(newPointY)));
 			
-			System.out.println(newPointX + " " + newPointY);
+			//System.out.println(newPointX + " " + newPointY);
 			
 			/*
 				650.0 300.0

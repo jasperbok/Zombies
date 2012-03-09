@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
@@ -21,6 +22,10 @@ public class MagneticCrane extends Entity implements Usable {
 
 	public void use(Entity user) {
 		
+	}
+	
+	public boolean canBeUsed(Rectangle rect) {
+		return false;
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {

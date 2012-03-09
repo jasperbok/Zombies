@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import LightTest.ConvexHull;
@@ -24,13 +25,17 @@ import nl.timcommandeur.zombies.light.FlashLight;
 import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.light.ShadowHull;
 
+import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Block;
 
 public class Level {
 	public Player player;
 	public TiledMap map;
+	protected List<Entity> entities;
+	protected List<Usable> usableObjects;
 	
 	// Lighting
     public static List<LightSource> lights;
@@ -48,17 +53,80 @@ public class Level {
         cHulls = new ArrayList<ShadowHull>();
         
 		init(mapFileName);
+		
+		map = new TiledMap("/data/maps/" + mapFileName);
+		player = new Player(100, 0, map, this);
+		entities = new ArrayList<Entity>();
+		usableObjects = new ArrayList<Usable>();
+		entities.add(player);
+		
+		for (int i = 0; i < map.getHeight(); i++) {
+			for (int j = 0; j < map.getWidth(); j++) {
+				entities.add(new Block(i, j, map.getTileId(j, i, 0), map.getTileHeight(), map));
+			}
+		}
 	}
 	
 	public void init(String mapFileName) throws SlickException {
-		this.map = new TiledMap("/data/maps/" + mapFileName);
-		this.player = new Player(100, 0, map, this);
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		
 		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
 		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
+	}
+	
+	/**
+	 * Returns an Entity implementing the Usable interface that's located
+	 * within the given Rectangle.
+	 * 
+	 * @param	rect	a Rectangle.
+	 * @return			The Entity within the given rect, or null if no
+	 * 					Entity was found.
+	 */
+	public Usable findUsableObject(Rectangle rect) {
+		for (Usable obj: usableObjects) {
+			if (obj.canBeUsed(rect)) {
+				return obj;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Checks for collisions between one Entity and others in the level.
+	 * 
+	 * @param ent	The Entity to check hits for.
+	 * @return		An ArrayList with Entities that intersect with ent.
+	 */
+	public ArrayList<Entity> touchingSolidObject(Entity ent) {
+		ArrayList<Entity> hits = new ArrayList<Entity>();
+		for (Entity ent2: entities) {
+			if (ent == ent2) continue;
+			if (ent.boundingBox.intersects(ent2.boundingBox)) {
+				hits.add(ent2);
+			}
+		}
+		return hits;
+	}
+	
+	/**
+	 * 
+	 * @param ent1 The entity to check the collisions for.
+	 * @param ent2 The entity to check the collisions against.
+	 * @return A boolean list, the order is top, right, down, left. True
+	 * tells there is an intersect.
+	 */
+	public boolean[] findIntersects(Entity ent1, Entity ent2) {
+		boolean[] sides = new boolean[3];
+		for (int i = 0; i < 4; i++) {
+			sides[i] = false;
+		}
+		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMinY())) sides[0] = true;
+		if (ent2.boundingBox.contains(ent1.boundingBox.getMaxX(), ent1.boundingBox.getCenterY())) sides[0] = true;
+		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMaxY())) sides[0] = true;
+		if (ent2.boundingBox.contains(ent1.boundingBox.getMinX(), ent1.boundingBox.getCenterY())) sides[0] = true;
+		return sides;
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -90,7 +158,9 @@ public class Level {
 		//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		map.render(0, 0);
-		player.render(container, g);
+		for (Entity ent: entities) {
+			ent.render(container, g);
+		}
 		
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
