@@ -64,7 +64,6 @@ public class MagneticCrane extends Entity implements Usable {
 			Input input = container.getInput();
 			
 			if (input.isKeyDown(Input.KEY_W)) {
-				System.out.println("PRESSING W ON THE CRANE");
 				armPos.y -= moveSpeed * delta;
 				if (armPos.y <= maxArmHeight) armPos.y = maxArmHeight;
 			}
