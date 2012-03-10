@@ -18,7 +18,11 @@ import nl.jasperbok.zombies.math.Vector2;
 public class MagneticCrane extends Entity implements Usable {
 	private Entity user;
 	private Rectangle useBox;
-	private float moveSpeed = 0.2f;
+	private Vector2 maxVelocity = new Vector2(0.5f, 0.5f);
+	private Vector2 acceleration = new Vector2(0.01f, 0.01f);
+	private Vector2 velocity = new Vector2(0.0f, 0.0f);
+	
+	public boolean isMagnetActive = false;
 	
 	private Image rail;
 	private Image slider;
@@ -63,29 +67,61 @@ public class MagneticCrane extends Entity implements Usable {
 		if (playerControlled) {
 			Input input = container.getInput();
 			
+			// Check vertical movement.
 			if (input.isKeyDown(Input.KEY_W)) {
-				armPos.y -= moveSpeed * delta;
-				if (armPos.y <= maxArmHeight) armPos.y = maxArmHeight;
+				velocity.y -= acceleration.y * delta;
+				if (velocity.y < -maxVelocity.y) velocity.y = -maxVelocity.y;
 			}
 			if (input.isKeyDown(Input.KEY_S)) {
-				armPos.y += moveSpeed * delta;
-				if (armPos.y >= minArmHeight) armPos.y = minArmHeight;
+				velocity.y += acceleration.y * delta;
+				if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
 			}
+			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
+				// No vertical movement input, slow this thing down!
+				if (velocity.y < 0) {
+					velocity.y += acceleration.y * delta;
+					if (velocity.y > 0) velocity.y = 0;
+				} else {
+					velocity.y -= acceleration.y * delta;
+					if (velocity.y < 0) velocity.y = 0;
+				}
+			}
+			
+			// Check horizontal movement.
 			if (input.isKeyDown(Input.KEY_A)) {
-				sliderPos.x -= moveSpeed * delta;
-				if (sliderPos.x < maxLeftPos) sliderPos.x = maxLeftPos;
-				armPos.x = sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2;
+				velocity.x -= acceleration.x * delta;
+				if (velocity.x < -maxVelocity.x) velocity.x = -maxVelocity.x;
 			}
 			if (input.isKeyDown(Input.KEY_D)) {
-				sliderPos.x += moveSpeed * delta;
-				if (sliderPos.x > maxRightPos) sliderPos.x = maxRightPos;
-				armPos.x = sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2;
+				velocity.x += acceleration.x * delta;
+				if (velocity.x > maxVelocity.x) velocity.x = maxVelocity.x;
 			}
+			if (!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
+				// No horizontal movement input, slow this thing down!
+				if (velocity.x < 0) {
+					velocity.x += acceleration.x * delta;
+					if (velocity.x > 0) velocity.x = 0;
+				} else {
+					velocity.x -= acceleration.x * delta;
+					if (velocity.x < 0) velocity.x = 0;
+				}
+			}
+			
+			// Check if the player wants to stop using.
 			if (input.isKeyPressed(Input.KEY_E)) {
 				playerControlled = false;
 				user.playerControlled = true;
 				user = null;
 			}
+			
+			// Check if the magnet should be turned on or off.
+			if (input.isKeyPressed(Input.KEY_SPACE)) {
+				isMagnetActive = !isMagnetActive;
+			}
+			
+			armPos.y += velocity.y;
+			sliderPos.x += velocity.x;
+			armPos.x = sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2;
 		}
 	}
 	

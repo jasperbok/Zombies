@@ -17,6 +17,7 @@ public class Block extends Entity {
 	public Block(int x, int y, int tileID, int tileSize, TiledMap map) throws SlickException {
 		position.x = x * tileSize;
 		position.y = y * tileSize;
+		isMovable = false;
 		this.tileID = tileID;
 		boundingBox = new Rectangle(position.x, position.y, tileSize, tileSize);
 		

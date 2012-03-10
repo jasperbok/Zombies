@@ -13,6 +13,7 @@ public abstract class Entity {
 	public Vector2 position = new Vector2(0.0f, 0.0f);
 	public Rectangle boundingBox;
 	public boolean isBlocking = true;
+	public boolean isMovable = true;
 	public boolean playerControlled = false;
 	
 	public void init(Level level) {
