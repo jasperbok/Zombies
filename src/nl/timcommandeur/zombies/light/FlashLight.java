@@ -17,6 +17,7 @@ public class FlashLight {
 	
 	protected int height = 30;
 	protected int width = 60;
+	protected int currentAngle;
 	
 	public Vec2 pos;
 	
@@ -29,13 +30,18 @@ public class FlashLight {
 		rotate(0);
 	}
 	
+	public void setColor(Color c)
+	{
+		flashLightLight.setColor(c);
+	}
+	
 	public void setPos(Vec2 newPos) {
 		pos = newPos;
 		flashLightLight.setPos(newPos);
 		for (ShadowHull hull : flashLightHulls) {
 			hull.setPos(newPos);
 		}
-		rotate(0);
+		rotate(currentAngle);
 	}
 	
 	public void setFlicker(float floor, float ceil) {
@@ -43,11 +49,12 @@ public class FlashLight {
 	}
 	
 	public void init() {
-		createLights();
+		createLights(new Color(170, 170, 170));
 		createHulls();
 	}
 	
 	public void rotate(int angle) {
+		currentAngle = angle;
 		for (ShadowHull hull : flashLightHulls) {
 			hull.rotate(angle, 10, 30);
 		}
@@ -58,8 +65,8 @@ public class FlashLight {
 		this.rotate(angle);
 	}
 	
-	public void createLights() {
-		LightSource light = new LightSource(new Vec2(0, 0), 400, 0, new Color(170, 170, 170));
+	public void createLights(Color c) {
+		LightSource light = new LightSource(new Vec2(0, 0), 400, 0, c);
 		lights.add(light);
 		flashLightLight = light;
 	}

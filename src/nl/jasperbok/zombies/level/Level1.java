@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.level;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
@@ -35,11 +36,13 @@ public class Level1 extends Level {
 		usableObjects.add(crane);
 		
 		craneLights = new FlashLight[2];
-		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.position.x - 30, crane.position.y));
-		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.position.x + 30, crane.position.y));
-		craneLights[0].rotate(111);
-		craneLights[1].rotate(69);
+		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 130));
+		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 90, 130));
+		craneLights[0].rotate(100);
+		craneLights[1].rotate(80);
 		
+		craneLights[0].setColor(new Color(150, 100, 100));
+		craneLights[1].setColor(new Color(150, 100, 100));
 		
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		bgMusic.loop();
@@ -47,6 +50,8 @@ public class Level1 extends Level {
 
 	public void update(GameContainer container, int delta) throws SlickException {
 		//dddelevator.update(container, delta);
+		craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 130));
+		craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
 		super.update(container, delta);
 		crane.update(container, delta);
 	}

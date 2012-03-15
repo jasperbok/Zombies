@@ -16,6 +16,9 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public class MagneticCrane extends Entity implements Usable {
+	public Vector2 sliderPos;
+	public Vector2 armPos;
+	
 	private Entity user;
 	private Rectangle useBox;
 	private Vector2 maxVelocity = new Vector2(0.5f, 0.5f);
@@ -27,9 +30,6 @@ public class MagneticCrane extends Entity implements Usable {
 	private Image rail;
 	private Image slider;
 	private Image arm;
-	
-	private Vector2 sliderPos;
-	private Vector2 armPos;
 	
 	private int maxLeftPos = 32;
 	private int maxRightPos = 256;

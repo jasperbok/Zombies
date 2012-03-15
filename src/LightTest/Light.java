@@ -154,6 +154,10 @@ public class Light {
     public void setPos(Vec2 pos) {
         this.pos = pos;
     }
+    
+    public void setColor(Color c) {
+    	this.color = c;
+    }
 
     public float getRadius() {
         return radius;
