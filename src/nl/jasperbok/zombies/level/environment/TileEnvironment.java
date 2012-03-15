@@ -45,7 +45,7 @@ public class TileEnvironment extends AbstractEnvironment {
 	 * @param width
 	 * @param height
 	 */
-	public TileEnvironment(int width, int heigth) {
+	public TileEnvironment(int width, int height) {
 		images = new Image[width][height];
 		shapes = new Shape[width][height];
 		this.width = width;
