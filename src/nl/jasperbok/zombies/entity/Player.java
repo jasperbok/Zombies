@@ -65,8 +65,6 @@ public class Player extends Actor {
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
 		
-		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
-		
 		if (playerControlled) {
 			// Check player input.
 			if (input.isKeyDown(Input.KEY_D)) {
