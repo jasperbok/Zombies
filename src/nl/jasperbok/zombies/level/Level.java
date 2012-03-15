@@ -115,9 +115,7 @@ public class Level {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		totalDelta += delta;
-		
 		env.update(delta);
-		
 		player.update(container, delta);
 		Hud.getInstance().update(delta);
 		fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
@@ -133,6 +131,7 @@ public class Level {
 		camera.translate(g);
 		
 		renderScene(container, g);
+		renderLevel(container, g);
         
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
@@ -157,7 +156,6 @@ public class Level {
 		
 		env.render(g);
         if (showBounds) env.renderBounds(g);
-        renderLevel(container, g);
         
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
