@@ -11,6 +11,8 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
+import net.phys2d.math.ROVector2f;
+import net.phys2d.math.Vector2f;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.gui.Notifications;
 import nl.jasperbok.zombies.level.Level;
@@ -137,6 +139,6 @@ public class Player extends Actor {
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw((int)position.x, (int)position.y);
+		currentAnimation.draw((int)body.getPosition().getX(), (int)body.getPosition().getY());
 	}
 }
