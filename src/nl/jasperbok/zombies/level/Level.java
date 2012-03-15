@@ -118,13 +118,13 @@ public class Level {
 		env.update(delta);
 		player.update(container, delta);
 		Hud.getInstance().update(delta);
-		fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
+		fl.setPos(new Vec2(player.getX() + 10 + camera.position.x, player.getY() + 10 - camera.position.y));
 		//fl.point(new Vec2(container.getInput().getAbsoluteMouseX() + camera.position.x, container.getInput().getAbsoluteMouseY()));
 		fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 
-		camera.position.x = player.position.x - 600;
-		camera.position.y = player.position.y - 600;
+		camera.position.x = player.getX() - 600;
+		camera.position.y = player.getY() - 600;
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
