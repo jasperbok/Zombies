@@ -156,9 +156,11 @@ public class Level {
         
         fboLight.render(1.0f);
 		
-		Hud.getInstance().render(container, g);
-		
 		g.resetTransform();
+		
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+        
+		Hud.getInstance().render(container, g);
 	}
 	
 	public void renderLevel(GameContainer container, Graphics g) throws SlickException {
