@@ -10,8 +10,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.tiled.TiledMap;
 
 import LightTest.ConvexHull;
 import LightTest.FrameBufferObject;
@@ -23,14 +21,12 @@ import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.light.ShadowHull;
 import nl.timcommandeur.zombies.screen.Camera;
 
-import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.environment.Environment;
 import nl.jasperbok.zombies.level.environment.MapLoader;
 import nl.jasperbok.zombies.level.environment.TileEnvironment;
-import nl.jasperbok.zombies.math.Vector2;
 
 public class Level {
 	private static int ID;
@@ -39,19 +35,15 @@ public class Level {
 	public Environment env;
 	// The player character.
 	public Player player;
-	// The map.
-	public TiledMap map;
 	// The map file name.
 	public String mapFileName;
 	// The camera.
 	public Camera camera;
 	
-	private int totalDelta;
+	private int totalDelta = 0;
 	private int controlInterval = 50;
 	private boolean showBounds = false;
 	
-	/* All the entities in the level. */
-	protected List<Entity> entities;
 	/* All the usable objects in the level. */
 	protected List<Usable> usableObjects;
 	
@@ -77,12 +69,9 @@ public class Level {
         cHulls = new ArrayList<ShadowHull>();
 		
 		this.mapFileName = mapFileName;
-		map = new TiledMap("/data/maps/" + mapFileName);
 		player = new Player(100, 0, 200f, 300f, 50f, 4f);
-		entities = new ArrayList<Entity>();
 		usableObjects = new ArrayList<Usable>();
 		camera = new Camera();
-		entities.add(player);
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
@@ -103,10 +92,7 @@ public class Level {
 		TileEnvironment env = loader.load();
 		env.setImageSize(32, 32);
 		env.init();
-		
-		//player = new Player();
 		env.addEntity(player);
-		
 		this.env = env;
 	}
 	
@@ -147,9 +133,6 @@ public class Level {
 		camera.translate(g);
 		
 		renderScene(container, g);
-        env.render(g);
-        if (showBounds) env.renderBounds(g);
-        renderLevel(container, g);
         
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
@@ -171,11 +154,11 @@ public class Level {
 		
 		//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		map.render(0, 0);
-		for (Entity ent: entities) {
-			ent.render(g);
-		}
 		
+		env.render(g);
+        if (showBounds) env.renderBounds(g);
+        renderLevel(container, g);
+        
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
 	}
