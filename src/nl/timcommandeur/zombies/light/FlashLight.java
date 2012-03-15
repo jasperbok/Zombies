@@ -65,18 +65,29 @@ public class FlashLight {
 	}
 	
 	public void createHulls() {
-		Vec2 points2[] = {new Vec2(0, height - 2), new Vec2(width + width * 4, 0 - height * 4), new Vec2(width + width * 4, -2 - height * 4), new Vec2(0, height)};
-        ShadowHull hull2 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points2), 0.1f, Color.black);
-        
-        Vec2 points3[] = {new Vec2(0, height + 2), new Vec2(width + width * 4, height * 2 + height * 4), new Vec2(width + width * 4, height * 2 + 2 + height * 4), new Vec2(0, height)};
-        ShadowHull hull3 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points3), 0.1f, Color.black);
-        
-        hulls.add(hull2);
-        hulls.add(hull3);
-        
+		// The drawing is orientated so that the flashlight will be pointing from left to right.
+		//
+		Vec2 centerLeft = new Vec2(-1, 30);
+		Vec2 topRight = new Vec2(17, 33);
+		Vec2 bottomRight = new Vec2(17, 27);
+		
+		Vec2 points2[] = {centerLeft, bottomRight, centerLeft};
+		ShadowHull hull2 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points2), 0.1f, Color.black);
+		hulls.add(hull2);
+		
+		Vec2 points3[] = {centerLeft, topRight, centerLeft};
+		ShadowHull hull3 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points3), 0.1f, Color.black);
+		hulls.add(hull3);
+		
+		Vec2 points4[] = {new Vec2(centerLeft.x, centerLeft.y + 1), new Vec2(centerLeft.x, centerLeft.y - 1)};
+		ShadowHull hull4 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points4), 0.1f, Color.black);
+		hulls.add(hull4);
+		
         flashLightHulls = new LoopingList<ShadowHull>();
+        
         flashLightHulls.add(hull2);
         flashLightHulls.add(hull3);
+        flashLightHulls.add(hull4);
 	}
 	
 	public float vecAngle(Vec2 v) {
