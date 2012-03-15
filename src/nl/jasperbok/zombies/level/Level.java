@@ -2,18 +2,15 @@ package nl.jasperbok.zombies.level;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.tiled.TiledMap;
 
 import LightTest.ConvexHull;
@@ -30,16 +27,31 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.level.Block;
-import nl.jasperbok.zombies.math.Vector2;
+import nl.jasperbok.zombies.level.environment.Environment;
+import nl.jasperbok.zombies.level.environment.MapLoader;
+import nl.jasperbok.zombies.level.environment.TileEnvironment;
 
 public class Level {
-	public Player player;
-	public TiledMap map;
+	private static int ID;
 	
+	// The environment in which the level takes place.
+	public Environment env;
+	// The player character.
+	public Player player;
+	// The map.
+	public TiledMap map;
+	// The map file name.
+	public String mapFileName;
+	// The camera.
 	public Camera camera;
 	
+	private int totalDelta;
+	private int controlInterval = 50;
+	private boolean showBounds = false;
+	
+	/* All the entities in the level. */
 	protected List<Entity> entities;
+	/* All the usable objects in the level. */
 	protected List<Usable> usableObjects;
 	
 	// Lighting
@@ -53,65 +65,48 @@ public class Level {
 	protected FlashLight fl;
 	protected int rot = 0;
 	
+	/**
+	 * Level constructor.
+	 * 
+	 * @param mapFileName The name of the map file (without the .tmx extension).
+	 * @throws SlickException
+	 */
 	public Level(String mapFileName) throws SlickException {
 		lights = new ArrayList<LightSource>();
         cHulls = new ArrayList<ShadowHull>();
-        
-		init(mapFileName);
 		
+		this.mapFileName = mapFileName;
 		map = new TiledMap("/data/maps/" + mapFileName);
-		player = new Player(100, 0, map, this);
+		player = new Player(100, 0, 200f, 300f, 50f, 4f);
 		entities = new ArrayList<Entity>();
 		usableObjects = new ArrayList<Usable>();
-		entities.add(player);
-		
-		for (int i = 0; i < map.getHeight(); i++) {
-			for (int j = 0; j < map.getWidth(); j++) {
-				entities.add(new Block(i, j, map.getTileId(j, i, 0), map.getTileHeight(), map));
-			}
-		}
-	}
-	
-	public void init(String mapFileName) throws SlickException {
 		camera = new Camera();
+		entities.add(player);
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		
 		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
 		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
+		
+		restart();
 	}
 	
-	public String movingStatus(Entity ent) {
-		String status = "falling"; // Falling by default.
-		Rectangle box = ent.boundingBox;
-		Vector2 vel = ent.velocity;
+	/**
+	 * Restarts the level.
+	 * 
+	 * @throws SlickException
+	 */
+	private void restart() throws SlickException {
+		MapLoader loader = new MapLoader(mapFileName);
+		TileEnvironment env = loader.load();
+		env.setImageSize(32, 32);
+		env.init();
 		
-		// Always create a bottom Rectangle to see if ground moves underneath.
-		Rectangle bottomSide = new Rectangle(box.getMinX(), box.getMaxY() - 2, box.getWidth(), 2);
-		Rectangle below = new Rectangle(box.getMinX(), box.getMaxY(), box.getWidth(), 1);
+		//player = new Player();
+		env.addEntity(player);
 		
-		if (vel.y < 0) {
-			Rectangle topSide = new Rectangle(box.getMinX(), box.getMinY(), box.getWidth(), 2);
-		}
-		
-		if (vel.x < 0) {
-			Rectangle leftSide = new Rectangle(box.getMinX(), box.getMinY(), 2, box.getHeight());
-		} else if (vel.x > 0) {
-			Rectangle rightSide = new Rectangle(box.getMaxX() - 2, box.getMinY(), 2, box.getHeight());
-		}
-		
-		// Check whether the Entity is standing on something solid.
-		for (Entity currEnt: entities) {
-			if (currEnt.isBlocking) {
-				if (currEnt.boundingBox.intersects(below)) {
-					status = "standing";
-					break;
-				}
-			}
-		}
-		
-		return status;
+		this.env = env;
 	}
 	
 	/**
@@ -168,6 +163,10 @@ public class Level {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		totalDelta += delta;
+		
+		env.update(delta);
+		
 		player.update(container, delta);
 		Hud.getInstance().update(delta);
 		fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
@@ -183,6 +182,8 @@ public class Level {
 		camera.translate(g);
 		
 		renderScene(container, g);
+        env.render(g);
+        if (showBounds) env.renderBounds(g);
         renderLevel(container, g);
         
         GL11.glEnable(GL11.GL_BLEND);
@@ -205,7 +206,7 @@ public class Level {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		map.render(0, 0);
 		for (Entity ent: entities) {
-			ent.render(container, g);
+			ent.render(g);
 		}
 		
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
