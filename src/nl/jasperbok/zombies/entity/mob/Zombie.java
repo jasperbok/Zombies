@@ -21,12 +21,6 @@ public class Zombie extends Entity {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		position.add(velocity);
-		
-		String moveStatus = level.movingStatus(this);
-		
-		if (moveStatus == "falling") {
-			velocity.add(level.gravity);
-		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
