@@ -30,6 +30,7 @@ import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.environment.Environment;
 import nl.jasperbok.zombies.level.environment.MapLoader;
 import nl.jasperbok.zombies.level.environment.TileEnvironment;
+import nl.jasperbok.zombies.math.Vector2;
 
 public class Level {
 	private static int ID;
@@ -44,6 +45,8 @@ public class Level {
 	public String mapFileName;
 	// The camera.
 	public Camera camera;
+	
+	public Vector2 gravity = new Vector2(0.0f, -0.002f);
 	
 	private int totalDelta;
 	private int controlInterval = 50;
