@@ -9,6 +9,8 @@ import LightTest.Vec2;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.math.Vector2;
 
+/*shit pickle*/
+
 public class Camera {
 	public int width;
 	public int height;
