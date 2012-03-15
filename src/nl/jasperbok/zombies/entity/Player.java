@@ -23,7 +23,6 @@ public class Player extends Entity {
 	private TiledMap map;
 	private int tileWidth;
 
-	private Vector2 velocity = new Vector2(0.0f, 0.0f);
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.1f;
 	private float walkAcceleration = 0.0006f;
@@ -80,16 +79,20 @@ public class Player extends Entity {
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
 		// Variables used for collision detection.
+		/*
 		int height = currentAnimation.getCurrentFrame().getHeight();
 		int width = currentAnimation.getCurrentFrame().getWidth();
 		int centerX = (int)(position.x + width / 2);
 		int centerY = (int)(position.y + height / 2);
 		int rightX = (int)(position.x + width);
 		int bottomY = (int)(position.y + height);
+		*/
 		
-		boundingBox.setBounds(position.x, position.y, width, height);
+		//boundingBox.setBounds(position.x, position.y, width, height);
+		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 		
 		// Positions in the tile system.
+		/*
 		int yTiled = (int)(Math.floor(position.y / tileWidth));
 		int xTiled = (int)(Math.floor(position.x / tileWidth));
 		int centerXTiled = (int)(Math.floor(centerX / tileWidth));
@@ -103,12 +106,13 @@ public class Player extends Entity {
 		int centerTileId = map.getTileId(centerXTiled, centerYTiled, 0);
 		int topTileId = map.getTileId(centerXTiled, yTiled, 0);
 		int tileUnderneathId = map.getTileId(centerXTiled, yTiled + 1, 0);
-		
+		*/
 		boolean isFalling = false;
 		boolean isJumping = false;
 		boolean isClimbing = false;
 		boolean isOnGround = false;
 		
+		/*
 		// If the player isn't standing on something AND not climbing, apply gravity:
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
 			isFalling = true;
@@ -123,6 +127,16 @@ public class Player extends Entity {
 					"true".equals(map.getTileProperty(bottomTileId, "climable", "false")))) {
 			isClimbing = true;
 			isFalling = false;
+		}
+		*/
+		String moveStatus = level.movingStatus(this);
+		if (moveStatus == "falling") {
+			if (isClimbing) {
+				
+			}
+			isFalling = true;
+		} else {
+			isOnGround = true;
 		}
 		
 		// Apply vertical forces according to state.
