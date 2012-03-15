@@ -46,8 +46,6 @@ public class Level {
 	// The camera.
 	public Camera camera;
 	
-	public Vector2 gravity = new Vector2(0.0f, -0.002f);
-	
 	private int totalDelta;
 	private int controlInterval = 50;
 	private boolean showBounds = false;
@@ -127,42 +125,6 @@ public class Level {
 			}
 		}
 		return null;
-	}
-	
-	/**
-	 * Checks for collisions between one Entity and others in the level.
-	 * 
-	 * @param ent	The Entity to check hits for.
-	 * @return		An ArrayList with Entities that intersect with ent.
-	 */
-	public ArrayList<Entity> touchingSolidObject(Entity ent) {
-		ArrayList<Entity> hits = new ArrayList<Entity>();
-		for (Entity ent2: entities) {
-			if (ent == ent2) continue;
-			if (ent.boundingBox.intersects(ent2.boundingBox)) {
-				hits.add(ent2);
-			}
-		}
-		return hits;
-	}
-	
-	/**
-	 * 
-	 * @param ent1 The entity to check the collisions for.
-	 * @param ent2 The entity to check the collisions against.
-	 * @return A boolean list, the order is top, right, down, left. True
-	 * tells there is an intersect.
-	 */
-	public boolean[] findIntersects(Entity ent1, Entity ent2) {
-		boolean[] sides = new boolean[3];
-		for (int i = 0; i < 4; i++) {
-			sides[i] = false;
-		}
-		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMinY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getMaxX(), ent1.boundingBox.getCenterY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMaxY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getMinX(), ent1.boundingBox.getCenterY())) sides[0] = true;
-		return sides;
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
