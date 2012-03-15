@@ -16,6 +16,8 @@ public abstract class Entity {
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
 	
+	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
+	
 	public void init(Level level) {
 		this.level = level;
 	}

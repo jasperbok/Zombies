@@ -3,7 +3,11 @@ package nl.timcommandeur.zombies.light;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.jasperbok.zombies.entity.Entity;
+import nl.timcommandeur.zombies.screen.Camera;
+
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 
 import LightTest.LoopingList;
 import LightTest.Vec2;
@@ -14,6 +18,8 @@ public class FlashLight {
 	public List<LightSource> lights;
 	public List<ShadowHull> hulls;
 	public List<ShadowHull> flashLightHulls;
+	
+	public Camera camera;
 	
 	protected int height = 30;
 	protected int width = 60;
@@ -49,6 +55,7 @@ public class FlashLight {
 	}
 	
 	public void init() {
+		camera = Camera.getInstance();
 		createLights(new Color(170, 170, 170));
 		createHulls();
 	}
@@ -62,6 +69,12 @@ public class FlashLight {
 	
 	public void point(Vec2 to) {
 		int angle = (int) (vecAngle(new Vec2(to.x - pos.x, to.y - pos.y)) / Math.PI * 180);
+		this.rotate(angle);
+	}
+	
+	public void pointToMouse(GameContainer container) {
+		Vec2 to = new Vec2(container.getInput().getAbsoluteMouseX() - 600, container.getInput().getAbsoluteMouseY() - 600);
+		int angle = (int) (vecAngle(new Vec2(to.x, to.y)) / Math.PI * 180);
 		this.rotate(angle);
 	}
 	

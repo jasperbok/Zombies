@@ -24,6 +24,7 @@ import LightTest.Vec2;
 import nl.timcommandeur.zombies.light.FlashLight;
 import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.light.ShadowHull;
+import nl.timcommandeur.zombies.screen.Camera;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
@@ -34,6 +35,9 @@ import nl.jasperbok.zombies.level.Block;
 public class Level {
 	public Player player;
 	public TiledMap map;
+	
+	public Camera camera;
+	
 	protected List<Entity> entities;
 	protected List<Usable> usableObjects;
 	
@@ -68,6 +72,7 @@ public class Level {
 	}
 	
 	public void init(String mapFileName) throws SlickException {
+		camera = new Camera();
 		
 		fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
@@ -132,12 +137,18 @@ public class Level {
 	public void update(GameContainer container, int delta) throws SlickException {
 		player.update(container, delta);
 		Hud.getInstance().update(delta);
-		rot++;
-		fl.setPos(new Vec2(player.position.x + 10, player.position.y + 10));
-		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
+		fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
+		//fl.point(new Vec2(container.getInput().getAbsoluteMouseX() + camera.position.x, container.getInput().getAbsoluteMouseY()));
+		fl.pointToMouse(container);
+		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
+
+		camera.position.x = player.position.x - 600;
+		camera.position.y = player.position.y - 600;
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		camera.translate(g);
+		
 		renderScene(container, g);
         renderLevel(container, g);
         
@@ -147,6 +158,8 @@ public class Level {
         fboLight.render(1.0f);
 		
 		Hud.getInstance().render(container, g);
+		
+		g.resetTransform();
 	}
 	
 	public void renderLevel(GameContainer container, Graphics g) throws SlickException {
