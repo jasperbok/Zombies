@@ -42,7 +42,7 @@ public class Player extends Entity {
 	private Animation idleAnimation;
 	private Animation walkRightAnimation;
 	private Animation walkLeftAnimation;
-	private Animation fallingAnimation;
+	private Animation fallAnimation;
 	private Animation climbAnimation;
 	private Animation currentAnimation;
 	
@@ -59,20 +59,21 @@ public class Player extends Entity {
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
-		sprites = new SpriteSheet("data/sprites/entity/peach.png", 16, 32);
+		sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
 		walkRightAnimation = new Animation();
-		for (int i = 0; i < 3; i++) {
-			walkRightAnimation.addFrame(sprites.getSprite(i, 0), 150);
+		for (int i = 0; i < 4; i++) {
+			walkRightAnimation.addFrame(sprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
 		}
 		walkLeftAnimation = new Animation();
-		for (int i = 0; i < 3; i++) {
-			walkLeftAnimation.addFrame(sprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
+		for (int i = 0; i < 4; i++) {
+			walkLeftAnimation.addFrame(sprites.getSprite(i, 1), 150);
 		}
 		idleAnimation = new Animation();
-		idleAnimation.addFrame(sprites.getSprite(3, 0), 500);
+		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
 		climbAnimation = new Animation();
-		climbAnimation.addFrame(sprites.getSprite(4, 0), 500);
-		climbAnimation.addFrame(sprites.getSprite(4, 0).getFlippedCopy(true, false), 500);
+		for (int i = 0; i < 4; i++) {
+			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
+		}
 		currentAnimation = idleAnimation;
 	}
 	
