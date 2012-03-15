@@ -26,8 +26,7 @@ public class MapLoader {
 	 * @param mapName The name of the map to load (without the .tmx extension).
 	 */
 	public MapLoader(String mapName) throws SlickException {
-		this.map = new TiledMap("data/maps/" + mapName);
-		//this.map = new TiledMap("data/maps/" + mapName + ".tmx");
+		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 	}
 	
 	/**

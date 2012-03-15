@@ -22,7 +22,7 @@ import net.phys2d.raw.shapes.Polygon;
  */
 public abstract class AbstractEnvironment implements Environment {
 	/** The physical world the environment provides to it's entities */
-	protected World world = new World(new Vector2f(0,10), 20); 
+	protected World world = new World(new Vector2f(0,10), 20);
 
 	/** The entities list */
 	protected ArrayList<Entity> entities = new ArrayList<Entity>();
