@@ -6,16 +6,20 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import LightTest.Vec2;
+
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Block;
 import nl.jasperbok.zombies.math.Vector2;
+import nl.timcommandeur.zombies.light.FlashLight;
 
 public class Level1 extends Level {
 	public Elevator elevator;
 	public MagneticCrane crane;
+	public FlashLight[] craneLights;
 	
 	private Music bgMusic;
 
@@ -29,6 +33,13 @@ public class Level1 extends Level {
 		entities.add(crane);
 		
 		usableObjects.add(crane);
+		
+		craneLights = new FlashLight[2];
+		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.position.x - 30, crane.position.y));
+		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.position.x + 30, crane.position.y));
+		craneLights[0].rotate(111);
+		craneLights[1].rotate(69);
+		
 		
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		bgMusic.loop();
