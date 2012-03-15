@@ -11,6 +11,7 @@ import nl.jasperbok.zombies.math.Vector2;
 public abstract class Entity {
 	public Level level;
 	public Vector2 position = new Vector2(0.0f, 0.0f);
+	public Vector2 velocity = new Vector2(0.0f, 0.0f);
 	public Rectangle boundingBox;
 	public boolean isBlocking = true;
 	public boolean isMovable = true;

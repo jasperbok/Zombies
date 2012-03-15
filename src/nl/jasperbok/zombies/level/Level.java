@@ -31,6 +31,7 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Block;
+import nl.jasperbok.zombies.math.Vector2;
 
 public class Level {
 	public Player player;
@@ -79,6 +80,38 @@ public class Level {
 		
 		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
 		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
+	}
+	
+	public String movingStatus(Entity ent) {
+		String status = "falling"; // Falling by default.
+		Rectangle box = ent.boundingBox;
+		Vector2 vel = ent.velocity;
+		
+		// Always create a bottom Rectangle to see if ground moves underneath.
+		Rectangle bottomSide = new Rectangle(box.getMinX(), box.getMaxY() - 2, box.getWidth(), 2);
+		Rectangle below = new Rectangle(box.getMinX(), box.getMaxY(), box.getWidth(), 1);
+		
+		if (vel.y < 0) {
+			Rectangle topSide = new Rectangle(box.getMinX(), box.getMinY(), box.getWidth(), 2);
+		}
+		
+		if (vel.x < 0) {
+			Rectangle leftSide = new Rectangle(box.getMinX(), box.getMinY(), 2, box.getHeight());
+		} else if (vel.x > 0) {
+			Rectangle rightSide = new Rectangle(box.getMaxX() - 2, box.getMinY(), 2, box.getHeight());
+		}
+		
+		// Check whether the Entity is standing on something solid.
+		for (Entity currEnt: entities) {
+			if (currEnt.isBlocking) {
+				if (currEnt.boundingBox.intersects(below)) {
+					status = "standing";
+					break;
+				}
+			}
+		}
+		
+		return status;
 	}
 	
 	/**
