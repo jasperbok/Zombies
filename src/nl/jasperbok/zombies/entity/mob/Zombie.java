@@ -1,37 +1,35 @@
 package nl.jasperbok.zombies.entity.mob;
 
+import nl.jasperbok.zombies.entity.Entity;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class Zombie {
-	private float x;
-	private float y;
-	private float vx;
-	private float vy;
-	
+public class Zombie extends Entity {
 	private Animation idleAnimation;
 	private Animation walkAnimation;
 	private Animation currentAnimation;
 	
 	public Zombie(float x, float y) throws SlickException {
-		this.x = x;
-		this.y = y;
-		this.vx = 0;
-		this.vx = 0;
-	}
-	
-	public void init() throws SlickException {
-		
+		this.position.x = x;
+		this.position.y = y;
+		this.velocity.x = 0;
+		this.velocity.y = 0;
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
-		x += vx;
-		y += vy;
+		position.add(velocity);
+		
+		String moveStatus = level.movingStatus(this);
+		
+		if (moveStatus == "falling") {
+			velocity.add(level.gravity);
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw(x, y);
+		currentAnimation.draw(position.x, position.y);
 	}
 }

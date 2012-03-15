@@ -36,6 +36,7 @@ import nl.jasperbok.zombies.math.Vector2;
 public class Level {
 	public Player player;
 	public TiledMap map;
+	public Vector2 gravity = new Vector2(0.0f, -0.002f);
 	
 	public Camera camera;
 	
