@@ -45,7 +45,8 @@ public class MagneticCrane extends Entity implements Usable {
 		position = pos;
 		this.crate = crate;
 		//useBox = new Rectangle(448.0f, 96.0f, 96.0f, 32.0f);
-		useBox = new Rectangle(400, 200, 700, 700);
+		//useBox = new Rectangle(400, 200, 700, 700);
+		useBox = new Rectangle(256, 200, 92, 160);
 		rail = new Image("data/sprites/entity/building/craneRail.png", new Color(255, 255, 255));
 		slider = new Image("data/sprites/entity/building/craneSlider.png", new Color(255, 255, 255));
 		arm = new Image("data/sprites/entity/building/craneArm.png", new Color(255, 255, 255));
