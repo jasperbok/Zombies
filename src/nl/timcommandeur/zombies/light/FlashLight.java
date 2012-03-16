@@ -79,7 +79,7 @@ public class FlashLight {
 	}
 	
 	public void createLights(Color c) {
-		LightSource light = new LightSource(new Vec2(0, 0), 400, 0, c);
+		LightSource light = new LightSource(new Vec2(0, 0), 500, 0, c);
 		lights.add(light);
 		flashLightLight = light;
 	}

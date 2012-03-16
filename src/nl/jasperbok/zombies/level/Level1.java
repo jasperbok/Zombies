@@ -14,6 +14,7 @@ import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
+import nl.timcommandeur.zombies.light.LightSource;
 
 public class Level1 extends Level {
 	public Elevator elevator;
@@ -21,6 +22,7 @@ public class Level1 extends Level {
 	public FlashLight[] craneLights;
 	public Zombie zombie;
 	public Crate crate;
+	public LightSource playerLight;
 	
 	private Music bgMusic;
 
@@ -34,13 +36,16 @@ public class Level1 extends Level {
 		zombie = new Zombie(750, 500, crate);
 		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
 		
+		playerLight = new LightSource(new Vec2(0, 0), 40, 0, new Color(10, 10, 10));
+		lights.add(playerLight);
+		
 		craneLights = new FlashLight[2];
-		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 130));
-		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 90, 130));
+		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 145));
+		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 90, 145));
 		craneLights[0].rotate(100);
 		craneLights[1].rotate(80);
-		craneLights[0].setColor(new Color(150, 100, 100));
-		craneLights[1].setColor(new Color(150, 100, 100));
+		//craneLights[0].setColor(new Color(150, 100, 100));
+		//craneLights[1].setColor(new Color(150, 100, 100));
 
 		entities.add(crate);
 		entities.add(crane);
@@ -56,12 +61,13 @@ public class Level1 extends Level {
 		//elevator.update(container, delta);
 //		craneLights[0].setPos(new Vec2(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
 //		craneLights[1].setPos(new Vec2(crane.armPos.x + 90 + camera.position.x, 130 - camera.position.y));
-		craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 130));
-		craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
+		craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 145));
+		craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 145));
 		super.update(container, delta);
 		crane.update(container, delta);
 		crate.update(container, delta);
 		zombie.update(container, delta);
+		playerLight.setPos(new Vec2(player.position.x + 16.5f, player.position.y + 35));
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
