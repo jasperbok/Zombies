@@ -297,4 +297,9 @@ public class Level {
         GL11.glColorMask(false, false, false, true);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
+    
+    public void remove(Entity ent) {
+    	System.out.println("Remove called!");
+    	entities.remove(ent);
+    }
 }

@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
 import LightTest.Vec2;
 
@@ -13,9 +12,6 @@ import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
-import nl.jasperbok.zombies.entity.Player;
-import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.level.Block;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
 
@@ -34,9 +30,10 @@ public class Level1 extends Level {
 		//elevator.position = new Vector2(500.0f, 336.0f);
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
-		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f));
+		crate = new Crate(this, 600, 500);
+		entities.add(crate);
+		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
 		entities.add(crane);
-		
 		usableObjects.add(crane);
 		
 		craneLights = new FlashLight[2];
@@ -47,11 +44,8 @@ public class Level1 extends Level {
 		
 		craneLights[0].setColor(new Color(150, 100, 100));
 		craneLights[1].setColor(new Color(150, 100, 100));
-		
-		crate = new Crate(this);
+
 		zombie = new Zombie(700, 500, crate);
-		
-		entities.add(crate);
 		entities.add(zombie);
 		
 		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
@@ -66,6 +60,7 @@ public class Level1 extends Level {
 		craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
 		super.update(container, delta);
 		crane.update(container, delta);
+		crate.update(container, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

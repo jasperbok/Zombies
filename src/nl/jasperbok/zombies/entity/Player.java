@@ -15,9 +15,9 @@ import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.gui.Notifications;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
+import nl.jasperbok.zombies.entity.mob.Mob;
 
-public class Player extends Entity {
-	private int health;
+public class Player extends Mob {
 	private int bandages;
 	
 	private TiledMap map;
@@ -114,7 +114,7 @@ public class Player extends Entity {
 		boolean isClimbing = false;
 		boolean isOnGround = false;
 
-		// If the player isn't standing on something AND not climbing, apply gravity:
+		// If the player isn't standing on something AND not climbing, he must be falling:
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
 			isFalling = true;
 			//if (velocity.y <= 0.05f) velocity.y += gravity.y;

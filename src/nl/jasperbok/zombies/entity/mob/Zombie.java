@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-public class Zombie extends Entity {
+public class Zombie extends Mob {
 	public Crate crate;
 	
 	// Animations
@@ -40,6 +40,10 @@ public class Zombie extends Entity {
 		}
 		
 		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+		
+		if (crateOnHead()) {
+			die();
+		}
 	}
 	
 	public boolean crateOnHead() {
