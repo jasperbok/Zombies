@@ -19,7 +19,7 @@ public class Crate extends Entity {
 		image = new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255));
 		this.level = level;
 	}
-	
+
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (isFalling) {
 			this.velocity.y += level.gravity.y * delta;

@@ -49,8 +49,9 @@ public class Level1 extends Level {
 		craneLights[1].setColor(new Color(150, 100, 100));
 		
 		crate = new Crate(this);
+		zombie = new Zombie(700, 500, crate);
+		
 		entities.add(crate);
-		zombie = new Zombie(300, 300, crate);
 		entities.add(zombie);
 		
 		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");

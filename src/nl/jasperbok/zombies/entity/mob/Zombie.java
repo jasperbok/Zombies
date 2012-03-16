@@ -23,11 +23,10 @@ public class Zombie extends Entity {
 		this.velocity.x = 0;
 		this.velocity.y = 0;
 		this.crate = crate;
+
 		sprites = new SpriteSheet("data/sprites/entity/zombie.png", 33, 75);
-		
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
-		
 		currentAnimation = idleAnimation;
 	}
 	
@@ -44,8 +43,8 @@ public class Zombie extends Entity {
 	}
 	
 	public boolean crateOnHead() {
-		//if (crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0)
-		//	return true;
+		if (crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0)
+			return true;
 		return false;
 	}
 	
