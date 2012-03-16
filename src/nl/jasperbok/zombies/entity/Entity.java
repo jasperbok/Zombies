@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -26,6 +27,18 @@ public abstract class Entity {
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
+	}
+	
+	public void updateStatus(Input input) {
+		boolean isFalling = false;
+		boolean isJumping = false;
+		boolean isClimbing = false;
+		boolean isOnGround = false;
+		
+		if (Math.floor(boundingBox.getMaxY() / level.map.getTileHeight()) == Math.floor(boundingBox.getMaxY() + 1 / level.map.getTileHeight()) ) {
+			// One pixel lower is another tile.
+			
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

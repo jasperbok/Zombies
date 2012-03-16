@@ -30,12 +30,6 @@ public class Player extends Entity {
 	private float maxFallSpeed = 0.5f;
 	private Rectangle box;
 	
-	private boolean wasOnGround = false;
-	private boolean wasFalling = false;
-	private boolean wasGoingLeft = false;
-	private boolean wasGoingRight = false;
-	private boolean wasClimbing = false;
-	
 	// Animations
 	private SpriteSheet sprites;
 	private Animation idleAnimation;
@@ -44,6 +38,13 @@ public class Player extends Entity {
 	private Animation fallAnimation;
 	private Animation climbAnimation;
 	private Animation currentAnimation;
+	
+	// Status variables.
+	protected boolean wasOnGround = false;
+	protected boolean wasFalling = false;
+	protected boolean wasGoingLeft = false;
+	protected boolean wasGoingRight = false;
+	protected boolean wasClimbing = false;
 	
 	public Player(int health, int bandages, TiledMap map, Level level) throws SlickException {
 		this.health = health;
@@ -78,6 +79,10 @@ public class Player extends Entity {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		Input input = container.getInput();
+		
+		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+		
+		updateStatus(input);
 		// Variables used for collision detection.
 		int height = currentAnimation.getCurrentFrame().getHeight();
 		int width = currentAnimation.getCurrentFrame().getWidth();
@@ -87,7 +92,7 @@ public class Player extends Entity {
 		int bottomY = (int)(position.y + height);
 		
 		//boundingBox.setBounds(position.x, position.y, width, height);
-		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+		
 		
 		// Positions in the tile system.
 		int yTiled = (int)(Math.floor(position.y / tileWidth));
@@ -125,6 +130,7 @@ public class Player extends Entity {
 			isFalling = false;
 		}
 
+		/*
 		String moveStatus = level.movingStatus(this);
 		if (moveStatus == "falling") {
 			if (isClimbing) {
@@ -133,7 +139,7 @@ public class Player extends Entity {
 			isFalling = true;
 		} else {
 			isOnGround = true;
-		}
+		}*/
 
 		// Apply vertical forces according to state.
 		if (isFalling) velocity.y += gravity.y * delta;
@@ -182,11 +188,23 @@ public class Player extends Entity {
 			}
 		}
 		
-		if (isClimbing) currentAnimation = climbAnimation;
+		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
+			currentAnimation = idleAnimation;
+		}
+		
+		if (isClimbing) {
+			currentAnimation = climbAnimation;
+			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
+				currentAnimation.stop();
+			} else if (currentAnimation.isStopped()) {
+				currentAnimation.start();
+			}
+		}
 		
 		position.x += velocity.x * delta;
 		position.y -= velocity.y * delta;
 		
+		/*
 		ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
 		for (Entity ent: touchingEnts) {
 			System.out.println("BLOCKING! :D");
@@ -197,7 +215,7 @@ public class Player extends Entity {
 				if (intersections[2]) position.y -= 1.0f;
 				if (intersections[3]) position.x += 1.0f;
 			}
-		}
+		}*/
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
