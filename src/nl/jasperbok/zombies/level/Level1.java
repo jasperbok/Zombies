@@ -31,22 +31,22 @@ public class Level1 extends Level {
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
 		crate = new Crate(this, 600, 500);
-		entities.add(crate);
+		zombie = new Zombie(750, 500, crate);
 		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
-		entities.add(crane);
-		usableObjects.add(crane);
 		
 		craneLights = new FlashLight[2];
 		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 130));
 		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 90, 130));
 		craneLights[0].rotate(100);
 		craneLights[1].rotate(80);
-		
 		craneLights[0].setColor(new Color(150, 100, 100));
 		craneLights[1].setColor(new Color(150, 100, 100));
 
-		zombie = new Zombie(700, 500, crate);
+		entities.add(crate);
+		entities.add(crane);
 		entities.add(zombie);
+		
+		usableObjects.add(crane);
 		
 		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		//bgMusic.loop();
@@ -61,9 +61,15 @@ public class Level1 extends Level {
 		super.update(container, delta);
 		crane.update(container, delta);
 		crate.update(container, delta);
+		zombie.update(container, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		super.render(container, g);
 	}
+	
+	public void remove() {
+    	System.out.println("Remove called!");
+    	entities.remove(zombie);
+    }
 }

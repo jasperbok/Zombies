@@ -102,11 +102,13 @@ public class MagneticCrane extends Entity implements Usable {
 					if (crate.position.y > armPos.y + arm.getHeight()) {
 						if (crate.position.y < armPos.y + arm.getHeight() + 32) {
 							magnetTarget = crate;
+							crate.draggedByMagnet = true;
 						}
 					}
 				}
 			}
 		} else {
+			crate.draggedByMagnet = false;
 			magnetTarget = null;
 		}
 		

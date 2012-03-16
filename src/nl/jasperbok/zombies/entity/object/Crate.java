@@ -14,6 +14,7 @@ import nl.jasperbok.zombies.math.Vector2;
 public class Crate extends Entity {
 	private Image image;
 	private boolean isFalling = false;
+	public boolean draggedByMagnet = false;
 
 	/**
 	 * Crate constructor creates a new crate.
@@ -72,6 +73,8 @@ public class Crate extends Entity {
 		} else {
 			this.velocity.y = 0;
 		}
+		
+		if (draggedByMagnet) velocity.y = 0f;
 		
 		position.x += velocity.x;
 		position.y += velocity.y;

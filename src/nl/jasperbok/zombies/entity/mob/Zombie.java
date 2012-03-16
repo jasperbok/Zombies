@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Zombie extends Mob {
 	public Crate crate;
@@ -16,6 +17,7 @@ public class Zombie extends Mob {
 	private SpriteSheet sprites;
 	private Animation idleAnimation;
 	private Animation currentAnimation;
+	private boolean draw = true;
 	
 	public Zombie(float x, float y, Crate crate) throws SlickException {
 		this.position.x = x;
@@ -28,31 +30,34 @@ public class Zombie extends Mob {
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
 		currentAnimation = idleAnimation;
+		boundingBox = new Rectangle(0, 0, 4, 4);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		//position.add(velocity);
 		
-		String moveStatus = level.movingStatus(this);
+		//String moveStatus = level.movingStatus(this);
 		
-		if (moveStatus == "falling") {
-			velocity.add(level.gravity);
-		}
+		//if (moveStatus == "falling") {
+		//	velocity.add(level.gravity);
+		//}
 		
 		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 		
-		if (crateOnHead()) {
-			die();
-		}
+		if (draw) draw = !crateOnHead();
+		System.out.println(crateOnHead());
 	}
 	
 	public boolean crateOnHead() {
-		if (crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0)
-			return true;
-		return false;
+		System.out.println("Checking for falling crates :)");
+		return crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0;
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw(position.x, position.y);
+		if (draw) currentAnimation.draw(position.x, position.y);
+	}
+	
+	public void zombieDie() {
+		draw = false;
 	}
 }
