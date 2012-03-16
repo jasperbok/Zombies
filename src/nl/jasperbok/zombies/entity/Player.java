@@ -108,7 +108,7 @@ public class Player extends Entity {
 		boolean isJumping = false;
 		boolean isClimbing = false;
 		boolean isOnGround = false;
-		
+
 		// If the player isn't standing on something AND not climbing, apply gravity:
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
 			isFalling = true;
@@ -134,7 +134,7 @@ public class Player extends Entity {
 		} else {
 			isOnGround = true;
 		}
-		
+
 		// Apply vertical forces according to state.
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
@@ -187,7 +187,6 @@ public class Player extends Entity {
 		position.x += velocity.x * delta;
 		position.y -= velocity.y * delta;
 		
-		/*
 		ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
 		for (Entity ent: touchingEnts) {
 			System.out.println("BLOCKING! :D");
@@ -199,7 +198,6 @@ public class Player extends Entity {
 				if (intersections[3]) position.x += 1.0f;
 			}
 		}
-		*/
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
