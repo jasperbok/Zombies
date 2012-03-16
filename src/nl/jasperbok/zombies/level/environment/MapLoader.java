@@ -32,7 +32,7 @@ public class MapLoader {
 	/**
 	 * Returns a TileEnvironment build from the internal map.
 	 * 
-	 * @return The configured enviornment thats been populated with tiles
+	 * @return The configured environment thats been populated with tiles
 	 */
 	public TileEnvironment load() throws SlickException {
 		int width = map.getWidth();
@@ -40,6 +40,7 @@ public class MapLoader {
 		int tileWidth = map.getTileWidth();
 		int tileHeight = map.getTileHeight();
 		TileEnvironment env = new TileEnvironment(width, height);
+		//System.out.println(tileWidth + " " + tileHeight);
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
