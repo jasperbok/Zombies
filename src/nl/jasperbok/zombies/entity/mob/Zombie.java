@@ -23,9 +23,6 @@ public class Zombie extends Entity {
 		this.velocity.x = 0;
 		this.velocity.y = 0;
 		this.crate = crate;
-	}
-	
-	public void init() throws SlickException {
 		sprites = new SpriteSheet("data/sprites/entity/zombie.png", 33, 75);
 		
 		idleAnimation = new Animation();
@@ -35,7 +32,7 @@ public class Zombie extends Entity {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
-		position.add(velocity);
+		//position.add(velocity);
 		
 		String moveStatus = level.movingStatus(this);
 		

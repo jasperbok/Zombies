@@ -16,12 +16,8 @@ public class Crate extends Entity {
 
 	public Crate(Level level) throws SlickException {
 		velocity = new Vector2(0.0f, 0.0f);
-		
+		image = new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255));
 		this.level = level;
-	}
-	
-	public void init() throws SlickException {
-		image = new Image("data/srites/entity/object/crate.png", new Color(255, 255, 255));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
