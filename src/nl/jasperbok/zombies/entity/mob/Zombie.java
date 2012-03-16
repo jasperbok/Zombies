@@ -23,9 +23,7 @@ public class Zombie extends Entity {
 		this.velocity.x = 0;
 		this.velocity.y = 0;
 		this.crate = crate;
-	}
-	
-	public void init() throws SlickException {
+		
 		sprites = new SpriteSheet("data/sprites/entity/zombie.png", 33, 75);
 		
 		idleAnimation = new Animation();
@@ -47,8 +45,8 @@ public class Zombie extends Entity {
 	}
 	
 	public boolean crateOnHead() {
-		//if (crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0)
-		//	return true;
+		if (crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0)
+			return true;
 		return false;
 	}
 	
