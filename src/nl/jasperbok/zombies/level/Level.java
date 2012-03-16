@@ -42,7 +42,7 @@ public class Level {
 	
 	private int totalDelta = 0;
 	private int controlInterval = 50;
-	private boolean showBounds = false;
+	private boolean showBounds = true;
 	
 	/* All the usable objects in the level. */
 	protected List<Usable> usableObjects;
