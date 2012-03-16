@@ -187,7 +187,7 @@ public class Player extends Entity {
 		position.x += velocity.x * delta;
 		position.y -= velocity.y * delta;
 		
-		ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
+		/*ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
 		for (Entity ent: touchingEnts) {
 			System.out.println("BLOCKING! :D");
 			boolean[] intersections = level.findIntersects(this, ent);
@@ -197,7 +197,7 @@ public class Player extends Entity {
 				if (intersections[2]) position.y -= 1.0f;
 				if (intersections[3]) position.x += 1.0f;
 			}
-		}
+		}*/
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.

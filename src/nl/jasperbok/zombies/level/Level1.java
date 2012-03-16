@@ -11,6 +11,8 @@ import LightTest.Vec2;
 
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
+import nl.jasperbok.zombies.entity.mob.Zombie;
+import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Block;
@@ -21,6 +23,8 @@ public class Level1 extends Level {
 	public Elevator elevator;
 	public MagneticCrane crane;
 	public FlashLight[] craneLights;
+	public Zombie zombie;
+	public Crate crate;
 	
 	private Music bgMusic;
 
@@ -44,8 +48,13 @@ public class Level1 extends Level {
 		craneLights[0].setColor(new Color(150, 100, 100));
 		craneLights[1].setColor(new Color(150, 100, 100));
 		
-		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
-		bgMusic.loop();
+		crate = new Crate(this);
+		entities.add(crate);
+		zombie = new Zombie(300, 300, crate);
+		entities.add(zombie);
+		
+		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		//bgMusic.loop();
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
