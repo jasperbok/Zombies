@@ -62,6 +62,7 @@ public class Player extends Actor {
 			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
 		}
 		currentAnimation = idleAnimation;
+		velocityX = 500;
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -72,7 +73,7 @@ public class Player extends Actor {
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
 				//velocity.x += walkAcceleration * delta;
-				applyForce(walkAcceleration * delta, 0f);
+				applyForce(500f, 0f);
 				if (getVelX() > maxWalkSpeed) setVelocity(maxWalkSpeed, getVelY());
 			}
 			if (input.isKeyDown(Input.KEY_A)) {

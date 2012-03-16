@@ -11,6 +11,7 @@ import net.phys2d.raw.CollisionListener;
 import net.phys2d.raw.StaticBody;
 import net.phys2d.raw.shapes.Box;
 import net.phys2d.raw.shapes.Polygon;
+//import net.phys2d.raw.shapes.Shape;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -91,7 +92,10 @@ public class TileEnvironment extends AbstractEnvironment {
 	 */
 	public void setTile(int x, int y, Tile tile) {
 		images[x][y] = tile.getImage();
-		shapes[x][y] = tile.getShape().transform(Transform.createTranslateTransform(x, y));
+		//System.out.println(tile.getShape().getWidth());
+		//shapes[x][y] = tile.getShape().transform(Transform.createTranslateTransform(x, y));
+		shapes[x][y] = tile.getShape();
+		//System.out.println(shapes[x][y].getWidth());
 	}
 	
 	/**
@@ -133,26 +137,35 @@ public class TileEnvironment extends AbstractEnvironment {
 				
 				if (this.shapes[xPos + x][yPos + y] != null) {
 					shapes.add(this.shapes[xPos + x][yPos + y]);
+					//System.out.println("Height: " + this.shapes[xPos + x][yPos + y].getHeight());
 				}
 			}
 		}
 		
-		// Combine the shapes together then build a static
+		// Combine the shapes together then build a static body
 		// for the resulting shape.
-		ArrayList<Shape> combines = new ArrayList<Shape>();
-		
+		ArrayList<Shape> combines = combine(shapes);
+
 		for (int i = 0; i < combines.size(); i++) {
 			Shape shape = combines.get(i);
 			float[] points = shape.getPoints();
-			Vector2f[] vectors = new Vector2f[points.length / 2];
+			//System.out.println();
+			Vector2f[] vectors = new Vector2f[(points.length / 2)];
 			
 			for (int j = 0; j < vectors.length; j++) {
 				vectors[j] = new Vector2f(points[j * 2] * tileWidth, points[(j * 2) + 1] * tileHeight);
 			}
 			
+			//vectors = new Vector2f[2];
+			//vectors[0] = new Vector2f();
+			//vectors[1] = new Vector2f();
+			
 			Polygon poly = new Polygon(vectors);
+			//System.out.println(poly.getBounds() + "LOLOLOLOL");
 			StaticBody body = new StaticBody(poly);
+			//StaticBody body = new StaticBody(shape);
 			body.setFriction(1f);
+			body.setRestitution(1f);
 			world.add(body);
 		}
 	}
@@ -176,9 +189,16 @@ public class TileEnvironment extends AbstractEnvironment {
 				// and add the new one, otherwise leave them where they are.
 				Shape[] joined = util.union(first, second);
 				if (joined.length == 1) {
+					System.out.println("Combined two shapes! :D");
 					result.remove(first);
 					result.remove(second);
 					result.add(joined[0]);
+				} else {
+					System.out.println("Didn't combine anything :("); 
+					System.out.println("=========================");
+					System.out.println(first.getHeight() + "x" + first.getWidth() + "@" + first.getMinX() + "x" + first.getMinY());
+					System.out.println(second.getHeight() + "x" + second.getWidth() + "@" + second.getMinX() + "x" + second.getMinY());
+					System.out.println("-------------------------");
 				}
 			}
 		}
@@ -235,11 +255,9 @@ public class TileEnvironment extends AbstractEnvironment {
 		g.scale(tileWidth, tileHeight);
 
 		g.setColor(Color.yellow);
-		for (int x=0;x<width;x++) {
-			for (int y=0;y<height;y++) {
-				if (shapes[x][y] != null) {
-					g.draw(shapes[x][y]);
-				}
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (shapes[x][y] != null) g.draw(shapes[x][y]);
 			}
 		}
 
@@ -247,6 +265,7 @@ public class TileEnvironment extends AbstractEnvironment {
 		g.setColor(Color.white);
 		g.setLineWidth(2);
 		BodyList list = world.getBodies();
+		//System.out.println("Body count: " + list.size());
 		for (int i=0;i<list.size();i++) {
 			Body body = list.get(i);
 			net.phys2d.raw.shapes.Shape shape = body.getShape();
