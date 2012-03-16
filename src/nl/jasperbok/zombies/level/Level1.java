@@ -49,7 +49,7 @@ public class Level1 extends Level {
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
-		//dddelevator.update(container, delta);
+		//elevator.update(container, delta);
 		craneLights[0].setPos(new Vec2(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
 		craneLights[1].setPos(new Vec2(crane.armPos.x + 90 + camera.position.x, 130 - camera.position.y));
 		super.update(container, delta);
