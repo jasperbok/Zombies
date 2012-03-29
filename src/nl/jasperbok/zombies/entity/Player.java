@@ -138,6 +138,18 @@ public class Player extends Mob {
 					wasClimbing = true;
 				}
 			}*/
+			if (input.isKeyDown(Input.KEY_W)){
+				if (level.env.canClimbHere(boundingBox)) {
+					isClimbing = true;
+					velocity.set(velocity.getX(), -climbSpeed);
+				}
+			}
+			if (input.isKeyDown(Input.KEY_S)){
+				if (level.env.canClimbHere(boundingBox)) {
+					isClimbing = true;
+					velocity.set(velocity.getX(), climbSpeed);
+				}
+			}
 			if (input.isKeyPressed(Input.KEY_E)) {
 				Usable target = level.env.getUsableEntity(boundingBox);
 				if (target != null) {

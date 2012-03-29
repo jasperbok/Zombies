@@ -87,12 +87,21 @@ public class TileEnvironment {
 				}
 				// Left side collisions.
 				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / 32);
-				int relTopLeftY = (int)Math.floor(ent.boundingBox.getMinY() / 32);
-				int relBottomLeftY = (int)Math.floor(ent.boundingBox.getMaxX());
+				int relTopLeftY = (int)(Math.floor(ent.boundingBox.getMinY() / 32) + 1);
+				int relBottomLeftY = (int)(Math.floor(ent.boundingBox.getMaxY() / 32) - 1);
 				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
 					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
 				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
+				}
+				// Right side collisions.
+				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / 32);
+				int relTopRightY = (int)(Math.floor(ent.boundingBox.getMinY() / 32) + 1);
+				int relBottomRightY = (int)(Math.floor(ent.boundingBox.getMaxY() / 32) - 1);
+				if (tiles[relRightX][relBottomRightY].isBlocking) {
+					ent.setPosition(tiles[relRightX][relBottomRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
+				} else if (tiles[relRightX][relTopRightY].isBlocking) {
+					ent.setPosition(tiles[relRightX][relTopRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				
@@ -259,6 +268,14 @@ public class TileEnvironment {
 			if (obj.canBeUsed(rect)) return obj;
 		}
 		return null;
+	}
+	
+	public boolean canClimbHere(Rectangle bbox) {
+		int centerX = (int)Math.floor(bbox.getCenterX() / 32);
+		int topY = (int)Math.floor((bbox.getMinY() + 10) / 32); // + 10 so part of the box must overlap.
+		int bottomY = (int)Math.floor((bbox.getMaxY() - 10) / 32); // - 10... same reason.
+		
+		return tiles[centerX][topY].isClimable || tiles[centerX][bottomY].isClimable;
 	}
 	
 	private void updateEntityList() {
