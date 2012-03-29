@@ -82,7 +82,7 @@ public class Player extends Mob {
 		
 		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 		
-		updateStatus(input);
+		//updateStatus(input);
 		// Variables used for collision detection.
 		int height = currentAnimation.getCurrentFrame().getHeight();
 		int width = currentAnimation.getCurrentFrame().getWidth();

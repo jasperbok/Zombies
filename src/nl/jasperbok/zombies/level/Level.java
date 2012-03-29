@@ -80,7 +80,7 @@ public class Level {
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		
 		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
-		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
+		//lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
 	}
 	
 	public String movingStatus(Entity ent) {

@@ -53,8 +53,8 @@ public class Level1 extends Level {
 		
 		usableObjects.add(crane);
 		
-		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
-		//bgMusic.loop();
+		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		bgMusic.loop();
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
