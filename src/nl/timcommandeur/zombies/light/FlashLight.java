@@ -24,6 +24,7 @@ public class FlashLight {
 	protected int height = 30;
 	protected int width = 60;
 	protected int currentAngle;
+	protected boolean on = true;
 	
 	public Vec2 pos;
 	
@@ -34,6 +35,26 @@ public class FlashLight {
 		init();
 		setPos(pos);
 		rotate(0);
+		
+		switchOnOff();switchOnOff();
+	}
+	
+	public void switchOnOff() {
+		if (on) {
+			turnOff();
+		} else {
+			turnOn();
+		}
+	}
+	
+	public void turnOn() {
+		on = true;
+		setColor(new Color(170, 170, 170));
+	}
+	
+	public void turnOff() {
+		on = false;
+		setColor(new Color(0, 0, 0, 0));
 	}
 	
 	public void setColor(Color c)

@@ -33,7 +33,7 @@ public class Zombie extends Mob {
 		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
 		walkLeftAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
-			walkRightAnimation.addFrame(sprites.getSprite(i, 0).getFlippedCopy(false, false), 150);
+			walkLeftAnimation.addFrame(sprites.getSprite(i, 0).getFlippedCopy(false, false), 150);
 		}
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 3; i++) {
