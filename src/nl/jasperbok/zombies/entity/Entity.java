@@ -22,6 +22,7 @@ public abstract class Entity {
 	
 	public void init(Level level) {
 		this.level = level;
+		this.boundingBox = new Rectangle(0, 0, 0, 0);
 	}
 	
 	public void setPosition(float x, float y) {

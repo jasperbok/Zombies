@@ -1,8 +1,8 @@
 package nl.jasperbok.zombies.math;
 
-public class Vector2 {
-	public float x;
-	public float y;
+import org.newdawn.slick.geom.Vector2f;
+
+public class Vector2 extends Vector2f {
 	
 	public Vector2(float x, float y) {
 		this.x = x;
@@ -11,15 +11,5 @@ public class Vector2 {
 	
 	public float getLength() {
 		return (float)Math.sqrt(x * x + y * y);
-	}
-	
-	public void add(Vector2 v) {
-		this.x += v.x;
-		this.y += v.y;
-	}
-	
-	public void subtract(Vector2 v) {
-		this.x -= v.x;
-		this.y -= v.y;
 	}
 }

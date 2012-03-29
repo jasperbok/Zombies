@@ -1,6 +1,5 @@
 package nl.jasperbok.zombies.entity;
 
-import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -12,7 +11,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.gui.Notifications;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.mob.Mob;
@@ -26,7 +24,7 @@ public class Player extends Mob {
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.1f;
 	private float walkAcceleration = 0.0006f;
-	private float maxWalkSpeed = 0.2f;
+	private float maxWalkSpeed = 0.035f;
 	private float maxFallSpeed = 0.5f;
 	private Rectangle box;
 	
@@ -75,42 +73,15 @@ public class Player extends Mob {
 		currentAnimation = idleAnimation;
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
-		Input input = container.getInput();
-		
-		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
-
-		// Variables used for collision detection.
-		int height = currentAnimation.getCurrentFrame().getHeight();
-		int width = currentAnimation.getCurrentFrame().getWidth();
-		int centerX = (int)(position.x + width / 2);
-		int centerY = (int)(position.y + height / 2);
-		int rightX = (int)(position.x + width);
-		int bottomY = (int)(position.y + height);
-		
-		//boundingBox.setBounds(position.x, position.y, width, height);
-		
-		
-		// Positions in the tile system.
-		int yTiled = (int)(Math.floor(position.y / tileWidth));
-		int xTiled = (int)(Math.floor(position.x / tileWidth));
-		int centerXTiled = (int)(Math.floor(centerX / tileWidth));
-		int centerYTiled = (int)(Math.floor(centerY / tileWidth));
-		int rightXTiled = (int)(Math.floor((position.x + width) / tileWidth));
-		int bottomYTiled = (int)(Math.floor((position.y + height) / tileWidth));
-		
-		int bottomTileId = map.getTileId(centerXTiled, bottomYTiled, 0);
-		int rightTileId = map.getTileId(rightXTiled, centerYTiled, 0);
-		int leftTileId = map.getTileId(xTiled, centerYTiled, 0);
-		int centerTileId = map.getTileId(centerXTiled, centerYTiled, 0);
-		int topTileId = map.getTileId(centerXTiled, yTiled, 0);
-		int tileUnderneathId = map.getTileId(centerXTiled, yTiled + 1, 0);
+	public void update(Input input, int delta) {		
+		this.boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 		
 		boolean isFalling = false;
 		boolean isJumping = false;
 		boolean isClimbing = false;
 		boolean isOnGround = false;
 
+		/*
 		// If the player isn't standing on something AND not climbing, he must be falling:
 		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
 			isFalling = true;
@@ -130,7 +101,7 @@ public class Player extends Mob {
 		// Apply vertical forces according to state.
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
-		
+		*/
 		if (playerControlled) {
 			// Check player input.
 			if (input.isKeyDown(Input.KEY_D)) {
@@ -152,6 +123,7 @@ public class Player extends Mob {
 					if (velocity.x < 0.0f) velocity.x = 0.0f;
 				}
 			}
+			/*
 			if (input.isKeyDown(Input.KEY_W)) {
 				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
 						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
@@ -165,7 +137,7 @@ public class Player extends Mob {
 					if (isClimbing) velocity.y -= climbSpeed;
 					wasClimbing = true;
 				}
-			}
+			}*/
 			if (input.isKeyPressed(Input.KEY_E)) {
 				Usable target = level.env.getUsableEntity(boundingBox);
 				if (target != null) {
@@ -173,7 +145,7 @@ public class Player extends Mob {
 				}
 			}
 		}
-		
+		/*
 		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
 			currentAnimation = idleAnimation;
 		}
@@ -185,29 +157,7 @@ public class Player extends Mob {
 			} else if (currentAnimation.isStopped()) {
 				currentAnimation.start();
 			}
-		}
-		
-		position.x += velocity.x * delta;
-		position.y -= velocity.y * delta;
-		
-		// If the player is now colliding with something, get him out of it.
-		// Check for bottom collisions.
-		if ("true".equals(map.getTileProperty(bottomTileId, "blocked", "false"))) {
-			if (velocity.y < 0) velocity.y = 0;
-			position.y -= bottomY % 32;
-		}
-		// Check for right collisions.
-		if ("true".equals(map.getTileProperty(rightTileId, "blocked", "false"))) {
-			if (velocity.x > 0) velocity.x = 0;
-			position.x -= rightX % 32;
-			wasGoingRight = false;
-		}
-		// Check for left collisions.
-		if ("true".equals(map.getTileProperty(leftTileId, "blocked", "false"))) {
-			if (velocity.x < 0) velocity.x = 0;
-			position.x += tileWidth - (position.x % tileWidth);
-			wasGoingLeft = false;
-		}
+		}*/
 	}
 	
 	public void hurt(int amount) {
@@ -215,7 +165,7 @@ public class Player extends Mob {
 		Hud.getInstance().setPlayerHealth(health);
 	}
 
-	public void render(Graphics g) throws SlickException {
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		currentAnimation.draw((int)position.x, (int)position.y);
 	}
 }

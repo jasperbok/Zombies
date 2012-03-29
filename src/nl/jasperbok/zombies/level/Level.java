@@ -2,19 +2,14 @@ package nl.jasperbok.zombies.level;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.geom.Vector2f;
 
 import LightTest.ConvexHull;
 import LightTest.FrameBufferObject;
@@ -26,14 +21,10 @@ import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.light.ShadowHull;
 import nl.timcommandeur.zombies.screen.Camera;
 
-import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.Player;
-import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.math.Vector2;
 
 public class Level {
-	public Vector2 gravity = new Vector2(0.0f, -0.002f);
+	public Vector2f gravity = new Vector2f(0.0f, 0.002f);
 	public Camera camera;
 	
 	public TileEnvironment env;
@@ -49,7 +40,7 @@ public class Level {
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
-		env = new TileEnvironment(mapFileName);
+		env = new TileEnvironment(mapFileName, gravity);
 		camera = new Camera();
 		
 		lights = new ArrayList<LightSource>();
@@ -70,6 +61,7 @@ public class Level {
 
 		camera.position.x = env.getPlayer().position.x - 600;
 		camera.position.y = env.getPlayer().position.y - 600;
+		env.update(container, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

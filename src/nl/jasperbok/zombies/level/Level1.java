@@ -59,9 +59,6 @@ public class Level1 extends Level {
 		craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 130));
 		craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
 		super.update(container, delta);
-		crane.update(container, delta);
-		crate.update(container, delta);
-		zombie.update(container, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
