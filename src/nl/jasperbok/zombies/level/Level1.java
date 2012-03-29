@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 
 import LightTest.Vec2;
 
+import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
@@ -25,14 +26,22 @@ public class Level1 extends Level {
 	private Music bgMusic;
 
 	public Level1() throws SlickException {
-		super("zombies_level_1.tmx");
+		super("zombies_level_1");
 		//elevator = new Elevator(this);
 		//elevator.position = new Vector2(500.0f, 336.0f);
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
+		env.setPlayer(new Player(100, 0, this));
 		crate = new Crate(this, 600, 500);
 		zombie = new Zombie(750, 500, crate);
 		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
+
+		env.addEntity(crate);
+		env.addEntity(crane);
+		env.addMob(zombie);
+		
+		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		bgMusic.loop();
 		
 		craneLights = new FlashLight[2];
 		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 130));
@@ -41,15 +50,6 @@ public class Level1 extends Level {
 		craneLights[1].rotate(80);
 		craneLights[0].setColor(new Color(150, 100, 100));
 		craneLights[1].setColor(new Color(150, 100, 100));
-
-		entities.add(crate);
-		entities.add(crane);
-		entities.add(zombie);
-		
-		usableObjects.add(crane);
-		
-		//bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
-		//bgMusic.loop();
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -67,9 +67,4 @@ public class Level1 extends Level {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		super.render(container, g);
 	}
-	
-	public void remove() {
-    	System.out.println("Remove called!");
-    	entities.remove(zombie);
-    }
 }

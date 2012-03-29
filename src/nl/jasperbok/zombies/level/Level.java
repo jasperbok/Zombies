@@ -30,18 +30,13 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.level.Block;
 import nl.jasperbok.zombies.math.Vector2;
 
 public class Level {
-	public Player player;
-	public TiledMap map;
 	public Vector2 gravity = new Vector2(0.0f, -0.002f);
-	
 	public Camera camera;
 	
-	protected List<Entity> entities;
-	protected List<Usable> usableObjects;
+	public TileEnvironment env;
 	
 	// Lighting
     public static List<LightSource> lights;
@@ -50,135 +45,31 @@ public class Level {
     protected FrameBufferObject fboLevel;
     protected boolean addLight=true;
 	protected List<ShadowHull> cHulls;
-	
 	protected FlashLight fl;
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
-		lights = new ArrayList<LightSource>();
-        cHulls = new ArrayList<ShadowHull>();
-        
-		init(mapFileName);
-		
-		map = new TiledMap("/data/maps/" + mapFileName);
-		player = new Player(100, 0, map, this);
-		entities = new ArrayList<Entity>();
-		usableObjects = new ArrayList<Usable>();
-		entities.add(player);
-		
-		for (int i = 0; i < map.getHeight(); i++) {
-			for (int j = 0; j < map.getWidth(); j++) {
-				entities.add(new Block(i, j, map.getTileId(j, i, 0), map.getTileHeight(), map));
-			}
-		}
-	}
-	
-	public void init(String mapFileName) throws SlickException {
+		env = new TileEnvironment(mapFileName);
 		camera = new Camera();
 		
-		fboLight = new FrameBufferObject(new Point(1280, 720));
+		lights = new ArrayList<LightSource>();
+        cHulls = new ArrayList<ShadowHull>();
+        fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
-		
 		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
 		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
 	}
 	
-	public String movingStatus(Entity ent) {
-		String status = "falling"; // Falling by default.
-		Rectangle box = ent.boundingBox;
-		Vector2 vel = ent.velocity;
-		
-		// Always create a bottom Rectangle to see if ground moves underneath.
-		Rectangle bottomSide = new Rectangle(box.getMinX(), box.getMaxY() - 2, box.getWidth(), 2);
-		Rectangle below = new Rectangle(box.getMinX(), box.getMaxY(), box.getWidth(), 1);
-		
-		if (vel.y < 0) {
-			Rectangle topSide = new Rectangle(box.getMinX(), box.getMinY(), box.getWidth(), 2);
-		}
-		
-		if (vel.x < 0) {
-			Rectangle leftSide = new Rectangle(box.getMinX(), box.getMinY(), 2, box.getHeight());
-		} else if (vel.x > 0) {
-			Rectangle rightSide = new Rectangle(box.getMaxX() - 2, box.getMinY(), 2, box.getHeight());
-		}
-		
-		// Check whether the Entity is standing on something solid.
-		for (Entity currEnt: entities) {
-			if (currEnt.isBlocking) {
-				if (currEnt.boundingBox.intersects(below)) {
-					status = "standing";
-					break;
-				}
-			}
-		}
-		
-		return status;
-	}
-	
-	/**
-	 * Returns an Entity implementing the Usable interface that's located
-	 * within the given Rectangle.
-	 * 
-	 * @param	rect	a Rectangle.
-	 * @return			The Entity within the given rect, or null if no
-	 * 					Entity was found.
-	 */
-	public Usable findUsableObject(Rectangle rect) {
-		for (Usable obj: usableObjects) {
-			if (obj.canBeUsed(rect)) {
-				return obj;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Checks for collisions between one Entity and others in the level.
-	 * 
-	 * @param ent	The Entity to check hits for.
-	 * @return		An ArrayList with Entities that intersect with ent.
-	 */
-	public ArrayList<Entity> touchingSolidObject(Entity ent) {
-		ArrayList<Entity> hits = new ArrayList<Entity>();
-		for (Entity ent2: entities) {
-			if (ent == ent2) continue;
-			if (ent.boundingBox.intersects(ent2.boundingBox)) {
-				hits.add(ent2);
-			}
-		}
-		return hits;
-	}
-	
-	/**
-	 * 
-	 * @param ent1 The entity to check the collisions for.
-	 * @param ent2 The entity to check the collisions against.
-	 * @return A boolean list, the order is top, right, down, left. True
-	 * tells there is an intersect.
-	 */
-	public boolean[] findIntersects(Entity ent1, Entity ent2) {
-		boolean[] sides = new boolean[3];
-		for (int i = 0; i < 4; i++) {
-			sides[i] = false;
-		}
-		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMinY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getMaxX(), ent1.boundingBox.getCenterY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getCenterX(), ent1.boundingBox.getMaxY())) sides[0] = true;
-		if (ent2.boundingBox.contains(ent1.boundingBox.getMinX(), ent1.boundingBox.getCenterY())) sides[0] = true;
-		return sides;
-	}
-	
 	public void update(GameContainer container, int delta) throws SlickException {
-		player.update(container, delta);
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
-		fl.setPos(new Vec2(player.position.x + 10, player.position.y + 10));
+		fl.setPos(new Vec2(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10));
 		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 
-		camera.position.x = player.position.x - 600;
-		camera.position.y = player.position.y - 600;
+		camera.position.x = env.getPlayer().position.x - 600;
+		camera.position.y = env.getPlayer().position.y - 600;
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
@@ -205,10 +96,7 @@ public class Level {
 		
 		//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		map.render(0, 0);
-		for (Entity ent: entities) {
-			ent.render(container, g);
-		}
+		env.render(container, g);
 		
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
@@ -297,9 +185,5 @@ public class Level {
         GL11.glColorMask(false, false, false, true);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
-    
-    public void remove() {
-    	//System.out.println("Remove called!");
-    	//entities.remove();
-    }
+  
 }
