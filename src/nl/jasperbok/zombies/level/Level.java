@@ -36,7 +36,7 @@ public class Level {
     protected FrameBufferObject fboLevel;
     protected boolean addLight=true;
 	protected List<ShadowHull> cHulls;
-	protected FlashLight fl;
+	public FlashLight fl;
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {

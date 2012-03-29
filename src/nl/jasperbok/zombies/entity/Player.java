@@ -43,6 +43,7 @@ public class Player extends Mob {
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
 	protected boolean wasClimbing = false;
+	public boolean isClimbing = false;
 	
 	public Player(int health, int bandages, Level level) throws SlickException {
 		this.health = health;
@@ -78,7 +79,6 @@ public class Player extends Mob {
 		
 		boolean isFalling = false;
 		boolean isJumping = false;
-		boolean isClimbing = false;
 		boolean isOnGround = false;
 
 		/*
@@ -155,6 +155,9 @@ public class Player extends Mob {
 				if (target != null) {
 					target.use(this);
 				}
+			}
+			if (input.isMousePressed(0)) {
+				level.fl.switchOnOff();
 			}
 		}
 		/*
