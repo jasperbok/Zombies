@@ -1,10 +1,14 @@
 package nl.jasperbok.zombies.entity.mob;
 
+import java.io.IOException;
 import java.util.List;
 
 import nl.jasperbok.zombies.entity.Entity;
 
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import LightTest.LoopingList;
 
@@ -20,12 +24,18 @@ public class MobDirector {
 	public List<Mob> mobs;
 	public List<MobAttractor> attractors;
 	
+	private Audio wavEffect;
+	
 	public MobDirector() {
 		mobs = new LoopingList<Mob>();
 	}
 	
 	public MobDirector(List<Mob> mobs) {
 		refresh(mobs);
+	}
+	
+	public void init() throws IOException {
+		wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/zombiegroan1.wav"));
 	}
 	
 	/**
@@ -116,5 +126,9 @@ public class MobDirector {
 				attractor = null;
 			}
 		}
+	}
+	
+	public void makeNoise() {
+		wavEffect.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 }
