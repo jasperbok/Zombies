@@ -46,11 +46,9 @@ public class Player extends Mob {
 	protected boolean wasGoingRight = false;
 	protected boolean wasClimbing = false;
 	
-	public Player(int health, int bandages, TiledMap map, Level level) throws SlickException {
+	public Player(int health, int bandages, Level level) throws SlickException {
 		this.health = health;
 		this.bandages = bandages;
-		this.map = map;
-		this.tileWidth = map.getTileHeight();
 		super.init(level);
 		this.init();
 	}
@@ -81,8 +79,12 @@ public class Player extends Mob {
 		Input input = container.getInput();
 		
 		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+<<<<<<< HEAD
 		
 		//updateStatus(input);
+=======
+
+>>>>>>> 1f2b3b94862bae7720f0dc8cad0891e4695f7678
 		// Variables used for collision detection.
 		int height = currentAnimation.getCurrentFrame().getHeight();
 		int width = currentAnimation.getCurrentFrame().getWidth();
@@ -130,17 +132,6 @@ public class Player extends Mob {
 			isFalling = false;
 		}
 
-		/*
-		String moveStatus = level.movingStatus(this);
-		if (moveStatus == "falling") {
-			if (isClimbing) {
-				
-			}
-			isFalling = true;
-		} else {
-			isOnGround = true;
-		}*/
-
 		// Apply vertical forces according to state.
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
@@ -181,7 +172,7 @@ public class Player extends Mob {
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
-				Usable target = level.findUsableObject(boundingBox);
+				Usable target = level.env.getUsableEntity(boundingBox);
 				if (target != null) {
 					target.use(this);
 				}
@@ -203,19 +194,6 @@ public class Player extends Mob {
 		
 		position.x += velocity.x * delta;
 		position.y -= velocity.y * delta;
-		
-		/*
-		ArrayList<Entity> touchingEnts = level.touchingSolidObject(this);
-		for (Entity ent: touchingEnts) {
-			System.out.println("BLOCKING! :D");
-			boolean[] intersections = level.findIntersects(this, ent);
-			if (ent.isBlocking) {
-				if (intersections[0]) position.y += 1.0f;
-				if (intersections[1]) position.x -= 1.0f;
-				if (intersections[2]) position.y -= 1.0f;
-				if (intersections[3]) position.x += 1.0f;
-			}
-		}*/
 		
 		// If the player is now colliding with something, get him out of it.
 		// Check for bottom collisions.
@@ -242,7 +220,7 @@ public class Player extends Mob {
 		Hud.getInstance().setPlayerHealth(health);
 	}
 
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(Graphics g) throws SlickException {
 		currentAnimation.draw((int)position.x, (int)position.y);
 	}
 }

@@ -31,49 +31,6 @@ public class Crate extends Entity {
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
-		int tileWidth = level.map.getTileWidth();
-		
-		// Variables used for collision detection.
-		int height = image.getHeight();
-		int width = image.getWidth();
-		int centerX = (int)(position.x + width / 2);
-		int centerY = (int)(position.y + height / 2);
-		int rightX = (int)(position.x + width);
-		int bottomY = (int)(position.y + height);
-		
-		// Positions in the tile system.
-		int yTiled = (int)(Math.floor(position.y / tileWidth));
-		int xTiled = (int)(Math.floor(position.x / tileWidth));
-		int centerXTiled = (int)(Math.floor(centerX / tileWidth));
-		int centerYTiled = (int)(Math.floor(centerY / tileWidth));
-		int rightXTiled = (int)(Math.floor((position.x + width) / tileWidth));
-		int bottomYTiled = (int)(Math.floor((position.y + height) / tileWidth));
-		
-		int bottomTileId = level.map.getTileId(centerXTiled, bottomYTiled, 0);
-		int rightTileId = level.map.getTileId(rightXTiled, centerYTiled, 0);
-		int leftTileId = level.map.getTileId(xTiled, centerYTiled, 0);
-		int centerTileId = level.map.getTileId(centerXTiled, centerYTiled, 0);
-		int topTileId = level.map.getTileId(centerXTiled, yTiled, 0);
-		int tileUnderneathId = level.map.getTileId(centerXTiled, yTiled + 1, 0);
-		
-		boolean isFalling = false;
-		boolean isJumping = false;
-		boolean isClimbing = false;
-		boolean isOnGround = false;
-		
-		if ("false".equals(level.map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
-			isFalling = true;
-		} else {
-			isOnGround = true;
-			isFalling = false;
-		}
-		
-		if (isFalling) {
-			this.velocity.y += -level.gravity.y * delta;
-		} else {
-			this.velocity.y = 0;
-		}
-		
 		if (draggedByMagnet) velocity.y = 0f;
 		
 		position.x += velocity.x;

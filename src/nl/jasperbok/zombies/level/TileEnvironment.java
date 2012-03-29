@@ -8,6 +8,7 @@ import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -20,8 +21,15 @@ public class TileEnvironment {
 	private ArrayList<Entity> entities;
 	private ArrayList<Usable> usableEntities;
 	private ArrayList<Mob> mobs;
+	private ArrayList<Tile> tiles;
 	private Player player;
 	
+	/**
+	 * Class constructor.
+	 * 
+	 * @param mapName The name of the map to load (without .tmx).
+	 * @throws SlickException
+	 */
 	public TileEnvironment(String mapName) throws SlickException {
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 		this.mapName = mapName;
@@ -47,6 +55,25 @@ public class TileEnvironment {
 	}
 	
 	private void checkForCollisions() {
+		ArrayList<Entity> collides = new ArrayList<Entity>();
+		ArrayList<Entity> allEnts = new ArrayList<Entity>();
+		allEnts.addAll(entities);
+		allEnts.addAll(mobs);
+		allEnts.add(player);
+		
+		for (int i = 0; i < allEnts.size(); i++) {
+			Entity first = allEnts.get(i);
+			for (int j = i + 1; j < allEnts.size(); j++) {
+				Entity second = allEnts.get(j);
+				checkForTileCollisions(first);
+				// If there's a collision between them, move A back its velocity - overlap.
+				// If a's velocity == 0, move B
+				// Or move them both half the overlap... Dunno yet...
+			}
+		}
+	}
+	
+	private void checkForTileCollisions(Entity ent) {
 		
 	}
 	
@@ -97,10 +124,30 @@ public class TileEnvironment {
 		return null;
 	}
 	
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		map.render(0, 0);
+		player.render(g);
+		for (Entity ent: entities) {
+			ent.render(container, g);
+		}
+		for (Mob mob: mobs) {
+			mob.render(container, g);
+		}
+	}
+	
 	/** GETTERS AND SETTERS **/
 	
 	public String getMapName() {
 		return mapName;
+	}
+	
+	/**
+	 * Returns the player.
+	 * 
+	 * @return The player.
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 	
 	/**
