@@ -29,19 +29,11 @@ public abstract class Entity {
 		position.y = y;
 	}
 	
-	public void updateStatus(Input input) {
-		boolean isFalling = false;
-		boolean isJumping = false;
-		boolean isClimbing = false;
-		boolean isOnGround = false;
+	public void render(GameContainer container, Graphics g) throws SlickException {
 		
-		if (Math.floor(boundingBox.getMaxY() / level.map.getTileHeight()) == Math.floor(boundingBox.getMaxY() + 1 / level.map.getTileHeight()) ) {
-			// One pixel lower is another tile.
-			
-		}
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void update(Input input, int delta) {
 		
 	}
 }

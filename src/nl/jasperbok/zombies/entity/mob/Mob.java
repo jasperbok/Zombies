@@ -32,4 +32,8 @@ public abstract class Mob extends Entity {
 	protected void die() {
 		//this.level.remove(this);
 	}
+	
+	public void update(int delta) {
+		
+	}
 }
