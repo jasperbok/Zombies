@@ -9,6 +9,7 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.BloodMark;
+import nl.jasperbok.zombies.entity.mob.MobDirector;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -40,6 +41,7 @@ public class TileEnvironment {
 	 */
 	private ArrayList<Entity> allEntities;
 	private Player player;
+	public MobDirector mobDirector;
 	
 	/**
 	 * Class constructor.
@@ -65,8 +67,9 @@ public class TileEnvironment {
 		this.mobs = new ArrayList<Mob>();
 		this.allEntities = new ArrayList<Entity>();
 		this.attractors = new ArrayList<Entity>();
-		/*
-		for (int x = 0; x < map.getWidth(); x++) {
+		this.mobDirector = new MobDirector(mobs);
+		
+		/*for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				if (tiles[x][y].isBlocking) {
 					System.out.println("Blocker!!!");
@@ -76,6 +79,7 @@ public class TileEnvironment {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		mobDirector.moveMobs();
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();
@@ -166,6 +170,7 @@ public class TileEnvironment {
 	public void addMob(Mob mob) {
 		mobs.add(mob);
 		updateEntityList();
+		mobDirector.refresh(mobs);
 	}
 	
 	public void addAttractor(Rectangle bbox, String type) throws SlickException {

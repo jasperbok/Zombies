@@ -11,8 +11,6 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Zombie extends Mob {
-	public Crate crate;
-	
 	// Animations
 	private SpriteSheet sprites;
 	private Animation idleAnimation;
@@ -21,12 +19,11 @@ public class Zombie extends Mob {
 	private Animation currentAnimation;
 	private boolean draw = true;
 	
-	public Zombie(float x, float y, Crate crate) throws SlickException {
+	public Zombie(float x, float y) throws SlickException {
 		this.position.x = x;
 		this.position.y = y;
 		this.velocity.x = 0;
 		this.velocity.y = 0;
-		this.crate = crate;
 
 		sprites = new SpriteSheet("data/sprites/entity/zombiesheet.png", 33, 75);
 		idleAnimation = new Animation();
@@ -60,19 +57,31 @@ public class Zombie extends Mob {
 			currentAnimation = idleAnimation;
 		}
 		
-		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+		if (Math.abs(velocity.x) > 5) {
+			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
+		}
 		
-		if (draw) draw = !crateOnHead();
-		System.out.println(crateOnHead());
+		System.out.println("zombie-vx: " + velocity.x);
+		System.out.println("zombie-vy: " + velocity.y);
+		
+		updateBoundingBox();
+		
+		//if (draw) draw = !crateOnHead();
+		//System.out.println(crateOnHead());
 	}
 	
+	public void updateBoundingBox() {
+		boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+	}
+	
+	/* OLD STUFF
 	public boolean crateOnHead() {
 		System.out.println("Checking for falling crates :)");
 		return crate.boundingBox.intersects(boundingBox) && crate.velocity.y > 0;
-	}
+	}*/
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (draw) currentAnimation.draw(position.x, position.y);
+		currentAnimation.draw(position.x, position.y);
 	}
 	
 	public void zombieDie() {
