@@ -37,7 +37,7 @@ public class Elevator extends Entity implements Usable {
 	public Elevator(Level level, int xPos, int yPos) throws SlickException {
 		setPosition(xPos, yPos);
 		image = new Image("data/sprites/entity/building/elevator.png");
-		useBox = new Rectangle(500.0f, 300.0f, image.getWidth(), image.getHeight());
+		useBox = new Rectangle(position.getX(), position.getY() - 40, image.getWidth(), image.getHeight());
 		gravityAffected = false;
 		init(level);
 	}
