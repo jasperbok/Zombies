@@ -33,7 +33,7 @@ public class Level1 extends Level {
 		//entities.add(elevator);
 		env.setPlayer(new Player(100, 0, this));
 		crate = new Crate(this, 600, 500);
-		zombie = new Zombie(750, 500, crate);
+		zombie = new Zombie(110, 0);
 		crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
 
 		env.addEntity(crate);

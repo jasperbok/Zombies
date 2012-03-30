@@ -7,6 +7,7 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
+import nl.jasperbok.zombies.entity.mob.MobDirector;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -30,12 +31,14 @@ public class TileEnvironment {
 	private ArrayList<Usable> usableEntities;
 	private ArrayList<Mob> mobs;
 	private Tile[][] tiles;
+	
 	/**
 	 * Contains all the entities in the environment. This variable is made
 	 * so we only have to loop over one ArrayList instead of several.
 	 */
 	private ArrayList<Entity> allEntities;
 	private Player player;
+	public MobDirector mobDirector;
 	
 	/**
 	 * Class constructor.
@@ -59,17 +62,19 @@ public class TileEnvironment {
 		this.usableEntities = new ArrayList<Usable>();
 		this.mobs = new ArrayList<Mob>();
 		this.allEntities = new ArrayList<Entity>();
+		this.mobDirector = new MobDirector(mobs);
 		
-		for (int x = 0; x < map.getWidth(); x++) {
+		/*for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				if (tiles[x][y].isBlocking) {
 					System.out.println("Blocker!!!");
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		mobDirector.moveMobs();
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();
@@ -93,9 +98,7 @@ public class TileEnvironment {
 				// Floor collisions.
 				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
-				System.out.println("Gonna check a block at " + relativeBottomX + "x" + relativeBottomY);
 				if (tiles[relativeBottomX][relativeBottomY].isBlocking) {
-					System.out.println("It's blocking!");
 					ent.setPosition(ent.position.getX(), + tiles[relativeBottomX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
@@ -155,6 +158,7 @@ public class TileEnvironment {
 	public void addMob(Mob mob) {
 		mobs.add(mob);
 		updateEntityList();
+		mobDirector.refresh(mobs);
 	}
 	
 	/**
