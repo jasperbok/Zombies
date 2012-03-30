@@ -59,6 +59,14 @@ public class TileEnvironment {
 		this.usableEntities = new ArrayList<Usable>();
 		this.mobs = new ArrayList<Mob>();
 		this.allEntities = new ArrayList<Entity>();
+		
+		for (int x = 0; x < map.getWidth(); x++) {
+			for (int y = 0; y < map.getHeight(); y++) {
+				if (tiles[x][y].isBlocking) {
+					System.out.println("Blocker!!!");
+				}
+			}
+		}
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -85,7 +93,9 @@ public class TileEnvironment {
 				// Floor collisions.
 				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
+				System.out.println("Gonna check a block at " + relativeBottomX + "x" + relativeBottomY);
 				if (tiles[relativeBottomX][relativeBottomY].isBlocking) {
+					System.out.println("It's blocking!");
 					ent.setPosition(ent.position.getX(), + tiles[relativeBottomX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
