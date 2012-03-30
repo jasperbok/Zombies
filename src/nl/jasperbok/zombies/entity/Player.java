@@ -22,7 +22,7 @@ public class Player extends Mob {
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.001f;
 	private float walkAcceleration = 0.0006f;
-	private float maxWalkSpeed = 0.035f;
+	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 0.5f;
 	
 	// Animations
@@ -128,6 +128,13 @@ public class Player extends Mob {
 				} else if (velocity.x > 0.0f) {
 					velocity.x -= walkAcceleration * 2 * delta;
 					if (velocity.x < 0.0f) velocity.x = 0.0f;
+				}
+			}
+			if (input.isKeyDown(Input.KEY_Q)) {
+				try {
+					level.env.addAttractor(boundingBox, "BloodMark");
+				} catch (SlickException e) {
+					e.printStackTrace();
 				}
 			}
 			if (input.isKeyDown(Input.KEY_W)){

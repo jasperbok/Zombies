@@ -40,7 +40,7 @@ public class Level {
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
-		env = new TileEnvironment(mapFileName, gravity);
+		env = new TileEnvironment(mapFileName, gravity, this);
 		camera = new Camera();
 		
 		lights = new ArrayList<LightSource>();

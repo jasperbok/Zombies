@@ -3,10 +3,12 @@ package nl.jasperbok.zombies.level;
 import java.util.ArrayList;
 
 import nl.jasperbok.slickhelp.geom.GeomHelper;
+import nl.jasperbok.zombies.entity.Attractor;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
+import nl.jasperbok.zombies.entity.object.BloodMark;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,6 +25,7 @@ public class TileEnvironment {
 	private String mapName;
 	private int tileWidth;
 	private int tileHeight;
+	private Level level;
 	
 	private Vector2f gravity;
 	
@@ -30,6 +33,7 @@ public class TileEnvironment {
 	private ArrayList<Usable> usableEntities;
 	private ArrayList<Mob> mobs;
 	private Tile[][] tiles;
+	private ArrayList<Entity> attractors;
 	/**
 	 * Contains all the entities in the environment. This variable is made
 	 * so we only have to loop over one ArrayList instead of several.
@@ -43,12 +47,13 @@ public class TileEnvironment {
 	 * @param mapName The name of the map to load (without .tmx).
 	 * @throws SlickException
 	 */
-	public TileEnvironment(String mapName, Vector2f gravity) throws SlickException {
+	public TileEnvironment(String mapName, Vector2f gravity, Level level) throws SlickException {
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 		this.mapName = mapName;
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
 		this.gravity = gravity;
+		this.level = level;
 		
 		// Load them tiles.
 		MapLoader loader = new MapLoader();
@@ -59,14 +64,15 @@ public class TileEnvironment {
 		this.usableEntities = new ArrayList<Usable>();
 		this.mobs = new ArrayList<Mob>();
 		this.allEntities = new ArrayList<Entity>();
-		
+		this.attractors = new ArrayList<Entity>();
+		/*
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				if (tiles[x][y].isBlocking) {
 					System.out.println("Blocker!!!");
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -78,8 +84,13 @@ public class TileEnvironment {
 	
 	private void updateEntities(Input input, int delta) {
 		for (Entity ent: allEntities) {
-			ent.velocity.add(gravity);
+			if (ent.gravityAffected) ent.velocity.add(gravity);
 			ent.update(input, delta);
+		}
+		
+		// Render all the attractors.
+		for (Entity att: attractors) {
+			att.update(input, delta);
 		}
 	}
 	
@@ -93,26 +104,26 @@ public class TileEnvironment {
 				// Floor collisions.
 				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
-				System.out.println("Gonna check a block at " + relativeBottomX + "x" + relativeBottomY);
 				if (tiles[relativeBottomX][relativeBottomY].isBlocking) {
-					System.out.println("It's blocking!");
 					ent.setPosition(ent.position.getX(), + tiles[relativeBottomX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
 				}
 				// Left side collisions.
 				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / tileWidth);
-				int relTopLeftY = (int)(Math.floor(ent.boundingBox.getMinY() / tileHeight) + 1);
-				int relBottomLeftY = (int)(Math.floor(ent.boundingBox.getMaxY() / tileHeight) - 1);
+				int relTopLeftY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
+				int relBottomLeftY = (int)(Math.floor((ent.boundingBox.getMaxY() - 10) / tileHeight));
 				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
+					System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
 				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
+					System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
 				}
 				// Right side collisions.
 				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / tileWidth);
-				int relTopRightY = (int)(Math.floor(ent.boundingBox.getMinY() / tileHeight) + 1);
-				int relBottomRightY = (int)(Math.floor(ent.boundingBox.getMaxY() / tileHeight) - 1);
+				int relTopRightY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
+				int relBottomRightY = (int)(Math.floor((ent.boundingBox.getMaxY() - 10) / tileHeight));
 				if (tiles[relRightX][relBottomRightY].isBlocking) {
 					ent.setPosition(tiles[relRightX][relBottomRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
 				} else if (tiles[relRightX][relTopRightY].isBlocking) {
@@ -157,6 +168,20 @@ public class TileEnvironment {
 		updateEntityList();
 	}
 	
+	public void addAttractor(Rectangle bbox, String type) throws SlickException {
+		Attractor attractor = null;
+		
+		switch (type) {
+		case "BloodMark":
+			attractors.add(new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20));
+			break;
+		}
+	}
+	
+	public void removeAttractor(Attractor att) {
+		attractors.remove(att);
+	}
+	
 	/**
 	 * Returns the first Usable who's 'use activation field' lies within the
 	 * given rectangle.
@@ -187,11 +212,25 @@ public class TileEnvironment {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		map.render(0, 0);
+		// Render the background and the environment.
+		map.render(0, 0, 0);
+		map.render(0, 0, 1);
+		
+		// Render all the attractors.
+		for (Entity att: attractors) {
+			att.render(container, g);
+			System.out.println("Rendering attractor");
+		}
+		
+		// Render all the entities.
 		for (Entity ent: allEntities) {
 			ent.render(container, g);
 		}
 		
+		// Render the foreground.
+		map.render(0,  0, 3);
+		
+		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {
 			for (Entity ent: allEntities) {
 				g.draw(ent.boundingBox);

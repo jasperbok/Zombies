@@ -28,19 +28,36 @@ public class Elevator extends Entity implements Usable {
 	
 	private Image image;
 	
-	public Elevator(Level level) throws SlickException {
-		position = new Vector2(500.0f, 336.0f);
+	/**
+	 * Class constructor
+	 * 
+	 * @param level The level this elevator is part of.
+	 * @throws SlickException
+	 */
+	public Elevator(Level level, int xPos, int yPos) throws SlickException {
+		setPosition(xPos, yPos);
 		image = new Image("data/sprites/entity/building/elevator.png");
 		useBox = new Rectangle(500.0f, 300.0f, image.getWidth(), image.getHeight());
+		gravityAffected = false;
 		init(level);
 	}
 	
+	/**
+	 * 
+	 */
 	public void use(Entity user) {
 		user.playerControlled = false;
 		playerControlled = true;
 		this.user = user;
 	}
 	
+	/**
+	 * Checks whether this elevator can be used from the position of the
+	 * given rectangle.
+	 * 
+	 * @param rect The rectangle from where we want to use this elevator.
+	 * @return boolean True if the elevator can be used, false otherwise.
+	 */
 	public boolean canBeUsed(Rectangle rect) {
 		if (useTimeOut <= 0) {
 			return useBox.intersects(rect);

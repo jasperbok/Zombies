@@ -1,6 +1,7 @@
 package nl.jasperbok.zombies.level;
 
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.building.Elevator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,7 +13,8 @@ public class TestLevel extends Level {
 
 	public TestLevel() throws SlickException {
 		super("proto_lvl");
-		env.setPlayer(new Player(100, 0, this));
+		env.setPlayer(new Player(100, 200, this));
+		//env.addEntity(new Elevator(this, 200, 620));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {

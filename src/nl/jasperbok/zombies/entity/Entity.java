@@ -17,6 +17,7 @@ public abstract class Entity {
 	public boolean isBlocking = true;
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
+	public boolean gravityAffected = true;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
 	
