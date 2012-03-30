@@ -13,7 +13,7 @@ public abstract class Entity {
 	public Level level;
 	public Vector2 position = new Vector2(0.0f, 0.0f);
 	public Vector2 velocity = new Vector2(0.0f, 0.0f);
-	public Rectangle boundingBox;
+	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public boolean isBlocking = true;
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
@@ -28,6 +28,12 @@ public abstract class Entity {
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
+		updateBoundingBox();
+	}
+	
+	protected void updateBoundingBox() {
+		boundingBox.setX(position.getX());
+		boundingBox.setY(position.getY());
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

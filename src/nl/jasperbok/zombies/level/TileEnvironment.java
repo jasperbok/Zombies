@@ -21,6 +21,8 @@ public class TileEnvironment {
 	private boolean drawBoundingBoxes = false;
 	private TiledMap map;
 	private String mapName;
+	private int tileWidth;
+	private int tileHeight;
 	
 	private Vector2f gravity;
 	
@@ -44,6 +46,8 @@ public class TileEnvironment {
 	public TileEnvironment(String mapName, Vector2f gravity) throws SlickException {
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 		this.mapName = mapName;
+		this.tileWidth = map.getTileWidth();
+		this.tileHeight = map.getTileHeight();
 		this.gravity = gravity;
 		
 		// Load them tiles.
@@ -79,24 +83,26 @@ public class TileEnvironment {
 		for (Entity ent: allEntities) {
 			try {
 				// Floor collisions.
-				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / 32);
-				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / 32);
+				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
+				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
 				if (tiles[relativeBottomX][relativeBottomY].isBlocking) {
 					ent.setPosition(ent.position.getX(), + tiles[relativeBottomX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
+					// The entity is standing on something solid, so change his y velocity to 0 or less.
+					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
 				}
 				// Left side collisions.
-				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / 32);
-				int relTopLeftY = (int)(Math.floor(ent.boundingBox.getMinY() / 32) + 1);
-				int relBottomLeftY = (int)(Math.floor(ent.boundingBox.getMaxY() / 32) - 1);
+				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / tileWidth);
+				int relTopLeftY = (int)(Math.floor(ent.boundingBox.getMinY() / tileHeight) + 1);
+				int relBottomLeftY = (int)(Math.floor(ent.boundingBox.getMaxY() / tileHeight) - 1);
 				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
 					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
 				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
 				}
 				// Right side collisions.
-				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / 32);
-				int relTopRightY = (int)(Math.floor(ent.boundingBox.getMinY() / 32) + 1);
-				int relBottomRightY = (int)(Math.floor(ent.boundingBox.getMaxY() / 32) - 1);
+				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / tileWidth);
+				int relTopRightY = (int)(Math.floor(ent.boundingBox.getMinY() / tileHeight) + 1);
+				int relBottomRightY = (int)(Math.floor(ent.boundingBox.getMaxY() / tileHeight) - 1);
 				if (tiles[relRightX][relBottomRightY].isBlocking) {
 					ent.setPosition(tiles[relRightX][relBottomRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
 				} else if (tiles[relRightX][relTopRightY].isBlocking) {
@@ -116,6 +122,7 @@ public class TileEnvironment {
 		for (Entity ent: allEntities) {
 			ent.setPosition(ent.position.x + ent.velocity.x * delta, ent.position.y + ent.velocity.y * delta);
 		}
+		//player.setPosition(player.position.x + player.velocity.x * delta, player.position.y + player.velocity.y * delta);
 	}
 	
 	/**
@@ -155,11 +162,12 @@ public class TileEnvironment {
 	}
 	
 	public boolean canClimbHere(Rectangle bbox) {
-		int centerX = (int)Math.floor(bbox.getCenterX() / 32);
-		int topY = (int)Math.floor((bbox.getMinY() + 10) / 32); // + 10 so part of the box must overlap.
-		int bottomY = (int)Math.floor((bbox.getMaxY() - 10) / 32); // - 10... same reason.
+		/*int centerX = (int)Math.floor(bbox.getCenterX() / tileWidth);
+		int topY = (int)Math.floor((bbox.getMinY() + 10) / tileHeight); // + 10 so part of the box must overlap.
+		int bottomY = (int)Math.floor((bbox.getMaxY() - 10) / tileHeight); // - 10... same reason.
 		
-		return tiles[centerX][topY].isClimable || tiles[centerX][bottomY].isClimable;
+		return tiles[centerX][topY].isClimable || tiles[centerX][bottomY].isClimable;*/
+		return false;
 	}
 	
 	private void updateEntityList() {

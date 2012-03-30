@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
 import nl.jasperbok.zombies.gui.Hud;
@@ -17,16 +18,12 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 
 public class Player extends Mob {
 	private int bandages;
-	
-	private TiledMap map;
-	private int tileWidth;
 
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
-	private float climbSpeed = 0.1f;
+	private float climbSpeed = 0.001f;
 	private float walkAcceleration = 0.0006f;
 	private float maxWalkSpeed = 0.035f;
 	private float maxFallSpeed = 0.5f;
-	private Rectangle box;
 	
 	// Animations
 	private SpriteSheet sprites;
@@ -74,12 +71,22 @@ public class Player extends Mob {
 		currentAnimation = idleAnimation;
 	}
 	
-	public void update(Input input, int delta) {		
+	protected void updateBoundingBox() {
 		this.boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+	}
+	
+	public void update(Input input, int delta) {		
+		updateBoundingBox();
 		
 		boolean isFalling = false;
 		boolean isJumping = false;
 		boolean isOnGround = false;
+		
+		if (isClimbing && level.env.canClimbHere(boundingBox)) {
+			velocity.set(new Vector2f(velocity.getX(), 0));
+		} else if (!level.env.canClimbHere(boundingBox)) {
+			isClimbing = false;
+		}
 
 		/*
 		// If the player isn't standing on something AND not climbing, he must be falling:
@@ -123,31 +130,16 @@ public class Player extends Mob {
 					if (velocity.x < 0.0f) velocity.x = 0.0f;
 				}
 			}
-			/*
-			if (input.isKeyDown(Input.KEY_W)) {
-				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
-						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
-					if (isClimbing) velocity.y += climbSpeed;
-					wasClimbing = true;
-				}
-			}
-			if (input.isKeyDown(Input.KEY_S)) {
-				if ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
-						"true".equals(map.getTileProperty(bottomTileId, "climable", "false"))) {
-					if (isClimbing) velocity.y -= climbSpeed;
-					wasClimbing = true;
-				}
-			}*/
 			if (input.isKeyDown(Input.KEY_W)){
 				if (level.env.canClimbHere(boundingBox)) {
 					isClimbing = true;
-					velocity.set(velocity.getX(), -climbSpeed);
+					velocity.set(velocity.getX(), -climbSpeed * delta);
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
 				if (level.env.canClimbHere(boundingBox)) {
 					isClimbing = true;
-					velocity.set(velocity.getX(), climbSpeed);
+					velocity.set(velocity.getX(), climbSpeed * delta);
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
@@ -159,6 +151,8 @@ public class Player extends Mob {
 			if (input.isMousePressed(0)) {
 				level.fl.switchOnOff();
 			}
+			
+			if (isClimbing) currentAnimation = climbAnimation;
 		}
 		/*
 		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
