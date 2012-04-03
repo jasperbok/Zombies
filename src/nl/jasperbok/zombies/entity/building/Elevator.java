@@ -78,13 +78,13 @@ public class Elevator extends Entity implements Usable {
 			Input input = container.getInput();
 			
 			if (input.isKeyDown(Input.KEY_W)) {
-				position.y -= moveSpeed * delta;
-				user.position.y -= moveSpeed * delta;
+				position.y -= moveSpeed;
+				user.position.y -= moveSpeed;
 				if (position.y <= maxHeight) position.y = maxHeight;
 			}
 			if (input.isKeyDown(Input.KEY_S)) {
-				position.y += moveSpeed * delta;
-				user.position.y += moveSpeed * delta;
+				position.y += moveSpeed;
+				user.position.y += moveSpeed;
 				if (position.y >= minHeight) position.y = minHeight;
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
@@ -95,14 +95,14 @@ public class Elevator extends Entity implements Usable {
 		} else {
 			if (moving) {
 				if (goingUp) {
-					position.y -= moveSpeed * delta;
+					position.y -= moveSpeed;
 					if (position.y <= maxHeight) {
 						position.y = maxHeight;
 						moving = false;
 						goingUp = false;
 					}
 				} else {
-					position.y += moveSpeed * delta;
+					position.y += moveSpeed;
 					if (position.y >= minHeight) {
 						position.y = minHeight;
 						moving = false;

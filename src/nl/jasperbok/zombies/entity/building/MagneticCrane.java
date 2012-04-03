@@ -121,40 +121,40 @@ public class MagneticCrane extends Entity implements Usable {
 	private void handleInput(Input input, int delta) {
 		// Check vertical movement.
 		if (input.isKeyDown(Input.KEY_W)) {
-			velocity.y -= acceleration.y * delta;
+			velocity.y -= acceleration.y;
 			if (velocity.y < -maxVelocity.y) velocity.y = -maxVelocity.y;
 		}
 		if (input.isKeyDown(Input.KEY_S)) {
-			velocity.y += acceleration.y * delta;
+			velocity.y += acceleration.y;
 			if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
 		}
 		if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
 			// No vertical movement input, slow this thing down!
 			if (velocity.y < 0) {
-				velocity.y += acceleration.y * delta;
+				velocity.y += acceleration.y;
 				if (velocity.y > 0) velocity.y = 0;
 			} else {
-				velocity.y -= acceleration.y * delta;
+				velocity.y -= acceleration.y;
 				if (velocity.y < 0) velocity.y = 0;
 			}
 		}
 		
 		// Check horizontal movement.
 		if (input.isKeyDown(Input.KEY_A)) {
-			velocity.x -= acceleration.x * delta;
+			velocity.x -= acceleration.x;
 			if (velocity.x < -maxVelocity.x) velocity.x = -maxVelocity.x;
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			velocity.x += acceleration.x * delta;
+			velocity.x += acceleration.x;
 			if (velocity.x > maxVelocity.x) velocity.x = maxVelocity.x;
 		}
 		if (!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
 			// No horizontal movement input, slow this thing down!
 			if (velocity.x < 0) {
-				velocity.x += acceleration.x * delta;
+				velocity.x += acceleration.x;
 				if (velocity.x > 0) velocity.x = 0;
 			} else {
-				velocity.x -= acceleration.x * delta;
+				velocity.x -= acceleration.x;
 				if (velocity.x < 0) velocity.x = 0;
 			}
 		}

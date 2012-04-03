@@ -60,6 +60,8 @@ public class Player extends Mob {
 		for (int i = 0; i < 4; i++) {
 			walkLeftAnimation.addFrame(sprites.getSprite(i, 1), 150);
 		}
+		//walkLeftAnimation = new Animation();
+		//walkLeftAnimation.addFrame(new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166).getSprite(0, 0), 5000);
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
 		climbAnimation = new Animation();
@@ -67,6 +69,8 @@ public class Player extends Mob {
 			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
 		}
 		currentAnimation = idleAnimation;
+		//walkRightAnimation = walkLeftAnimation;
+		//currentAnimation = walkLeftAnimation;
 	}
 	
 	protected void updateBoundingBox() {
@@ -107,20 +111,20 @@ public class Player extends Mob {
 			// Check player input.
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
-				velocity.x += walkAcceleration * delta;
+				velocity.x += walkAcceleration;
 				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
 				if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
-				velocity.x -= walkAcceleration * delta;
+				velocity.x -= walkAcceleration;
 				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
 				if (velocity.x < 0.0f) {
-					velocity.x += walkAcceleration * 2 * delta;
+					velocity.x += walkAcceleration * 2;
 					if (velocity.x > 0.0f) velocity.x = 0.0f;
 				} else if (velocity.x > 0.0f) {
-					velocity.x -= walkAcceleration * 2 * delta;
+					velocity.x -= walkAcceleration * 2;
 					if (velocity.x < 0.0f) velocity.x = 0.0f;
 				}
 			}
@@ -134,13 +138,13 @@ public class Player extends Mob {
 			if (input.isKeyDown(Input.KEY_W)){
 				if (level.env.canClimbHere(boundingBox)) {
 					isClimbing = true;
-					velocity.set(velocity.getX(), -climbSpeed * delta);
+					velocity.set(velocity.getX(), -climbSpeed);
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
 				if (level.env.canClimbHere(boundingBox)) {
 					isClimbing = true;
-					velocity.set(velocity.getX(), climbSpeed * delta);
+					velocity.set(velocity.getX(), climbSpeed);
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
