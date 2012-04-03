@@ -57,9 +57,9 @@ public class Zombie extends Mob {
 			currentAnimation = idleAnimation;
 		}
 		
-		if (Math.abs(velocity.x) > 5) {
+		/*if (Math.abs(velocity.x) > 5) {
 			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
-		}
+		}//*/
 		
 		System.out.println("zombie-vx: " + velocity.x);
 		System.out.println("zombie-vy: " + velocity.y);

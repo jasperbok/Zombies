@@ -65,22 +65,31 @@ public class MobDirector {
 	 * Executes all logic to make mobs behave accordingly.
 	 */
 	public void moveMobs() {
+		for (MobAttractor attractor : attractors) {
+			attractor.update();
+		}
+		
 		for (Mob mob : mobs) {
 			Vector2f v = new Vector2f();
 			//v = v.add(keepDistanceBetweenAllMobs(mob));
 			for (MobAttractor attractor : attractors) {
+				attractor.update();
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
 			}
 			mob.velocity.x += v.x;
 			mob.velocity.y += v.y;
 			
-			System.out.println("v.x" + mob.velocity.x);
+			//System.out.println("v.x" + mob.velocity.x);
 			
 			if (Math.abs(mob.velocity.x) > 3) {
 				mob.velocity.x = mob.velocity.x / Math.abs(mob.velocity.x) * 3;
 			}
 			
-			System.out.println("v.x" + mob.velocity.x);
+			//System.out.println("vx" + mob.velocity.x);
+			
+			mob.velocity.x /= 50;
+			
+			//System.out.println("v.x" + mob.velocity.x);
 		}
 	}
 	
@@ -142,7 +151,9 @@ public class MobDirector {
 		
 		// The division by (1 * (1000 / power)) is a limiter.
 		// The higher the division the slower the mob will move towards a point.
-		v.x = (10 * (power)) / ((mob.position.x - point.x) * 100);
+		//v.x = (10 * (power)) / ((mob.position.x - point.x) * 100);
+		if (mob.position.x < point.x) v.x = 1;
+		else if (mob.position.x > point.x) v.x = -1;
 		
 		return v;
 	}
