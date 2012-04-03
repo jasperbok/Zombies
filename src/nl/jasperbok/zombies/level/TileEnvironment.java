@@ -145,9 +145,8 @@ public class TileEnvironment {
 	 */
 	private void moveEntities(int delta) {
 		for (Entity ent: allEntities) {
-			ent.setPosition(ent.position.x + ent.velocity.x, ent.position.y + ent.velocity.y);
+			ent.setPosition(ent.position.x + (ent.velocity.x * delta), ent.position.y + (ent.velocity.y * delta));
 		}
-		//player.setPosition(player.position.x + player.velocity.x * delta, player.position.y + player.velocity.y * delta);
 	}
 	
 	/**
