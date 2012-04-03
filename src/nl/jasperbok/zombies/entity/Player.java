@@ -1,6 +1,5 @@
 package nl.jasperbok.zombies.entity;
 
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,7 +8,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.tiled.TiledMap;
 
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Level;
@@ -22,10 +20,10 @@ public class Player extends Mob {
 	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.001f;
 	private float walkAcceleration = 0.0006f;
-	private float maxWalkSpeed = 0.2f;
+	private float maxWalkSpeed = 0.05f;
 	private float maxFallSpeed = 0.5f;
 	
-	// Animations
+	// Spritesheet and animations
 	private SpriteSheet sprites;
 	private Animation idleAnimation;
 	private Animation walkRightAnimation;
@@ -77,10 +75,6 @@ public class Player extends Mob {
 	
 	public void update(Input input, int delta) {		
 		updateBoundingBox();
-		
-		boolean isFalling = false;
-		boolean isJumping = false;
-		boolean isOnGround = false;
 		
 		if (isClimbing && level.env.canClimbHere(boundingBox)) {
 			velocity.set(new Vector2f(velocity.getX(), 0));
