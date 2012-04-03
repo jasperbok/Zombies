@@ -210,6 +210,7 @@ public class TileEnvironment {
 	}
 	
 	private void updateEntityList() {
+		allEntities = new ArrayList<Entity>();
 		allEntities.addAll(entities);
 		allEntities.addAll(mobs);
 		allEntities.add(player);
