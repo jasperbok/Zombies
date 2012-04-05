@@ -39,6 +39,7 @@ public class Elevator extends Entity implements Usable {
 		image = new Image("data/sprites/entity/building/elevator.png");
 		useBox = new Rectangle(position.getX(), position.getY() - 40, image.getWidth(), image.getHeight());
 		gravityAffected = false;
+		this.isBlocking = true;
 		init(level);
 	}
 	

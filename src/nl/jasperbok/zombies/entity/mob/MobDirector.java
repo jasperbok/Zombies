@@ -13,11 +13,11 @@ import org.newdawn.slick.util.ResourceLoader;
 import LightTest.LoopingList;
 
 /**
- * @author timcommandeur
+ * @author Tim Commandeur
  * 
- * The MobDirector handles the behaviour of the mobs.
+ * The MobDirector handles the behavior of the mobs.
  * 
- * The Mobdirector is responsable for the behaviour the mobs will (try) to execute.
+ * The Mobdirector is responsible for the behavior the mobs will (try) to execute.
  * It is not a physics class so it will not handle gravity, collision with surroundings, etc.
  */
 public class MobDirector {

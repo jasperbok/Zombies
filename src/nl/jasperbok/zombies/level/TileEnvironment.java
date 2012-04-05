@@ -99,7 +99,27 @@ public class TileEnvironment {
 	}
 	
 	private void checkForCollisions() {
-		
+		for (int i = 0; i < allEntities.size(); i++) {
+			for (int j = i + 1; j < allEntities.size(); j++) {
+				if (allEntities.get(i).isBlocking || allEntities.get(j).isBlocking) {
+					Rectangle bbox1 = allEntities.get(i).boundingBox;
+					Rectangle bbox2 = allEntities.get(j).boundingBox;
+					if (bbox1.intersects(bbox2)) {
+						// Their bounding boxes intersect, let's investigate further...
+						// First let's check for and resolve vertical collisions.
+						if ((bbox1.getMinY() > bbox2.getMinY()) && (bbox1.getMaxY() > bbox2.getMaxY())) {
+							// bbox1 is higher up than bbox2.
+							float verticalDifference = bbox2.getMinY() - bbox1.getMaxY();
+							allEntities.get(i).setPosition(allEntities.get(i).position.getX(), allEntities.get(i).position.getY() + verticalDifference);
+						} else if ((bbox2.getMinY() > bbox1.getMinY()) && (bbox2.getMaxY() > bbox1.getMaxY())) {
+							// bbox2 is higher up than bbox1.
+							float verticalDifference = bbox1.getMinY() - bbox2.getMaxY();
+							allEntities.get(j).setPosition(allEntities.get(j).position.getX(), allEntities.get(j).position.getY() + verticalDifference);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	private void checkForTileCollisions() {

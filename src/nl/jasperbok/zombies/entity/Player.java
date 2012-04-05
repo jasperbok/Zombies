@@ -17,11 +17,10 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 public class Player extends Mob {
 	private int bandages;
 
-	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.001f;
-	private float walkAcceleration = 0.0006f;
-	private float maxWalkSpeed = 0.05f;
-	private float maxFallSpeed = 0.5f;
+	private float walkAcceleration = 0.06f;
+	private float maxWalkSpeed = 0.2f;
+	private float maxFallSpeed = 2f;
 	
 	// Spritesheet and animations
 	private SpriteSheet sprites;
