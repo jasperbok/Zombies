@@ -6,6 +6,8 @@ public abstract class Mob extends Entity {
 	protected int health = 50;
 	protected int maxHealth = 100;
 	
+	protected boolean isOnGround = false;
+	
 	/**
 	 * Heals the mob.
 	 * 

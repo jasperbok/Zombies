@@ -22,8 +22,7 @@ public class Player extends Mob {
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 2f;
 	
-	// Spritesheet and animations
-	private SpriteSheet sprites;
+	// Animations
 	private Animation idleAnimation;
 	private Animation walkRightAnimation;
 	private Animation walkLeftAnimation;
@@ -50,7 +49,8 @@ public class Player extends Mob {
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
-		sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
+		SpriteSheet sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
+		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_girl2.png", 75, 150);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
 			walkRightAnimation.addFrame(sprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
@@ -58,6 +58,14 @@ public class Player extends Mob {
 		walkLeftAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
 			walkLeftAnimation.addFrame(sprites.getSprite(i, 1), 150);
+		}
+		walkRightAnimation = new Animation();
+		for (int i = 0; i < 4; i++) {
+			walkRightAnimation.addFrame(walkSprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
+		}
+		walkLeftAnimation = new Animation();
+		for (int i = 0; i < 4; i++) {
+			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 1), 150);
 		}
 		//walkLeftAnimation = new Animation();
 		//walkLeftAnimation.addFrame(new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166).getSprite(0, 0), 5000);
@@ -109,14 +117,10 @@ public class Player extends Mob {
 		if (playerControlled) {
 			// Check player input.
 			if (input.isKeyDown(Input.KEY_D)) {
-				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
-				velocity.x += walkAcceleration;
-				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
+				moveRight();
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
-				if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
-				velocity.x -= walkAcceleration;
-				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
+				moveLeft();
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
 				if (velocity.x < 0.0f) {
@@ -128,11 +132,7 @@ public class Player extends Mob {
 				}
 			}
 			if (input.isKeyDown(Input.KEY_Q)) {
-				try {
-					level.env.addAttractor(boundingBox, "BloodMark");
-				} catch (SlickException e) {
-					e.printStackTrace();
-				}
+				addBloodMark();
 			}
 			if (input.isKeyDown(Input.KEY_W)){
 				if (level.env.canClimbHere(boundingBox)) {
@@ -147,10 +147,7 @@ public class Player extends Mob {
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
-				Usable target = level.env.getUsableEntity(boundingBox);
-				if (target != null) {
-					target.use(this);
-				}
+				useObject();
 			}
 			if (input.isMousePressed(0)) {
 				level.fl.switchOnOff();
@@ -171,6 +168,33 @@ public class Player extends Mob {
 				currentAnimation.start();
 			}
 		}*/
+	}
+	
+	private void moveRight() {
+		if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
+		velocity.x += walkAcceleration;
+		if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
+	}
+	
+	private void moveLeft() {
+		if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
+		velocity.x -= walkAcceleration;
+		if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
+	}
+	
+	private void addBloodMark() {
+		try {
+			level.env.addAttractor(boundingBox, "BloodMark");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void useObject() {
+		Usable target = level.env.getUsableEntity(boundingBox);
+		if (target != null) {
+			target.use(this);
+		}
 	}
 	
 	public void hurt(int amount) {
