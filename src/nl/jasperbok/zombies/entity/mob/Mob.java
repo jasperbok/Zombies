@@ -19,12 +19,6 @@ public abstract class Mob extends Entity {
 	public Animation currentAnimation;
 	public Animation attackAnimation;
 	
-	// Status variables
-	public boolean wasOnGround = false;
-	public boolean isOnGround = false;
-	public boolean wasFalling = false;
-	public boolean isFalling = false;
-	
 	public EntityState currentState;
 	
 	/**
