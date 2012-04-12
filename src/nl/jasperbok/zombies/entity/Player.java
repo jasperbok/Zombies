@@ -18,7 +18,7 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.state.IdleState;
 
 public class Player extends Mob {
-	private float climbSpeed = 0.05f;
+	private float climbSpeed = 0.1f;
 	private float walkAcceleration = 0.06f;
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 2f;

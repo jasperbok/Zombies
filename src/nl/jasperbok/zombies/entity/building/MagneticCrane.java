@@ -6,24 +6,19 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
-import nl.jasperbok.zombies.entity.object.Crate;
-import nl.jasperbok.zombies.gui.Notifications;
 import nl.jasperbok.zombies.level.Level;
-import nl.jasperbok.zombies.math.Vector2;
 
 public class MagneticCrane extends Entity implements Usable {
-	public Vector2 sliderPos;
-	public Vector2 armPos;
+	public Vector2f sliderPos;
+	public Vector2f armPos;
 	
 	private Entity user;
 	private Rectangle useBox;
-	private Vector2 acceleration = new Vector2(0.01f, 0.01f);
 	
 	public boolean magnetActive = false;
 	
@@ -31,31 +26,35 @@ public class MagneticCrane extends Entity implements Usable {
 	private Image slider;
 	public Image arm;
 	
+	// Arm positional variables.
 	private int maxLeftPos = 32;
 	private int maxRightPos = 256;
 	private float minArmHeight;
 	private float maxArmHeight;
-	
-	private Entity magnetTarget = null;
-	private Crate crate;
+	private Vector2f armVelocity;
+	private Vector2f armAcceleration;
+	private Vector2f maxArmVelocity;
 	
 	public MagneticCrane(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
 		this.gravityAffected = false;
 		this.position = pos;
-		this.maxVelocity = new Vector2(1f, 1f);
+		this.armVelocity = new Vector2f(0f, 0f);
+		this.armAcceleration = new Vector2f(0.01f, 0.01f);
+		this.maxArmVelocity = new Vector2f(1f, 1f);
 		this.useBox = new Rectangle(1840, 720, 80, 160);
 		
+		// Initialize the images.
 		rail = new Image("data/sprites/entity/building/craneRail.png", new Color(255, 255, 255));
 		slider = new Image("data/sprites/entity/building/craneSlider.png", new Color(255, 255, 255));
 		arm = new Image("data/sprites/entity/building/craneArm.png", new Color(255, 255, 255));
 		
-		sliderPos = new Vector2(position.x + 100.0f, position.y);
-		armPos = new Vector2(sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2, sliderPos.y + 200.0f);
-		maxArmHeight = sliderPos.y;
-		minArmHeight = sliderPos.y + slider.getHeight() + arm.getHeight() - 100;
-		maxLeftPos = (int) (position.x - 100);
-		maxRightPos = (int) (position.x + rail.getWidth() - slider.getWidth());
+		this.sliderPos = new Vector2f(position.x + 100.0f, position.y);
+		this.armPos = new Vector2f(sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2, sliderPos.y + 200.0f);
+		this.maxArmHeight = sliderPos.y;
+		this.minArmHeight = sliderPos.y + slider.getHeight() + arm.getHeight() - 100;
+		this.maxLeftPos = (int) (position.x - 100);
+		this.maxRightPos = (int) (position.x + rail.getWidth() - slider.getWidth());
 	}
 
 	/**
@@ -84,77 +83,49 @@ public class MagneticCrane extends Entity implements Usable {
 	public void update(Input input, int delta) {
 		if (playerControlled) handleInput(input);
 			
-		armPos.y += velocity.y;
-		sliderPos.x += velocity.x;
-		armPos.x = sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2;
-		
-		/*if (magnetActive) {
-			Rectangle attractArea = new Rectangle(armPos.x, armPos.y + arm.getHeight(), arm.getWidth(), 32);
-			if (attractArea.intersects(crate.boundingBox)) {
-				crate.position.y = armPos.y + arm.getHeight();
-				crate.position.x = armPos.x;
-			}
-		}*/
-		/*
-		if (magnetActive) {
-			if (crate.position.x > armPos.x - 32) {
-				if (crate.position.x < armPos.x - 32 + arm.getWidth()) {
-					if (crate.position.y > armPos.y + arm.getHeight()) {
-						if (crate.position.y < armPos.y + arm.getHeight() + 32) {
-							magnetTarget = crate;
-							crate.draggedByMagnet = true;
-						}
-					}
-				}
-			}
-		} else {
-			crate.draggedByMagnet = false;
-			magnetTarget = null;
-		}
-		*/
-		if (magnetActive && magnetTarget != null) {
-			magnetTarget.setPosition(armPos.x, armPos.y + arm.getHeight());
-		}
+		armPos.y += armVelocity.getY();
+		sliderPos.x += armVelocity.getX();
+		armPos.x = sliderPos.getX() + slider.getWidth() / 2 - arm.getWidth() / 2;
 	}
 	
 	private void handleInput(Input input) {
 		// Check vertical movement.
 		if (input.isKeyDown(Input.KEY_W)) {
-			velocity.y -= acceleration.y;
-			if (velocity.y < -maxVelocity.y) velocity.y = -maxVelocity.y;
+			armVelocity.y -= armAcceleration.y;
+			if (armVelocity.y < -maxArmVelocity.y) armVelocity.y = -maxArmVelocity.y;
 		}
 		if (input.isKeyDown(Input.KEY_S)) {
-			velocity.y += acceleration.y;
-			if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
+			armVelocity.y += armAcceleration.y;
+			if (armVelocity.y > maxArmVelocity.y) armVelocity.y = maxArmVelocity.y;
 		}
 		if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
 			// No vertical movement input, slow this thing down!
-			if (velocity.y < 0) {
-				velocity.y += acceleration.y;
-				if (velocity.y > 0) velocity.y = 0;
+			if (armVelocity.y < 0) {
+				armVelocity.y += armAcceleration.y;
+				if (armVelocity.y > 0) armVelocity.y = 0;
 			} else {
-				velocity.y -= acceleration.y;
-				if (velocity.y < 0) velocity.y = 0;
+				armVelocity.y -= armAcceleration.y;
+				if (armVelocity.y < 0) armVelocity.y = 0;
 			}
 		}
 		
 		// Check horizontal movement.
 		if (input.isKeyDown(Input.KEY_A)) {
-			velocity.x -= acceleration.x;
-			if (velocity.x < -maxVelocity.x) velocity.x = -maxVelocity.x;
+			armVelocity.x -= armAcceleration.x;
+			if (armVelocity.x < -maxArmVelocity.x) armVelocity.x = -maxArmVelocity.x;
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			velocity.x += acceleration.x;
-			if (velocity.x > maxVelocity.x) velocity.x = maxVelocity.x;
+			armVelocity.x += armAcceleration.x;
+			if (armVelocity.x > maxArmVelocity.x) armVelocity.x = maxArmVelocity.x;
 		}
 		if (!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
 			// No horizontal movement input, slow this thing down!
-			if (velocity.x < 0) {
-				velocity.x += acceleration.x;
-				if (velocity.x > 0) velocity.x = 0;
+			if (armVelocity.x < 0) {
+				armVelocity.x += armAcceleration.x;
+				if (armVelocity.x > 0) armVelocity.x = 0;
 			} else {
-				velocity.x -= acceleration.x;
-				if (velocity.x < 0) velocity.x = 0;
+				armVelocity.x -= armAcceleration.x;
+				if (armVelocity.x < 0) armVelocity.x = 0;
 			}
 		}
 		
