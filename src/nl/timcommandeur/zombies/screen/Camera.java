@@ -18,15 +18,49 @@ public class Camera {
 	public int height;
 	public Vector2f position = new Vector2f(0.0f, 0.0f);
 	public Entity target = null;
+	public Vector2f displacement;
 	
 	public static Camera instance;
 	
 	public static Vector2f center = new Vector2f(620, 400);
 	
+	/**
+	 * Sets the target.
+	 * 
+	 * @param target
+	 */
 	public void setTarget(Entity target) {
-		this.target = target;
+		setTarget(target, new Vector2f(0, 0));
 	}
 	
+	/**
+	 * Sets the target and moves the given displacement from it.
+	 * 
+	 * @param target
+	 * @param displacementX
+	 * @param displacementY
+	 */
+	public void setTarget(Entity target, float displacementX, float displacementY) {
+		setTarget(target, new Vector2f(displacementX, displacementY));
+	}
+	
+	/**
+	 * Sets the target and moves the given displacement from it.
+	 * 
+	 * @param target
+	 * @param displacement
+	 */
+	public void setTarget(Entity target, Vector2f displacement) {
+		this.target = target;
+		this.displacement = displacement;
+	}
+	
+	/**
+	 * Sets the position of the camera.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
@@ -40,8 +74,8 @@ public class Camera {
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (target != null) {
 			System.out.println("line");
-			this.position.x = target.position.x;
-			this.position.y = target.position.y;
+			this.position.x = target.position.x + displacement.x;
+			this.position.y = target.position.y + displacement.y;
 		}
 	}
 	
