@@ -94,6 +94,7 @@ public class TileEnvironment {
 		for (Entity ent: allEntities) {
 			if (ent.gravityAffected) ent.velocity.add(gravity);
 			ent.update(input, delta);
+			ent.updateRenderPosition();
 		}
 		
 		// Render all the attractors.

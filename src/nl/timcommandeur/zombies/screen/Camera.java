@@ -3,6 +3,7 @@ package nl.timcommandeur.zombies.screen;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 import LightTest.Vec2;
 
@@ -17,6 +18,8 @@ public class Camera {
 	public Vector2 position = new Vector2(0.0f, 0.0f);
 	
 	public static Camera instance;
+	
+	public static Vector2f center = new Vector2f(620, 400);
 	
 	public void setPosition(float x, float y) {
 		position.x = x;
