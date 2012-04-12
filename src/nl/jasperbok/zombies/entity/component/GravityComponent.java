@@ -7,22 +7,24 @@ import org.newdawn.slick.Input;
 public class GravityComponent extends Component {
 	
 	private float gravity;
+	private float maxGravity;
 	
 	public GravityComponent(Entity owner) {
-		this(0.5f, owner);
+		this(0.005f, owner);
 	}
 
 	public GravityComponent(float gravity, Entity owner) {
 		this.id = 1;
 		this.gravity = gravity;
+		this.maxGravity = gravity * 500;
 		this.owner = owner;
 	}
 
 	public void update(Input input, int delta) {
-		System.out.println(owner.isOnGround);
 		if (!owner.isOnGround && !owner.isClimbing) {
-			owner.velocity.set(owner.velocity.getX(), owner.velocity.getY() + gravity * delta);
+			float yVel = owner.velocity.getY() + gravity * delta;
+			if (yVel > maxGravity) yVel = maxGravity;
+			owner.velocity.set(owner.velocity.getX(), yVel);
 		}
-		//owner.velocity.set(owner.velocity.getX(), owner.velocity.getY() + gravity * delta);
 	}
 }

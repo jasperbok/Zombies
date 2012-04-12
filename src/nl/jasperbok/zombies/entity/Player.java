@@ -34,7 +34,7 @@ public class Player extends Mob {
 	}
 	
 	public void init() throws SlickException {
-		this.addComponent(new GravityComponent(0.005f, this));
+		this.addComponent(new GravityComponent(0.002f, this));
 		gravityAffected = false;
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
