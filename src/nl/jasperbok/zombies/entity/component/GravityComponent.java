@@ -14,7 +14,7 @@ public class GravityComponent extends Component {
 	}
 
 	public GravityComponent(float gravity, Entity owner) {
-		this.id = 1;
+		this.id = Component.GRAVITY;
 		this.gravity = gravity;
 		this.maxGravity = gravity * 500;
 		this.owner = owner;

@@ -23,6 +23,7 @@ public abstract class Entity extends RenderObject {
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
 	public boolean gravityAffected = true;
+	public Entity user = null;
 	
 	// Status variables.
 	public boolean wasFalling = false;

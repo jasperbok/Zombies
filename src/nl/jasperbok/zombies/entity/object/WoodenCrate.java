@@ -9,11 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
-public class WoodenCrate extends Entity {
+public class WoodenCrate extends Entity implements Usable {
 	private Image image;
 
 	/**
@@ -42,5 +43,15 @@ public class WoodenCrate extends Entity {
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		image.draw(position.x, position.y);
+	}
+
+	@Override
+	public void use(Entity user) {
+		this.user = user;
+	}
+
+	@Override
+	public boolean canBeUsed(Rectangle rect) {
+		return false;
 	}
 }
