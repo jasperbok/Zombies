@@ -94,7 +94,7 @@ public class FlashLight {
 		this.position = position;
 		flashLightLight.setPosition(position);
 		for (ShadowHull hull : flashLightHulls) {
-			//hull.setPos(position);
+			hull.setPos(new Vec2(position.x, position.y));
 		}
 		rotate(currentAngle);
 	}
