@@ -1,19 +1,16 @@
 package nl.jasperbok.zombies.level;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-
-import LightTest.Vec2;
+import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
-import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
 
 public class Level1 extends Level {
@@ -32,14 +29,16 @@ public class Level1 extends Level {
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
 		Player player = new Player(100, this);
-		player.setPosition(80, 320);
+		//player.setPosition(80, 320);
+		player.setPosition(2100, 660);
 		env.setPlayer(player);
+		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
+		env.addEntity(crane);
+		env.addEntity(new Crate(this, new Vector2f(2160, 660), crane));
 		//crate = new Crate(this, 600, 500);
 		//zombie = new Zombie(110, 0);
-		//crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
 
 		//env.addEntity(crate);
-		//env.addEntity(crane);
 		//env.addMob(zombie);
 		
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");

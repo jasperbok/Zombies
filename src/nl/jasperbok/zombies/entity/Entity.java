@@ -57,6 +57,15 @@ public abstract class Entity extends RenderObject {
 		return null;
 	}
 	
+	public boolean hasComponent(int id) {
+		for (Component comp: components) {
+			if (comp.getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;

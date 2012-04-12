@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
@@ -22,15 +23,13 @@ public class MagneticCrane extends Entity implements Usable {
 	
 	private Entity user;
 	private Rectangle useBox;
-	private Vector2 maxVelocity = new Vector2(1f, 1f);
 	private Vector2 acceleration = new Vector2(0.01f, 0.01f);
-	private Vector2 velocity = new Vector2(0.0f, 0.0f);
 	
 	public boolean magnetActive = false;
 	
 	private Image rail;
 	private Image slider;
-	private Image arm;
+	public Image arm;
 	
 	private int maxLeftPos = 32;
 	private int maxRightPos = 256;
@@ -40,13 +39,13 @@ public class MagneticCrane extends Entity implements Usable {
 	private Entity magnetTarget = null;
 	private Crate crate;
 	
-	public MagneticCrane(Level level, Vector2 pos, Crate crate) throws SlickException {
+	public MagneticCrane(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
-		position = pos;
-		this.crate = crate;
-		//useBox = new Rectangle(448.0f, 96.0f, 96.0f, 32.0f);
-		//useBox = new Rectangle(400, 200, 700, 700);
-		useBox = new Rectangle(256, 200, 92, 160);
+		this.gravityAffected = false;
+		this.position = pos;
+		this.maxVelocity = new Vector2(1f, 1f);
+		this.useBox = new Rectangle(1840, 720, 80, 160);
+		
 		rail = new Image("data/sprites/entity/building/craneRail.png", new Color(255, 255, 255));
 		slider = new Image("data/sprites/entity/building/craneSlider.png", new Color(255, 255, 255));
 		arm = new Image("data/sprites/entity/building/craneArm.png", new Color(255, 255, 255));
@@ -82,8 +81,8 @@ public class MagneticCrane extends Entity implements Usable {
 		return rect.intersects(useBox);
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
-		if (playerControlled) handleInput(container.getInput(), delta);
+	public void update(Input input, int delta) {
+		if (playerControlled) handleInput(input);
 			
 		armPos.y += velocity.y;
 		sliderPos.x += velocity.x;
@@ -96,7 +95,7 @@ public class MagneticCrane extends Entity implements Usable {
 				crate.position.x = armPos.x;
 			}
 		}*/
-		
+		/*
 		if (magnetActive) {
 			if (crate.position.x > armPos.x - 32) {
 				if (crate.position.x < armPos.x - 32 + arm.getWidth()) {
@@ -112,13 +111,13 @@ public class MagneticCrane extends Entity implements Usable {
 			crate.draggedByMagnet = false;
 			magnetTarget = null;
 		}
-		
+		*/
 		if (magnetActive && magnetTarget != null) {
 			magnetTarget.setPosition(armPos.x, armPos.y + arm.getHeight());
 		}
 	}
 	
-	private void handleInput(Input input, int delta) {
+	private void handleInput(Input input) {
 		// Check vertical movement.
 		if (input.isKeyDown(Input.KEY_W)) {
 			velocity.y -= acceleration.y;
@@ -173,8 +172,8 @@ public class MagneticCrane extends Entity implements Usable {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		rail.draw(position.x, position.y);
-		arm.draw(armPos.x, armPos.y);
-		slider.draw(sliderPos.x, sliderPos.y);
+		rail.draw(renderPosition.getX(), renderPosition.getY());
+		arm.draw(renderPosition.getX() + armPos.x - position.getX(), renderPosition.getY() + armPos.y - position.getY());
+		slider.draw(renderPosition.getX() + sliderPos.x - position.getX(), renderPosition.getY() + sliderPos.y - position.getY());
 	}
 }
