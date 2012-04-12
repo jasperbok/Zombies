@@ -50,46 +50,35 @@ public class Player extends Mob {
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		SpriteSheet sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
+		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_girl2.png", 75, 150);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
-			walkRightAnimation.addFrame(sprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
+			walkRightAnimation.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
 		}
 		walkLeftAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
-			walkLeftAnimation.addFrame(sprites.getSprite(i, 1), 150);
+			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 0), 150);
 		}
-		walkRightAnimation = new Animation();
-		for (int i = 0; i < 4; i++) {
-			walkRightAnimation.addFrame(walkSprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
-		}
-		walkLeftAnimation = new Animation();
-		for (int i = 0; i < 4; i++) {
-			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 1), 150);
-		}
-		//walkLeftAnimation = new Animation();
-		//walkLeftAnimation.addFrame(new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166).getSprite(0, 0), 5000);
 		idleAnimation = new Animation();
-		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
+		idleAnimation.addFrame(idleSprites.getSprite(0, 0), 500);
 		climbAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
 			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
 		}
 		currentAnimation = idleAnimation;
-		//walkRightAnimation = walkLeftAnimation;
-		//currentAnimation = walkLeftAnimation;
 	}
 	
 	protected void updateBoundingBox() {
 		this.boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 	}
 	
-	public void update(Input input, int delta) {		
+	public void update(Input input, int delta) {
 		updateBoundingBox();
 		
-		if (isClimbing && level.env.canClimbHere(boundingBox)) {
+		if (isClimbing && level.env.isOnClimableSurface(this)) {
 			velocity.set(new Vector2f(velocity.getX(), 0));
-		} else if (!level.env.canClimbHere(boundingBox)) {
+		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
 		}
 
@@ -115,7 +104,7 @@ public class Player extends Mob {
 		if (isOnGround || isClimbing) velocity.y = 0;
 		*/
 		if (playerControlled) {
-			// Check player input.
+			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {
 				moveRight();
 			}
@@ -135,13 +124,13 @@ public class Player extends Mob {
 				addBloodMark();
 			}
 			if (input.isKeyDown(Input.KEY_W)){
-				if (level.env.canClimbHere(boundingBox)) {
+				if (level.env.isOnClimableSurface(this)) {
 					isClimbing = true;
 					velocity.set(velocity.getX(), -climbSpeed);
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
-				if (level.env.canClimbHere(boundingBox)) {
+				if (level.env.isOnClimableSurface(this)) {
 					isClimbing = true;
 					velocity.set(velocity.getX(), climbSpeed);
 				}
@@ -152,10 +141,9 @@ public class Player extends Mob {
 			if (input.isMousePressed(0)) {
 				level.fl.switchOnOff();
 			}
-			
-			if (isClimbing) currentAnimation = climbAnimation;
 		}
-		/*
+		
+		// Decide what animation should be played.
 		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
 			currentAnimation = idleAnimation;
 		}
@@ -167,7 +155,7 @@ public class Player extends Mob {
 			} else if (currentAnimation.isStopped()) {
 				currentAnimation.start();
 			}
-		}*/
+		}
 	}
 	
 	private void moveRight() {

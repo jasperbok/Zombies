@@ -264,15 +264,6 @@ public class TileEnvironment {
 		return null;
 	}
 	
-	public boolean canClimbHere(Rectangle bbox) {
-		/*int centerX = (int)Math.floor(bbox.getCenterX() / tileWidth);
-		int topY = (int)Math.floor((bbox.getMinY() + 10) / tileHeight); // + 10 so part of the box must overlap.
-		int bottomY = (int)Math.floor((bbox.getMaxY() - 10) / tileHeight); // - 10... same reason.
-		
-		return tiles[centerX][topY].isClimable || tiles[centerX][bottomY].isClimable;*/
-		return false;
-	}
-	
 	private void updateEntityList() {
 		allEntities = new ArrayList<Entity>();
 		allEntities.addAll(entities);

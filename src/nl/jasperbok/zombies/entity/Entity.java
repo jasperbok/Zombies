@@ -19,6 +19,10 @@ public abstract class Entity {
 	public boolean playerControlled = false;
 	public boolean gravityAffected = true;
 	
+	public boolean isFalling = false;
+	public boolean isOnGround = true;
+	public boolean isFacingLeft = false;
+	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
 	
 	public void init(Level level) {

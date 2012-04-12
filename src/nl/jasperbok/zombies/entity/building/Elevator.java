@@ -16,7 +16,7 @@ import nl.jasperbok.zombies.math.Vector2;
 
 public class Elevator extends Entity implements Usable {
 	private Vector2 velocity = new Vector2(0.0f, 0.0f);
-	private float moveSpeed = 0.1f;
+	private float moveSpeed = 1f;
 	private boolean moving = false;
 	private boolean goingUp = true;
 	private Entity user;
@@ -72,12 +72,10 @@ public class Elevator extends Entity implements Usable {
 		goingUp = top;
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(Input input, int delta) {
 		useBox.setLocation(position.x, position.y - 50);
 		
-		if (playerControlled) {
-			Input input = container.getInput();
-			
+		if (playerControlled) {			
 			if (input.isKeyDown(Input.KEY_W)) {
 				position.y -= moveSpeed;
 				user.position.y -= moveSpeed;
@@ -89,6 +87,7 @@ public class Elevator extends Entity implements Usable {
 				if (position.y >= minHeight) position.y = minHeight;
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
+				System.out.println("User wants to stop controlling this elevator!");
 				playerControlled = false;
 				user.playerControlled = true;
 				user = null;
