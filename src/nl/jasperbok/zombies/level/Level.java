@@ -30,7 +30,7 @@ public class Level {
 	public TileEnvironment env;
 	
 	// Lighting
-	private boolean doLighting = true;
+	private boolean doLighting = false;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
