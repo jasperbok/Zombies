@@ -5,13 +5,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public abstract class Entity extends RenderObject {
 	public Level level;
-	public Vector2 position = new Vector2(0.0f, 0.0f);
 	public Vector2 velocity = new Vector2(0.0f, 0.0f);
 	public Vector2 acceleration = new Vector2(0f, 0f);
 	public Vector2 maxVelocity = new Vector2(0f, 0f);

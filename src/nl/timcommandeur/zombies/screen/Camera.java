@@ -15,7 +15,7 @@ import nl.jasperbok.zombies.math.Vector2;
 public class Camera {
 	public int width;
 	public int height;
-	public Vector2 position = new Vector2(0.0f, 0.0f);
+	public Vector2f position = new Vector2f(0.0f, 0.0f);
 	
 	public static Camera instance;
 	
