@@ -178,6 +178,6 @@ public class Player extends Mob {
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw((int)position.x, (int)position.y);
+		currentAnimation.draw((int)renderPosition.getX(), (int)renderPosition.getY());
 	}
 }
