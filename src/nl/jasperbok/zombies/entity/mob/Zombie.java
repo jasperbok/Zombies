@@ -81,7 +81,7 @@ public class Zombie extends Mob {
 	}*/
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw(position.x, position.y);
+		currentAnimation.draw(renderPosition.getX(), renderPosition.getY());
 	}
 	
 	public void zombieDie() {

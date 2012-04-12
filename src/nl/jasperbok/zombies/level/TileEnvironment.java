@@ -10,6 +10,7 @@ import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.mob.MobDirector;
+import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -246,7 +247,8 @@ public class TileEnvironment {
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// Render the background and the environment.
-		map.render(0, 0, 0);
+		//map.render(0, 0, 0);
+		map.render(0 - (int)Camera.getInstance().position.getX(), 0 - (int)Camera.getInstance().position.getY(), 0);
 		//map.render(0, 0, 1);
 		
 		// Render all the attractors.
