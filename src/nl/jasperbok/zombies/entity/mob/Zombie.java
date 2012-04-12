@@ -6,6 +6,7 @@ import nl.jasperbok.zombies.entity.object.Crate;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -40,7 +41,7 @@ public class Zombie extends Mob {
 		boundingBox = new Rectangle(0, 0, 4, 4);
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(Input input, int delta) {
 		//position.add(velocity);
 		
 		//String moveStatus = level.movingStatus(this);
@@ -57,12 +58,11 @@ public class Zombie extends Mob {
 			currentAnimation = idleAnimation;
 		}
 		
+		System.out.println("should walk now");
+		
 		/*if (Math.abs(velocity.x) > 5) {
 			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
 		}//*/
-		
-		System.out.println("zombie-vx: " + velocity.x);
-		System.out.println("zombie-vy: " + velocity.y);
 		
 		updateBoundingBox();
 		
