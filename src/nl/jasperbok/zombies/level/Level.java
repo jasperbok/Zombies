@@ -57,6 +57,7 @@ public class Level {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		camera.update(container, delta);
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
 		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
@@ -65,9 +66,6 @@ public class Level {
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 		
 		playerLight.setPosition(env.getPlayer().position.x + env.getPlayer().boundingBox.getWidth() / 2, env.getPlayer().position.y + env.getPlayer().boundingBox.getHeight() / 2);
-		
-		camera.position.x = env.getPlayer().position.x;
-		camera.position.y = env.getPlayer().position.y;
 		
 		/*System.out.println("player.position.y: " + env.getPlayer().position.y);
 		System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);

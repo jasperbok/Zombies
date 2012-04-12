@@ -50,6 +50,7 @@ public class WoodenCrate extends Entity implements Usable {
 	@Override
 	public void use(Entity user) {
 		this.user = user;
+		System.out.println("use");
 	}
 
 	@Override
