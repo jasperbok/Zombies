@@ -8,6 +8,8 @@ import java.util.Map;
 
 import nl.jasperbok.zombies.entity.Entity;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -77,7 +79,7 @@ public class MobDirector {
 	/**
 	 * Executes all logic to make mobs behave accordingly.
 	 */
-	public void moveMobs() {
+	public void moveMobs(GameContainer container) {
 		
 		// I think it will work without this bit.
 		// So check it out!!!
@@ -104,6 +106,13 @@ public class MobDirector {
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
 				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange) {
 					v = new Vector2f(0, 0);
+					// End the game
+					try {
+						container.reinit();
+					} catch (SlickException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			

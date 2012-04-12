@@ -83,7 +83,7 @@ public class TileEnvironment {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
-		mobDirector.moveMobs();
+		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();

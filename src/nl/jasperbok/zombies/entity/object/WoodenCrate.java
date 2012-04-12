@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
+import nl.jasperbok.zombies.entity.component.DraggableComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
@@ -30,6 +31,7 @@ public class WoodenCrate extends Entity implements Usable {
 		this.level = level;
 		updateBoundingBox();
 		components.add(new GravityComponent(this));
+		components.add(new DraggableComponent(this));
 	}
 	
 	protected void updateBoundingBox() {

@@ -42,6 +42,11 @@ public class Level1 extends Level {
 		//env.addEntity(crane);
 		//env.addMob(zombie);
 		
+		for (int i = 0; i < 5; i++) {
+			env.addMob(new Zombie((float)(300 + i * 40), 80f));
+		}
+		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
+		
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		bgMusic.loop();
 		

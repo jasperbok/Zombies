@@ -26,7 +26,7 @@ public class Zombie extends Mob {
 		this.velocity.x = 0;
 		this.velocity.y = 0;
 
-		sprites = new SpriteSheet("data/sprites/entity/zombiesheet.png", 33, 75);
+		sprites = new SpriteSheet("data/sprites/entity/zombie_walk.png", 102, 150);
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
 		walkLeftAnimation = new Animation();
