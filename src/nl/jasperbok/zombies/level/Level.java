@@ -30,7 +30,7 @@ public class Level {
 	public TileEnvironment env;
 	
 	// Lighting
-	private boolean doLighting = false;
+	private boolean doLighting = true;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
@@ -56,7 +56,7 @@ public class Level {
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
 		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
-		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
+		fl.pointToMouse(container);
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 		
