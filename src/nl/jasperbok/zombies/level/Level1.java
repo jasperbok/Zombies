@@ -11,6 +11,8 @@ import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
+import nl.jasperbok.zombies.entity.object.WoodenCrate;
+import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
 
 public class Level1 extends Level {
@@ -40,6 +42,13 @@ public class Level1 extends Level {
 
 		//env.addEntity(crate);
 		//env.addMob(zombie);
+		
+		env.addEntity(new WoodenCrate(this, 200, 320));
+		
+		for (int i = 0; i < 5; i++) {
+			env.addMob(new Zombie((float)(700 + i * 40), 80f));
+		}
+		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		bgMusic.loop();
