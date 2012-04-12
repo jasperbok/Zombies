@@ -58,6 +58,9 @@ public class TileEnvironment {
 		this.gravity = gravity;
 		this.level = level;
 		
+		CollisionHelper.setTileWidth(tileWidth);
+		CollisionHelper.setTileHeight(tileHeight);
+		
 		// Load them tiles.
 		MapLoader loader = new MapLoader();
 		this.tiles = loader.loadTiles(map);
@@ -164,7 +167,12 @@ public class TileEnvironment {
 	public boolean isOnClimableSurface(Entity ent) {
 		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 		int relativeY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
-		return tiles[relativeX][relativeY].isClimable;
+		try {
+			return tiles[relativeX][relativeY].isClimable;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("isOnClimableSurface() is invoked on an entity that's outside the level bounds.");
+		}
+		return false;
 	}
 	
 	private void checkForTileCollisions() {
