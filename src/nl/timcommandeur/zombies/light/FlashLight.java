@@ -104,7 +104,7 @@ public class FlashLight {
 	}
 	
 	public void init() {
-		createLights(new Color(170, 170, 170));
+		createLights(new Color(100, 100, 100));
 		createHulls();
 	}
 	
@@ -128,7 +128,7 @@ public class FlashLight {
 	}
 	
 	public void createLights(Color c) {
-		LightSource light = new LightSource(new Vector2f(0, 0), 400, 0, c, camera);
+		LightSource light = new LightSource(new Vector2f(0, 0), 600, 0, c, camera);
 		lights.add(light);
 		flashLightLight = light;
 	}

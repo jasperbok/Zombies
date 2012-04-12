@@ -38,6 +38,7 @@ public class Level {
     protected boolean addLight=true;
 	protected List<ShadowHull> cHulls;
 	public FlashLight fl;
+	public LightSource playerLight;
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
@@ -49,7 +50,10 @@ public class Level {
         fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
-		lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
+		//lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
+		
+		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(20, 20, 20), camera);
+		lights.add(playerLight);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
@@ -59,6 +63,8 @@ public class Level {
 		fl.pointToMouse(container);
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
+		
+		playerLight.setPosition(env.getPlayer().position.x + env.getPlayer().boundingBox.getWidth() / 2, env.getPlayer().position.y + env.getPlayer().boundingBox.getHeight() / 2);
 		
 		camera.position.x = env.getPlayer().position.x;
 		camera.position.y = env.getPlayer().position.y;
