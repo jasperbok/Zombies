@@ -60,8 +60,13 @@ public class Level {
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 		
-		camera.position.x = env.getPlayer().position.x - 600;
-		camera.position.y = env.getPlayer().position.y - 600;
+		camera.position.x = env.getPlayer().position.x;
+		camera.position.y = env.getPlayer().position.y;
+		
+		System.out.println("player.position.y: " + env.getPlayer().position.y);
+		System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);
+		System.out.println("camera.position.y: " + camera.position.y);
+		
 		env.update(container, delta);
 	}
 	
