@@ -6,9 +6,12 @@ public class MobAttractor extends Entity {
 	public Entity object;
 	public int power = 0;
 	
-	public MobAttractor(Entity object, int power) {
+	protected boolean triggerAgression = false;
+	
+	public MobAttractor(Entity object, int power, boolean triggerAgression) {
 		this.object = object;
 		this.power = power;
+		this.triggerAgression = triggerAgression;
 	}
 	
 	public void update() {

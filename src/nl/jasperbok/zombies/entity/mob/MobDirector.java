@@ -1,7 +1,10 @@
 package nl.jasperbok.zombies.entity.mob;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nl.jasperbok.zombies.entity.Entity;
 
@@ -26,9 +29,15 @@ public class MobDirector {
 	
 	private Audio wavEffect;
 	
+	private ArrayList<Mob> closedForDistanceChecking;
+	private int distanceCheckingTimeoutCeil = 0;
+	private int distanceCheckingTimer = 10;
+	
+	private HashMap<Mob, List> trackingMobs; 
+	
 	public MobDirector() {
 		try {
-			initSound();
+			init();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,7 +48,7 @@ public class MobDirector {
 	
 	public MobDirector(List<Mob> mobs) {
 		try {
-			initSound();
+			init();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +57,8 @@ public class MobDirector {
 		attractors = new LoopingList<MobAttractor>();
 	}
 	
-	public void initSound() throws IOException {
+	public void init() throws IOException {
+		trackingMobs = new HashMap<Mob, List>();
 		wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/sfx/zombiegroan1.wav"));
 	}
 	
@@ -59,38 +69,90 @@ public class MobDirector {
 	 */
 	public void refresh(List<Mob> mobs) {
 		this.mobs = mobs;
+		for (Mob mob : mobs) {
+			updateTrackingMobs(mob);
+		}
 	}
 	
 	/**
 	 * Executes all logic to make mobs behave accordingly.
 	 */
 	public void moveMobs() {
-		for (MobAttractor attractor : attractors) {
-			attractor.update();
-		}
+		
+		// I think it will work without this bit.
+		// So check it out!!!
+		//---
+			for (MobAttractor attractor : attractors) {
+				attractor.update();
+			}
+		//---
+		
+		closedForDistanceChecking = new ArrayList<Mob>();
 		
 		for (Mob mob : mobs) {
 			Vector2f v = new Vector2f();
-			//v = v.add(keepDistanceBetweenAllMobs(mob));
+			if (closedForDistanceChecking.contains(mob) != true && distanceCheckingTimer == 0) {
+				v = v.add(keepDistanceBetweenAllMobs(mob));
+				//closedForDistanceChecking.add(mob);
+				distanceCheckingTimer = distanceCheckingTimeoutCeil;
+			} else {
+				distanceCheckingTimer--;
+			}
+			
 			for (MobAttractor attractor : attractors) {
 				attractor.update();
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
+				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange) {
+					v = new Vector2f(0, 0);
+				}
 			}
+			
 			mob.velocity.x += v.x;
 			mob.velocity.y += v.y;
-			
-			//System.out.println("v.x" + mob.velocity.x);
-			
-			if (Math.abs(mob.velocity.x) > 3) {
-				mob.velocity.x = mob.velocity.x / Math.abs(mob.velocity.x) * 3;
-			}
-			
-			//System.out.println("vx" + mob.velocity.x);
 			
 			mob.velocity.x /= 50;
 			
 			//System.out.println("v.x" + mob.velocity.x);
 		}
+	}
+	
+	public void updateTrackingMobs(Mob mob) {
+		Mob leftMob = null;
+		Mob rightMob = null;
+		
+		// The distance of the closest mob.
+		float leftMobXDis = 0;
+		float rightMobXDis = 0;
+		
+		// Check which mobs are closest on each side.
+		for (Mob mob2 : mobs) {
+			if (mob2 != mob) {
+				float distance = Math.abs(mob.position.x - mob2.position.x);
+				if (mob.position.x < mob2.position.x) {
+					// mob2 is left of mob
+					if (leftMob == null || distance < leftMobXDis)
+					{
+						leftMob = mob2;
+						leftMobXDis = distance;
+					}
+				} else {
+					// mob2 is right of mob
+					if (rightMob == null || distance < rightMobXDis)
+					{
+						rightMob = mob2;
+						rightMobXDis = distance;
+					}
+				}
+			}
+		}
+		
+		// Create the list the that the mob should keep track of.
+		List<Mob> mobList = new LoopingList<Mob>();
+		if (leftMob != null) mobList.add(leftMob);
+		if (rightMob != null) mobList.add(rightMob);
+		
+		// Update the tracking list
+		trackingMobs.put(mob, mobList);
 	}
 	
 	/**
@@ -100,9 +162,15 @@ public class MobDirector {
 	protected Vector2f keepDistanceBetweenAllMobs(Mob mob1) {
 		Vector2f v = new Vector2f(0, 0);
 		
-		for (Mob mob2 : mobs) {
-			if (mobs.indexOf(mob1) != mobs.indexOf(mob2)) {
-				v = v.add(keepDistanceBetweenMobs(mob1, mob2));
+		List<Mob> mobList = trackingMobs.get(mob1);
+		
+		if (mobList != null && mobList.size() > 0) {
+			for (Mob mob2 : mobList) {
+				if (closedForDistanceChecking.contains(mob2) != true) {
+					if (mobs.indexOf(mob1) != mobs.indexOf(mob2)) {
+						v = v.add(keepDistanceBetweenMobs(mob1, mob2));
+					}
+				}
 			}
 		}
 		
@@ -121,11 +189,9 @@ public class MobDirector {
 	protected Vector2f keepDistanceBetweenMobs(Mob mob1, Mob mob2) {
 		Vector2f v = new Vector2f(0, 0);
 		
-		float mob1Radius = mob1.boundingBox.getWidth() / 2;
-		float mob2Radius = mob2.boundingBox.getWidth() / 2;
+		float mob1Radius = mob1.boundingBox.getWidth() / 4;
+		float mob2Radius = mob2.boundingBox.getWidth() / 4;
 		
-		System.out.println("mob1.x: " + (mob1.position.x));
-		System.out.println("mob1.y: " + (mob1.position.y));
 		//System.out.println("mob2.x: " + (mob2.position.x));
 		//System.out.println("sum: " + (mob1.position.x - mob2.position.x));
 		if (Math.abs(mob1.position.x - mob2.position.x) < mob2Radius) {
@@ -164,8 +230,8 @@ public class MobDirector {
 	 * @param object
 	 * @param power
 	 */
-	public void addAttractor(Entity object, int power) {
-		MobAttractor attractor = new MobAttractor(object, power);
+	public void addAttractor(Entity object, int power, boolean triggerAgression) {
+		MobAttractor attractor = new MobAttractor(object, power, triggerAgression);
 		attractors.add(attractor);
 	}
 	

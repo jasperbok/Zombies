@@ -224,7 +224,6 @@ public class TileEnvironment {
 		// Render all the attractors.
 		for (Entity att: attractors) {
 			att.render(container, g);
-			System.out.println("Rendering attractor");
 		}
 		
 		// Render all the entities.

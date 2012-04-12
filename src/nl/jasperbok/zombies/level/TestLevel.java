@@ -18,10 +18,10 @@ public class TestLevel extends Level {
 		super("proto_lvl");
 		env.setPlayer(new Player(100, 200, this));
 		//env.addEntity(new Elevator(this, 200, 620));
-		for (int i = 0; i < 10; i++) {
-			env.addMob(new Zombie((float)(110 + i), 80f));
+		for (int i = 0; i < 5; i++) {
+			env.addMob(new Zombie((float)(100 + i * 40), 80f));
 		}
-		env.mobDirector.addAttractor(env.getPlayer(), 1);
+		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
 		lights.add(new LightSource(new Vec2(300, 300), 600, 1.0f, new Color(255, 255, 255)));
 	}
