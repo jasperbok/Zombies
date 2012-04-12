@@ -12,6 +12,8 @@ import org.newdawn.slick.geom.Vector2f;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
+import nl.jasperbok.zombies.entity.component.Component;
+import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.state.IdleState;
 
@@ -32,6 +34,8 @@ public class Player extends Mob {
 	}
 	
 	public void init() throws SlickException {
+		this.addComponent(new GravityComponent(0.005f, this));
+		gravityAffected = false;
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
@@ -62,6 +66,8 @@ public class Player extends Mob {
 	
 	public void update(Input input, int delta) {
 		updateBoundingBox();
+		
+		this.isOnGround = level.env.isOnGround(this, false);
 		
 		if (isClimbing && level.env.isOnClimableSurface(this)) {
 			velocity.set(new Vector2f(velocity.getX(), 0));
@@ -143,6 +149,8 @@ public class Player extends Mob {
 				currentAnimation.start();
 			}
 		}
+		//System.out.println(isOnGround);
+		super.update(input, delta);
 	}
 	
 	private void moveRight() {

@@ -24,7 +24,6 @@ public class RenderObject {
 		if (!staticPosition) {
 			renderPosition.x = (position.x - camera.position.x) + Camera.center.x;
 			renderPosition.y = (position.y - camera.position.y) + Camera.center.y;
-			System.out.println("y: " + this.position.y);
 		}
 	}
 }

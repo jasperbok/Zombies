@@ -89,9 +89,35 @@
  <tileset firstgid="641" name="flashlightTile" tilewidth="80" tileheight="80">
   <image source="src/Flashlight.png" width="80" height="80"/>
  </tileset>
+ <tileset firstgid="642" name="Blockade" tilewidth="80" tileheight="80">
+  <image source="src/blockade.png" width="480" height="320"/>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="666" name="VentilationShaft" tilewidth="80" tileheight="80">
+  <image source="src/ventilationShaftTiles.png" width="240" height="240"/>
+ </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UN05DQQAE0I/hAgQbkwoyBlOQc0HOBdHEgpwLcj4Ch+CmPAlbcongCzde6WmrndE0WxAEQYTCX94fWX76LqOIaPD/5zN9x0nksD8Z5Pfn9+euP7//e3+xj6mEUsqIEqOcOBVUUkU1NZFw+jP7a+XVUU8DjTTRTAsJWmkjSXtI/Zn9HfI66aKbHnrpo58BBhlimJGQ94/KG2OcCSaZYpoZZpljngUWQ+5fkrfMCqussU6KDTbZYpsddkPqD9L9e/L2OeCQI4454ZQzzrngkquQ+6/l3XDLHfc88MgTz7zwyhvvf+zPPrEc+wLuVluFAAkAAA==
+   H4sIAAAAAAAAC+3S6wnCMBiF4VhdQesKok6gTqAu5f1+v+ufuoPdwU7lW2gkhIJpEYvQwEO+/ginp01GCGEhG3PXmZyTcsiL3y8n2IsoJZhfEWn/tD/PVjJk/6Ty/6H/BdeYbqb9A/cQtjKX/TOoWmb3zP5w/979NX6WG7CVuUZuHY0v5cv+D42f5QVsZW6S20IbHXTRQx8DDLX3MsmXfZ8KT4T/C9WIrDEmmGKGueF3cZRZ7etGsCBriRXW2GAbI1/2jWpH1h4HHHHC2TBfXYWEvQAnrCb0AAkAAA==
   </data>
  </layer>
 </map>

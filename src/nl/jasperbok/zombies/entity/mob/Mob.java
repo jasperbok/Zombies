@@ -24,8 +24,6 @@ public abstract class Mob extends Entity {
 	public boolean isOnGround = false;
 	public boolean wasFalling = false;
 	public boolean isFalling = false;
-	public boolean wasClimbing = false;
-	public boolean isClimbing = false;
 	
 	public EntityState currentState;
 	

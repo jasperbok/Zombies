@@ -1,19 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
- <tileset firstgid="1" name="LevelSprites" tilewidth="80" tileheight="80">
-  <image source="src/tileSheet.png" width="1600" height="1600"/>
- </tileset>
- <tileset firstgid="401" name="CloningMachine" tilewidth="80" tileheight="80">
-  <image source="src/cloningMachine.png" width="1080" height="960"/>
+ <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
+  <image source="src/tiles.png" width="1600" height="1600"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="climbable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="climbable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="climbable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NkYGBgAmLmAaBZgFiUgX5AC4i1kfgSQKw5gPbrMIz6f9T/A2f/SPL/Liz209P/2OwfSf4/h8X+wZD+6QWwhb8UHe0Hhb8dENsjienR0X6YG84j8Z2AWAyIxQeQBgB/T690AAkAAA==
-  </data>
- </layer>
- <layer name="Tile Layer 2" width="32" height="18">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2SXQrCMBCE175oWn8PoDlDmvN7MZ8cYReGsKVqUkHowEf2KTP7I7Jq1X8pgB4Myi88pogL+V81A+fgOip5If+kGTjHq76Rb5b5OdVmsBxB65F8vXmU1Mj6T/Sav7ef7FAj638s6iz+fspdtPBnP6uj/l/uh71bzJ9zsD9nYPgWWsyfVe7fMjCt7t5TEn8OzLt3f//C/7HxvafytNa2E9mBAHowgD04gCM4gTO4dJ/9+wSVk/LcAAkAAA==
+   H4sIAAAAAAAAC2NkYGBgAmJmOtIwzALEogz0BwuhtAQQaw6g/ToMo/4f9f/A2T/q/1H/j2T/6wyA3cj2DxQYaPuRgdgAYwCsL+6ZAAkAAA==
   </data>
  </layer>
 </map>

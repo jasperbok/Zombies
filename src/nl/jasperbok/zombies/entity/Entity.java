@@ -1,5 +1,7 @@
 package nl.jasperbok.zombies.entity;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -7,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
@@ -24,12 +27,31 @@ public abstract class Entity extends RenderObject {
 	public boolean isFalling = false;
 	public boolean isOnGround = true;
 	public boolean isFacingLeft = false;
+	public boolean wasClimbing = false;
+	public boolean isClimbing = false;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
+	
+	protected ArrayList<Component> components;
 	
 	public void init(Level level) {
 		this.level = level;
 		this.boundingBox = new Rectangle(0, 0, 0, 0);
+		components = new ArrayList<Component>();
+	}
+	
+	public void addComponent(Component component) {
+		component.setOwner(this);
+		components.add(component);
+	}
+	
+	public Component getComponent(int id) {
+		for (Component comp: components) {
+			if (comp.getId() == id) {
+				return comp;
+			}
+		}
+		return null;
 	}
 	
 	public void setPosition(float x, float y) {
@@ -48,6 +70,8 @@ public abstract class Entity extends RenderObject {
 	}
 	
 	public void update(Input input, int delta) {
-		
+		for (Component comp: components) {
+			comp.update(input, delta);
+		}
 	}
 }
