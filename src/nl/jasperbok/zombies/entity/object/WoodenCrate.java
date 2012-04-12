@@ -25,26 +25,29 @@ public class WoodenCrate extends Entity implements Usable {
 	 * @throws SlickException
 	 */
 	public WoodenCrate(Level level, int x, int y) throws SlickException {
+		super.init(level);
 		this.gravityAffected = false;
 		setPosition(x, y);
 		image = new Image("data/sprites/entity/object/wooden_crate.png", new Color(255, 255, 255));
 		this.level = level;
-		updateBoundingBox();
+		this.boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
 		components.add(new GravityComponent(this));
 		components.add(new DraggableComponent(this));
 	}
 	
 	protected void updateBoundingBox() {
-		this.boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
+		//this.boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
+		this.boundingBox.setBounds(0, 0, 0, 0);
 	}
 
 	public void update(Input input, GameContainer container, int delta) throws SlickException {
+		this.isOnGround = level.env.isOnGround(this, false);
 		updateBoundingBox();
 		super.update(input, delta);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		image.draw(position.x, position.y);
+		image.draw(renderPosition.x, renderPosition.y);
 	}
 
 	@Override
