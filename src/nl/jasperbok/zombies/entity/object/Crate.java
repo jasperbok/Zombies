@@ -63,6 +63,6 @@ public class Crate extends Entity {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		image.draw(drawPosition.getX(), drawPosition.getY());
+		image.draw(renderPosition.getX(), renderPosition.getY());
 	}
 }
