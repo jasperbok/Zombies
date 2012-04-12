@@ -43,7 +43,7 @@ public class Level1 extends Level {
 		//env.addEntity(crate);
 		//env.addMob(zombie);
 		
-		env.addEntity(new WoodenCrate(this, 200, 320));
+		env.addEntity(new WoodenCrate(this, 2160, 660));
 		
 		for (int i = 0; i < 5; i++) {
 			env.addMob(new Zombie((float)(700 + i * 40), 80f));

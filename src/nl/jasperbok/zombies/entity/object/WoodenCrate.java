@@ -1,6 +1,5 @@
 package nl.jasperbok.zombies.entity.object;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,7 +12,6 @@ import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.component.DraggableComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
-import nl.jasperbok.zombies.math.Vector2;
 
 public class WoodenCrate extends Entity implements Usable {
 	private Image image;
@@ -27,20 +25,19 @@ public class WoodenCrate extends Entity implements Usable {
 	public WoodenCrate(Level level, int x, int y) throws SlickException {
 		super.init(level);
 		this.gravityAffected = false;
-		setPosition(x, y);
-		image = new Image("data/sprites/entity/object/wooden_crate.png", new Color(255, 255, 255));
+		this.setPosition(x, y);
+		this.image = new Image("data/sprites/entity/object/wooden_crate.png");
 		this.level = level;
-		this.boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
-		components.add(new GravityComponent(this));
-		components.add(new DraggableComponent(this));
+		this.boundingBox = new Rectangle(this.position.getX(), this.position.getY(), 80, 80);
+		this.addComponent(new GravityComponent(this));
+		this.addComponent(new DraggableComponent(this));
 	}
 	
 	protected void updateBoundingBox() {
-		//this.boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
-		this.boundingBox.setBounds(0, 0, 0, 0);
+		this.boundingBox.setBounds(this.position.getX(), this.position.getY(), 80, 80);
 	}
 
-	public void update(Input input, GameContainer container, int delta) throws SlickException {
+	public void update(Input input, int delta){
 		this.isOnGround = level.env.isOnGround(this, false);
 		updateBoundingBox();
 		super.update(input, delta);
