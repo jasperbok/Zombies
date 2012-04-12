@@ -9,6 +9,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 import LightTest.Vec2;
 
@@ -23,7 +24,7 @@ public class TestLevel extends Level {
 		}
 		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
-		lights.add(new LightSource(new Vec2(300, 300), 600, 1.0f, new Color(255, 255, 255)));
+		lights.add(new LightSource(new Vector2f(300, 300), 600, 1.0f, new Color(255, 255, 255), camera));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
