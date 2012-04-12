@@ -9,12 +9,11 @@ public class IdleState implements EntityState {
 	private static IdleState instance = null;
 
 	public void enterState(Mob mob) {
-		
+		mob.currentAnimation = mob.idleAnimation;
 	}
 
 	public void update(Input input, Mob mob) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 	
 	public static IdleState getInstance() {

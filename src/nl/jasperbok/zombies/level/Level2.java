@@ -17,17 +17,14 @@ import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
 
 public class Level2 extends Level {
-	public Elevator elevator;
-	public MagneticCrane crane;
-	public FlashLight[] craneLights;
-	public Zombie zombie;
-	public Crate crate;
 	
 	private Music bgMusic;
 
 	public Level2() throws SlickException {
 		super("level2");
-		env.setPlayer(new Player(100, 0, this));
+		Player player = new Player(100, this);
+		player.setPosition(480, 0);
+		env.setPlayer(player);
 		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
 		bgMusic.loop();
 	}

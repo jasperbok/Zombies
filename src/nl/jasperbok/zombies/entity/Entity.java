@@ -13,6 +13,8 @@ public abstract class Entity extends RenderObject {
 	public Level level;
 	public Vector2 position = new Vector2(0.0f, 0.0f);
 	public Vector2 velocity = new Vector2(0.0f, 0.0f);
+	public Vector2 acceleration = new Vector2(0f, 0f);
+	public Vector2 maxVelocity = new Vector2(0f, 0f);
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public boolean isBlocking = true;
 	public boolean isMovable = true;
