@@ -50,7 +50,7 @@ public class LightSource extends Light {
 		if (camera == null) {
 			setPos(new Vec2(position.x, position.y));
 		} else {
-			setPos(new Vec2(position.x + camera.position.x, position.y - camera.position.y));
+			setPos(new Vec2(position.x - camera.position.x, position.y - camera.position.y));
 		}
 	}
 	
