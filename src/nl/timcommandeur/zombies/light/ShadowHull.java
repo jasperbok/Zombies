@@ -69,14 +69,6 @@ public class ShadowHull extends ConvexHull {
 			newPoints.add(new Vec2(Math.round(newPointX), Math.round(newPointY)));
 			
 			//System.out.println(newPointX + " " + newPointY);
-			
-			/*
-				650.0 300.0
-				670.0 300.0
-				670.0 320.0
-				650.0 320.0
-			 */
-			
 		}
 		
 		points = newPoints;

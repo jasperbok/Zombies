@@ -41,24 +41,24 @@ public class Level {
 	
 	public Level(String mapFileName) throws SlickException {
 		env = new TileEnvironment(mapFileName, gravity, this);
-		camera = new Camera();
+		camera = Camera.getInstance();
 		
 		lights = new ArrayList<LightSource>();
         cHulls = new ArrayList<ShadowHull>();
         fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
-		fl = new FlashLight(lights, cHulls, new Vec2(200, 200));
-		lights.add(new LightSource(new Vec2(200, 200), 200, 0, new Color(150, 0, 0)));
+		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
+		lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
-		fl.setPos(new Vec2(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10));
+		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
 		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
-
+		
 		camera.position.x = env.getPlayer().position.x - 600;
 		camera.position.y = env.getPlayer().position.y - 600;
 		env.update(container, delta);

@@ -8,6 +8,7 @@ import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.geom.Vector2f;
 
 import LightTest.LoopingList;
 import LightTest.Vec2;
@@ -26,8 +27,29 @@ public class FlashLight {
 	protected int currentAngle;
 	protected boolean on = true;
 	
-	public Vec2 pos;
+	public Vector2f position;
 	
+	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position) {
+		this(lights, hulls, position, null);
+	}
+	
+	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, Camera camera) {
+		this.lights = lights;
+		this.hulls = hulls;
+		this.camera = camera;
+		
+		init();
+		setPosition(position);
+		rotate(0);
+	}
+	
+	/**
+	 * Old constructor.
+	 * 
+	 * @param lights
+	 * @param hulls
+	 * @param pos
+	 */
 	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vec2 pos) {
 		this.lights = lights;
 		this.hulls = hulls;
@@ -35,8 +57,6 @@ public class FlashLight {
 		init();
 		setPos(pos);
 		rotate(0);
-		
-		switchOnOff();switchOnOff();
 	}
 	
 	public void switchOnOff() {
@@ -62,11 +82,19 @@ public class FlashLight {
 		flashLightLight.setColor(c);
 	}
 	
-	public void setPos(Vec2 newPos) {
-		pos = newPos;
-		flashLightLight.setPos(newPos);
+	public void setPos(Vec2 v) {
+		setPosition(v.x, v.y);
+	}
+	
+	public void setPosition(float x, float y) {
+		setPosition(new Vector2f(x, y));
+	}
+	
+	public void setPosition(Vector2f position) {
+		this.position = position;
+		flashLightLight.setPosition(position);
 		for (ShadowHull hull : flashLightHulls) {
-			hull.setPos(newPos);
+			//hull.setPos(position);
 		}
 		rotate(currentAngle);
 	}
@@ -76,7 +104,6 @@ public class FlashLight {
 	}
 	
 	public void init() {
-		camera = Camera.getInstance();
 		createLights(new Color(170, 170, 170));
 		createHulls();
 	}
@@ -89,7 +116,7 @@ public class FlashLight {
 	}
 	
 	public void point(Vec2 to) {
-		int angle = (int) (vecAngle(new Vec2(to.x - pos.x, to.y - pos.y)) / Math.PI * 180);
+		int angle = (int) (vecAngle(new Vec2(to.x - position.x, to.y - position.y)) / Math.PI * 180);
 		this.rotate(angle);
 	}
 	
@@ -100,7 +127,7 @@ public class FlashLight {
 	}
 	
 	public void createLights(Color c) {
-		LightSource light = new LightSource(new Vec2(0, 0), 400, 0, c);
+		LightSource light = new LightSource(new Vector2f(0, 0), 400, 0, c, camera);
 		lights.add(light);
 		flashLightLight = light;
 	}
