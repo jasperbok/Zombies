@@ -104,7 +104,7 @@ public class FlashLight {
 	}
 	
 	public void init() {
-		createLights(new Color(170, 170, 170));
+		createLights(new Color(100, 100, 100));
 		createHulls();
 	}
 	
@@ -121,13 +121,14 @@ public class FlashLight {
 	}
 	
 	public void pointToMouse(GameContainer container) {
-		Vec2 to = new Vec2(container.getInput().getAbsoluteMouseX() - 600, container.getInput().getAbsoluteMouseY() - 600);
+		Camera camera = Camera.getInstance();
+		Vec2 to = new Vec2(container.getInput().getAbsoluteMouseX() - 600, container.getInput().getAbsoluteMouseY() - 400);
 		int angle = (int) (vecAngle(new Vec2(to.x, to.y)) / Math.PI * 180);
 		this.rotate(angle);
 	}
 	
 	public void createLights(Color c) {
-		LightSource light = new LightSource(new Vector2f(0, 0), 400, 0, c, camera);
+		LightSource light = new LightSource(new Vector2f(0, 0), 600, 0, c, camera);
 		lights.add(light);
 		flashLightLight = light;
 	}
@@ -135,9 +136,9 @@ public class FlashLight {
 	public void createHulls() {
 		// The drawing is orientated so that the flashlight will be pointing from left to right.
 		//
-		Vec2 centerLeft = new Vec2(-1, 30);
-		Vec2 topRight = new Vec2(17, 33);
-		Vec2 bottomRight = new Vec2(17, 27);
+		Vec2 centerLeft = new Vec2(-4, 30);
+		Vec2 topRight = new Vec2(20, 38);
+		Vec2 bottomRight = new Vec2(20, 22);
 		
 		Vec2 points2[] = {centerLeft, bottomRight, centerLeft};
 		ShadowHull hull2 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points2), 0.1f, Color.black);

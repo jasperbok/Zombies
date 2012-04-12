@@ -30,7 +30,7 @@ public class Level {
 	public TileEnvironment env;
 	
 	// Lighting
-	private boolean doLighting = false;
+	private boolean doLighting = true;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
@@ -38,6 +38,7 @@ public class Level {
     protected boolean addLight=true;
 	protected List<ShadowHull> cHulls;
 	public FlashLight fl;
+	public LightSource playerLight;
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
@@ -49,16 +50,21 @@ public class Level {
         fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
 		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
-		lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
+		//lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
+		
+		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(20, 20, 20), camera);
+		lights.add(playerLight);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
 		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
-		fl.point(new Vec2(container.getInput().getAbsoluteMouseX(), container.getInput().getAbsoluteMouseY()));
+		fl.pointToMouse(container);
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
+		
+		playerLight.setPosition(env.getPlayer().position.x + env.getPlayer().boundingBox.getWidth() / 2, env.getPlayer().position.y + env.getPlayer().boundingBox.getHeight() / 2);
 		
 		camera.position.x = env.getPlayer().position.x;
 		camera.position.y = env.getPlayer().position.y;
