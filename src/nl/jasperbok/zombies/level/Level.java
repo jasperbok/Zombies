@@ -30,7 +30,7 @@ public class Level {
 	public TileEnvironment env;
 	
 	// Lighting
-	private boolean doLighting = false;
+	private boolean doLighting = true;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
@@ -63,9 +63,9 @@ public class Level {
 		camera.position.x = env.getPlayer().position.x;
 		camera.position.y = env.getPlayer().position.y;
 		
-		System.out.println("player.position.y: " + env.getPlayer().position.y);
+		/*System.out.println("player.position.y: " + env.getPlayer().position.y);
 		System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);
-		System.out.println("camera.position.y: " + camera.position.y);
+		System.out.println("camera.position.y: " + camera.position.y);*/
 		
 		env.update(container, delta);
 	}

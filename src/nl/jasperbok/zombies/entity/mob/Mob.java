@@ -54,6 +54,17 @@ public abstract class Mob extends Entity {
 		//this.level.remove(this);
 	}
 	
+	/**
+	 * Makes the mob hop with a given velocity.
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void hop(float x, float y) {
+		this.velocity.x = x;
+		this.velocity.y = y;
+	}
+	
 	public void update(int delta) {
 		
 	}
