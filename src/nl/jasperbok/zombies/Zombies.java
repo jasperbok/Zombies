@@ -20,8 +20,7 @@ public class Zombies extends BasicGame {
 	}
 	
 	public void init(GameContainer container) throws SlickException {
-		//level = new Level1();
-		level = new TestLevel();
+		level = new Level2();
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {

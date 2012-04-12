@@ -274,7 +274,7 @@ public class TileEnvironment {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// Render the background and the environment.
 		map.render(0, 0, 0);
-		map.render(0, 0, 1);
+		//map.render(0, 0, 1);
 		
 		// Render all the attractors.
 		for (Entity att: attractors) {
@@ -288,7 +288,7 @@ public class TileEnvironment {
 		}
 		
 		// Render the foreground.
-		map.render(0,  0, 3);
+		//map.render(0,  0, 3);
 		
 		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {

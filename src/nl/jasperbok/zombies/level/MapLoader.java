@@ -17,7 +17,7 @@ public class MapLoader {
 		
 		for (int y = 0; y < mapHeight; y++) {
 			for (int x = 0; x < mapWidth; x++) {
-				int tileId = map.getTileId(x, y, 1);
+				int tileId = map.getTileId(x, y, 0);
 				tiles[x][y] = new Tile(
 					tileId,
 					tileWidth,

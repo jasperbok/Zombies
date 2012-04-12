@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
+ <tileset firstgid="1" name="LevelSprites" tilewidth="80" tileheight="80">
+  <image source="src/tileSheet.png" width="1600" height="1600"/>
+ </tileset>
+ <tileset firstgid="401" name="Boxes" tilewidth="80" tileheight="80">
+  <image source="src/boxes.png" width="1300" height="1200"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Ut04DURQE0MXwAwQHDBRkDAaJnAtMTgU5F+RckPO/c5BliRa00ja+0tGrdkbTbEkQBDFK//H+vr9++6OMeBDdpchE2J8NivuL+6O74v78/nI/pQoqqSJOgiQpqklTQy11sXD6C/vr5TXQSBPNtNBKGxna6SBLZ0j9hf3d8nropY9+BhhkiGFGGGWM8ZD3T8jLMckU08wwyxzzLLDIEssh71+Rt8oa62ywyRbb7LDLHvschNSfDvL7D+UdccwJp5xxzgWXXHHNDbch9XcF+f138u554JEnnnnhlTfe+eCTr5D6cyRIRvh+A1U2rj0ACQAA
+  </data>
+ </layer>
+</map>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
+ <tileset firstgid="1" name="LevelSprites" tilewidth="80" tileheight="80">
+  <image source="src/tileSheet.png" width="1600" height="1600"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="18">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgAmJmOtBZQJyNxGcBYlEG+oE6IK5H4ksAsSYd7Z8ExJOR+DoMo/4f9T/9wEj2/y6GgfU/yP6R7P9zDIMz/dMLYIt/KTraDwr/ZUC8HElMj472w9xwHonvBMRiQCw+gDQAbTk6kgAJAAA=
+  </data>
+ </layer>
+</map>
