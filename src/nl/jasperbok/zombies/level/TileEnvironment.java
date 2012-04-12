@@ -285,7 +285,7 @@ public class TileEnvironment {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// Render the background and the environment.
 		//map.render(0, 0, 0);
-		map.render(0 - (int)Camera.getInstance().position.getX(), 0 - (int)Camera.getInstance().position.getY(), 0);
+		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, 0);
 		//map.render(0, 0, 1);
 		
 		// Render all the attractors.
