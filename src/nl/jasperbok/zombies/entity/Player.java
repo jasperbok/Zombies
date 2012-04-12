@@ -17,14 +17,12 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 public class Player extends Mob {
 	private int bandages;
 
-	private Vector2 gravity = new Vector2(0.0f, -0.002f);
 	private float climbSpeed = 0.001f;
-	private float walkAcceleration = 0.0006f;
-	private float maxWalkSpeed = 0.05f;
-	private float maxFallSpeed = 0.5f;
+	private float walkAcceleration = 0.06f;
+	private float maxWalkSpeed = 0.2f;
+	private float maxFallSpeed = 2f;
 	
-	// Spritesheet and animations
-	private SpriteSheet sprites;
+	// Animations
 	private Animation idleAnimation;
 	private Animation walkRightAnimation;
 	private Animation walkLeftAnimation;
@@ -51,38 +49,36 @@ public class Player extends Mob {
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
-		sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
+		SpriteSheet sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
+		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
+		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_girl2.png", 75, 150);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
-			walkRightAnimation.addFrame(sprites.getSprite(i, 1).getFlippedCopy(true, false), 150);
+			walkRightAnimation.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
 		}
 		walkLeftAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
-			walkLeftAnimation.addFrame(sprites.getSprite(i, 1), 150);
+			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 0), 150);
 		}
-		//walkLeftAnimation = new Animation();
-		//walkLeftAnimation.addFrame(new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166).getSprite(0, 0), 5000);
 		idleAnimation = new Animation();
-		idleAnimation.addFrame(sprites.getSprite(0, 0), 500);
+		idleAnimation.addFrame(idleSprites.getSprite(0, 0), 500);
 		climbAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
 			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
 		}
 		currentAnimation = idleAnimation;
-		//walkRightAnimation = walkLeftAnimation;
-		//currentAnimation = walkLeftAnimation;
 	}
 	
 	protected void updateBoundingBox() {
 		this.boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
 	}
 	
-	public void update(Input input, int delta) {		
+	public void update(Input input, int delta) {
 		updateBoundingBox();
 		
-		if (isClimbing && level.env.canClimbHere(boundingBox)) {
+		if (isClimbing && level.env.isOnClimableSurface(this)) {
 			velocity.set(new Vector2f(velocity.getX(), 0));
-		} else if (!level.env.canClimbHere(boundingBox)) {
+		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
 		}
 
@@ -108,16 +104,12 @@ public class Player extends Mob {
 		if (isOnGround || isClimbing) velocity.y = 0;
 		*/
 		if (playerControlled) {
-			// Check player input.
+			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {
-				if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
-				velocity.x += walkAcceleration;
-				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
+				moveRight();
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
-				if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
-				velocity.x -= walkAcceleration;
-				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
+				moveLeft();
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
 				if (velocity.x < 0.0f) {
@@ -129,37 +121,29 @@ public class Player extends Mob {
 				}
 			}
 			if (input.isKeyDown(Input.KEY_Q)) {
-				try {
-					level.env.addAttractor(boundingBox, "BloodMark");
-				} catch (SlickException e) {
-					e.printStackTrace();
-				}
+				addBloodMark();
 			}
 			if (input.isKeyDown(Input.KEY_W)){
-				if (level.env.canClimbHere(boundingBox)) {
+				if (level.env.isOnClimableSurface(this)) {
 					isClimbing = true;
 					velocity.set(velocity.getX(), -climbSpeed);
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
-				if (level.env.canClimbHere(boundingBox)) {
+				if (level.env.isOnClimableSurface(this)) {
 					isClimbing = true;
 					velocity.set(velocity.getX(), climbSpeed);
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
-				Usable target = level.env.getUsableEntity(boundingBox);
-				if (target != null) {
-					target.use(this);
-				}
+				useObject();
 			}
 			if (input.isMousePressed(0)) {
 				level.fl.switchOnOff();
 			}
-			
-			if (isClimbing) currentAnimation = climbAnimation;
 		}
-		/*
+		
+		// Decide what animation should be played.
 		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
 			currentAnimation = idleAnimation;
 		}
@@ -171,7 +155,34 @@ public class Player extends Mob {
 			} else if (currentAnimation.isStopped()) {
 				currentAnimation.start();
 			}
-		}*/
+		}
+	}
+	
+	private void moveRight() {
+		if (currentAnimation != walkRightAnimation) currentAnimation = walkRightAnimation;
+		velocity.x += walkAcceleration;
+		if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
+	}
+	
+	private void moveLeft() {
+		if (currentAnimation != walkLeftAnimation) currentAnimation = walkLeftAnimation;
+		velocity.x -= walkAcceleration;
+		if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
+	}
+	
+	private void addBloodMark() {
+		try {
+			level.env.addAttractor(boundingBox, "BloodMark");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void useObject() {
+		Usable target = level.env.getUsableEntity(boundingBox);
+		if (target != null) {
+			target.use(this);
+		}
 	}
 	
 	public void hurt(int amount) {

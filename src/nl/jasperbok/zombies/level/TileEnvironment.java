@@ -83,7 +83,7 @@ public class TileEnvironment {
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();
-		checkForCollisions();
+		//checkForCollisions();
 	}
 	
 	private void updateEntities(Input input, int delta) {
@@ -99,7 +99,71 @@ public class TileEnvironment {
 	}
 	
 	private void checkForCollisions() {
-		
+		for (int i = 0; i < allEntities.size(); i++) {
+			for (int j = i + 1; j < allEntities.size(); j++) {
+				if (allEntities.get(i).isBlocking || allEntities.get(j).isBlocking) {
+					Rectangle bbox1 = allEntities.get(i).boundingBox;
+					Rectangle bbox2 = allEntities.get(j).boundingBox;
+					if (bbox1.intersects(bbox2)) {
+						int horizontalOverlap = 0;
+						int verticalOverlap = 0;
+						boolean leftOverlap = bbox1.contains(bbox2.getMinX(), bbox2.getMinY()) || bbox1.contains(bbox2.getMinX(), bbox2.getMaxY());
+						boolean rightOverlap = bbox1.contains(bbox2.getMaxX(), bbox2.getMinY()) || bbox1.contains(bbox2.getMaxX(), bbox2.getMaxY());
+						
+						if (leftOverlap && rightOverlap) {
+							// Fuck this shit... That thing's inside her!
+						} else if (leftOverlap) {
+							// There's a left overlap.
+							float overlap = Math.abs(bbox1.getMaxX() - bbox2.getMinX());
+							if (allEntities.get(j).isMovable) {
+								if (allEntities.get(i).isMovable) {
+									// Both movable, move 'em both.
+									allEntities.get(j).setPosition((float)(allEntities.get(j).position.getX() - overlap / 2), allEntities.get(j).position.getY());
+									allEntities.get(i).setPosition((float)(allEntities.get(i).position.getX() + overlap / 2), allEntities.get(i).position.getY());
+								} else {
+									// Only j is movable.
+									allEntities.get(j).setPosition((float)(allEntities.get(j).position.getX() - overlap), allEntities.get(j).position.getY());
+								}
+							} else {
+								// Only i is movable.
+								allEntities.get(i).setPosition((float)(allEntities.get(i).position.getX() + overlap), allEntities.get(i).position.getY());
+							}
+						} else if (rightOverlap) {
+							// There's a right overlap.
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Checks whether an entity is on something solid with his feet.
+	 * 
+	 * @param ent The entity to check.
+	 * @return boolean True if the entity is on top of something solid.
+	 */
+	public boolean isOnGround(Entity ent, boolean resolveCollision) {
+		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
+		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
+		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		return tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
+	}
+	
+	/**
+	 * Checks whether an entity is on something climable.
+	 * 
+	 * To decide whether the entity is a climable tile, the point at the
+	 * entities center X and bottom Y is checked for a collision with a
+	 * climable tile.
+	 * 
+	 * @param ent The entity to check.
+	 * @return boolean True if the entity's feet are on something climable.
+	 */
+	public boolean isOnClimableSurface(Entity ent) {
+		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
+		int relativeY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		return tiles[relativeX][relativeY].isClimable;
 	}
 	
 	private void checkForTileCollisions() {
@@ -198,15 +262,6 @@ public class TileEnvironment {
 			if (obj.canBeUsed(rect)) return obj;
 		}
 		return null;
-	}
-	
-	public boolean canClimbHere(Rectangle bbox) {
-		/*int centerX = (int)Math.floor(bbox.getCenterX() / tileWidth);
-		int topY = (int)Math.floor((bbox.getMinY() + 10) / tileHeight); // + 10 so part of the box must overlap.
-		int bottomY = (int)Math.floor((bbox.getMaxY() - 10) / tileHeight); // - 10... same reason.
-		
-		return tiles[centerX][topY].isClimable || tiles[centerX][bottomY].isClimable;*/
-		return false;
 	}
 	
 	private void updateEntityList() {
