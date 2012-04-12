@@ -30,6 +30,7 @@ public class Level {
 	public TileEnvironment env;
 	
 	// Lighting
+	private boolean doLighting = false;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
@@ -72,16 +73,18 @@ public class Level {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		//camera.translate(g);
 		
-		renderScene(container, g);
+		if (doLighting) renderScene(container, g);
         renderLevel(container, g);
         
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
-        
-        fboLight.render(1.0f);
-		
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+        if (doLighting) {
+	        GL11.glEnable(GL11.GL_BLEND);
+	        GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
+	        
+	        fboLight.render(1.0f);
+			
+	        GL11.glEnable(GL11.GL_BLEND);
+	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+        }
         
 		Hud.getInstance().render(container, g);
 		
@@ -89,17 +92,21 @@ public class Level {
 	}
 	
 	public void renderLevel(GameContainer container, Graphics g) throws SlickException {
-		fboLevel.enable();
-		
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-		
-		//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		if (doLighting) {
+			fboLevel.enable();
+			
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+	        GL11.glEnable(GL11.GL_BLEND);
+			
+			//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		}
 		env.render(container, g);
 		
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDisable(GL11.GL_BLEND);
+		if (doLighting) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+	        GL11.glDisable(GL11.GL_BLEND);
+		}
 	}
 	
 	public void renderScene(GameContainer container, Graphics g) throws SlickException
