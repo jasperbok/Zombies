@@ -22,7 +22,7 @@ public class GravityComponent extends Component {
 
 	public void update(Input input, int delta) {
 		if (!owner.isOnGround && !owner.isClimbing) {
-			float yVel = owner.velocity.getY() + gravity * delta;
+			float yVel = owner.velocity.getY() + gravity;
 			if (yVel > maxGravity) yVel = maxGravity;
 			owner.velocity.set(owner.velocity.getX(), yVel);
 		}

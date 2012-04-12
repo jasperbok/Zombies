@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 public abstract class Component {
 	
 	public static int GRAVITY = 1;
+	public static int PLAYER_CLIMB = 20;
 
 	public int id;
 	protected Entity owner;

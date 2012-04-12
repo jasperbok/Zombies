@@ -18,7 +18,7 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.state.IdleState;
 
 public class Player extends Mob {
-	private float climbSpeed = 0.001f;
+	private float climbSpeed = 0.05f;
 	private float walkAcceleration = 0.06f;
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 2f;
@@ -34,7 +34,7 @@ public class Player extends Mob {
 	}
 	
 	public void init() throws SlickException {
-		this.addComponent(new GravityComponent(0.002f, this));
+		this.addComponent(new GravityComponent(0.01f, this));
 		gravityAffected = false;
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
