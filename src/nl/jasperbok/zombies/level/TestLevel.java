@@ -16,7 +16,9 @@ public class TestLevel extends Level {
 
 	public TestLevel() throws SlickException {
 		super("proto_lvl");
-		env.setPlayer(new Player(100, 200, this));
+		Player player = new Player(100, this);
+		player.setPosition(50, 400);
+		env.setPlayer(player);
 		//env.addEntity(new Elevator(this, 200, 620));
 		for (int i = 0; i < 5; i++) {
 			env.addMob(new Zombie((float)(100 + i * 40), 80f));

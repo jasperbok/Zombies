@@ -13,34 +13,20 @@ import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.mob.Mob;
+import nl.jasperbok.zombies.entity.state.IdleState;
 
 public class Player extends Mob {
-	private int bandages;
-
 	private float climbSpeed = 0.001f;
 	private float walkAcceleration = 0.06f;
 	private float maxWalkSpeed = 0.2f;
 	private float maxFallSpeed = 2f;
 	
-	// Animations
-	private Animation idleAnimation;
-	private Animation walkRightAnimation;
-	private Animation walkLeftAnimation;
-	private Animation fallAnimation;
-	private Animation climbAnimation;
-	private Animation currentAnimation;
-	
 	// Status variables.
-	protected boolean wasOnGround = false;
-	protected boolean wasFalling = false;
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
-	protected boolean wasClimbing = false;
-	public boolean isClimbing = false;
 	
-	public Player(int health, int bandages, Level level) throws SlickException {
+	public Player(int health, Level level) throws SlickException {
 		this.health = health;
-		this.bandages = bandages;
 		super.init(level);
 		this.init();
 	}
@@ -67,6 +53,7 @@ public class Player extends Mob {
 			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
 		}
 		currentAnimation = idleAnimation;
+		currentState = IdleState.getInstance();
 	}
 	
 	protected void updateBoundingBox() {

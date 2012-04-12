@@ -1,14 +1,33 @@
 package nl.jasperbok.zombies.entity.mob;
 
+import org.newdawn.slick.Animation;
+
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.entity.state.EntityState;
 
 public abstract class Mob extends Entity {
 	public int agressionRange = 50;
 	protected int health = 50;
 	protected int maxHealth = 100;
 	
-	protected boolean isClimbing = false;
-	protected boolean isWalking = false;
+	// Animations
+	public Animation idleAnimation;
+	public Animation walkLeftAnimation;
+	public Animation walkRightAnimation;
+	public Animation climbAnimation;
+	public Animation fallAnimation;
+	public Animation currentAnimation;
+	public Animation attackAnimation;
+	
+	// Status variables
+	public boolean wasOnGround = false;
+	public boolean isOnGround = false;
+	public boolean wasFalling = false;
+	public boolean isFalling = false;
+	public boolean wasClimbing = false;
+	public boolean isClimbing = false;
+	
+	public EntityState currentState;
 	
 	/**
 	 * Heals the mob.

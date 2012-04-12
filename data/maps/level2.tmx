@@ -2,13 +2,108 @@
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
  <tileset firstgid="1" name="LevelSprites" tilewidth="80" tileheight="80">
   <image source="src/tileSheet.png" width="1600" height="1600"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="401" name="Boxes" tilewidth="80" tileheight="80">
   <image source="src/boxes.png" width="1300" height="1200"/>
+  <tile id="203">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="208">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="209">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="210">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="220">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="225">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="226">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="236">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Ut04DURQE0MXwAwQHDBRkDAaJnAtMTgU5F+RckPO/c5BliRa00ja+0tGrdkbTbEkQBDFK//H+vr9++6OMeBDdpchE2J8NivuL+6O74v78/nI/pQoqqSJOgiQpqklTQy11sXD6C/vr5TXQSBPNtNBKGxna6SBLZ0j9hf3d8nropY9+BhhkiGFGGGWM8ZD3T8jLMckU08wwyxzzLLDIEssh71+Rt8oa62ywyRbb7LDLHvschNSfDvL7D+UdccwJp5xxzgWXXHHNDbch9XcF+f138u554JEnnnnhlTfe+eCTr5D6cyRIRvh+A1U2rj0ACQAA
+   H4sIAAAAAAAAC8XUx04CUQCF4ZkB7C4sVHVhFymJvSv2vrD3hb0v7P1RnXeAJ/CfZG5mUAYCQSD5cjeXczhMQJYkSYEtzXMUY4hk+H7ttMOJAKJwyAavzqefIYQTnJm+vuGBX+83d4q+bHVZ9QclY7+58z/6EvWL/dpzzEWnuVuVjP1qbmr/9Iv9+eoX+2N56Dc//wI5t9+B6Bf7Zf4QFNhghwMFKEQRilGCUpShXMlOv9hfQV4lqlANJ1xwwwMvfKhBLeqy1C/215PXgEY0oRktaEUb/GhHAEGElPgcVUrv+f3e30FeJ7rQjR70og/9GMAghjCMEb0/asoyU6Xkn0m8T+wfJ28Ck5jCNGYwiznMYwGLWMKyEt+RSEyX7I7Yv0LeKtawjg1sYgvb2MEu9rCPA8XIt6L9pjTJ7kT0/YfkHeEYJzjFGc5xgUtc4Ro3uFWMfCs+Xap72v478u7xgEc84RkveMUb3vGBT3wpRr6VsC7VPRf9bil/5w8Utk7CAAkAAA==
   </data>
  </layer>
 </map>

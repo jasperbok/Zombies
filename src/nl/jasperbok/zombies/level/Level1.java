@@ -31,7 +31,9 @@ public class Level1 extends Level {
 		//elevator.position = new Vector2(500.0f, 336.0f);
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
-		env.setPlayer(new Player(100, 0, this));
+		Player player = new Player(100, this);
+		player.setPosition(50, 400);
+		env.setPlayer(player);
 		//crate = new Crate(this, 600, 500);
 		//zombie = new Zombie(110, 0);
 		//crane = new MagneticCrane(this, new Vector2(700.0f, 64.0f), crate);
