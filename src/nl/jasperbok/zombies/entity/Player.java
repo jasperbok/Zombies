@@ -96,6 +96,7 @@ public class Player extends Mob {
 		if (isFalling) velocity.y += gravity.y * delta;
 		if (isOnGround || isClimbing) velocity.y = 0;
 		*/
+		
 		if (playerControlled) {
 			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {

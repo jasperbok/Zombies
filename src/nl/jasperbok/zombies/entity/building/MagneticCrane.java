@@ -12,6 +12,7 @@ import org.newdawn.slick.geom.Vector2f;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.level.Level;
+import nl.timcommandeur.zombies.screen.Camera;
 
 public class MagneticCrane extends Entity implements Usable {
 	public Vector2f sliderPos;
@@ -67,6 +68,7 @@ public class MagneticCrane extends Entity implements Usable {
 		user.playerControlled = false;
 		playerControlled = true;
 		this.user = user;
+		Camera.getInstance().setTarget(this);
 	}
 	
 	/**
@@ -133,6 +135,7 @@ public class MagneticCrane extends Entity implements Usable {
 		if (input.isKeyPressed(Input.KEY_E)) {
 			playerControlled = false;
 			user.playerControlled = true;
+			Camera.getInstance().setTarget(user);
 			user = null;
 		}
 		

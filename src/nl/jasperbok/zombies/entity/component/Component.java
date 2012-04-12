@@ -8,7 +8,7 @@ public abstract class Component {
 	
 	public static int GRAVITY = 1;
 	public static int DRAGGABLE = 2;
-	public static int PLAYER_CLIMB = 20;
+	public static int PLAYER_INPUT = 20;
 
 	public int id;
 	protected Entity owner;
