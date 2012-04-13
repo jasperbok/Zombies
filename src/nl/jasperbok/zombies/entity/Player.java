@@ -108,10 +108,12 @@ public class Player extends Mob {
 		if (playerControlled) {
 			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {
+				// Move the player right.
 				velocity.x += walkAcceleration;
 				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
+				// Move the player left.
 				velocity.x -= walkAcceleration;
 				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
 			}
@@ -152,11 +154,11 @@ public class Player extends Mob {
 		
 		// Decide what animation should be played.
 		if (isOnGround) {
-			if (input.isKeyDown(Input.KEY_A)) {
+			if (velocity.getX() < 0f) {
 				currentAnimation = walkLeftAnimation;
-			} else if (input.isKeyDown(Input.KEY_D)) {
+			} else if (velocity.getX() > 0f) {
 				currentAnimation = walkRightAnimation;
-			} else if (!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
+			} else if (velocity.getX() == 0f) {
 				currentAnimation = idleAnimation;
 			}
 		} else if (isClimbing) {
