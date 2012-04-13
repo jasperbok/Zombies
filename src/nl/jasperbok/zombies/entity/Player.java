@@ -39,8 +39,8 @@ public class Player extends Mob {
 		position = new Vector2(280.0f, 300.0f);
 		playerControlled = true;
 		boundingBox = new Rectangle(position.x, position.y, 10, 10);
-		SpriteSheet sprites = new SpriteSheet("data/sprites/entity/player.png", 33, 75);
-		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
+		
+		// Fix the walking animations.
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_girl2.png", 75, 150);
 		walkRightAnimation = new Animation();
 		for (int i = 0; i < 4; i++) {
@@ -50,14 +50,20 @@ public class Player extends Mob {
 		for (int i = 0; i < 4; i++) {
 			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 0), 150);
 		}
+		
+		// Fix the idle animation.
+		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
 		idleAnimation = new Animation();
 		idleAnimation.addFrame(idleSprites.getSprite(0, 0), 500);
+		
+		// Fix the climb animation.
+		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 110, 175);
 		climbAnimation = new Animation();
-		for (int i = 0; i < 4; i++) {
-			climbAnimation.addFrame(sprites.getSprite(i, 2), 250);
-		}
+		climbAnimation.addFrame(climbSprites.getSprite(0, 1), 250);
+		climbAnimation.addFrame(climbSprites.getSprite(1, 1), 250);
+		
+		// Set the initial animation.
 		currentAnimation = idleAnimation;
-		currentState = IdleState.getInstance();
 	}
 	
 	protected void updateBoundingBox() {
@@ -67,9 +73,11 @@ public class Player extends Mob {
 	public void update(Input input, int delta) {
 		updateBoundingBox();
 		
-		this.isOnGround = level.env.isOnGround(this, false);
+		wasClimbing = isClimbing;
 		
-		if (isClimbing && level.env.isOnClimableSurface(this)) {
+		this.isOnGround = level.env.isOnGround(this, false);
+		if (wasClimbing && level.env.isOnClimableSurface(this)) {
+			isClimbing = true;
 			velocity.set(new Vector2f(velocity.getX(), 0));
 		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
