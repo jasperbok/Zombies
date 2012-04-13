@@ -138,18 +138,26 @@ public class Player extends Mob {
 		}
 		
 		// Decide what animation should be played.
-		if (isOnGround && (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D))) {
-			currentAnimation = idleAnimation;
-		}
-		
-		if (isClimbing) {
+		if (isOnGround) {
+			if (input.isKeyDown(Input.KEY_A)) {
+				currentAnimation = walkLeftAnimation;
+			} else if (input.isKeyDown(Input.KEY_D)) {
+				currentAnimation = walkRightAnimation;
+			} else if (!input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_D)) {
+				currentAnimation = idleAnimation;
+			}
+		} else if (isClimbing) {
 			currentAnimation = climbAnimation;
 			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
 				currentAnimation.stop();
 			} else if (currentAnimation.isStopped()) {
 				currentAnimation.start();
 			}
+		} else {
+			// Not on ground and not climbing, surely the player is falling!
+			//currentAnimation = fallAnimation;
 		}
+		
 		//System.out.println(isOnGround);
 		super.update(input, delta);
 	}
