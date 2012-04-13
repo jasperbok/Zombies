@@ -32,7 +32,7 @@ public class Level1 extends Level {
 		//entities.add(elevator);
 		Player player = new Player(100, this);
 		//player.setPosition(80, 320);
-		player.setPosition(2100, 660);
+		player.setPosition(1800, 660);
 		env.setPlayer(player);
 		
 		env.addMob(new Zombie((float)(2400), 660));

@@ -11,13 +11,13 @@ import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
+import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public class Crate extends Entity {
 	private Image image;
-	private boolean isFalling = false;
 	public boolean draggedByMagnet = false;
 	private MagneticCrane crane;
 
@@ -48,13 +48,23 @@ public class Crate extends Entity {
 			if (hitBox.intersects(this.boundingBox)) {
 				setPosition(position.getX(), crane.armPos.getY() + crane.arm.getHeight());
 				draggedByMagnet = true;
+				// Disable the GravityComponent.
+				if (this.hasComponent(Component.GRAVITY)) {
+					GravityComponent comp = (GravityComponent) this.getComponent(Component.GRAVITY);
+					comp.toggleGravity();
+				}
 			}
 		}
 		if (draggedByMagnet) {
 			if (crane.magnetActive) {
-				this.velocity = crane.armVelocity;
+				this.velocity = crane.armVelocity.copy();
 			} else {
 				draggedByMagnet = false;
+				// Enable the GravityComponent.
+				if (this.hasComponent(Component.GRAVITY)) {
+					GravityComponent comp = (GravityComponent) this.getComponent(Component.GRAVITY);
+					comp.toggleGravity();
+				}
 			}
 		}
 		
