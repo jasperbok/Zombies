@@ -84,7 +84,10 @@ public class MagneticCrane extends Entity implements Usable {
 	
 	public void update(Input input, int delta) {
 		if (playerControlled) handleInput(input);
-			
+		
+		// Because the crane itself does not have a velocity, it is not
+		// affected by TileEnvironment. Therefore we increment the arm's
+		// position here manually.
 		armPos.y += armVelocity.getY() * delta;
 		sliderPos.x += armVelocity.getX() * delta;
 		armPos.x = sliderPos.getX() + slider.getWidth() / 2 - arm.getWidth() / 2;
