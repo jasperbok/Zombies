@@ -15,7 +15,7 @@ import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.mob.Mob;
-import nl.jasperbok.zombies.entity.state.IdleState;
+import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Player extends Mob {
 	private float climbSpeed = 0.1f;
@@ -57,10 +57,10 @@ public class Player extends Mob {
 		idleAnimation.addFrame(idleSprites.getSprite(0, 0), 500);
 		
 		// Fix the climb animation.
-		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 110, 175);
+		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 55, 147);
 		climbAnimation = new Animation();
-		climbAnimation.addFrame(climbSprites.getSprite(0, 1), 250);
-		climbAnimation.addFrame(climbSprites.getSprite(1, 1), 250);
+		climbAnimation.addFrame(climbSprites.getSprite(0, 0), 250);
+		climbAnimation.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
 		
 		// Set the initial animation.
 		currentAnimation = idleAnimation;
@@ -140,6 +140,9 @@ public class Player extends Mob {
 			if (input.isKeyPressed(Input.KEY_E)) {
 				useObject();
 			}
+			if (input.isKeyPressed(Input.KEY_SPACE)) {
+				climbObject();
+			}
 			if (input.isMousePressed(0)) {
 				level.fl.switchOnOff();
 			}
@@ -194,6 +197,13 @@ public class Player extends Mob {
 		Usable target = level.env.getUsableEntity(boundingBox);
 		if (target != null) {
 			target.use(this);
+		}
+	}
+	
+	private void climbObject() {
+		Entity target = (Entity) level.env.getUsableEntity(boundingBox);
+		if (target != null && target instanceof WoodenCrate) {
+			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
 		}
 	}
 	

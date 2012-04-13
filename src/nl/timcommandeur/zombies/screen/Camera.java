@@ -73,7 +73,6 @@ public class Camera {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		if (target != null) {
-			System.out.println("line");
 			this.position.x = target.position.x + displacement.x;
 			this.position.y = target.position.y + displacement.y;
 		}

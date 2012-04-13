@@ -152,7 +152,24 @@ public class TileEnvironment {
 		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
 		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
 		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
-		return tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
+		
+		boolean onEntity = false;
+		// This should probably go in the hittest section...
+		for (Entity entity: allEntities) {
+			if (entity != ent && entity.isTopSolid) {
+				Rectangle topBox = new Rectangle(entity.position.getX(), entity.position.getY(), entity.boundingBox.getWidth(), 10);
+				if (topBox.contains(ent.boundingBox.getCenterX() - 10, ent.boundingBox.getMaxY()) || topBox.contains(ent.boundingBox.getCenterX() + 10, ent.boundingBox.getMaxY())) {
+					ent.setPosition(ent.position.getX(), entity.boundingBox.getMinY() - ent.boundingBox.getHeight());
+					onEntity = true;
+					break;
+				}
+			}
+		}
+		
+		boolean onAllSolidBlock =  tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
+		// This should be altered to only check the top 10 pixels of the topSolid block.
+		boolean onTopSolidBlock = tiles[relativeLeftX][relativeBottomY].isTopSolid || tiles[relativeRightX][relativeBottomY].isTopSolid;
+		return onAllSolidBlock || onTopSolidBlock || onEntity;
 	}
 	
 	/**

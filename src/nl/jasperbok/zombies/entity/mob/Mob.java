@@ -3,7 +3,6 @@ package nl.jasperbok.zombies.entity.mob;
 import org.newdawn.slick.Animation;
 
 import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.state.EntityState;
 
 public abstract class Mob extends Entity {
 	public int agressionRange = 50;
@@ -18,8 +17,6 @@ public abstract class Mob extends Entity {
 	public Animation fallAnimation;
 	public Animation currentAnimation;
 	public Animation attackAnimation;
-	
-	public EntityState currentState;
 	
 	/**
 	 * Heals the mob.

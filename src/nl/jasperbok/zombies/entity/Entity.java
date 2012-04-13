@@ -20,6 +20,7 @@ public abstract class Entity extends RenderObject {
 	public Vector2 maxVelocity = new Vector2(0f, 0f);
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public boolean isBlocking = true;
+	public boolean isTopSolid = false;
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
 	public boolean gravityAffected = true;

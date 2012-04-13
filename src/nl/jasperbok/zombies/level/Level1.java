@@ -28,13 +28,9 @@ public class Level1 extends Level {
 
 	public Level1() throws SlickException {
 		super("level1");
-		//elevator = new Elevator(this);
-		//elevator.position = new Vector2(500.0f, 336.0f);
-		//elevator.minHeight = 336.0f;
-		//entities.add(elevator);
 		Player player = new Player(100, this);
-		player.setPosition(1800, 660);
-		//player.setPosition(300, 320);
+		//player.setPosition(1800, 660);
+		player.setPosition(300, 320);
 		env.setPlayer(player);
 		
 		crateZombie = new Zombie((float)(2400), 660);
@@ -46,13 +42,8 @@ public class Level1 extends Level {
 		env.addEntity(crane);
 		crate = new Crate(this, new Vector2f(2160, 660), crane);
 		env.addEntity(crate);
-		//crate = new Crate(this, 600, 500);
-		//zombie = new Zombie(110, 0);
-
-		//env.addEntity(crate);
-		//env.addMob(zombie);
-		
-		env.addEntity(new WoodenCrate(this, 2160, 660));
+		env.addEntity(new WoodenCrate(this, 2720, 1040));
+		env.addEntity(new WoodenCrate(this, 3520, 1040));
 		
 		for (int i = 0; i < 2; i++) {
 			Zombie zl = new Zombie((float)(10 + i * 30), 80f);
