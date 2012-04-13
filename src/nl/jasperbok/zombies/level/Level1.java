@@ -34,6 +34,9 @@ public class Level1 extends Level {
 		player.setPosition(240, 320);
 		//player.setPosition(1800, 660);
 		env.setPlayer(player);
+		
+		env.addMob(new Zombie((float)(2400), 660));
+		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
 		env.addEntity(crane);
