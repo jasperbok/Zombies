@@ -54,7 +54,7 @@ public class Level1 extends Level {
 		}
 		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
-		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
 		
 		/*
