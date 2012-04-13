@@ -22,6 +22,8 @@ public class Level1 extends Level {
 	public Zombie zombie;
 	public Crate crate;
 	
+	public Zombie crateZombie;
+	
 	private Music bgMusic;
 
 	public Level1() throws SlickException {
@@ -31,16 +33,19 @@ public class Level1 extends Level {
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
 		Player player = new Player(100, this);
-		//player.setPosition(240, 320);
 		player.setPosition(1800, 660);
+		//player.setPosition(300, 320);
 		env.setPlayer(player);
 		
-		env.addMob(new Zombie((float)(2400), 660));
+		crateZombie = new Zombie((float)(2400), 660);
+		env.addMob(crateZombie);
+		crateZombie.addBlockingPointLeft(2290);
 		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
 		env.addEntity(crane);
-		env.addEntity(new Crate(this, new Vector2f(2160, 660), crane));
+		crate = new Crate(this, new Vector2f(2160, 660), crane);
+		env.addEntity(crate);
 		//crate = new Crate(this, 600, 500);
 		//zombie = new Zombie(110, 0);
 
@@ -49,8 +54,10 @@ public class Level1 extends Level {
 		
 		env.addEntity(new WoodenCrate(this, 2160, 660));
 		
-		for (int i = 0; i < 5; i++) {
-			env.addMob(new Zombie((float)(700 + i * 40), 80f));
+		for (int i = 0; i < 2; i++) {
+			Zombie zl = new Zombie((float)(10 + i * 30), 80f);
+			zl.addBlockingPointRight(600);
+			env.addMob(zl);
 		}
 		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
@@ -74,6 +81,11 @@ public class Level1 extends Level {
 //		craneLights[1].setPos(new Vec2(crane.armPos.x + 90 + camera.position.x, 130 - camera.position.y));
 		//craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 130));
 		//craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
+		
+		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
+			crateZombie.position.x = 100000000;
+		}
+		
 		super.update(container, delta);
 	}
 	

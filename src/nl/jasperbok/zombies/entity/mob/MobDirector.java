@@ -35,7 +35,7 @@ public class MobDirector {
 	private int distanceCheckingTimeoutCeil = 0;
 	private int distanceCheckingTimer = 10;
 	
-	private HashMap<Mob, List> trackingMobs; 
+	private HashMap<Mob, List> trackingMobs;
 	
 	public MobDirector() {
 		try {
@@ -104,7 +104,7 @@ public class MobDirector {
 			for (MobAttractor attractor : attractors) {
 				attractor.update();
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
-				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange) {
+				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange && mob.boundingBox.intersects(attractor.object.boundingBox)) {
 					v = new Vector2f(0, 0);
 					// End the game
 					try {
