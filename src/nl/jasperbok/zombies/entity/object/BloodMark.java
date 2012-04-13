@@ -37,7 +37,7 @@ public class BloodMark extends Entity implements Attractor {
 	 * Renders the bloodmark on the screen if it's lifetime has not expired.
 	 */
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (currentLifetime < lifetime) image.draw(position.x, position.y);
+		if (currentLifetime < lifetime) image.draw(renderPosition.x, renderPosition.y);
 	}
 	
 	/**

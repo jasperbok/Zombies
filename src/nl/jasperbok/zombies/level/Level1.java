@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.level;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
@@ -14,6 +15,7 @@ import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
+import nl.timcommandeur.zombies.screen.Camera;
 
 public class Level1 extends Level {
 	public Elevator elevator;
@@ -57,8 +59,8 @@ public class Level1 extends Level {
 		
 		/*
 		craneLights = new FlashLight[2];
-		craneLights[0] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 30, 130));
-		craneLights[1] = new FlashLight(lights, cHulls, new Vec2(crane.armPos.x + 90, 130));
+		craneLights[0] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 30, 130), camera);
+		craneLights[1] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 90, 130), camera);
 		craneLights[0].rotate(100);
 		craneLights[1].rotate(80);
 		craneLights[0].setColor(new Color(150, 100, 100));
@@ -67,11 +69,13 @@ public class Level1 extends Level {
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
-		//elevator.update(container, delta);
-//		craneLights[0].setPos(new Vec2(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
-//		craneLights[1].setPos(new Vec2(crane.armPos.x + 90 + camera.position.x, 130 - camera.position.y));
-		//craneLights[0].setPos(new Vec2(crane.armPos.x + 30, 130));
-		//craneLights[1].setPos(new Vec2(crane.armPos.x + 90, 130));
+		/*
+		//craneLights[0].setPosition(new Vector2f(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
+		craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30 + camera.position.getX(), 130 - camera.position.getY()));
+		craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90 + camera.position.getX(), 130 - camera.position.getY()));
+		craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30, 130));
+		craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90, 130));
+		*/
 		
 		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
 			crateZombie.position.x = 100000000;
