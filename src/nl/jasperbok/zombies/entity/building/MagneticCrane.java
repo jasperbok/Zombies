@@ -32,7 +32,7 @@ public class MagneticCrane extends Entity implements Usable {
 	private int maxRightPos = 256;
 	private float minArmHeight;
 	private float maxArmHeight;
-	private Vector2f armVelocity;
+	public Vector2f armVelocity;
 	private Vector2f armAcceleration;
 	private Vector2f maxArmVelocity;
 	
@@ -68,7 +68,7 @@ public class MagneticCrane extends Entity implements Usable {
 		user.playerControlled = false;
 		playerControlled = true;
 		this.user = user;
-		Camera.getInstance().setTarget(this);
+		Camera.getInstance().setTarget(this, new Vector2f(0, 400));
 	}
 	
 	/**
@@ -85,9 +85,11 @@ public class MagneticCrane extends Entity implements Usable {
 	public void update(Input input, int delta) {
 		if (playerControlled) handleInput(input);
 			
-		armPos.y += armVelocity.getY();
-		sliderPos.x += armVelocity.getX();
+		armPos.y += armVelocity.getY() * delta;
+		sliderPos.x += armVelocity.getX() * delta;
 		armPos.x = sliderPos.getX() + slider.getWidth() / 2 - arm.getWidth() / 2;
+		//if (armPos.y > maxArmHeight) armPos.y = maxArmHeight;
+		//if (armPos.y < minArmHeight) armPos.y = minArmHeight;
 	}
 	
 	private void handleInput(Input input) {

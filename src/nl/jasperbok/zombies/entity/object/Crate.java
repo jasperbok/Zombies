@@ -52,7 +52,7 @@ public class Crate extends Entity {
 		}
 		if (draggedByMagnet) {
 			if (crane.magnetActive) {
-				this.velocity = crane.velocity;
+				this.velocity = crane.armVelocity;
 			} else {
 				draggedByMagnet = false;
 			}
