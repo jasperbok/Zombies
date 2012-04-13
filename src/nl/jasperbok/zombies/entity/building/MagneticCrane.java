@@ -52,8 +52,8 @@ public class MagneticCrane extends Entity implements Usable {
 		
 		this.sliderPos = new Vector2f(position.x + 100.0f, position.y);
 		this.armPos = new Vector2f(sliderPos.x + slider.getWidth() / 2 - arm.getWidth() / 2, sliderPos.y + 200.0f);
-		this.maxArmHeight = sliderPos.y;
-		this.minArmHeight = sliderPos.y + slider.getHeight() + arm.getHeight() - 100;
+		this.minArmHeight = sliderPos.y + 32;
+		this.maxArmHeight = sliderPos.y + slider.getHeight();
 		this.maxLeftPos = (int) (position.x - 100);
 		this.maxRightPos = (int) (position.x + rail.getWidth() - slider.getWidth());
 	}
@@ -89,10 +89,12 @@ public class MagneticCrane extends Entity implements Usable {
 		// affected by TileEnvironment. Therefore we increment the arm's
 		// position here manually.
 		armPos.y += armVelocity.getY() * delta;
+		if (armPos.y > maxArmHeight) armPos.y = maxArmHeight;
+		if (armPos.y < minArmHeight) armPos.y = minArmHeight;
 		sliderPos.x += armVelocity.getX() * delta;
+		if (sliderPos.x < maxLeftPos) sliderPos.x = maxLeftPos;
+		if (sliderPos.x > maxRightPos) sliderPos.x = maxRightPos;
 		armPos.x = sliderPos.getX() + slider.getWidth() / 2 - arm.getWidth() / 2;
-		//if (armPos.y > maxArmHeight) armPos.y = maxArmHeight;
-		//if (armPos.y < minArmHeight) armPos.y = minArmHeight;
 	}
 	
 	private void handleInput(Input input) {

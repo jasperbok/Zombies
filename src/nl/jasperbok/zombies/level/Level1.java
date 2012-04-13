@@ -31,8 +31,8 @@ public class Level1 extends Level {
 		//elevator.minHeight = 336.0f;
 		//entities.add(elevator);
 		Player player = new Player(100, this);
-		//player.setPosition(80, 320);
-		player.setPosition(1800, 660);
+		player.setPosition(240, 320);
+		//player.setPosition(1800, 660);
 		env.setPlayer(player);
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));

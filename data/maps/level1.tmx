@@ -66,14 +66,37 @@
  <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
   <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
  </tileset>
+ <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
+  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Background" width="128" height="36">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3JqRGAQBQFwZ8YisOjFsg/EJ5cvYUBuqtGTRUAAFRNXfzP3gUAwLfNaUlr2gY+79bSkc50DXwAAAAAAAAAAAAAAOBZN3d4CBQASAAA
+   H4sIAAAAAAAAC+3RMQ6CABBFweVgVCo9lcKtRMJ52caEBgoiEHAmedU2m/wIAACIKCfxf+pJe3sXEd1Mn+KAh9jV3PbfuLZ+YePB/gCbuWX37JFVK+6c2zN7ZU3WrrgDAAAAAAAAAAAAAAC/NQJxBc1WAEgAAA==
   </data>
  </layer>
  <layer name="Level" width="128" height="36">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2ajQ2CMBBGC7KCPyu4hhuqEziOW6kxpE0DUnrAR+W95GJCevTi82LbtHLO1e/YZXw2Dkpnb8g9ZeY9DHPCtJwNufgvH/p/29D/kAv+t03sv3LfvUFOfPYSh5EBdsZ8z0MOrGuJ8L3X94/pFsW9wv+c9PVvy1D/Wv2H8x875gifNT/qjcenjOUsw+4vzr8Y8o8dY9pnj575+sanjM1dy/wTU/u35ON/eab01/5Hd3lMycf/8szR//gvB4v/PlL9p+SF/qeeG//43zpjz1/+LQC2hrVnnkHQc+VhObOvo3flnPlb57eGsobwfFLFHGu+VKxnRqXXEO5PVeAf/yrw72tQgX/8q8C/r0EF/vGvAv++BhX4x78K/PsaVOAf/yrG3OHIZSgf/zrw72tQgX/8r5m5/StZQ23417GG2vCvYw21qe/cEdp7UC8dLN8AAEgAAA==
+   H4sIAAAAAAAAC+2aa26DMBCEgeQKTXqFXqPH7Ju+n2l7jN6qg1qEZcXgerEGynzSKD/w4pU+bRIsyqIoKmSV8LkuxNw5MNQeJtbVhj3FuBwZauV//mj+l43mX6Qi/8vG918WP88GKWmeJTa/GSJ2nRhmE5G+tS7W/xLyzyU0vy1D82v13+6/9e69ctJeW/f0W3n3iVmrswy7P7/+OLF+27OuuVYH9tu3NtTbvv2Xztj+U+vln8OY/tvf6D6Xofqm5gRf2KfIGXKOXCCXpfznJMf8p/q/gusauUZukFvkTv6zYvEfIta/X3MP1w/II/KEPCMvjv+x95b/afl/hes3ZIe8Ix/Ip/xnJeYs4D9HiKVhnZkvJ5q5+WE5s6+8e6Wc+Vv3t4bZg3s+ySLHf75YrGdGc+/BfT5lIf/yz0L+ux5YyL/8s5D/rgcW8i//LOS/64GF/Ms/C/nvemAh//LP4i/vcKQyVC//POS/64GF/Mv/lMntn8kUepN/HlPoTf55TKE39jt3Cvc9qG/7PdlrAEgAAA==
   </data>
  </layer>
 </map>
