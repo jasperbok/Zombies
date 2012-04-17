@@ -104,16 +104,31 @@ public class MobDirector {
 			for (MobAttractor attractor : attractors) {
 				attractor.update();
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
+				
+				// If the mob is near an attractor it will stop moving.
+				if (Math.abs(mob.position.x - attractor.position.x) < mob.boundingBox.getWidth() / 2) {
+					v.x = 0;
+					break;
+				}
+				
 				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange && mob.boundingBox.intersects(attractor.object.boundingBox)) {
 					v = new Vector2f(0, 0);
-					// End the game
+					
+					// End the game if the mob touches an agression attractor.
+					/* un-uncomment if the game should end when the player touches a zombie
 					try {
 						container.reinit();
 					} catch (SlickException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}//*/
 				}
+			}
+			
+			if (v.x > mob.maxVelocity.x) {
+				v.x = mob.maxVelocity.x;
+			} else if (v.x < -mob.maxVelocity.x) {
+				v.x = -mob.maxVelocity.x;
 			}
 			
 			mob.velocity.x += v.x;
@@ -226,9 +241,9 @@ public class MobDirector {
 		
 		// The division by (1 * (1000 / power)) is a limiter.
 		// The higher the division the slower the mob will move towards a point.
-		//v.x = (10 * (power)) / ((mob.position.x - point.x) * 100);
-		if (mob.position.x < point.x) v.x = 1;
-		else if (mob.position.x > point.x) v.x = -1;
+		v.x = (500 * (power)) / -((mob.position.x - point.x) * 100);
+		//if (mob.position.x < point.x) v.x = 1;
+		//else if (mob.position.x > point.x) v.x = -1;
 		
 		return v;
 	}

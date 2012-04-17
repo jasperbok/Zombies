@@ -12,11 +12,14 @@ import org.newdawn.slick.geom.Vector2f;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.level.Level;
+import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.screen.Camera;
 
 public class MagneticCrane extends Entity implements Usable {
 	public Vector2f sliderPos;
 	public Vector2f armPos;
+	
+	public LightSource craneLight;
 	
 	private Entity user;
 	private Rectangle useBox;
@@ -69,6 +72,11 @@ public class MagneticCrane extends Entity implements Usable {
 		playerControlled = true;
 		this.user = user;
 		Camera.getInstance().setTarget(this, new Vector2f(0, 400));
+		
+		// Create the crane light when the crane is used.
+		craneLight = new LightSource(new Vector2f(armPos.getX() + 30, 730), 400, 1, new Color(200, 200, 200), camera);
+		Level.lights.add(craneLight);
+		level.fl.switchOnOff();
 	}
 	
 	/**
@@ -83,7 +91,16 @@ public class MagneticCrane extends Entity implements Usable {
 	}
 	
 	public void update(Input input, int delta) {
-		if (playerControlled) handleInput(input);
+		if (playerControlled) {
+			handleInput(input);
+			craneLight.setPosition(new Vector2f(armPos.x + arm.getWidth() / 2, armPos.y + arm.getHeight()));
+		} else {
+			if (Level.lights.contains(craneLight)) {
+				Level.lights.remove(craneLight);
+				craneLight = null;
+				level.fl.switchOnOff();
+			}
+		}
 		
 		// Because the crane itself does not have a velocity, it is not
 		// affected by TileEnvironment. Therefore we increment the arm's

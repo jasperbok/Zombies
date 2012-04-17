@@ -13,10 +13,10 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.level.Level;
 
 public class BloodMark extends Entity implements Attractor {
-	private int lifetime = 5000;
+	private int lifetime = 50000;
 	private int currentLifetime = 0;
 	private Image image;
-	private float attractionPower = 0f;
+	private float attractionPower = 100f;
 	
 	/**
 	 * Class constructor.
@@ -27,6 +27,7 @@ public class BloodMark extends Entity implements Attractor {
 	 * @throws SlickException
 	 */
 	public BloodMark(Level level, float xPos, float yPos) throws SlickException {
+		gravityAffected = false;
 		image = new Image("data/sprites/entity/object/blood.png", new Color(255, 255, 255));
 		this.level = level;
 		boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
@@ -37,7 +38,10 @@ public class BloodMark extends Entity implements Attractor {
 	 * Renders the bloodmark on the screen if it's lifetime has not expired.
 	 */
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (currentLifetime < lifetime) image.draw(renderPosition.x, renderPosition.y);
+		//System.out.println("X:" + position.x);
+		if (currentLifetime < lifetime) {
+			image.draw(renderPosition.x, renderPosition.y);
+		}
 	}
 	
 	/**

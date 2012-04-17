@@ -15,12 +15,12 @@ import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.light.FlashLight;
+import nl.timcommandeur.zombies.light.LightSource;
 import nl.timcommandeur.zombies.screen.Camera;
 
 public class Level1 extends Level {
 	public Elevator elevator;
 	public MagneticCrane crane;
-	public FlashLight[] craneLights;
 	public Zombie zombie;
 	public Crate crate;
 	
@@ -31,8 +31,8 @@ public class Level1 extends Level {
 	public Level1() throws SlickException {
 		super("level1");
 		Player player = new Player(100, this);
-		//player.setPosition(1800, 660);
-		player.setPosition(300, 320);
+		player.setPosition(1800, 660);
+		//player.setPosition(300, 320);
 		env.setPlayer(player);
 		
 		crateZombie = new Zombie((float)(2400), 660);
@@ -52,30 +52,26 @@ public class Level1 extends Level {
 			zl.addBlockingPointRight(600);
 			env.addMob(zl);
 		}
-		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
+		env.mobDirector.addAttractor(env.getPlayer(), 50, true);
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
 		
-		/*
-		craneLights = new FlashLight[2];
-		craneLights[0] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 30, 130), camera);
-		craneLights[1] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 90, 130), camera);
-		craneLights[0].rotate(100);
-		craneLights[1].rotate(80);
-		craneLights[0].setColor(new Color(150, 100, 100));
-		craneLights[1].setColor(new Color(150, 100, 100));
-		*/
+		//craneLights[0] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 30, 730), 200, camera);
+		//craneLights[1] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 90, 730), 200, camera);
+		//craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30 + camera.position.getX(), 730 - camera.position.getY()));
+		//craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90 + camera.position.getX(), 730 - camera.position.getY()));
+		//craneLights[0].rotate(100);
+		//craneLights[1].rotate(80);
+		//craneLights[0].setColor(new Color(100, 100, 100));
+		//craneLights[1].setColor(new Color(100, 100, 100));
+		
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException {
-		/*
+		
 		//craneLights[0].setPosition(new Vector2f(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
-		craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30 + camera.position.getX(), 130 - camera.position.getY()));
-		craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90 + camera.position.getX(), 130 - camera.position.getY()));
-		craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30, 130));
-		craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90, 130));
-		*/
+		
 		
 		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
 			crateZombie.position.x = 100000000;

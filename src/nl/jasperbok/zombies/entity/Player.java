@@ -179,7 +179,6 @@ public class Player extends Mob {
 	
 	private void addBloodMark() {
 		try {
-			System.out.println("blabla");
 			level.env.addAttractor(boundingBox, "BloodMark");
 		} catch (SlickException e) {
 			e.printStackTrace();

@@ -58,6 +58,21 @@ public class Zombie extends Mob {
 		//	velocity.add(level.gravity);
 		//}
 		
+		// Stop when touching a left blocking point.
+		for (Vector2f pl : blockingPointsLeft) {
+			if (position.x + velocity.x < pl.x) {
+				velocity.x = 0;
+			}
+		}
+		
+		// Stop when touching a right blocking point.
+		for (Vector2f pr : blockingPointsRight) {
+			if (position.x + velocity.x > pr.x) {
+				velocity.x = 0;
+			}
+		}
+		
+		// Determine the animation.
 		if (velocity.x < 0) {
 			currentAnimation = walkLeftAnimation;
 		} else if (velocity.x > 0) {
@@ -69,18 +84,6 @@ public class Zombie extends Mob {
 		/*if (Math.abs(velocity.x) > 5) {
 			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
 		}//*/
-		
-		for (Vector2f pl : blockingPointsLeft) {
-			if (position.x < pl.x) {
-				position.x += 2;
-			}
-		}
-		
-		for (Vector2f pr : blockingPointsRight) {
-			if (position.x > pr.x) {
-				position.x -= 2;
-			}
-		}
 		
 		updateBoundingBox();
 		
