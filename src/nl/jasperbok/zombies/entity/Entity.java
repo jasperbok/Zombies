@@ -88,4 +88,11 @@ public abstract class Entity extends RenderObject {
 			comp.update(input, delta);
 		}
 	}
+	
+	/**
+	 * Makes the entity die.
+	 */
+	public void die() {
+		this.level.env.remove(this);
+	}
 }

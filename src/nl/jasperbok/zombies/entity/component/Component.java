@@ -6,9 +6,11 @@ import org.newdawn.slick.Input;
 
 public abstract class Component {
 	
-	public static int GRAVITY = 1;
-	public static int DRAGGABLE = 2;
-	public static int PLAYER_INPUT = 20;
+	public static final int GRAVITY = 1;
+	public static final int DRAGGABLE = 2;
+	public static final int LIFE = 3;
+	public static final int DAMAGING_AURA = 4;
+	public static final int PLAYER_INPUT = 20;
 
 	public int id;
 	protected Entity owner;

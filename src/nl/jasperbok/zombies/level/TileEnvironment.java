@@ -101,7 +101,25 @@ public class TileEnvironment {
 		}
 	}
 	
-	private void checkForCollisions() {
+	/**
+	 * Checks if the given entity collides with another entity.
+	 * 
+	 * @param checkingEntity
+	 * @return ArrayList<Entity> The entities the given entity colledes with.
+	 */
+	public ArrayList<Entity> checkForEntityCollision(Entity checkingEntity) {
+		ArrayList<Entity> colliding = new ArrayList<Entity>();
+		
+		for (Entity entity : allEntities) {
+			if (checkingEntity != entity && checkingEntity.boundingBox.intersects(entity.boundingBox)) {
+				colliding.add(entity);
+			}
+		}
+		
+		return colliding;
+	}
+	
+	/*private void checkForCollisions() {
 		for (int i = 0; i < allEntities.size(); i++) {
 			for (int j = i + 1; j < allEntities.size(); j++) {
 				if (allEntities.get(i).isBlocking || allEntities.get(j).isBlocking) {
@@ -138,7 +156,7 @@ public class TileEnvironment {
 				}
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Checks whether an entity is on something solid with his feet.
@@ -190,6 +208,8 @@ public class TileEnvironment {
 		}
 		return false;
 	}
+	
+	
 	
 	private void checkForTileCollisions() {
 		for (Entity ent: allEntities) {
@@ -326,6 +346,20 @@ public class TileEnvironment {
 				g.draw(ent.boundingBox);
 			}
 		}
+	}
+	
+	/**
+	 * Removes the given entity.
+	 * 
+	 * @param entity
+	 */
+	public void remove(Entity entity) {
+		if (entities.contains(entities)) entities.remove(entity);
+		if (entities.contains(mobs)) entities.remove(entity);
+		if (entities.contains(attractors)) entities.remove(entity);
+		if (entities.contains(usableEntities)) entities.remove(entity);
+		if (entities.contains(allEntities)) entities.remove(entity);
+		entity = null;
 	}
 	
 	/** GETTERS AND SETTERS **/
