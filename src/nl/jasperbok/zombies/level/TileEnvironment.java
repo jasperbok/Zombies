@@ -90,7 +90,6 @@ public class TileEnvironment {
 	
 	private void updateEntities(Input input, int delta) {
 		for (Entity ent: allEntities) {
-			if (ent.gravityAffected) ent.velocity.add(gravity);
 			ent.update(input, delta);
 			ent.updateRenderPosition();
 		}
