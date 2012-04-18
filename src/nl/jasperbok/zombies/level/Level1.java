@@ -40,7 +40,7 @@ public class Level1 extends Level {
 		env.setPlayer(player);
 		
 		// Creating a Zombie.
-		crateZombie = new Zombie((float)(2400), 660);
+		crateZombie = new Zombie(this, (float)(2400), 660);
 		env.addMob(crateZombie);
 		crateZombie.addBlockingPointLeft(2290);
 		
@@ -58,7 +58,7 @@ public class Level1 extends Level {
 		env.addEntity(new WoodenCrate(this, 3520, 1040));
 		
 		for (int i = 0; i < 2; i++) {
-			Zombie zl = new Zombie((float)(10 + i * 30), 80f);
+			Zombie zl = new Zombie(this, (float)(10 + i * 30), 80f);
 			zl.addBlockingPointRight(600);
 			env.addMob(zl);
 		}

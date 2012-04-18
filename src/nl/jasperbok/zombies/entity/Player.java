@@ -29,10 +29,6 @@ public class Player extends Mob {
 	public Player(int health, Level level) throws SlickException {
 		this.health = health;
 		super.init(level);
-		this.init();
-	}
-	
-	public void init() throws SlickException {
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
 		this.acceleration = new Vector2f(0.06f, 0);
@@ -40,7 +36,10 @@ public class Player extends Mob {
 		this.position = new Vector2(280.0f, 300.0f);
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
-		
+		this.init();
+	}
+	
+	public void init() throws SlickException {		
 		// Fix the walking animations.
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_no_arms_girl.png", 75, 150);
 		walkRightAnimation = new Animation();

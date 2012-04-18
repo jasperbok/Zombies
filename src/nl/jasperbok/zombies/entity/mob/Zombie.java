@@ -3,7 +3,9 @@ package nl.jasperbok.zombies.entity.mob;
 import java.util.ArrayList;
 
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.object.Crate;
+import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -26,7 +28,9 @@ public class Zombie extends Mob {
 	private ArrayList<Vector2f> blockingPointsLeft;
 	private ArrayList<Vector2f> blockingPointsRight;
 	
-	public Zombie(float x, float y) throws SlickException {
+	public Zombie(Level level, float x, float y) throws SlickException {
+		super.init(level);
+		this.addComponent(new GravityComponent(0.01f, this));
 		this.blockingPointsLeft = new ArrayList<Vector2f>();
 		this.blockingPointsRight = new ArrayList<Vector2f>();
 		this.position.x = x;
@@ -50,14 +54,6 @@ public class Zombie extends Mob {
 	}
 	
 	public void update(Input input, int delta) {
-		//position.add(velocity);
-		
-		//String moveStatus = level.movingStatus(this);
-		
-		//if (moveStatus == "falling") {
-		//	velocity.add(level.gravity);
-		//}
-		
 		// Stop when touching a left blocking point.
 		for (Vector2f pl : blockingPointsLeft) {
 			if (position.x + velocity.x < pl.x) {
@@ -81,14 +77,8 @@ public class Zombie extends Mob {
 			currentAnimation = idleAnimation;
 		}
 		
-		/*if (Math.abs(velocity.x) > 5) {
-			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
-		}//*/
-		
 		updateBoundingBox();
-		
-		//if (draw) draw = !crateOnHead();
-		//System.out.println(crateOnHead());
+		super.update(input, delta);
 	}
 	
 	public void addBlockingPointLeft(float x) {
