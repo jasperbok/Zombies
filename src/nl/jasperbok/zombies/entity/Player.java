@@ -12,7 +12,6 @@ import org.newdawn.slick.geom.Vector2f;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
-import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.mob.Mob;
@@ -20,7 +19,6 @@ import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Player extends Mob {
 	public float climbSpeed = 0.1f;
-	private float maxWalkSpeed = 0.2f;
 	
 	// Status variables.
 	protected boolean wasGoingLeft = false;
@@ -108,31 +106,11 @@ public class Player extends Mob {
 		}
 	}
 	
-	public void addBloodMark() {
-		try {
-			level.env.addAttractor(boundingBox, "BloodMark");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void useObject() {
-		Usable target = level.env.getUsableEntity(boundingBox);
-		if (target != null) {
-			target.use(this);
-		}
-	}
-	
 	private void climbObject() {
 		Entity target = (Entity) level.env.getUsableEntity(boundingBox);
 		if (target != null && target instanceof WoodenCrate) {
 			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
 		}
-	}
-	
-	public void hurt(int amount) {
-		health -= amount;
-		Hud.getInstance().setPlayerHealth(health);
 	}
 
 	public void render(GameContainer container, Graphics g) throws SlickException {
