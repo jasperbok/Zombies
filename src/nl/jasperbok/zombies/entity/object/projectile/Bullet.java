@@ -39,6 +39,9 @@ public class Bullet extends Entity {
 		this.velocity = velocity;
 		
 		this.image = new Image("data/sprites/entity/object/projectile/bullet.png");
+		if (velocity.x > 0) {
+			this.image.getFlippedCopy(true, false);
+		}
 		
 		addComponent(new LifeComponent(this));
 		addComponent(new DamagingAuraComponent(this, damage));
