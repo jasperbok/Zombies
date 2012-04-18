@@ -1,11 +1,13 @@
 package nl.jasperbok.zombies.entity.mob;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
 
 public abstract class Mob extends Entity {
 	public int agressionRange = 50;
+	public Vector2f maxVelocity = new Vector2f(4.0f, 0.0f);
 	protected int health = 50;
 	protected int maxHealth = 100;
 	

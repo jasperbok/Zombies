@@ -2,7 +2,6 @@ package nl.jasperbok.zombies.level;
 
 import java.util.ArrayList;
 
-import nl.jasperbok.slickhelp.geom.GeomHelper;
 import nl.jasperbok.zombies.entity.Attractor;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
@@ -16,7 +15,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
@@ -212,6 +210,10 @@ public class TileEnvironment {
 				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
 					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
 				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
+					//System.out.println("Collision on a side");
+					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
+				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
+					//System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
 				}
 				// Right side collisions.
@@ -267,7 +269,9 @@ public class TileEnvironment {
 		
 		switch (type) {
 		case "BloodMark":
-			attractors.add(new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20));
+			BloodMark bm = new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20);
+			addEntity(bm);
+			this.mobDirector.addAttractor(bm, 60, false);
 			break;
 		}
 	}

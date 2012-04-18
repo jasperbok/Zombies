@@ -22,6 +22,7 @@ public class FlashLight {
 	
 	public Camera camera;
 	
+	protected float radius = 800;
 	protected int height = 30;
 	protected int width = 60;
 	protected int currentAngle;
@@ -34,8 +35,13 @@ public class FlashLight {
 	}
 	
 	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, Camera camera) {
+		this(lights, hulls, position, 800, camera);
+	}
+	
+	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, float radius, Camera camera) {
 		this.lights = lights;
 		this.hulls = hulls;
+		this.radius = radius;
 		this.camera = camera;
 		
 		init();
@@ -104,7 +110,7 @@ public class FlashLight {
 	}
 	
 	public void init() {
-		createLights(new Color(100, 100, 100));
+		createLights(new Color(200, 200, 200));
 		createHulls();
 	}
 	
@@ -128,7 +134,7 @@ public class FlashLight {
 	}
 	
 	public void createLights(Color c) {
-		LightSource light = new LightSource(new Vector2f(0, 0), 600, 0, c, camera);
+		LightSource light = new LightSource(new Vector2f(0, 0), radius, 0, c, camera);
 		lights.add(light);
 		flashLightLight = light;
 	}
