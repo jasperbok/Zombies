@@ -82,10 +82,10 @@ public class AutoTurret extends Entity implements Observer {
 				float xVel = 0;
 				if (facingLeft) {
 					xPos = position.getX();
-					xVel = -40f;
+					xVel = -2f;
 				} else {
 					xPos = position.getX() + turretOnImage.getWidth();
-					xVel = 40f;
+					xVel = 2f;
 				}
 				float yPos = position.getY() + 17;
 				try {
