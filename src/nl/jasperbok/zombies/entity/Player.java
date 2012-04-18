@@ -14,14 +14,13 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
+import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Player extends Mob {
-	private float climbSpeed = 0.1f;
-	private float walkAcceleration = 0.06f;
+	public float climbSpeed = 0.1f;
 	private float maxWalkSpeed = 0.2f;
-	private float maxFallSpeed = 2f;
 	
 	// Status variables.
 	protected boolean wasGoingLeft = false;
@@ -35,10 +34,13 @@ public class Player extends Mob {
 	
 	public void init() throws SlickException {
 		this.addComponent(new GravityComponent(0.01f, this));
-		gravityAffected = false;
-		position = new Vector2(280.0f, 300.0f);
-		playerControlled = true;
-		boundingBox = new Rectangle(position.x, position.y, 10, 10);
+		this.addComponent(new PlayerInputComponent(this));
+		this.gravityAffected = false;
+		this.acceleration = new Vector2f(0.06f, 0);
+		this.maxVelocity = new Vector2f(0.1f, 10f);
+		this.position = new Vector2(280.0f, 300.0f);
+		this.playerControlled = true;
+		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		
 		// Fix the walking animations.
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_no_arms_girl.png", 75, 150);
@@ -74,6 +76,7 @@ public class Player extends Mob {
 		updateBoundingBox();
 		
 		wasClimbing = isClimbing;
+		isClimbing = false;
 		
 		this.isOnGround = level.env.isOnGround(this, false);
 		if (wasClimbing && level.env.isOnClimableSurface(this)) {
@@ -82,75 +85,8 @@ public class Player extends Mob {
 		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
 		}
-
-		/*
-		// If the player isn't standing on something AND not climbing, he must be falling:
-		if ("false".equals(map.getTileProperty(tileUnderneathId, "blocked", "false"))) {
-			isFalling = true;
-			//if (velocity.y <= 0.05f) velocity.y += gravity.y;
-		} else {
-			isOnGround = true;
-			isFalling = false;
-		}
 		
-		// Climbing?
-		if (wasClimbing && ("true".equals(map.getTileProperty(topTileId, "climable", "false")) ||
-					"true".equals(map.getTileProperty(bottomTileId, "climable", "false")))) {
-			isClimbing = true;
-			isFalling = false;
-		}
-
-		// Apply vertical forces according to state.
-		if (isFalling) velocity.y += gravity.y * delta;
-		if (isOnGround || isClimbing) velocity.y = 0;
-		*/
-		
-		if (playerControlled) {
-			// Handle player input.
-			if (input.isKeyDown(Input.KEY_D)) {
-				// Move the player right.
-				velocity.x += walkAcceleration;
-				if (velocity.x > maxWalkSpeed) velocity.x = maxWalkSpeed;
-			}
-			if (input.isKeyDown(Input.KEY_A)) {
-				// Move the player left.
-				velocity.x -= walkAcceleration;
-				if (velocity.x < -maxWalkSpeed) velocity.x = -maxWalkSpeed;
-			}
-			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
-				if (velocity.x < 0.0f) {
-					velocity.x += walkAcceleration * 2;
-					if (velocity.x > 0.0f) velocity.x = 0.0f;
-				} else if (velocity.x > 0.0f) {
-					velocity.x -= walkAcceleration * 2;
-					if (velocity.x < 0.0f) velocity.x = 0.0f;
-				}
-			}
-			if (input.isKeyDown(Input.KEY_Q)) {
-				addBloodMark();
-			}
-			if (input.isKeyDown(Input.KEY_W)){
-				if (level.env.isOnClimableSurface(this)) {
-					isClimbing = true;
-					velocity.set(velocity.getX(), -climbSpeed);
-				}
-			}
-			if (input.isKeyDown(Input.KEY_S)){
-				if (level.env.isOnClimableSurface(this)) {
-					isClimbing = true;
-					velocity.set(velocity.getX(), climbSpeed);
-				}
-			}
-			if (input.isKeyPressed(Input.KEY_E)) {
-				useObject();
-			}
-			if (input.isKeyPressed(Input.KEY_SPACE)) {
-				climbObject();
-			}
-			if (input.isMousePressed(0)) {
-				level.fl.switchOnOff();
-			}
-		}
+		super.update(input, delta);
 		
 		// Decide what animation should be played.
 		if (isOnGround) {
@@ -172,12 +108,9 @@ public class Player extends Mob {
 			// Not on ground and not climbing, surely the player is falling!
 			//currentAnimation = fallAnimation;
 		}
-		
-		//System.out.println(isOnGround);
-		super.update(input, delta);
 	}
 	
-	private void addBloodMark() {
+	public void addBloodMark() {
 		try {
 			System.out.println("blabla");
 			level.env.addAttractor(boundingBox, "BloodMark");

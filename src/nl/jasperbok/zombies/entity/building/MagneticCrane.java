@@ -42,7 +42,7 @@ public class MagneticCrane extends Entity implements Usable {
 		this.position = pos;
 		this.armVelocity = new Vector2f(0f, 0f);
 		this.armAcceleration = new Vector2f(0.01f, 0.01f);
-		this.maxArmVelocity = new Vector2f(1f, 1f);
+		this.maxArmVelocity = new Vector2f(0.1f, 0.1f);
 		this.useBox = new Rectangle(1840, 720, 80, 160);
 		
 		// Initialize the images.

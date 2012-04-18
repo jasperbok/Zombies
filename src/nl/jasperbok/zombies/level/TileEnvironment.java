@@ -210,10 +210,8 @@ public class TileEnvironment {
 				int relTopLeftY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
 				int relBottomLeftY = (int)(Math.floor((ent.boundingBox.getMaxY() - 10) / tileHeight));
 				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
-					System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
 				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
-					System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
 				}
 				// Right side collisions.

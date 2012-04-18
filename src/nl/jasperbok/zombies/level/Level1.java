@@ -31,8 +31,8 @@ public class Level1 extends Level {
 	public Level1() throws SlickException {
 		super("level1");
 		Player player = new Player(100, this);
-		//player.setPosition(1800, 660);
-		player.setPosition(300, 320);
+		player.setPosition(1800, 660); // Start at crane controls.
+		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
 		crateZombie = new Zombie((float)(2400), 660);

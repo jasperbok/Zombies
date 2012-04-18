@@ -15,9 +15,9 @@ import nl.jasperbok.zombies.math.Vector2;
 
 public abstract class Entity extends RenderObject {
 	public Level level;
-	public Vector2f velocity = new Vector2(0.0f, 0.0f);
-	public Vector2 acceleration = new Vector2(0f, 0f);
-	public Vector2 maxVelocity = new Vector2(0f, 0f);
+	public Vector2f velocity = new Vector2f(0.0f, 0.0f);
+	public Vector2f acceleration = new Vector2f(0f, 0f);
+	public Vector2f maxVelocity = new Vector2f(0f, 0f);
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public boolean isBlocking = true;
 	public boolean isTopSolid = false;
