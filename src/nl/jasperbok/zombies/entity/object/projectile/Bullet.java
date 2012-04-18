@@ -35,13 +35,14 @@ public class Bullet extends Entity {
 	 * @throws SlickException
 	 */
 	public Bullet(Level level, Vector2f position, Vector2f velocity, int damage) throws SlickException {
+		super.init(level);
 		this.position = position;
 		this.velocity = velocity;
 		
 		this.image = new Image("data/sprites/entity/object/projectile/bullet.png");
 		
-		addComponent(new LifeComponent(this));
-		addComponent(new DamagingAuraComponent(this, damage));
+		this.addComponent(new LifeComponent(this));
+		this.addComponent(new DamagingAuraComponent(this, damage));
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

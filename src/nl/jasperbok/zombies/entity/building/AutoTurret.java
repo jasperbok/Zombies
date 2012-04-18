@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Vector2f;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Observer;
 import nl.jasperbok.zombies.entity.Observable;
+import nl.jasperbok.zombies.entity.object.projectile.Bullet;
 import nl.jasperbok.zombies.level.Level;
 
 public class AutoTurret extends Entity implements Observer {
@@ -76,7 +77,22 @@ public class AutoTurret extends Entity implements Observer {
 		if (firing) {
 			if (lastShotFired >= fireRate) {
 				lastShotFired = 0;
-				System.out.println("turret firing!");
+				
+				float xPos = 0;
+				float xVel = 0;
+				if (facingLeft) {
+					xPos = position.getX();
+					xVel = -40f;
+				} else {
+					xPos = position.getX() + turretOnImage.getWidth();
+					xVel = 40f;
+				}
+				float yPos = position.getY() + 17;
+				try {
+					level.env.addEntity(new Bullet(level, new Vector2f(xPos, yPos), new Vector2f(xVel, 0)));
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
