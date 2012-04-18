@@ -8,8 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
+import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
@@ -30,14 +32,22 @@ public class Level1 extends Level {
 
 	public Level1() throws SlickException {
 		super("level1");
+		
+		// Creating the Player.
 		Player player = new Player(100, this);
 		player.setPosition(1800, 660); // Start at crane controls.
 		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
+		// Creating a Zombie.
 		crateZombie = new Zombie((float)(2400), 660);
 		env.addMob(crateZombie);
 		crateZombie.addBlockingPointLeft(2290);
+		
+		// Creating a Switch and AutoTurret.
+		Switch turretSwitch = new Switch(this, true, new Vector2f(1800, 660));
+		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(1900, 660)));
+		env.addEntity(turretSwitch);
 		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
