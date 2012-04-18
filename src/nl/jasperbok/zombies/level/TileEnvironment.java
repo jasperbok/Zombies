@@ -34,6 +34,7 @@ public class TileEnvironment {
 	private ArrayList<Mob> mobs;
 	private Tile[][] tiles;
 	private ArrayList<Entity> attractors;
+	private ArrayList<Entity> garbage;
 	/**
 	 * Contains all the entities in the environment. This variable is made
 	 * so we only have to loop over one ArrayList instead of several.
@@ -70,6 +71,7 @@ public class TileEnvironment {
 		this.allEntities = new ArrayList<Entity>();
 		this.attractors = new ArrayList<Entity>();
 		this.mobDirector = new MobDirector(mobs);
+		this.garbage = new ArrayList<Entity>();
 		
 		/*for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
@@ -85,6 +87,7 @@ public class TileEnvironment {
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();
+		emptyGarbage();
 		//checkForCollisions();
 	}
 	
@@ -354,12 +357,23 @@ public class TileEnvironment {
 	 * @param entity
 	 */
 	public void remove(Entity entity) {
-		if (entities.contains(entities)) entities.remove(entity);
-		if (entities.contains(mobs)) entities.remove(entity);
-		if (entities.contains(attractors)) entities.remove(entity);
-		if (entities.contains(usableEntities)) entities.remove(entity);
-		if (entities.contains(allEntities)) entities.remove(entity);
-		entity = null;
+		garbage.add(entity);
+	}
+	
+	/**
+	 * Clears the garbage array.
+	 * @param entity
+	 */
+	public void emptyGarbage() {
+		for (Entity entity : garbage) {
+			if (entities.contains(entity)) entities.remove(entity);
+			if (mobs.contains(entity)) mobs.remove((Mob)entity);
+			if (attractors.contains(entity)) attractors.remove(entity);
+			if (usableEntities.contains(entity)) usableEntities.remove(entity);
+			if (allEntities.contains(entity)) allEntities.remove(entity);
+			entity = null;
+		}
+		garbage.clear();
 	}
 	
 	/** GETTERS AND SETTERS **/

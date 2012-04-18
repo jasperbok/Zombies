@@ -93,6 +93,9 @@ public abstract class Entity extends RenderObject {
 	 * Makes the entity die.
 	 */
 	public void die() {
-		this.level.env.remove(this);
+		if (level != null && level.env != null && this != null) {
+			System.out.println("Class: " + this.getClass().toString());
+			this.level.env.remove(this);
+		}
 	}
 }
