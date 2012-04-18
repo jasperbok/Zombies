@@ -41,13 +41,6 @@ public abstract class Mob extends Entity {
 	}
 	
 	/**
-	 * Makes the mob die.
-	 */
-	protected void die() {
-		//this.level.remove(this);
-	}
-	
-	/**
 	 * Makes the mob hop with a given velocity.
 	 * 
 	 * @param x
