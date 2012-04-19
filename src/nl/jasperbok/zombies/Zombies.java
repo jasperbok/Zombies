@@ -23,7 +23,7 @@ public class Zombies extends StateBasedGame {
 
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		
-		addState(new MainMenu());
+		//addState(new MainMenu());
 		addState(new Level1());
 	}
 }
