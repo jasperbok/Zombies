@@ -45,13 +45,13 @@ public class Player extends Mob {
 	
 	public void init() throws SlickException {		
 		// Fix the walking animations.
-		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walksheet_no_arms_girl.png", 75, 150);
+		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walkingwalking.png", 75, 150);
 		walkRightAnimation = new Animation();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			walkRightAnimation.addFrame(walkSprites.getSprite(i, 0), 150);
 		}
 		walkLeftAnimation = new Animation();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
 		}
 		
@@ -92,20 +92,20 @@ public class Player extends Mob {
 		super.update(input, delta);
 		
 		// Decide what animation should be played.
-		if (isOnGround) {
+		if (isClimbing) {
+			currentAnimation = climbAnimation;
+			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
+				currentAnimation.stop();
+			} else if (currentAnimation.isStopped()) {
+				currentAnimation.start();
+			}
+		} else if (isOnGround) {
 			if (velocity.getX() < 0f) {
 				currentAnimation = walkLeftAnimation;
 			} else if (velocity.getX() > 0f) {
 				currentAnimation = walkRightAnimation;
 			} else if (velocity.getX() == 0f) {
 				currentAnimation = idleAnimation;
-			}
-		} else if (isClimbing) {
-			currentAnimation = climbAnimation;
-			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
-				currentAnimation.stop();
-			} else if (currentAnimation.isStopped()) {
-				currentAnimation.start();
 			}
 		} else {
 			// Not on ground and not climbing, surely the player is falling!

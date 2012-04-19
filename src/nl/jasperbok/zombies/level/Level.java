@@ -10,11 +10,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import LightTest.ConvexHull;
 import LightTest.FrameBufferObject;
 import LightTest.Light;
-import LightTest.Vec2;
 
 import nl.timcommandeur.zombies.light.FlashLight;
 import nl.timcommandeur.zombies.light.LightSource;
@@ -23,8 +25,8 @@ import nl.timcommandeur.zombies.screen.Camera;
 
 import nl.jasperbok.zombies.gui.Hud;
 
-public class Level {
-	public Vector2f gravity = new Vector2f(0.0f, 0.002f);
+public class Level extends BasicGameState implements GameState {
+	protected static int ID;
 	public Camera camera;
 	
 	public TileEnvironment env;
@@ -42,7 +44,7 @@ public class Level {
 	protected int rot = 0;
 	
 	public Level(String mapFileName) throws SlickException {
-		env = new TileEnvironment(mapFileName, gravity, this);
+		env = new TileEnvironment(mapFileName, this);
 		camera = Camera.getInstance();
 		
 		lights = new ArrayList<LightSource>();
@@ -56,7 +58,7 @@ public class Level {
 		lights.add(playerLight);
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		camera.update(container, delta);
 		Hud.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
@@ -74,7 +76,7 @@ public class Level {
 		env.update(container, delta);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//camera.translate(g);
 		
 		if (doLighting) renderScene(container, g);
@@ -196,5 +198,16 @@ public class Level {
         GL11.glColorMask(false, false, false, true);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
     }
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException {
+		// Only here because it has to...
+	}
+
+	@Override
+	public int getID() {
+		return ID;
+	}
   
 }

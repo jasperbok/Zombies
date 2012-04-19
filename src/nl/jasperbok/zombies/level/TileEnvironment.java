@@ -20,19 +20,21 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class TileEnvironment {
+	// Settings.
 	private boolean drawBoundingBoxes = false;
+	
+	// Map variables.
 	private TiledMap map;
 	private String mapName;
 	private int tileWidth;
 	private int tileHeight;
 	private Level level;
+	private Tile[][] tiles;
 	
-	private Vector2f gravity;
-	
+	// Entity variables.
 	private ArrayList<Entity> entities;
 	private ArrayList<Usable> usableEntities;
 	private ArrayList<Mob> mobs;
-	private Tile[][] tiles;
 	private ArrayList<Entity> attractors;
 	private ArrayList<Entity> garbage;
 	/**
@@ -41,6 +43,8 @@ public class TileEnvironment {
 	 */
 	private ArrayList<Entity> allEntities;
 	private Player player;
+	
+	// Utilities.
 	public MobDirector mobDirector;
 	
 	/**
@@ -49,22 +53,19 @@ public class TileEnvironment {
 	 * @param mapName The name of the map to load (without .tmx).
 	 * @throws SlickException
 	 */
-	public TileEnvironment(String mapName, Vector2f gravity, Level level) throws SlickException {
+	public TileEnvironment(String mapName, Level level) throws SlickException {
+		// Load the map and all related variables.
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 		this.mapName = mapName;
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
-		this.gravity = gravity;
 		this.level = level;
-		
-		CollisionHelper.setTileWidth(tileWidth);
-		CollisionHelper.setTileHeight(tileHeight);
-		
-		// Load them tiles.
+		// Load the tiles.
 		MapLoader loader = new MapLoader();
 		this.tiles = loader.loadTiles(map);
 		loader = null;
 		
+		// Initialize the Entity ArrayLists.
 		this.entities = new ArrayList<Entity>();
 		this.usableEntities = new ArrayList<Usable>();
 		this.mobs = new ArrayList<Mob>();
@@ -73,6 +74,7 @@ public class TileEnvironment {
 		this.mobDirector = new MobDirector(mobs);
 		this.garbage = new ArrayList<Entity>();
 		
+		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				if (tiles[x][y].isBlocking) {
@@ -107,7 +109,7 @@ public class TileEnvironment {
 	 * Checks if the given entity collides with another entity.
 	 * 
 	 * @param checkingEntity
-	 * @return ArrayList<Entity> The entities the given entity colledes with.
+	 * @return ArrayList<Entity> The entities the given entity collides with.
 	 */
 	public ArrayList<Entity> checkForEntityCollision(Entity checkingEntity) {
 		ArrayList<Entity> colliding = new ArrayList<Entity>();
@@ -229,10 +231,12 @@ public class TileEnvironment {
 		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
 	}	
 	
+	/**
+	 * Handles collisions between Entities and Tiles.
+	 */
 	private void checkForTileCollisions() {
 		for (Entity ent: allEntities) {
 			try {
-				//CollisionHelper.entityVsTiles(ent, tiles);
 				// Floor collisions.
 				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
@@ -288,7 +292,6 @@ public class TileEnvironment {
 		entities.add(ent);
 		if (ent instanceof Usable) usableEntities.add((Usable) ent);
 		updateEntityList();
-		
 	}
 	
 	/**
