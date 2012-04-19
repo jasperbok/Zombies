@@ -14,10 +14,14 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
+import nl.jasperbok.zombies.entity.item.Inventory;
+import nl.jasperbok.zombies.entity.item.Item;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Player extends Mob {
+	public Inventory inventory;
+	
 	public float climbSpeed = 0.1f;
 	
 	// Status variables.
@@ -35,6 +39,8 @@ public class Player extends Mob {
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		this.init();
+		
+		inventory = new Inventory();
 	}
 	
 	public void init() throws SlickException {		
@@ -69,6 +75,7 @@ public class Player extends Mob {
 	}
 	
 	public void update(Input input, int delta) {
+		inventory.log();
 		updateBoundingBox();
 		
 		wasClimbing = isClimbing;

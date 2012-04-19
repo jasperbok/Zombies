@@ -8,9 +8,11 @@ import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
+import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.building.Switch;
+import nl.jasperbok.zombies.entity.item.Item;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
@@ -33,6 +35,15 @@ public class Level1 extends Level {
 		player.setPosition(1800, 660); // Start at crane controls.
 		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
+		
+		// Add the key card.
+		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
+		env.addEntity(item);
+		item.setPosition(1900, 660);
+		
+		// Add the door.
+		Door door = new Door(this, new Vector2f(2800, 960));
+		env.addEntity(door);
 		
 		// Creating a Zombie.
 		crateZombie = new Zombie(this, (float)(2400), 660);
