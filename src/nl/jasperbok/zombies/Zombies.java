@@ -17,7 +17,7 @@ public class Zombies extends StateBasedGame {
 	
 	public static void main(String[] args) throws SlickException{
 		AppGameContainer app = new AppGameContainer(new Zombies());
-		app.setDisplayMode(1280, 720, true);
+		app.setDisplayMode(1280, 720, false);
 		app.start();
 	}
 

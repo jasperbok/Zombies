@@ -20,8 +20,6 @@ import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Player extends Mob {
-	public Inventory inventory;
-	
 	public float climbSpeed = 0.1f;
 	
 	// Status variables.
