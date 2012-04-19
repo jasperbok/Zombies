@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
+import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.level.Level;
 
@@ -31,8 +32,8 @@ public class Zombie extends Mob {
 	public Zombie(Level level, float x, float y) throws SlickException {
 		super.init(level);
 		
-		addComponent(new LifeComponent(this, 1));
-		
+		this.addComponent(new LifeComponent(this, 1));
+		this.addComponent(new GravityComponent(0.01f, this));
 		this.blockingPointsLeft = new ArrayList<Vector2f>();
 		this.blockingPointsRight = new ArrayList<Vector2f>();
 		this.position.x = x;
@@ -64,7 +65,7 @@ public class Zombie extends Mob {
 		//if (moveStatus == "falling") {
 		//	velocity.add(level.gravity);
 		//}
-		
+
 		// Stop when touching a left blocking point.
 		for (Vector2f pl : blockingPointsLeft) {
 			if (position.x + velocity.x < pl.x) {
@@ -88,14 +89,8 @@ public class Zombie extends Mob {
 			currentAnimation = idleAnimation;
 		}
 		
-		/*if (Math.abs(velocity.x) > 5) {
-			velocity.x = velocity.x / Math.abs(velocity.x) * 5;
-		}//*/
-		
 		updateBoundingBox();
-		
-		//if (draw) draw = !crateOnHead();
-		//System.out.println(crateOnHead());
+		super.update(input, delta);
 	}
 	
 	public void addBlockingPointLeft(float x) {

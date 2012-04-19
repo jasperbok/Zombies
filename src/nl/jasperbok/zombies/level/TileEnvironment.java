@@ -84,8 +84,11 @@ public class TileEnvironment {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
+		//System.out.println("After mobDirector call: " + player.velocity.getX());
 		updateEntities(container.getInput(), delta);
+		//System.out.println("After updateEntities call: " + player.velocity.getX());
 		moveEntities(delta);
+		//System.out.println("After moveEntities call: " + player.velocity.getX());
 		checkForTileCollisions();
 		emptyGarbage();
 		//checkForCollisions();
@@ -93,7 +96,6 @@ public class TileEnvironment {
 	
 	private void updateEntities(Input input, int delta) {
 		for (Entity ent: allEntities) {
-			if (ent.gravityAffected) ent.velocity.add(gravity);
 			ent.update(input, delta);
 			ent.updateRenderPosition();
 		}

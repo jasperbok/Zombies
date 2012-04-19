@@ -20,7 +20,6 @@ public class PlayerInputComponent extends Component {
 			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {
 				owner.velocity.set(owner.velocity.getX() + owner.acceleration.getX(), owner.velocity.getY());
-				System.out.println(owner.velocity.getX());
 				if (owner.velocity.getX() > owner.maxVelocity.getX()) {
 					owner.velocity.set(owner.maxVelocity.getX(), owner.velocity.getY());
 				}

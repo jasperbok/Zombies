@@ -22,7 +22,7 @@ public class TestLevel extends Level {
 		env.setPlayer(player);
 		//env.addEntity(new Elevator(this, 200, 620));
 		for (int i = 0; i < 5; i++) {
-			env.addMob(new Zombie((float)(100 + i * 40), 80f));
+			env.addMob(new Zombie(this, (float)(100 + i * 40), 80f));
 		}
 		env.mobDirector.addAttractor(env.getPlayer(), 1, true);
 		
