@@ -84,11 +84,8 @@ public class TileEnvironment {
 	
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
-		//System.out.println("After mobDirector call: " + player.velocity.getX());
 		updateEntities(container.getInput(), delta);
-		//System.out.println("After updateEntities call: " + player.velocity.getX());
 		moveEntities(delta);
-		//System.out.println("After moveEntities call: " + player.velocity.getX());
 		checkForTileCollisions();
 		emptyGarbage();
 		//checkForCollisions();
@@ -166,13 +163,37 @@ public class TileEnvironment {
 	/**
 	 * Checks whether an entity is on something solid with his feet.
 	 * 
+	 * We don't actually check the whole bottom side of the Entity, but only
+	 * two points: one 10px to the left of his center point and one 10px to
+	 * the right. If either or both of these points overlaps a solid object
+	 * true is returned, otherwise false.
+	 * 
 	 * @param ent The entity to check.
 	 * @return boolean True if the entity is on top of something solid.
 	 */
 	public boolean isOnGround(Entity ent, boolean resolveCollision) {
+		int entLeftX = (int)(ent.boundingBox.getCenterX() - 10);
+		int entRightX = (int)(ent.boundingBox.getCenterX() + 10);
+		int entY = (int)(ent.boundingBox.getMaxY());
 		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
 		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
 		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		
+		// Becomes true if the Entity is on a Tile that has its isBlocking property set to true.
+		boolean onAllSolidBlock =  tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
+		
+		// Becomes true if the Entity is on a Tile that has its isClimable property set to true.
+		boolean onClimableTile = tiles[relativeLeftX][relativeBottomY].isClimable || tiles[relativeRightX][relativeBottomY].isClimable;
+		
+		// Becomes true if the Entity is anywhere on the top 10 pixels of a Tile that has its isTopSolid property set to true.
+		boolean onTopSolidBlock = false;
+		if (entY % tileHeight <= 10) {
+			if (tiles[relativeLeftX][relativeBottomY].isTopSolid) {
+				onTopSolidBlock = true;
+			} else if (tiles[relativeRightX][relativeBottomY].isTopSolid) {
+				onTopSolidBlock = true;
+			}
+		}
 		
 		boolean onEntity = false;
 		// This should probably go in the hittest section...
@@ -180,41 +201,33 @@ public class TileEnvironment {
 			if (entity != ent && entity.isTopSolid) {
 				Rectangle topBox = new Rectangle(entity.position.getX(), entity.position.getY(), entity.boundingBox.getWidth(), 10);
 				if (topBox.contains(ent.boundingBox.getCenterX() - 10, ent.boundingBox.getMaxY()) || topBox.contains(ent.boundingBox.getCenterX() + 10, ent.boundingBox.getMaxY())) {
-					ent.setPosition(ent.position.getX(), entity.boundingBox.getMinY() - ent.boundingBox.getHeight());
+					//ent.setPosition(ent.position.getX(), entity.boundingBox.getMinY() - ent.boundingBox.getHeight());
 					onEntity = true;
 					break;
 				}
 			}
 		}
-		
-		boolean onAllSolidBlock =  tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
-		// This should be altered to only check the top 10 pixels of the topSolid block.
-		boolean onTopSolidBlock = tiles[relativeLeftX][relativeBottomY].isTopSolid || tiles[relativeRightX][relativeBottomY].isTopSolid;
-		return onAllSolidBlock || onTopSolidBlock || onEntity;
+		return onAllSolidBlock || onClimableTile || onTopSolidBlock || onEntity;
 	}
 	
 	/**
-	 * Checks whether an entity is on something climable.
+	 * Checks whether an Entity is on a Tile that has its isClimable property set to true.
 	 * 
-	 * To decide whether the entity is a climable tile, the point at the
-	 * entities center X and bottom Y is checked for a collision with a
-	 * climable tile.
+	 * To decide whether the Entity is a climable tile, two points are checked
+	 * for collisions with a Tile with its isClimable property set to true.
+	 * First the Entity's lowest center point is checked. Second the point
+	 * that lies 20px below its top center point is checked.
 	 * 
-	 * @param ent The entity to check.
-	 * @return boolean True if the entity's feet are on something climable.
+	 * @param ent The Entity to check.
+	 * @return boolean True if the Entity's feet are on something climable.
 	 */
 	public boolean isOnClimableSurface(Entity ent) {
 		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
-		int relativeY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
-		try {
-			return tiles[relativeX][relativeY].isClimable;
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("isOnClimableSurface() is invoked on an entity that's outside the level bounds.");
-		}
-		return false;
-	}
-	
-	
+		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
+		
+		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
+	}	
 	
 	private void checkForTileCollisions() {
 		for (Entity ent: allEntities) {
