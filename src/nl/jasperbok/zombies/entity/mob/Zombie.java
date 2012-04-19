@@ -32,6 +32,8 @@ public class Zombie extends Mob {
 	public Zombie(Level level, float x, float y) throws SlickException {
 		super.init(level);
 		
+		this.maxVelocity = new Vector2f(3, 0);
+		
 		this.addComponent(new LifeComponent(this, 1));
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.blockingPointsLeft = new ArrayList<Vector2f>();

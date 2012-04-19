@@ -47,9 +47,8 @@ public class Level1 extends Level {
 		
 		// Creating a Switch and AutoTurret.
 		Switch turretSwitch = new Switch(this, true, new Vector2f(1800, 660));
-		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(1900, 400)));
+		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(1900, 660)));
 		env.addEntity(turretSwitch);
-		env.addMob(new Zombie(this, 1800, 300));
 		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
