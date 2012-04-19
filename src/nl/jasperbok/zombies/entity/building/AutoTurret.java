@@ -30,7 +30,7 @@ public class AutoTurret extends Entity implements Observer {
 	/**
 	 * Delta time between successive shots.
 	 */
-	private int fireRate = 50;
+	private int fireRate = 150;
 	/**
 	 * Delta counter that counts the time since the last shot.
 	 */
@@ -82,10 +82,10 @@ public class AutoTurret extends Entity implements Observer {
 				float xVel = 0;
 				if (facingLeft) {
 					xPos = position.getX();
-					xVel = -2f;
+					xVel = -1f;
 				} else {
 					xPos = position.getX() + turretOnImage.getWidth();
-					xVel = 2f;
+					xVel = 1f;
 				}
 				float yPos = position.getY() + 17;
 				try {
@@ -103,7 +103,6 @@ public class AutoTurret extends Entity implements Observer {
 		} else if (message == "off") {
 			this.firing = false;
 		}
-		System.out.println(message);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
