@@ -16,6 +16,7 @@ public class DamagingAuraComponent extends Component {
 	 */
 	public DamagingAuraComponent(Entity owner) {
 		this.owner = owner;
+		this.id = Component.DAMAGING_AURA;
 	}
 	
 	/**

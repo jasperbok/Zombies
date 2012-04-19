@@ -13,6 +13,7 @@ public class LifeComponent extends Component {
 	 */
 	public LifeComponent(Entity owner) {
 		this.owner = owner;
+		this.id = Component.LIFE;
 	}
 	
 	/**

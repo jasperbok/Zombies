@@ -3,6 +3,7 @@ package nl.jasperbok.zombies.entity.mob;
 import java.util.ArrayList;
 
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.level.Level;
@@ -30,6 +31,8 @@ public class Zombie extends Mob {
 	
 	public Zombie(Level level, float x, float y) throws SlickException {
 		super.init(level);
+		
+		this.addComponent(new LifeComponent(this, 1));
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.blockingPointsLeft = new ArrayList<Vector2f>();
 		this.blockingPointsRight = new ArrayList<Vector2f>();
@@ -54,6 +57,15 @@ public class Zombie extends Mob {
 	}
 	
 	public void update(Input input, int delta) {
+		super.update(input, delta);
+		//position.add(velocity);
+		
+		//String moveStatus = level.movingStatus(this);
+		
+		//if (moveStatus == "falling") {
+		//	velocity.add(level.gravity);
+		//}
+
 		// Stop when touching a left blocking point.
 		for (Vector2f pl : blockingPointsLeft) {
 			if (position.x + velocity.x < pl.x) {
