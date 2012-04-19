@@ -285,7 +285,6 @@ public class TileEnvironment {
 		entities.add(ent);
 		if (ent instanceof Usable) usableEntities.add((Usable) ent);
 		updateEntityList();
-		
 	}
 	
 	/**
