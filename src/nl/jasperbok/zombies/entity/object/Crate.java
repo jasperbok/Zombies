@@ -57,7 +57,8 @@ public class Crate extends Entity {
 		}
 		if (draggedByMagnet) {
 			if (crane.magnetActive) {
-				this.velocity = crane.armVelocity.copy();
+				Vector2f armPosCopy = crane.armPos.copy();
+				this.position = new Vector2f(armPosCopy.x + crane.arm.getWidth() / 2 - image.getWidth() / 2, crane.armPos.copy().y + crane.arm.getHeight());
 			} else {
 				draggedByMagnet = false;
 				// Enable the GravityComponent.
