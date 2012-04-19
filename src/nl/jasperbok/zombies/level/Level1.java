@@ -1,11 +1,11 @@
 package nl.jasperbok.zombies.level;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.state.StateBasedGame;
 
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
@@ -15,12 +15,12 @@ import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
-import nl.jasperbok.zombies.math.Vector2;
-import nl.timcommandeur.zombies.light.FlashLight;
-import nl.timcommandeur.zombies.light.LightSource;
-import nl.timcommandeur.zombies.screen.Camera;
 
 public class Level1 extends Level {
+	/**
+	 * The game holding this state.
+	 */
+	private StateBasedGame game;
 	public Elevator elevator;
 	public MagneticCrane crane;
 	public Zombie zombie;
@@ -32,6 +32,7 @@ public class Level1 extends Level {
 
 	public Level1() throws SlickException {
 		super("level1");
+		this.ID = 2;
 		
 		// Creating the Player.
 		Player player = new Player(100, this);
@@ -79,7 +80,7 @@ public class Level1 extends Level {
 		
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		//craneLights[0].setPosition(new Vector2f(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
 		
@@ -88,10 +89,10 @@ public class Level1 extends Level {
 			crateZombie.position.x = 100000000;
 		}
 		
-		super.update(container, delta);
+		super.update(container, game, delta);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		super.render(container, g);
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		super.render(container, game, g);
 	}
 }

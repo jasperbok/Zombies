@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="80" tileheight="80">
  <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
   <image source="src/tiles.png" width="1600" height="1600"/>
   <tile id="0">
@@ -34,7 +34,7 @@
   </tile>
   <tile id="22">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="23">
@@ -49,12 +49,12 @@
   </tile>
   <tile id="41">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="42">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="43">
@@ -63,35 +63,99 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="401" name="Boxes" tilewidth="80" tileheight="80">
-  <image source="src/boxes.png" width="1300" height="1200"/>
-  <tile id="203">
+ <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
+  <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
+ </tileset>
+ <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
+  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <tile id="7">
    <properties>
     <property name="blocked" value="true"/>
    </properties>
   </tile>
-  <tile id="219">
+  <tile id="8">
    <properties>
     <property name="blocked" value="true"/>
    </properties>
   </tile>
-  <tile id="220">
+  <tile id="9">
    <properties>
     <property name="blocked" value="true"/>
    </properties>
   </tile>
-  <tile id="236">
+  <tile id="10">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
    <properties>
     <property name="blocked" value="true"/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="641" name="flashlightTile" tilewidth="80" tileheight="80">
-  <image source="src/Flashlight.png" width="80" height="80"/>
+ <tileset firstgid="434" name="boxes" tilewidth="80" tileheight="80">
+  <image source="src/boxes.png" trans="ffffff" width="1300" height="1200"/>
  </tileset>
- <layer name="Tile Layer 1" width="32" height="18">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UN05DQQAE0I/hAgQbkwoyBlOQc0HOBdHEgpwLcj4Ch+CmPAlbcongCzde6WmrndE0WxAEQYTCX94fWX76LqOIaPD/5zN9x0nksD8Z5Pfn9+euP7//e3+xj6mEUsqIEqOcOBVUUkU1NZFw+jP7a+XVUU8DjTTRTAsJWmkjSXtI/Zn9HfI66aKbHnrpo58BBhlimJGQ94/KG2OcCSaZYpoZZpljngUWQ+5fkrfMCqussU6KDTbZYpsddkPqD9L9e/L2OeCQI4454ZQzzrngkquQ+6/l3XDLHfc88MgTz7zwyhvvf+zPPrEc+wLuVluFAAkAAA==
+ <tileset firstgid="674" name="Turret" tilewidth="80" tileheight="80">
+  <image source="src/turret_on.png" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="678" name="BrokenVentilation" tilewidth="80" tileheight="80">
+  <image source="src/brokenVentilationTiles.png" width="480" height="320"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background" width="70" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztlk0OgjAQhVtugZ5BTHTnzwLd6hI8A3gG8OoOSSc8JjQ1/pRY+iUvDG0DmZdhBqU+I9VKLUhL3ccro8xcU3GfmfMhw3muIefcCL3o7k9wDR3O86yHMe7J9TlQUK4l6aaHMVNZ1kOny7sm3fUwtp2JvAf2K5fmBPYil+YE9iKXfLJJlNom/T8I/ot0tbujvT3pQDom338/9iKXfIE+5EJc2/xtX8iT6w98aejZLenxgnwgvSiEuLZlHWEthYj0ohLi2uZ6GZsZISK9aIS4tnkWjM2MEJFesA/Y/0tLPMV88IX04zEyF2pL7Hs+TAF6I+dCa4l9zodIJBL5d56Kyk0X
+  </data>
+ </layer>
+ <layer name="Level" width="70" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztVu1t2zAQpdK09QIunG5gQHVmkN0VbGeFRDM0HqFDdIc6QCdo7BVqe4ZEA5Rs70HP5+PJan8EBUrggfo4UnxP746cFSFcRbyPmDi4DCHELlycgT6xCa+MPs3xxcCHIg9v/X0bazJ1MIqxw4hdxJOB54gmYhva2AM9R/82zjWI2NNcXyPWEQ8y/iBzrAXMvXLgrb+vNtAljV04KGPsWHi8KU4BvokTYlkH9M+kI+uxIU0amSOnBfPdGJx0LLzUp2HMQvFcRtxEfBTAA6zBo+IGTyAWvoAOGIv+kfTYkyYD+Z7mx5ro9j2080ErxP9JLlWZ76TG2sADOwXWBXqxt1iP9I7jd6QHNB0I/7Jjbbr9oPn2itukxzxoc/HKg6zV0uWG/IJ6wvyAxCn9+1Ji+f1a9dtwXJeg27eLVhfkgFdnr4Wv976vJoHWthXolrRJ/2GktGB+AOoL7jfGNdcR9lGteL6W73fV2ZmM8QCNcrrxd9HYy4cM9xRThuP6yPyAxK+h+71xzXUEmqwE4FnFd1fh99rnDhZSB2cd4PrE8DzGXm4y3J/EL9sMv0bxxD3Pq/dr3qMqxfNX/ohXbh3cic+WHcDcWlfLg9DnXXgZsC65mLT2Tw7uxWd1B6Ch1tXyILRJaZU7c+Z6nEfPGXuZGc+1JTc//t2toQX8vqQ8zAHjtK6WB+fyzWE4PnNZZzHmAGB/ui6OayD6WsaNaD74/k7NaeU5n1+0Jlxra/VO+wfPrXrMGuk6PDZ00LoyhxmtzdtDc3sAnvOcVp6XofW25s21dlW0fuIYwKvHrAWAfzsM7T+x5l0Vp/V/WbR+6dpH9bkV+cu6WHmedGF/63qCdXCOWTwRZ71jLYCl8ByHU84LtQ5d/2vSpWsf/WzEVEoXK89zPIFJ5hp5DHgasBYA8nwYTjnjGrro/MYzbw/N7QGobUmXabDzFuC6pTHNXPP/tc421j7O9WglPJNfNGdcdzVvD83tATk9eQ3otY8Z2t+45v9rnW2sfZxrBtpLnV/OgfYxw/I3e9zam7QGWot/pXl7geVvcPTG/W9/134COLGSxA==
   </data>
  </layer>
 </map>
