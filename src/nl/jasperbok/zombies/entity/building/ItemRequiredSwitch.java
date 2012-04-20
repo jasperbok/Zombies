@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.item.Inventory;
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.SlickException;
@@ -30,6 +31,11 @@ public class ItemRequiredSwitch extends Switch {
 	public boolean checkRequiredItems(Inventory inventory) {
 		for (Integer i : requiredItems.keySet()) {
 			if (inventory.containsAmount(i) < requiredItems.get(i)) {
+				// Ugly quick fix for the player speech
+				//---
+				PlayerSpeech ps = PlayerSpeech.getInstance();
+				ps.addMessage("It seems I need a key for this...", 4000);
+				//---
 				return false;
 			}
 		}
