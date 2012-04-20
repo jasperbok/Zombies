@@ -3,6 +3,7 @@ package nl.jasperbok.zombies.entity.component;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
+import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -61,6 +62,12 @@ public class PlayerInputComponent extends Component {
 				Usable target = owner.level.env.getUsableEntity(owner.boundingBox);
 				if (target != null) {
 					target.use(owner);
+				}
+			}
+			if (input.isKeyPressed(Input.KEY_SPACE)){
+				Entity target = (Entity) owner.level.env.getUsableEntity(owner.boundingBox);
+				if (target != null && target instanceof WoodenCrate) {
+					owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
 				}
 			}
 			if (input.isMousePressed(0)) {

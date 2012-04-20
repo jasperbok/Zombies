@@ -245,11 +245,13 @@ public class TileEnvironment {
 				int relativeRightX = (int)Math.floor(entRightX / tileWidth);
 				int relativeBottomY = (int)Math.floor(entY / tileWidth);
 				
-				if (tiles[relativeLeftX][relativeBottomY].isBlocking || (tiles[relativeLeftX][relativeBottomY].isClimable && !ent.isClimbing)) {
+				//if (tiles[relativeLeftX][relativeBottomY].isBlocking || (tiles[relativeLeftX][relativeBottomY].isClimable && !ent.isClimbing)) {
+				if (tiles[relativeLeftX][relativeBottomY].isBlocking) {
 					ent.setPosition(ent.position.getX(), + tiles[relativeLeftX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
-				} else if (tiles[relativeRightX][relativeBottomY].isBlocking || (tiles[relativeRightX][relativeBottomY].isBlocking && !ent.isClimbing)) {
+				//} else if (tiles[relativeRightX][relativeBottomY].isBlocking || (tiles[relativeRightX][relativeBottomY].isBlocking && !ent.isClimbing)) {
+				} else if (tiles[relativeRightX][relativeBottomY].isBlocking) {
 					ent.setPosition(ent.position.getX(), + tiles[relativeRightX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
