@@ -14,6 +14,7 @@ import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
+import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.entity.item.Item;
