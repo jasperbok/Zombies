@@ -65,8 +65,8 @@ public class Level1 extends Level {
 		crateZombie.addBlockingPointLeft(2290);
 		
 		// Creating a Switch and AutoTurret.
-		Switch turretSwitch = new Switch(this, true, new Vector2f(4175, 300));
-		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(4075, 300)));
+		Switch turretSwitch = new Switch(this, true, new Vector2f(4275, 230));
+		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(4075, 279)));
 		env.addEntity(turretSwitch);
 		
 		camera.setTarget(env.getPlayer());
