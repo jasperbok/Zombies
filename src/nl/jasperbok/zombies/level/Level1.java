@@ -11,6 +11,7 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
+import nl.jasperbok.zombies.entity.building.ItemRequiredSwitch;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.item.Item;
@@ -38,17 +39,22 @@ public class Level1 extends Level {
 		
 		// Creating the Player.
 		Player player = new Player(100, this);
-		player.setPosition(1800, 660); // Start at crane controls.
+		player.setPosition(4200, 600); // Start at the door.
+		//player.setPosition(3800, 800); // Walking animation glitch position.
+		//player.setPosition(1800, 660); // Start at crane controls.
 		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
 		// Add the key card.
 		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
 		env.addEntity(item);
-		item.setPosition(1900, 660);
+		item.setPosition(4500, 800);
+		
+		ItemRequiredSwitch itemRequiredSwitch = new ItemRequiredSwitch(this, new Vector2f(4550, 1060));
+		env.addEntity(itemRequiredSwitch);
 		
 		// Add the door.
-		Door door = new Door(this, new Vector2f(2800, 960));
+		Door door = new Door(this, itemRequiredSwitch, new Vector2f(4640, 960));
 		env.addEntity(door);
 		
 		// Creating a Zombie.

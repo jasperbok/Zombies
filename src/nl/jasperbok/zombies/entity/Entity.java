@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.component.Component;
+import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
@@ -25,6 +26,7 @@ public abstract class Entity extends RenderObject {
 	public boolean playerControlled = false;
 	public boolean gravityAffected = true;
 	public Entity user = null;
+	public Inventory inventory;
 	
 	// Status variables.
 	public boolean wasFalling = false;
