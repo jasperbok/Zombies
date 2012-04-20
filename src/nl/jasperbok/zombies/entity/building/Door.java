@@ -29,11 +29,17 @@ public class Door extends Entity implements Observer {
 		this.setPosition(position.x, position.y);
 		this.onOffSwitch = onOffSwitch;
 		this.onOffSwitch.registerObserver(this);
+		this.isBlocking = true;
 	}
 	
 	public void update(Input input, int delta) {
 		super.update(input, delta);
 		boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
+		
+		// Ugly quickfix
+		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
+			level.env.getPlayer().position.x -= 1;
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
