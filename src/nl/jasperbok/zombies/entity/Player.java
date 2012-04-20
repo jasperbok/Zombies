@@ -73,7 +73,6 @@ public class Player extends Mob {
 	}
 	
 	public void update(Input input, int delta) {
-		inventory.log();
 		updateBoundingBox();
 		
 		wasClimbing = isClimbing;

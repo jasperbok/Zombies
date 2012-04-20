@@ -39,7 +39,7 @@ public class Level1 extends Level {
 		
 		// Creating the Player.
 		Player player = new Player(100, this);
-		player.setPosition(4200, 600); // Start at the door.
+		player.setPosition(4500, 600); // Start at the door.
 		//player.setPosition(3800, 800); // Walking animation glitch position.
 		//player.setPosition(1800, 660); // Start at crane controls.
 		//player.setPosition(300, 320); // Regular level start.
@@ -48,10 +48,11 @@ public class Level1 extends Level {
 		// Add the key card.
 		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
 		env.addEntity(item);
-		item.setPosition(4500, 800);
+		item.setPosition(4200, 800);
 		
 		ItemRequiredSwitch itemRequiredSwitch = new ItemRequiredSwitch(this, new Vector2f(4550, 1060));
 		env.addEntity(itemRequiredSwitch);
+		itemRequiredSwitch.addRequirement(Item.KEY_CARD, 1);
 		
 		// Add the door.
 		Door door = new Door(this, itemRequiredSwitch, new Vector2f(4640, 960));
