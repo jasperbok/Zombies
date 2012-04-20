@@ -48,8 +48,13 @@ public class Level1 extends Level {
 		
 		// Add the key card.
 		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
+		item.setPosition(2560, 320);
 		env.addEntity(item);
-		item.setPosition(4200, 800);
+		
+		// Add the zombie guarding the key card.
+		Zombie guardZombie = new Zombie(this, 2700, 250);
+		guardZombie.addBlockingPointRight(4080);
+		env.addMob(guardZombie);
 		
 		ItemRequiredSwitch itemRequiredSwitch = new ItemRequiredSwitch(this, new Vector2f(4550, 1060));
 		env.addEntity(itemRequiredSwitch);
@@ -65,7 +70,7 @@ public class Level1 extends Level {
 		crateZombie.addBlockingPointLeft(2290);
 		
 		// Creating a Switch and AutoTurret.
-		Switch turretSwitch = new Switch(this, true, new Vector2f(4175, 300));
+		Switch turretSwitch = new Switch(this, false, new Vector2f(4175, 300));
 		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(4075, 300)));
 		env.addEntity(turretSwitch);
 		

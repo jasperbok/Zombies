@@ -19,6 +19,10 @@ public class PlayerSpeech {
 		this.queueMessageLengths = new ArrayList<Integer>();
 	}
 	
+	public void addMessage(String message) {
+		this.addMessage(message, 5000);
+	}
+	
 	public void addMessage(String message, int duration) {
 		messageQueue.add(message);
 		queueMessageLengths.add(duration);
@@ -41,7 +45,6 @@ public class PlayerSpeech {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		if (messageQueue.size() > 0) {
 			g.drawString(messageQueue.get(0), 200, 680);
-			System.out.println("messageQueue.get(0)");
 		}
 	}
 	
