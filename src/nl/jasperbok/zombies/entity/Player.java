@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.gui.Hud;
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
@@ -41,7 +42,7 @@ public class Player extends Mob {
 		inventory = new Inventory();
 	}
 	
-	public void init() throws SlickException {		
+	public void init() throws SlickException {
 		// Fix the walking animations.
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walkingwalking.png", 75, 150);
 		walkRightAnimation = new Animation();

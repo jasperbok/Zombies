@@ -234,17 +234,27 @@ public class TileEnvironment {
 	/**
 	 * Handles collisions between Entities and Tiles.
 	 */
-	private void checkForTileCollisions() {
+	private void checkForTileCollisions() {		
 		for (Entity ent: allEntities) {
 			try {
 				// Floor collisions.
-				int relativeBottomX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
-				int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileHeight);
-				if (tiles[relativeBottomX][relativeBottomY].isBlocking) {
-					ent.setPosition(ent.position.getX(), + tiles[relativeBottomX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
+				int entLeftX = (int)(ent.boundingBox.getCenterX() - 10);
+				int entRightX = (int)(ent.boundingBox.getCenterX() + 10);
+				int entY = (int)(ent.boundingBox.getMaxY());
+				int relativeLeftX = (int)Math.floor(entLeftX / tileWidth);
+				int relativeRightX = (int)Math.floor(entRightX / tileWidth);
+				int relativeBottomY = (int)Math.floor(entY / tileWidth);
+				
+				if (tiles[relativeLeftX][relativeBottomY].isBlocking || (tiles[relativeLeftX][relativeBottomY].isClimable && !ent.isClimbing)) {
+					ent.setPosition(ent.position.getX(), + tiles[relativeLeftX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
+					// The entity is standing on something solid, so change his y velocity to 0 or less.
+					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
+				} else if (tiles[relativeRightX][relativeBottomY].isBlocking || (tiles[relativeRightX][relativeBottomY].isBlocking && !ent.isClimbing)) {
+					ent.setPosition(ent.position.getX(), + tiles[relativeRightX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
 					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
 				}
+				
 				// Left side collisions.
 				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / tileWidth);
 				int relTopLeftY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
@@ -258,6 +268,7 @@ public class TileEnvironment {
 					//System.out.println("Collision on a side");
 					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
 				}
+				
 				// Right side collisions.
 				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / tileWidth);
 				int relTopRightY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));

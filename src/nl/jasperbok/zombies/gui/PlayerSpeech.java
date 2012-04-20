@@ -15,6 +15,8 @@ public class PlayerSpeech {
 	private int currentMessagePassedTime = 0;
 	
 	private PlayerSpeech() {
+		this.messageQueue = new ArrayList<String>();
+		this.queueMessageLengths = new ArrayList<Integer>();
 	}
 	
 	public void addMessage(String message, int duration) {
