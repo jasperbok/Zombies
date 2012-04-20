@@ -24,6 +24,7 @@ import nl.timcommandeur.zombies.light.ShadowHull;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import nl.jasperbok.zombies.gui.Hud;
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 
 public class Level extends BasicGameState implements GameState {
 	protected static int ID;
@@ -61,6 +62,7 @@ public class Level extends BasicGameState implements GameState {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		camera.update(container, delta);
 		Hud.getInstance().update(delta);
+		PlayerSpeech.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
 		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
 		fl.pointToMouse(container);
@@ -93,6 +95,7 @@ public class Level extends BasicGameState implements GameState {
         }
         
 		Hud.getInstance().render(container, g);
+		PlayerSpeech.getInstance().render(container, g);
 		
 		//g.resetTransform();
 	}
