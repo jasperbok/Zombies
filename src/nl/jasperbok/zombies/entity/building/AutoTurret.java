@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.entity.building;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -35,14 +36,6 @@ public class AutoTurret extends Entity implements Observer {
 	 * Delta counter that counts the time since the last shot.
 	 */
 	private int lastShotFired = 0;
-	/**
-	 * The Image representing the AutoTurret's on state.
-	 */
-	private Image turretOnImage;
-	/**
-	 * The Image representing the AutoTurret's off state.
-	 */
-	private Image turretOffImage;
 	
 	/**
 	 * AutoTurret constructor.
@@ -57,8 +50,20 @@ public class AutoTurret extends Entity implements Observer {
 		this.facingLeft = facingLeft;
 		this.onOffSwitch = onOffSwitch;
 		this.firing = false;
-		this.turretOnImage = new Image("data/sprites/entity/building/buildings.png").getSubImage(135, 0, 135, 121);
-		this.turretOffImage = new Image("data/sprites/entity/building/buildings.png").getSubImage(0, 0, 135, 121);
+		
+		Animation turretOn = new Animation();
+		Animation turretOff = new Animation();
+		Animation turretOnFlipped = new Animation();
+		Animation turretOffFlipped = new Animation();
+		turretOn.addFrame(new Image("data/sprites/entity/building/buildings.png").getSubImage(135, 0, 135, 121), 5000);
+		turretOff.addFrame(new Image("data/sprites/entity/building/buildings.png").getSubImage(0, 0, 135, 121), 5000);
+		turretOnFlipped.addFrame(new Image("data/sprites/entity/building/buildings.png").getSubImage(135, 0, 135, 121).getFlippedCopy(true, false), 5000);
+		turretOffFlipped.addFrame(new Image("data/sprites/entity/building/buildings.png").getSubImage(0, 0, 135, 121).getFlippedCopy(true, false), 5000);
+		this.anims.put("on", turretOn);
+		this.anims.put("off", turretOff);
+		this.anims.put("onFlipped", turretOnFlipped);
+		this.anims.put("offFlipped", turretOffFlipped);
+		this.currentAnim = this.anims.get("off");
 		
 		this.onOffSwitch.registerObserver(this);
 	}
@@ -66,9 +71,32 @@ public class AutoTurret extends Entity implements Observer {
 	/**
 	 * Switches the AutoTurret on or off (inverses its state).
 	 */
-	public void switchOnOrOff() {
-		this.firing = !firing;
+	public void switchOn() {
+		this.firing = true;
 		this.lastShotFired = fireRate;
+		this.changeAnimation();
+	}
+	
+	public void switchOff() {
+		this.firing = false;
+		this.lastShotFired = fireRate;
+		this.changeAnimation();
+	}
+	
+	public void changeAnimation() {
+		if (this.firing) {
+			if (this.facingLeft) {
+				this.currentAnim = this.anims.get("on");
+			} else {
+				this.currentAnim = this.anims.get("onFlipped");
+			}
+		} else {
+			if (this.facingLeft) {
+				this.currentAnim = this.anims.get("off");
+			} else {
+				this.currentAnim = this.anims.get("offFlipped");
+			}
+		}
 	}
 	
 	public void update(Input input, int delta) {
@@ -84,7 +112,7 @@ public class AutoTurret extends Entity implements Observer {
 					xPos = position.getX();
 					xVel = -1f;
 				} else {
-					xPos = position.getX() + turretOnImage.getWidth();
+					xPos = position.getX() + this.currentAnim.getWidth();
 					xVel = 1f;
 				}
 				float yPos = position.getY() + 17;
@@ -99,25 +127,9 @@ public class AutoTurret extends Entity implements Observer {
 	
 	public void notify(Observable observable, String message) {
 		if (message == "on") {
-			this.firing = true;
+			this.switchOn();
 		} else if (message == "off") {
-			this.firing = false;
-		}
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (firing) {
-			if (facingLeft) {
-				turretOnImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-			} else {
-				turretOnImage.getFlippedCopy(true, false).draw((int)renderPosition.getX(), (int)renderPosition.getY());
-			}
-		} else {
-			if (facingLeft) {
-				turretOffImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-			} else {
-				turretOffImage.getFlippedCopy(true, false).draw((int)renderPosition.getX(), (int)renderPosition.getY());
-			}
+			this.switchOff();
 		}
 	}
 }

@@ -5,6 +5,7 @@ import nl.jasperbok.zombies.entity.Observable;
 import nl.jasperbok.zombies.entity.Observer;
 import nl.jasperbok.zombies.level.Level;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,13 +16,15 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Door extends Entity implements Observer {
-	private Image image;
 	private Switch onOffSwitch;
 	
 	public Door(Level level) throws SlickException {
 		super.init(level);
-		this.image = new Image("data/sprites/entity/building/door.png");
-		this.boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
+		Animation door = new Animation();
+		door.addFrame(new Image("data/sprites/entity/building/door.png"), 5000);
+		this.anims.put("door", door);
+		this.currentAnim = this.anims.get("door");
+		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 	
 	public Door(Level level, Switch onOffSwitch, Vector2f position) throws SlickException {
@@ -34,16 +37,12 @@ public class Door extends Entity implements Observer {
 	
 	public void update(Input input, int delta) {
 		super.update(input, delta);
-		boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
+		boundingBox.setBounds(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 		
 		// Ugly quickfix
 		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
 			level.env.getPlayer().position.x -= 1;
 		}
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		image.draw(renderPosition.getX(), renderPosition.getY());
 	}
 
 	public void notify(Observable observable, String message) {

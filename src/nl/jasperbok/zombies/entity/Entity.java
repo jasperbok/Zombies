@@ -1,7 +1,9 @@
 package nl.jasperbok.zombies.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -15,10 +17,13 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public abstract class Entity extends RenderObject {
-	public Level level;
+	public int id = 0;
+	public String name = "";
+	
 	public Vector2f velocity = new Vector2f(0.0f, 0.0f);
 	public Vector2f acceleration = new Vector2f(0f, 0f);
 	public Vector2f maxVelocity = new Vector2f(0f, 0f);
+	
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public int health = 5;
 	public boolean isBlocking = true;
@@ -28,6 +33,9 @@ public abstract class Entity extends RenderObject {
 	public boolean gravityAffected = true;
 	public Entity user = null;
 	public Inventory inventory;
+	
+	public HashMap<String, Animation> anims = new HashMap<String, Animation>();
+	public Animation currentAnim = null;
 	
 	// Status variables.
 	public boolean wasFalling = false;
@@ -41,6 +49,7 @@ public abstract class Entity extends RenderObject {
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
 	
 	protected ArrayList<Component> components;
+	public Level level;
 	
 	public void init(Level level) {
 		this.level = level;
@@ -82,8 +91,19 @@ public abstract class Entity extends RenderObject {
 		boundingBox.setY(position.getY());
 	}
 	
+	/**
+	 * Renders the Entity to the screen.
+	 * 
+	 * Uses the Entity's renderPosition field.
+	 * 
+	 * @param container The GameContainer this Entity is part of.
+	 * @param g The Graphics object the Entity should draw itself on.
+	 * @throws SlickException
+	 */
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		
+		if (this.currentAnim != null) {
+			this.currentAnim.draw((int)this.renderPosition.x, (int)this.renderPosition.y);
+		}
 	}
 	
 	public void update(Input input, int delta) {
