@@ -82,7 +82,7 @@ public class Item extends Entity {
 	 * @return
 	 */
 	public int collect() {
-		level.env.remove(this);
+		level.env.removeEntity(this);
 		return this.id;
 	}
 }

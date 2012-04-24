@@ -28,7 +28,7 @@ public class LifeComponent extends Component {
 	
 	public void update(Input input, int delta) {
 		if (hp == 0) {
-			owner.die();
+			owner.kill();
 		}
 	}
 	

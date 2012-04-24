@@ -48,7 +48,7 @@ public class Door extends Entity implements Observer {
 
 	public void notify(Observable observable, String message) {
 		if (message == "on") {
-			level.env.remove(this);
+			level.env.removeEntity(this);
 		}
 	}
 }

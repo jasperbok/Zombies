@@ -383,11 +383,11 @@ public class TileEnvironment {
 	}
 	
 	/**
-	 * Removes the given entity.
+	 * Removes the given Entity.
 	 * 
 	 * @param entity
 	 */
-	public void remove(Entity entity) {
+	public void removeEntity(Entity entity) {
 		garbage.add(entity);
 	}
 	

@@ -20,6 +20,7 @@ public abstract class Entity extends RenderObject {
 	public Vector2f acceleration = new Vector2f(0f, 0f);
 	public Vector2f maxVelocity = new Vector2f(0f, 0f);
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
+	public int health = 5;
 	public boolean isBlocking = true;
 	public boolean isTopSolid = false;
 	public boolean isMovable = true;
@@ -92,11 +93,71 @@ public abstract class Entity extends RenderObject {
 	}
 	
 	/**
-	 * Makes the entity die.
+	 * Kills the Entity.
 	 */
-	public void die() {
-		if (level != null && level.env != null && this != null) {
-			this.level.env.remove(this);
+	public void kill() {
+		this.level.env.removeEntity(this);
+	}
+	
+	/**
+	 * Deals damage to the Entity.
+	 * 
+	 * @param amount The amount of damage to deal.
+	 */
+	public void receiveDamage(int amount) {
+		this.health -= amount;
+		if (this.health <= 0) {
+			this.kill();
 		}
+	}
+	
+	/**
+	 * Heals the Entity.
+	 * 
+	 * @param amount The amount of damage to heal.
+	 */
+	public void heal(int amount) {
+		this.receiveDamage(-amount);
+	}
+	
+	/**
+	 * Checks whether this entity touches another.
+	 * 
+	 * @param other The Entity to check.
+	 * @return True if the Entities overlap, otherwise false.
+	 */
+	public boolean touches(Entity other) {
+		return !(
+				this.position.x >= other.position.x + other.boundingBox.getWidth() ||
+				this.position.x + this.boundingBox.getWidth() <= other.position.x ||
+				this.position.y >= other.position.y + other.boundingBox.getHeight() ||
+				this.position.y + this.boundingBox.getHeight() <= other.position.y
+				);
+	}
+	
+	/**
+	 * Calculates the distance between the center points of this and
+	 * another Entity.
+	 * 
+	 * @param other The other Entity to check the distance to.
+	 * @return The distance between the Entities.
+	 */
+	public float distanceTo(Entity other) {
+		float xDistance = this.boundingBox.getCenterX() - other.boundingBox.getCenterX();
+		float yDistance = this.boundingBox.getCenterY() - other.boundingBox.getCenterY();
+		return (float)Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+	}
+	
+	/**
+	 * Returns the angle from this Entity to another.
+	 * 
+	 * @param other The other Entity to check the angle to.
+	 * @return
+	 */
+	public float angleTo(Entity other) {
+		return (float)Math.atan2(
+				(other.position.y + other.boundingBox.getHeight() / 2) - (this.position.y + this.boundingBox.getHeight() / 2),
+				(other.position.x + other.boundingBox.getWidth() / 2) - (this.position.x + this.boundingBox.getWidth() / 2)
+				);
 	}
 }
