@@ -17,6 +17,27 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public abstract class Entity extends RenderObject {
+	public static enum Collides {
+		NEVER (0),
+		LITE (1),
+		PASSIVE (2),
+		ACTIVE (4),
+		FIXED (8);
+		
+		public int value;
+		Collides(int value) {this.value = value;};
+	}
+	
+	public static enum Type {
+		NONE (0),
+		A (1),
+		B (2),
+		BOTH (4);
+		
+		public int value;
+		Type(int value) {this.value = value;};
+	}
+	
 	public int id = 0;
 	public String name = "";
 	
@@ -47,6 +68,10 @@ public abstract class Entity extends RenderObject {
 	public boolean isClimbing = false;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
+	
+	public Entity.Type type = Entity.Type.NONE;
+	public Entity.Type checkAgainst = Entity.Type.NONE;
+	public Entity.Collides collides = Entity.Collides.NEVER;
 	
 	protected ArrayList<Component> components;
 	public Level level;
@@ -179,5 +204,76 @@ public abstract class Entity extends RenderObject {
 				(other.position.y + other.boundingBox.getHeight() / 2) - (this.position.y + this.boundingBox.getHeight() / 2),
 				(other.position.x + other.boundingBox.getWidth() / 2) - (this.position.x + this.boundingBox.getWidth() / 2)
 				);
+	}
+	
+	//
+	// STATIC COLLISION FUNCTIONS
+	//
+	
+	public static void checkPair(Entity a, Entity b) {
+		
+	}
+	
+	public static void solveCollision(Entity a, Entity b) {
+		Entity weak = null;
+		
+		if (a.collides == Entity.Collides.LITE || b.collides == Entity.Collides.FIXED) {
+			weak = a;
+		} else if (b.collides == Entity.Collides.LITE || a.collides == Entity.Collides.FIXED) {
+			weak = b;
+		}
+		
+		// The rest of this function requires that every Entity has it's previous position stored.
+	}
+	
+	public static void seperateOnXAxis(Entity left, Entity right, Entity weak) {
+		float nudge = (left.position.x + left.boundingBox.getWidth() - right.position.x);
+		
+		// There is a weak Entity, so just move that one.
+		if (weak != null) {
+			if (weak == left) {
+				weak.setPosition(weak.position.x - nudge, weak.position.y);
+			} else {
+				weak.setPosition(weak.position.x + nudge, weak.position.y);
+			}
+		}
+		
+		else {
+			left.setPosition(left.position.x - nudge / 2, left.position.y);
+			right.setPosition(right.position.x + nudge / 2, right.position.y);
+		}
+	}
+	
+	public static void seperateOnYAxis(Entity top, Entity bottom, Entity weak) {
+		float nudge = (top.position.y + top.boundingBox.getHeight() - bottom.position.y);
+		
+		// There is a weak Entity, so just move that one.
+		if (weak != null) {
+			Entity strong = top == weak ? bottom : top;
+			
+			weak.velocity.y = strong.velocity.y;
+			
+			// On a platform?
+			float nudgeX = 0;
+			if (weak == top) {
+				weak.isOnGround = true;
+				nudgeX = strong.velocity.x;
+			}
+			
+			weak.setPosition(weak.position.x + nudgeX, weak.position.y + nudge);
+		}
+		
+		// Bottom Entity is standing, just move the top one.
+		else if (bottom.isOnGround) {
+			top.setPosition(top.position.x, top.position.y - nudge);
+			top.isOnGround = true;
+			top.velocity.y = 0;
+		}
+		
+		// Normal collision, both move.
+		else {
+			bottom.setPosition(bottom.position.x, bottom.position.y + nudge / 2);
+			top.setPosition(top.position.x, top.position.y - nudge / 2);
+		}
 	}
 }
