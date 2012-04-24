@@ -18,39 +18,4 @@ public abstract class Mob extends Entity {
 	public Animation fallAnimation;
 	public Animation currentAnimation;
 	public Animation attackAnimation;
-	
-	/**
-	 * Heals the mob.
-	 * 
-	 * @param amount The amount of HP to heal.
-	 */
-	public void heal(int amount) {
-		health += amount;
-		if (health > maxHealth) health = maxHealth;
-	}
-	
-	/**
-	 * Deals damage to the mob.
-	 * 
-	 * @param damage The amount of damage to deal.
-	 */
-	public void hurt(int damage) {
-		health -= damage;
-		if (health <= 0) die();
-	}
-	
-	/**
-	 * Makes the mob hop with a given velocity.
-	 * 
-	 * @param x
-	 * @param y
-	 */
-	public void hop(float x, float y) {
-		this.velocity.x = x;
-		this.velocity.y = y;
-	}
-	
-	public void update(int delta) {
-		
-	}
 }
