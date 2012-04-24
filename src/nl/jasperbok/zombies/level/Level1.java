@@ -40,10 +40,10 @@ public class Level1 extends Level {
 		// Creating the Player.
 		Player player = new Player(100, this);
 		//player.setPosition(4200, 250); // Start at the turret.
-		//player.setPosition(4500, 600); // Start at the door.
+		player.setPosition(4500, 600); // Start at the door.
 		//player.setPosition(3800, 800); // Walking animation glitch position.
 		//player.setPosition(1800, 660); // Start at crane controls.
-		player.setPosition(300, 320); // Regular level start.
+		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
 		// Add the key card.
@@ -106,8 +106,8 @@ public class Level1 extends Level {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		//craneLights[0].setPosition(new Vector2f(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
-		System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
-		System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
+		//System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
+		//System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
 		
 		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
 			crateZombie.position.x = 100000000;

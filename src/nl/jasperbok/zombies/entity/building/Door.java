@@ -37,9 +37,11 @@ public class Door extends Entity implements Observer {
 		boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
 		
 		// Ugly quickfix
+		//---
 		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
 			level.env.getPlayer().position.x -= 1;
 		}
+		//---
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
