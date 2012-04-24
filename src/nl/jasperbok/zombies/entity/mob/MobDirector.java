@@ -28,6 +28,7 @@ import LightTest.LoopingList;
 public class MobDirector {
 	public List<Mob> mobs;
 	public List<MobAttractor> attractors;
+	public List<MobAttractor> attractorGarbage;
 	
 	private Audio wavEffect;
 	
@@ -45,6 +46,7 @@ public class MobDirector {
 		}
 		mobs = new LoopingList<Mob>();
 		attractors = new LoopingList<MobAttractor>();
+		attractorGarbage = new LoopingList<MobAttractor>();
 	}
 	
 	public MobDirector(List<Mob> mobs) {
@@ -56,6 +58,7 @@ public class MobDirector {
 		}
 		refresh(mobs);
 		attractors = new LoopingList<MobAttractor>();
+		attractorGarbage = new LoopingList<MobAttractor>();
 	}
 	
 	public void init() throws IOException {
@@ -110,7 +113,7 @@ public class MobDirector {
 					break;
 				}
 				
-				if (attractor.triggerAgression && Math.abs(mob.position.x - attractor.position.x) <= mob.agressionRange && mob.boundingBox.intersects(attractor.object.boundingBox)) {
+				if (attractor.triggerAgression && mob.boundingBox.intersects(attractor.object.boundingBox)) {
 					v = new Vector2f(0, 0);
 					
 					// End the game if the mob touches an agression attractor.
@@ -136,6 +139,11 @@ public class MobDirector {
 			mob.velocity.x /= 50;
 			
 			//System.out.println("v.x" + mob.velocity.x);
+		}
+		
+		for (MobAttractor attractor : attractorGarbage) {
+			attractors.remove(attractor);
+			attractor = null;
 		}
 	}
 	
@@ -268,8 +276,7 @@ public class MobDirector {
 	public void removeAttractor(Entity object) {
 		for (MobAttractor attractor : attractors) {
 			if (attractor.object == object) {
-				attractors.remove(attractor);
-				attractor = null;
+				attractorGarbage.add(attractor);
 			}
 		}
 	}

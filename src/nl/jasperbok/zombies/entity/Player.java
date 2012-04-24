@@ -29,10 +29,10 @@ public class Player extends Mob {
 	protected boolean wasGoingRight = false;
 	
 	public Player(int health, Level level) throws SlickException {
-		this.health = health;
 		super.init(level);
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
+		this.addComponent(new LifeComponent(this, health));
 		this.acceleration = new Vector2f(0.06f, 0);
 		this.maxVelocity = new Vector2f(0.1f, 10f);
 		this.position = new Vector2(280.0f, 300.0f);

@@ -40,4 +40,8 @@ public class LifeComponent extends Component {
 		}
 		return hp;
 	}
+	
+	public int getHealth() {
+		return hp;
+	}
 }

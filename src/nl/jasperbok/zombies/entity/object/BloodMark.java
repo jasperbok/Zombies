@@ -13,7 +13,7 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.level.Level;
 
 public class BloodMark extends Entity implements Attractor {
-	private int lifetime = 50000;
+	private int lifetime = 9000;
 	private int currentLifetime = 0;
 	private Image image;
 	private float attractionPower = 100f;
@@ -41,6 +41,9 @@ public class BloodMark extends Entity implements Attractor {
 		//System.out.println("X:" + position.x);
 		if (currentLifetime < lifetime) {
 			image.draw(renderPosition.x, renderPosition.y);
+		} else {
+			this.level.env.mobDirector.removeAttractor(this);
+			this.kill();
 		}
 	}
 	
