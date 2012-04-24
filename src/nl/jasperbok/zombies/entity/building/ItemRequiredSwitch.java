@@ -31,11 +31,8 @@ public class ItemRequiredSwitch extends Switch {
 	public boolean checkRequiredItems(Inventory inventory) {
 		for (Integer i : requiredItems.keySet()) {
 			if (inventory.containsAmount(i) < requiredItems.get(i)) {
-				// Ugly quick fix for the player speech
-				//---
 				PlayerSpeech ps = PlayerSpeech.getInstance();
-				ps.addMessage("It seems I need a key for this...", 4000);
-				//---
+				ps.displayMessage(this.level.getClass().toString(), "missingkey");
 				return false;
 			}
 		}

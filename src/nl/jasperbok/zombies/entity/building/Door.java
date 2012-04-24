@@ -40,9 +40,11 @@ public class Door extends Entity implements Observer {
 		boundingBox.setBounds(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 		
 		// Ugly quickfix
+		//---
 		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
 			level.env.getPlayer().position.x -= 1;
 		}
+		//---
 	}
 
 	public void notify(Observable observable, String message) {

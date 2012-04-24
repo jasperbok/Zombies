@@ -106,8 +106,8 @@ public class Level1 extends Level {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 		//craneLights[0].setPosition(new Vector2f(crane.armPos.x + 30 + camera.position.x, 130 - camera.position.y));
-		System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
-		System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
+		//System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
+		//System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
 		
 		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
 			crateZombie.position.x = 100000000;

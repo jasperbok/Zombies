@@ -41,7 +41,6 @@ public class MobDirector {
 		try {
 			init();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mobs = new LoopingList<Mob>();
@@ -230,7 +229,7 @@ public class MobDirector {
 	 * Makes the mob tend towards a certain point.
 	 * 
 	 * Keep in mind there is no limit to the mobs speed in this method, so the velocity should be
-	 * limited by the mobs own class. 
+	 * limited by the mobs own class.
 	 * 
 	 * @param mob
 	 * @param point
@@ -241,7 +240,9 @@ public class MobDirector {
 		
 		// The division by (1 * (1000 / power)) is a limiter.
 		// The higher the division the slower the mob will move towards a point.
-		v.x = (500 * (power)) / -((mob.position.x - point.x) * 100);
+		if (mob.position.y - point.y < 240 && mob.position.y - point.y > -240) {
+			v.x = (500 * (power)) / -((mob.position.x - point.x) * 100);
+		}
 		//if (mob.position.x < point.x) v.x = 1;
 		//else if (mob.position.x > point.x) v.x = -1;
 		
