@@ -16,7 +16,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class TileEnvironment {
@@ -32,16 +31,16 @@ public class TileEnvironment {
 	private Tile[][] tiles;
 	
 	// Entity variables.
-	private ArrayList<Entity> entities;
-	private ArrayList<Usable> usableEntities;
-	private ArrayList<Mob> mobs;
-	private ArrayList<Entity> attractors;
-	private ArrayList<Entity> garbage;
+	private ArrayList<Entity> entities = new ArrayList<Entity>();
+	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
+	private ArrayList<Mob> mobs = new ArrayList<Mob>();
+	private ArrayList<Entity> attractors = new ArrayList<Entity>();
+	private ArrayList<Entity> garbage = new ArrayList<Entity>();
 	/**
 	 * Contains all the entities in the environment. This variable is made
 	 * so we only have to loop over one ArrayList instead of several.
 	 */
-	private ArrayList<Entity> allEntities;
+	private ArrayList<Entity> allEntities = new ArrayList<Entity>();
 	private Player player;
 	
 	// Utilities.
@@ -60,19 +59,10 @@ public class TileEnvironment {
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
 		this.level = level;
-		// Load the tiles.
-		MapLoader loader = new MapLoader();
-		this.tiles = loader.loadTiles(map);
-		loader = null;
-		
-		// Initialize the Entity ArrayLists.
-		this.entities = new ArrayList<Entity>();
-		this.usableEntities = new ArrayList<Usable>();
-		this.mobs = new ArrayList<Mob>();
-		this.allEntities = new ArrayList<Entity>();
-		this.attractors = new ArrayList<Entity>();
+		this.tiles = MapLoader.loadTiles(map);
 		this.mobDirector = new MobDirector(mobs);
-		this.garbage = new ArrayList<Entity>();
+		
+		MapLoader.loadEntities(map);
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
@@ -145,52 +135,13 @@ public class TileEnvironment {
 		ArrayList<Entity> colliding = new ArrayList<Entity>();
 		
 		for (Entity entity : allEntities) {
-			if (checkingEntity != entity && checkingEntity.boundingBox.intersects(entity.boundingBox)) {
+			if (checkingEntity != entity && checkingEntity.touches(entity)) {
 				colliding.add(entity);
 			}
 		}
 		
 		return colliding;
 	}
-	
-	/*private void checkForCollisions() {
-		for (int i = 0; i < allEntities.size(); i++) {
-			for (int j = i + 1; j < allEntities.size(); j++) {
-				if (allEntities.get(i).isBlocking || allEntities.get(j).isBlocking) {
-					Rectangle bbox1 = allEntities.get(i).boundingBox;
-					Rectangle bbox2 = allEntities.get(j).boundingBox;
-					if (bbox1.intersects(bbox2)) {
-						int horizontalOverlap = 0;
-						int verticalOverlap = 0;
-						boolean leftOverlap = bbox1.contains(bbox2.getMinX(), bbox2.getMinY()) || bbox1.contains(bbox2.getMinX(), bbox2.getMaxY());
-						boolean rightOverlap = bbox1.contains(bbox2.getMaxX(), bbox2.getMinY()) || bbox1.contains(bbox2.getMaxX(), bbox2.getMaxY());
-						
-						if (leftOverlap && rightOverlap) {
-							// Fuck this shit... That thing's inside her!
-						} else if (leftOverlap) {
-							// There's a left overlap.
-							float overlap = Math.abs(bbox1.getMaxX() - bbox2.getMinX());
-							if (allEntities.get(j).isMovable) {
-								if (allEntities.get(i).isMovable) {
-									// Both movable, move 'em both.
-									allEntities.get(j).setPosition((float)(allEntities.get(j).position.getX() - overlap / 2), allEntities.get(j).position.getY());
-									allEntities.get(i).setPosition((float)(allEntities.get(i).position.getX() + overlap / 2), allEntities.get(i).position.getY());
-								} else {
-									// Only j is movable.
-									allEntities.get(j).setPosition((float)(allEntities.get(j).position.getX() - overlap), allEntities.get(j).position.getY());
-								}
-							} else {
-								// Only i is movable.
-								allEntities.get(i).setPosition((float)(allEntities.get(i).position.getX() + overlap), allEntities.get(i).position.getY());
-							}
-						} else if (rightOverlap) {
-							// There's a right overlap.
-						}
-					}
-				}
-			}
-		}
-	}*/
 	
 	/**
 	 * Checks whether an entity is on something solid with his feet.
@@ -204,8 +155,6 @@ public class TileEnvironment {
 	 * @return boolean True if the entity is on top of something solid.
 	 */
 	public boolean isOnGround(Entity ent, boolean resolveCollision) {
-		int entLeftX = (int)(ent.boundingBox.getCenterX() - 10);
-		int entRightX = (int)(ent.boundingBox.getCenterX() + 10);
 		int entY = (int)(ent.boundingBox.getMaxY());
 		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
 		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
@@ -356,9 +305,7 @@ public class TileEnvironment {
 		mobDirector.refresh(mobs);
 	}
 	
-	public void addAttractor(Rectangle bbox, String type) throws SlickException {
-		Attractor attractor = null;
-		
+	public void addAttractor(Rectangle bbox, String type) throws SlickException {		
 		switch (type) {
 		case "BloodMark":
 			BloodMark bm = new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20);
