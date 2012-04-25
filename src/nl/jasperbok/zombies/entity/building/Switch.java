@@ -1,6 +1,7 @@
 package nl.jasperbok.zombies.entity.building;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -28,12 +29,12 @@ public class Switch extends Entity implements Usable, Observable {
 	private Image switchedOffImage;
 	
 	public Switch(Level level, Vector2f position) throws SlickException {
-		this(level, false, position);
+		this(level, false, position, new HashMap<String, String>());
 	}
 
-	public Switch(Level level, boolean initialState, Vector2f position) throws SlickException {
+	public Switch(Level level, boolean initialState, Vector2f position, HashMap<String, String> settings) throws SlickException {
 		super.init(level);
-		this.gravityAffected = false;
+		this.settings = settings;
 		this.position = position;
 		this.switchedOnImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84);
 		this.switchedOffImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(29, 121, 29, 84);
@@ -73,6 +74,19 @@ public class Switch extends Entity implements Usable, Observable {
 	 */
 	public void use(Entity user) {
 		this.state = !this.state;
+		if (this.settings.get("target") != "") {
+			try {
+				if (this.state == true) {
+					((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "on");
+				} else {
+					((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "off");
+				}
+			}
+			finally {
+				
+			}
+		}
+		/*
 		for (Observer observer: observers) {
 			if (this.state == true) {
 				observer.notify(this, "on");
@@ -80,6 +94,7 @@ public class Switch extends Entity implements Usable, Observable {
 				observer.notify(this, "off");
 			}
 		}
+		*/
 	}
 
 	/**

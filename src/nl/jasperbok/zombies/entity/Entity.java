@@ -40,6 +40,7 @@ public abstract class Entity extends RenderObject {
 	
 	public int id = 0;
 	public String name = "";
+	public HashMap<String, String> settings = new HashMap<String, String>();
 	
 	public Vector2f velocity = new Vector2f(0.0f, 0.0f);
 	public Vector2f acceleration = new Vector2f(0f, 0f);

@@ -14,7 +14,7 @@ public class ItemRequiredSwitch extends Switch {
 	private HashMap<Integer, Integer> requiredItems;
 	
 	public ItemRequiredSwitch(Level level, Vector2f position) throws SlickException {
-		super(level, false, position);
+		super(level, false, position, new HashMap<String, String>());
 		requiredItems = new HashMap<Integer, Integer>();
 	}
 	

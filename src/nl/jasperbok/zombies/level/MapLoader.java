@@ -1,6 +1,12 @@
 package nl.jasperbok.zombies.level;
 
+import java.util.HashMap;
+
+import nl.jasperbok.zombies.entity.building.AutoTurret;
+import nl.jasperbok.zombies.entity.building.Switch;
+
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class MapLoader {
@@ -14,9 +20,7 @@ public class MapLoader {
 		int tileWidth = map.getTileWidth();
 		int tileHeight = map.getTileHeight();
 		
-		int backgroundLayer = map.getLayerIndex("background");
 		int collisionLayer = map.getLayerIndex("collision");
-		int entityLayer = map.getLayerIndex("entities");
 		
 		Tile[][] tiles = new Tile[mapWidth][mapHeight];
 		
@@ -39,7 +43,7 @@ public class MapLoader {
 		return tiles;
 	}
 	
-	public static void loadEntities(TiledMap map) throws SlickException {
+	public static void loadEntities(TileEnvironment env, Level level, TiledMap map) throws SlickException {
 		// The number of object layers.
 		int numGroups = map.getObjectGroupCount();
 		
@@ -48,8 +52,41 @@ public class MapLoader {
 			int numObjects = map.getObjectCount(i);
 			
 			for (int j = 0; j < numObjects; j++) {
-				System.out.println("Found a " + map.getObjectName(i, j));
+				switch (map.getObjectType(i, j)) {
+				case "AutoTurret" :
+					MapLoader.spawnTurret(env, level, map, i, j);
+					break;
+				case "Door" :
+					break;
+				case "Switch" :
+					MapLoader.spawnSwitch(env, level, map, i, j);
+					break;
+				}
 			}
 		}
+	}
+	
+	private static void spawnTurret(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		AutoTurret turret = new AutoTurret(
+				level,
+				"left".equals(map.getObjectProperty(layerIndex, objectIndex, "direction", "left")),
+				null,
+				new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex))
+				);
+		turret.name = map.getObjectName(layerIndex, objectIndex);
+		env.spawnEntity(turret);
+	}
+	
+	private static void spawnSwitch(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		HashMap<String, String> settings = new HashMap<String, String>();
+		settings.put("target", map.getObjectProperty(layerIndex, objectIndex, "target", ""));
+		Switch newSwitch = new Switch(
+				level,
+				"true".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "false")),
+				new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex)),
+				settings
+				);
+		newSwitch.name = map.getObjectName(layerIndex, objectIndex);
+		env.spawnEntity(newSwitch);
 	}
 }

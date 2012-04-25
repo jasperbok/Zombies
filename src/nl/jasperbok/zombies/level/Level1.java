@@ -39,11 +39,11 @@ public class Level1 extends Level {
 		
 		// Creating the Player.
 		Player player = new Player(5, this);
-		//player.setPosition(4200, 250); // Start at the turret.
+		player.setPosition(4200, 250); // Start at the turret.
 		//player.setPosition(4500, 600); // Start at the door.
 		//player.setPosition(3800, 800); // Walking animation glitch position.
 		//player.setPosition(1800, 660); // Start at crane controls.
-		player.setPosition(300, 320); // Regular level start.
+		//player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
 		// Add the key card.
@@ -68,11 +68,6 @@ public class Level1 extends Level {
 		crateZombie = new Zombie(this, (float)(2400), 660);
 		env.addMob(crateZombie);
 		crateZombie.addBlockingPointLeft(2290);
-		
-		// Creating a Switch and AutoTurret.
-		Switch turretSwitch = new Switch(this, false, new Vector2f(4275, 230));
-		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(4075, 279)));
-		env.addEntity(turretSwitch);
 		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
