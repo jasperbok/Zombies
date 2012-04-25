@@ -71,6 +71,8 @@ public class TileEnvironment {
 		
 		MapLoader.loadEntities(this, level, map);
 		
+		Camera.getInstance().setTarget(this.getEntityByName("player"));
+		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
@@ -392,13 +394,11 @@ public class TileEnvironment {
 		allEntities = new ArrayList<Entity>();
 		allEntities.addAll(entities);
 		allEntities.addAll(mobs);
-		allEntities.add(player);
+		//allEntities.add(player);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		// Render the background and the environment.
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
-		// Render the actual level where the entities collide with.
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
 		
 		// Render all the attractors.
@@ -410,9 +410,6 @@ public class TileEnvironment {
 		for (Entity ent: allEntities) {
 			ent.render(container, g);
 		}
-		
-		// Render the foreground.
-		//map.render(0,  0, 3);
 		
 		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {
@@ -459,7 +456,7 @@ public class TileEnvironment {
 	 * @return The player.
 	 */
 	public Player getPlayer() {
-		return player;
+		return (Player)this.getEntityByName("player");
 	}
 	
 	/**

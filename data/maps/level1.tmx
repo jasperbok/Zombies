@@ -170,5 +170,6 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
+  <object name="player" type="Player" x="897" y="389" width="66" height="151"/>
  </objectgroup>
 </map>

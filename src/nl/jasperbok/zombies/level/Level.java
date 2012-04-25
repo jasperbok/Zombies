@@ -64,12 +64,12 @@ public class Level extends BasicGameState implements GameState {
 		Hud.getInstance().update(delta);
 		PlayerSpeech.getInstance().update(delta);
 		//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
-		fl.setPosition(env.getPlayer().position.x + 10, env.getPlayer().position.y + 10);
+		fl.setPosition(env.getEntityByName("player").position.x + 10, env.getEntityByName("player").position.y + 10);
 		fl.pointToMouse(container);
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 		
-		playerLight.setPosition(env.getPlayer().position.x + env.getPlayer().boundingBox.getWidth() / 2, env.getPlayer().position.y + env.getPlayer().boundingBox.getHeight() / 2);
+		playerLight.setPosition(env.getEntityByName("player").position.x + env.getEntityByName("player").boundingBox.getWidth() / 2, env.getEntityByName("player").position.y + env.getEntityByName("player").boundingBox.getHeight() / 2);
 		
 		/*System.out.println("player.position.y: " + env.getPlayer().position.y);
 		System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);

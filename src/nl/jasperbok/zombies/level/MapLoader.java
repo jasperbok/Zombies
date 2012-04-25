@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.level;
 
 import java.util.HashMap;
 
+import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Switch;
 
@@ -58,6 +59,9 @@ public class MapLoader {
 					break;
 				case "Door" :
 					break;
+				case "Player" :
+					MapLoader.spawnPlayer(env, level, map, i, j);
+					break;
 				case "Switch" :
 					MapLoader.spawnSwitch(env, level, map, i, j);
 					break;
@@ -75,6 +79,16 @@ public class MapLoader {
 				);
 		turret.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(turret);
+	}
+	
+	private static void spawnPlayer(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		Player player = new Player(
+				level,
+				new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex))
+				);
+		player.name = "player";
+		env.spawnEntity(player);
+		//env.setPlayer(player);
 	}
 	
 	private static void spawnSwitch(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {

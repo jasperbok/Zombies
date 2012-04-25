@@ -38,13 +38,13 @@ public class Level1 extends Level {
 		this.ID = 2;
 		
 		// Creating the Player.
-		Player player = new Player(5, this);
-		player.setPosition(4200, 250); // Start at the turret.
+		//Player player = new Player(this, new Vector2f(300, 320));
+		//player.setPosition(4200, 250); // Start at the turret.
 		//player.setPosition(4500, 600); // Start at the door.
 		//player.setPosition(3800, 800); // Walking animation glitch position.
 		//player.setPosition(1800, 660); // Start at crane controls.
 		//player.setPosition(300, 320); // Regular level start.
-		env.setPlayer(player);
+		//env.setPlayer(player);
 		
 		// Add the key card.
 		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
@@ -82,7 +82,7 @@ public class Level1 extends Level {
 			zl.addBlockingPointRight(600);
 			env.addMob(zl);
 		}
-		env.mobDirector.addAttractor(env.getPlayer(), 50, true);
+		env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();

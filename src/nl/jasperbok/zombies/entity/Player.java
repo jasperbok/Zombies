@@ -24,14 +24,14 @@ public class Player extends Entity {
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
 	
-	public Player(int health, Level level) throws SlickException {
+	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
-		this.addComponent(new LifeComponent(this, health));
+		this.addComponent(new LifeComponent(this, 5));
 		this.acceleration = new Vector2f(0.06f, 0);
 		this.maxVelocity = new Vector2f(0.1f, 10f);
-		this.position = new Vector2(280.0f, 300.0f);
+		this.position = pos;
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		this.init();
