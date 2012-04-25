@@ -4,9 +4,11 @@ import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 public class PlayerInputComponent extends Component {
 	
@@ -19,15 +21,19 @@ public class PlayerInputComponent extends Component {
 		if (owner.playerControlled) {
 			// Handle player input.
 			if (input.isKeyDown(Input.KEY_D)) {
-				owner.velocity.set(owner.velocity.getX() + owner.acceleration.getX(), owner.velocity.getY());
-				if (owner.velocity.getX() > owner.maxVelocity.getX()) {
-					owner.velocity.set(owner.maxVelocity.getX(), owner.velocity.getY());
+				if (!((Player)owner).isHidden()) {
+					owner.velocity.set(owner.velocity.getX() + owner.acceleration.getX(), owner.velocity.getY());
+					if (owner.velocity.getX() > owner.maxVelocity.getX()) {
+						owner.velocity.set(owner.maxVelocity.getX(), owner.velocity.getY());
+					}
 				}
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
-				owner.velocity.set(owner.velocity.getX() - owner.acceleration.getX(), owner.velocity.getY());
-				if (owner.velocity.getX() < -owner.maxVelocity.getX()) {
-					owner.velocity.set(-owner.maxVelocity.getX(), owner.velocity.getY());
+				if (!((Player)owner).isHidden()) {
+					owner.velocity.set(owner.velocity.getX() - owner.acceleration.getX(), owner.velocity.getY());
+					if (owner.velocity.getX() < -owner.maxVelocity.getX()) {
+						owner.velocity.set(-owner.maxVelocity.getX(), owner.velocity.getY());
+					}
 				}
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
@@ -61,6 +67,7 @@ public class PlayerInputComponent extends Component {
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
 				if (owner.level.env.isOnHideableSurface(owner)) {
+					owner.velocity = new Vector2f(0, 0);
 					((Player)owner).switchHide();
 				} else {
 					Usable target = owner.level.env.getUsableEntity(owner.boundingBox);

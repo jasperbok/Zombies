@@ -249,7 +249,7 @@ public class MobDirector {
 		// The division by (1 * (1000 / power)) is a limiter.
 		// The higher the division the slower the mob will move towards a point.
 		if (mob.position.y - point.y < 240 && mob.position.y - point.y > -240) {
-			v.x = (500 * (power)) / -((mob.position.x - point.x) * 100);
+			v.x = ((500 * (power)) / -((mob.position.x - point.x) * 50)) * 2;
 		}
 		//if (mob.position.x < point.x) v.x = 1;
 		//else if (mob.position.x > point.x) v.x = -1;

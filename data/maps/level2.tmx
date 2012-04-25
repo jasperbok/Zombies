@@ -195,7 +195,7 @@
    H4sIAAAAAAAAC+3Tqw0AIABDwVr2n4vPSCgEEhIMuUuerGwCAADAUkvSH3aqXWyA3fAj4GMTAVgKdOAVAAA=
   </data>
  </layer>
- <layer name="Background" width="70" height="20">
+ <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2WSwrCMBCGk67MEdQzqKA7Hwt1q0v1DOrKx1Y9lXoGHyCCC4/jBDp0kjbWZ8S0H3w4fdCSnzFTxt4jyxnLgXke1AXfov+b1Y6L/v0ug+sskTU3fWkW8rhFfl0H19nmak2v6eeTQA/W2gcHXK2RoeG868h1j8AxV2vTPSmvQferOJME3YviTBJ0L4rTJmWPsYoXfIPQbxHZu1W4VgPrYMP7/PvpXhSnLWgOTU3sbfxvdyCT7hdyWcCzl+DqAW2gZ9HTxN7W+4j2kmucRTiLoSb2NvZL1MxwjYsIZyH7Wea14Gpv4yygM0PedxTm55/Ec17uPMsmVxFkoedA9/++of7FfLDBNaIvVhFzYWSobc+HX4DZrKHegFsW5EQzi5oZrjHJhN3B+T14AOcZ1Sk4+2It35+SkvL/3ACygFCd4BUAAA==
   </data>

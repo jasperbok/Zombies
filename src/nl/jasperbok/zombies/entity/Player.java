@@ -30,7 +30,7 @@ public class Player extends Entity {
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, health));
 		this.acceleration = new Vector2f(0.06f, 0);
-		this.maxVelocity = new Vector2f(0.1f, 10f);
+		this.maxVelocity = new Vector2f(0.4f, 10f);
 		this.position = new Vector2(280.0f, 300.0f);
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
@@ -62,10 +62,16 @@ public class Player extends Entity {
 		climb.addFrame(climbSprites.getSprite(0, 0), 250);
 		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
 		
+		// Fix the hide animation.
+		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
+		Animation hide = new Animation();
+		hide.addFrame(hideSprite.getSprite(0, 0), 250);
+		
 		this.anims.put("walkLeft", walkLeft);
 		this.anims.put("walkRight", walkRight);
 		this.anims.put("idle", idle);
 		this.anims.put("climb", climb);
+		this.anims.put("hide", hide);
 		
 		// Set the initial animation.
 		this.currentAnim = this.anims.get("idle");
@@ -101,7 +107,10 @@ public class Player extends Entity {
 		super.update(input, delta);
 		
 		// Decide what animation should be played.
-		if (isClimbing) {
+		if (isHidden()) {
+			this.currentAnim = this.anims.get("hide");
+		} else if (isClimbing) {
+			System.out.println(this.getClass().toString() + ".update: not hidden");
 			this.currentAnim = this.anims.get("climb");
 			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
 				this.currentAnim.stop();
@@ -142,6 +151,7 @@ public class Player extends Entity {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == true) {
 			lifeComponent.setDamageable(false);
+			System.out.println("Player.hide: hiding");
 		}
 	}
 	
@@ -149,6 +159,7 @@ public class Player extends Entity {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == false) {
 			lifeComponent.setDamageable(true);
+			System.out.println("Player.hide: unhiding");
 		}
 	}
 	

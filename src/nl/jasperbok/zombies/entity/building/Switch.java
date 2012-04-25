@@ -15,20 +15,31 @@ import nl.jasperbok.zombies.entity.Observer;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.level.Level;
 
-public class Switch extends Entity implements Usable, Observable {
+public class Switch extends Entity implements Usable, Observable, Observer {
 	
 	/**
 	 * The state of the Switch. True = on, False = off.
 	 */
 	private boolean state;
+	private boolean canBeUsed = true;
 	private Rectangle useBox;
 	private ArrayList<Observer> observers;
 	
 	private Image switchedOnImage;
 	private Image switchedOffImage;
 	
+	public Switch onOffSwitch;
+	
 	public Switch(Level level, Vector2f position) throws SlickException {
 		this(level, false, position);
+	}
+	
+	public Switch(Level level, boolean initialState, Vector2f position, Switch onOffSwitch) throws SlickException {
+		this(level, initialState, position);
+		
+		this.onOffSwitch = onOffSwitch;
+		this.onOffSwitch.registerObserver(this);
+		this.canBeUsed = false;
 	}
 
 	public Switch(Level level, boolean initialState, Vector2f position) throws SlickException {
@@ -72,12 +83,14 @@ public class Switch extends Entity implements Usable, Observable {
 	 * @param user The Entity that uses the Switch.
 	 */
 	public void use(Entity user) {
-		this.state = !this.state;
-		for (Observer observer: observers) {
-			if (this.state == true) {
-				observer.notify(this, "on");
-			} else {
-				observer.notify(this, "off");
+		if (canBeUsed) {
+			this.state = !this.state;
+			for (Observer observer: observers) {
+				if (this.state == true) {
+					observer.notify(this, "on");
+				} else {
+					observer.notify(this, "off");
+				}
 			}
 		}
 	}
@@ -97,6 +110,15 @@ public class Switch extends Entity implements Usable, Observable {
 			switchedOnImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
 		} else {
 			switchedOffImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
+		}
+	}
+
+	public void notify(Observable observable, String message) {
+		if (message == "on") {
+			System.out.println(this.getClass().toString() + ".notify: canbeused");
+			canBeUsed = true;
+		} else if (message == "off") {
+			canBeUsed = false;
 		}
 	}
 }

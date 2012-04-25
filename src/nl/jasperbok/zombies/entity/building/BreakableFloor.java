@@ -14,6 +14,10 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class BreakableFloor extends Entity {
 	public BreakableFloor(Level level) throws SlickException {
+		this(level, 0, 0);
+	}
+	
+	public BreakableFloor(Level level, float x, float y) throws SlickException {
 		super.init(level);
 		Animation breakableFloor = new Animation();
 		breakableFloor.addFrame(new Image("data/sprites/entity/building/breakablefloor.png"), 5000);
@@ -23,6 +27,8 @@ public class BreakableFloor extends Entity {
 		this.isBlocking = true;
 		
 		this.components.add(new LifeComponent(this, 1));
+		
+		setPosition(x, y);
 	}
 	
 	public void update(Input input, int delta) {

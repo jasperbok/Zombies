@@ -5,13 +5,19 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
 import LightTest.Vec2;
 
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.building.BreakableFloor;
+import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
+import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.math.Vector2;
@@ -24,11 +30,31 @@ public class Level2 extends Level {
 	public Level2() throws SlickException {
 		super("level2");
 		Player player = new Player(100, this);
-		player.setPosition(0, 0);
+		player.setPosition(100, 100);
 		env.setPlayer(player);
+		
+		camera.setTarget(env.getPlayer());
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
+		
+		env.addMob(new Zombie(this, 320, 1200));
+		
+		env.addEntity(new BreakableFloor(this, 2480, 720));
+		
+		Switch powerSwitch = new Switch(this, false, new Vector2f(320, 1190));
+		Switch firstDoorSwitch = new Switch(this, false, new Vector2f(2100, 1190));
+		Switch unpoweredSwitch = new Switch(this, false, new Vector2f(2990, 1190), powerSwitch);
+		
+		env.addEntity(powerSwitch);
+		env.addEntity(firstDoorSwitch);
+		env.addEntity(unpoweredSwitch);
+
+		Door firstDoor = new Door(this, firstDoorSwitch, new Vector2f(1920, 1200), Door.SIDE_RIGHT);
+		Door finalDoor = new Door(this, unpoweredSwitch, new Vector2f(3050, 1200), Door.SIDE_LEFT);
+		
+		env.addEntity(firstDoor);
+		env.addEntity(finalDoor);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
