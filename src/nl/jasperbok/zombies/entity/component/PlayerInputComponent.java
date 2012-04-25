@@ -60,9 +60,13 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
-				Usable target = owner.level.env.getUsableEntity(owner.boundingBox);
-				if (target != null) {
-					target.use(owner);
+				if (owner.level.env.isOnHidableSurface(owner)) {
+					((Player)owner).switchHide();
+				} else {
+					Usable target = owner.level.env.getUsableEntity(owner.boundingBox);
+					if (target != null) {
+						target.use(owner);
+					}
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_SPACE)){

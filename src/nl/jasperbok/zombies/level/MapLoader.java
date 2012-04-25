@@ -25,7 +25,8 @@ public class MapLoader {
 					tileWidth * x,
 					tileHeight * y,
 					"true".equals(map.getTileProperty(tileId, "blocked", "false")),
-					"true".equals(map.getTileProperty(tileId, "climable", "false"))
+					"true".equals(map.getTileProperty(tileId, "climable", "false")),
+					"true".equals(map.getTileProperty(tileId, "hideable", "false"))
 				);
 			}
 		}
