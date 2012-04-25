@@ -148,14 +148,22 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Background" width="70" height="20">
+ <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3Wt1JCURiF0QvvY2OOhTk3KmYbc2zMsTHnGQEx+6yuxk6kYmDgfDOrP/8u7twoCoVCoVAo9FdPsShKZpGKFfp1hSvbJr8KUWU8iqqopoZa6qingUaaaKYlnp83pP+5PVOgXdrc2k4HnXTRTQ+99NHPAIN52qUYG3LrMCMkGGWMcSaYZIppZspol1m3zjHPAossscwKq6yxzkYZ7bLp1i222WGXPfY54JAjjjkpoV0qcny3Tt16xjkXXHLFNTfccsc9DzyWyDatOXZJujNFmmcyvPDKG+988MkX3yWyS6KM/4tCoVCoGPoBihNX7uAVAAA=
   </data>
  </layer>
- <layer name="Level" width="70" height="20">
+ <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2WbU7CQBCGt8U/HkDLFUzwEHoHj6X897ug4reSII3eQDiDehXfDTthrN0tMwUV0zd5Uja705l9d0obGWNi0FBcV9hvbXxXiI2JBDkoj1RrihhS0113wR5og8x830vbQeOhW2fje7GMpqs5Y4TUYXVKtKGIIRX5MjZfa87M1BMaj9y6liJny9U8ZoQ0VOaZR7+kZnIudu+0Zw55QuM0F1+kfiyr5TWXmzQqyeNT1X7JP0PP8YQBeDLTZ4bXSr7kz3Eg9ILrDbyDD4fVqtH3SxVZX3iv2L1bT14c/Ay5uC/rCyRx19/whfcEvSc02HcG7adMUl9muacmR2gt74mq/1V/yRcu33mTys67qi+UP8ndu8GgOf4d40OyNvSNU3Vf+fhtZXwSWGfnUk++orW+2ory+zRvX7Tx/9kX/oxL423MPhr/AByCI3AMTqLl94Wk9eUUHqSgA7rgDJwrfZlFm5F/roovPklq47pAnT1wCa7ANbhxtafhUFXurSXx5RZ13oF78AAeQV/oi0Q7AV8W+e25DNSqVavWT+gTn7vdqOAVAAA=
   </data>
  </layer>
+ <objectgroup color="#0055ff" name="entities" width="70" height="20">
+  <object name="turret_1" type="AutoTurret" x="4000" y="240" width="160" height="160">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="door_1" type="Door" x="4640" y="960" width="80" height="240"/>
+ </objectgroup>
 </map>
