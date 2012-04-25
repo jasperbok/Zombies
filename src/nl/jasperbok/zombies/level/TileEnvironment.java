@@ -29,6 +29,8 @@ public class TileEnvironment {
 	private int tileHeight;
 	private Level level;
 	private Tile[][] tiles;
+	int backgroundLayer;
+	int collisionLayer;
 	
 	// Entity variables.
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
@@ -60,6 +62,8 @@ public class TileEnvironment {
 		this.tileHeight = map.getTileHeight();
 		this.level = level;
 		this.tiles = MapLoader.loadTiles(map);
+		this.backgroundLayer = map.getLayerIndex("background");
+		this.collisionLayer = map.getLayerIndex("collision");
 		this.mobDirector = new MobDirector(mobs);
 		
 		MapLoader.loadEntities(map);
@@ -342,9 +346,9 @@ public class TileEnvironment {
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		// Render the background and the environment.
-		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, 0);
+		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
 		// Render the actual level where the entities collide with.
-		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, 1);
+		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
 		
 		// Render all the attractors.
 		for (Entity att: attractors) {
