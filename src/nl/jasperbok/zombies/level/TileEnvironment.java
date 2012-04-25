@@ -264,9 +264,9 @@ public class TileEnvironment {
 	public boolean isOnHidableSurface(Entity ent) {
 		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
 		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
-		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
+		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY()) / tileHeight);
 		
-		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
+		return tiles[relativeX][relativeBottomY].isHideable || tiles[relativeX][relativeTopY].isHideable;
 	}
 	
 	/**

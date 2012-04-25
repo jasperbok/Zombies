@@ -6,7 +6,7 @@ import org.newdawn.slick.Input;
 
 public class LifeComponent extends Component {
 	protected int hp = 1;
-	protected boolean damagable = true;
+	protected boolean damageable = true;
 	
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class LifeComponent extends Component {
 	}
 	
 	public int takeDamage(int damage) {
-		if (damagable) {
+		if (damageable) {
 			if (damage > hp) {
 				hp = 0;
 			} else {
@@ -48,11 +48,11 @@ public class LifeComponent extends Component {
 		return hp;
 	}
 	
-	public boolean getDamagable() {
-		return this.damagable;
+	public boolean getDamageable() {
+		return this.damageable;
 	}
 	
-	public void setDamagable(boolean damagable) {
-		this.damagable = damagable;
+	public void setDamageable(boolean damageable) {
+		this.damageable = damageable;
 	}
 }

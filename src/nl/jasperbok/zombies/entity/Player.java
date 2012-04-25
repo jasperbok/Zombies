@@ -128,4 +128,36 @@ public class Player extends Entity {
 			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
 		}
 	}
+	
+	public void switchHide() {
+		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
+		if (lifeComponent.getDamageable() == true) {
+			hide();
+		} else {
+			unHide();
+		}
+	}
+	
+	public void hide() {
+		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
+		if (lifeComponent.getDamageable() == true) {
+			lifeComponent.setDamageable(false);
+		}
+	}
+	
+	public void unHide() {
+		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
+		if (lifeComponent.getDamageable() == false) {
+			lifeComponent.setDamageable(true);
+		}
+	}
+	
+	public boolean isHidden() {
+		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
+		if (lifeComponent.getDamageable() == true) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

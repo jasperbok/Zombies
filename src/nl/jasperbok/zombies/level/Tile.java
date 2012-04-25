@@ -9,8 +9,9 @@ public class Tile extends Entity {
 	public int relativeX;
 	public int relativeY;
 	public boolean isClimable;
+	public boolean isHideable;
 	
-	public Tile(int id, int width, int height, int xPos, int yPos, boolean blocking, boolean climable) {
+	public Tile(int id, int width, int height, int xPos, int yPos, boolean blocking, boolean climable, boolean hideable) {
 		this.id = id;
 		this.width = width;
 		this.height = height;
@@ -19,6 +20,7 @@ public class Tile extends Entity {
 		this.isBlocking = blocking;
 		this.isMovable = false;
 		this.isClimable = climable;
+		this.isHideable = hideable;
 		this.setPosition(xPos, yPos);
 	}
 }
