@@ -1,27 +1,23 @@
 package nl.jasperbok.zombies.entity;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.gui.Hud;
-import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
+import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
-import nl.jasperbok.zombies.entity.item.Item;
-import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
+import nl.jasperbok.zombies.gui.Hud;
 
-public class Player extends Mob {
+public class Player extends Entity {
 	public float climbSpeed = 0.1f;
 	
 	// Status variables.
@@ -46,32 +42,39 @@ public class Player extends Mob {
 	public void init() throws SlickException {
 		// Fix the walking animations.
 		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walkingwalking.png", 75, 150);
-		walkRightAnimation = new Animation();
+		Animation walkRight = new Animation();
 		for (int i = 0; i < 8; i++) {
-			walkRightAnimation.addFrame(walkSprites.getSprite(i, 0), 150);
+			walkRight.addFrame(walkSprites.getSprite(i, 0), 150);
 		}
-		walkLeftAnimation = new Animation();
+		Animation walkLeft = new Animation();
 		for (int i = 0; i < 8; i++) {
-			walkLeftAnimation.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
+			walkLeft.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
 		}
 		
 		// Fix the idle animation.
 		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
-		idleAnimation = new Animation();
-		idleAnimation.addFrame(idleSprites.getSprite(0, 0), 500);
+		Animation idle = new Animation();
+		idle.addFrame(idleSprites.getSprite(0, 0), 500);
 		
 		// Fix the climb animation.
 		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
-		climbAnimation = new Animation();
-		climbAnimation.addFrame(climbSprites.getSprite(0, 0), 250);
-		climbAnimation.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
+		Animation climb = new Animation();
+		climb.addFrame(climbSprites.getSprite(0, 0), 250);
+		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
+		
+		this.anims.put("walkLeft", walkLeft);
+		this.anims.put("walkRight", walkRight);
+		this.anims.put("idle", idle);
+		this.anims.put("climb", climb);
 		
 		// Set the initial animation.
-		currentAnimation = idleAnimation;
+		this.currentAnim = this.anims.get("idle");
 	}
 	
 	protected void updateBoundingBox() {
-		this.boundingBox.setBounds(position.x, position.y, currentAnimation.getCurrentFrame().getWidth(), currentAnimation.getCurrentFrame().getHeight());
+		if (this.currentAnim != null) {
+			this.boundingBox.setBounds(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
+		}
 	}
 	
 	public void update(Input input, int delta) {
@@ -88,23 +91,30 @@ public class Player extends Mob {
 			isClimbing = false;
 		}
 		
+		try {
+			Hud.getInstance().setPlayerHealth(((LifeComponent)getComponent(Component.LIFE)).getHealth());
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		super.update(input, delta);
 		
 		// Decide what animation should be played.
 		if (isClimbing) {
-			currentAnimation = climbAnimation;
+			this.currentAnim = this.anims.get("climb");
 			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
-				currentAnimation.stop();
-			} else if (currentAnimation.isStopped()) {
-				currentAnimation.start();
+				this.currentAnim.stop();
+			} else if (this.currentAnim.isStopped()) {
+				this.currentAnim.start();
 			}
 		} else if (isOnGround) {
 			if (velocity.getX() < 0f) {
-				currentAnimation = walkLeftAnimation;
+				this.currentAnim = this.anims.get("walkLeft");
 			} else if (velocity.getX() > 0f) {
-				currentAnimation = walkRightAnimation;
+				this.currentAnim =this.anims.get("walkRight");
 			} else if (velocity.getX() == 0f) {
-				currentAnimation = idleAnimation;
+				this.currentAnim = this.anims.get("idle");
 			}
 		} else {
 			// Not on ground and not climbing, surely the player is falling!
@@ -117,9 +127,5 @@ public class Player extends Mob {
 		if (target != null && target instanceof WoodenCrate) {
 			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
 		}
-	}
-
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		currentAnimation.draw((int)renderPosition.getX(), (int)renderPosition.getY());
 	}
 }

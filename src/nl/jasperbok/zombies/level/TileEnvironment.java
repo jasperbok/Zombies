@@ -84,6 +84,36 @@ public class TileEnvironment {
 		}*/
 	}
 	
+	public ArrayList<Entity> getAllEntities() {
+		ArrayList<Entity> ents = new ArrayList<Entity>();
+		for (Entity ent: entities) {
+			if (ent instanceof Entity) {
+				ents.add(ent);
+			}
+		}
+		return ents;
+	}
+	
+	public ArrayList<Entity> getAllMobs() {
+		ArrayList<Entity> ents = new ArrayList<Entity>();
+		for (Entity ent: entities) {
+			if (ent instanceof Mob) {
+				ents.add(ent);
+			}
+		}
+		return ents;
+	}
+	/*
+	public ArrayList<Entity> getAllZombies() {
+		ArrayList<Entity> ents = new ArrayList<Entity>();
+		for (Entity ent: entities) {
+			if (ent instanceof Zombie) {
+				ents.add(ent);
+			}
+		}
+		return ents;
+	}
+	*/
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
@@ -229,7 +259,15 @@ public class TileEnvironment {
 		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
 		
 		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
-	}	
+	}
+	
+	public boolean isOnHidableSurface(Entity ent) {
+		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
+		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
+		
+		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
+	}
 	
 	/**
 	 * Handles collisions between Entities and Tiles.
