@@ -28,7 +28,8 @@ public class Hud {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		g.drawAnimation(playerHealthBar, 460, -30);
+		//g.drawAnimation(playerHealthBar, 460, -30, 450, 100);
+		this.playerHealthBar.draw(860, -15, 450, 100);
 	}
 	
 	private Hud() throws SlickException {
