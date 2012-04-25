@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 import LightTest.Vec2;
 
@@ -23,17 +24,18 @@ public class Level2 extends Level {
 	public Level2() throws SlickException {
 		super("level2");
 		Player player = new Player(100, this);
-		player.setPosition(480, 0);
+		player.setPosition(0, 0);
 		env.setPlayer(player);
-		bgMusic = new Music("data/sound/music/zombiesinspace.ogg");
+		
+		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
 	}
 
-	public void update(GameContainer container, int delta) throws SlickException {
-		super.update(container, delta);
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		super.update(container, game, delta);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		super.render(container, g);
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		super.render(container, game, g);
 	}
 }

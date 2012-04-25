@@ -60,7 +60,7 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
-				if (owner.level.env.isOnHidableSurface(owner)) {
+				if (owner.level.env.isOnHideableSurface(owner)) {
 					((Player)owner).switchHide();
 				} else {
 					Usable target = owner.level.env.getUsableEntity(owner.boundingBox);

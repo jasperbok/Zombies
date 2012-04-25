@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="80" tileheight="80">
  <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
-  <image source="src/tiles.png" width="1600" height="1600"/>
+  <image source="../../../../Desktop/levelsTiled/src/tiles.png" width="1600" height="1600"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -64,10 +64,10 @@
   </tile>
  </tileset>
  <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
-  <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
+  <image source="../../../../Desktop/levelsTiled/src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
  </tileset>
  <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
-  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <image source="../../../../Desktop/levelsTiled/src/blockade.png" trans="ffffff" width="480" height="320"/>
   <tile id="7">
    <properties>
     <property name="blocked" value="true"/>
@@ -110,13 +110,13 @@
   </tile>
  </tileset>
  <tileset firstgid="434" name="boxes" tilewidth="80" tileheight="80">
-  <image source="src/boxes.png" trans="ffffff" width="1300" height="1200"/>
+  <image source="../../../../Desktop/levelsTiled/src/boxes.png" trans="ffffff" width="1300" height="1200"/>
  </tileset>
  <tileset firstgid="674" name="Turret" tilewidth="80" tileheight="80">
-  <image source="src/turret_on.png" width="160" height="160"/>
+  <image source="../../../../Desktop/levelsTiled/src/turret_on.png" width="160" height="160"/>
  </tileset>
  <tileset firstgid="678" name="BrokenVentilation" tilewidth="80" tileheight="80">
-  <image source="src/brokenVentilationTiles.png" width="480" height="320"/>
+  <image source="../../../../Desktop/levelsTiled/src/brokenVentilationTiles.png" width="480" height="320"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -148,14 +148,61 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Background" width="70" height="20">
-  <data encoding="base64" compression="zlib">
-   eJztlk0OgjAQhVtugZ5BTHTnzwLd6hI8A3gG8OoOSSc8JjQ1/pRY+iUvDG0DmZdhBqU+I9VKLUhL3ccro8xcU3GfmfMhw3muIefcCL3o7k9wDR3O86yHMe7J9TlQUK4l6aaHMVNZ1kOny7sm3fUwtp2JvAf2K5fmBPYil+YE9iKXfLJJlNom/T8I/ot0tbujvT3pQDom338/9iKXfIE+5EJc2/xtX8iT6w98aejZLenxgnwgvSiEuLZlHWEthYj0ohLi2uZ6GZsZISK9aIS4tnkWjM2MEJFesA/Y/0tLPMV88IX04zEyF2pL7Hs+TAF6I+dCa4l9zodIJBL5d56Kyk0X
+ <tileset firstgid="702" name="HiddingWall" tilewidth="80" tileheight="80">
+  <image source="../../../../Desktop/levelsTiled/src/hidding_wall.png" width="240" height="160"/>
+  <tile id="0">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="hideable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="708" name="Background" tilewidth="80" tileheight="80">
+  <image source="../../../../Desktop/levelsTiled/src/level1Background.png" width="5600" height="1600"/>
+ </tileset>
+ <tileset firstgid="2108" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="../../../../Desktop/levelsTiled/src/logosWallSprites.png" width="1600" height="1600"/>
+ </tileset>
+ <tileset firstgid="2508" name="CableTiles" tilewidth="80" tileheight="80">
+  <image source="../../../../Desktop/levelsTiled/src/powercables.png" width="320" height="320"/>
+ </tileset>
+ <layer name="bg" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Tqw0AIABDwVr2n4vPSCgEEhIMuUuerGwCAADAUkvSH3aqXWyA3fAj4GMTAVgKdOAVAAA=
   </data>
  </layer>
- <layer name="Level" width="70" height="20">
-  <data encoding="base64" compression="zlib">
-   eJztVu1t2zAQpdK09QIunG5gQHVmkN0VbGeFRDM0HqFDdIc6QCdo7BVqe4ZEA5Rs70HP5+PJan8EBUrggfo4UnxP746cFSFcRbyPmDi4DCHELlycgT6xCa+MPs3xxcCHIg9v/X0bazJ1MIqxw4hdxJOB54gmYhva2AM9R/82zjWI2NNcXyPWEQ8y/iBzrAXMvXLgrb+vNtAljV04KGPsWHi8KU4BvokTYlkH9M+kI+uxIU0amSOnBfPdGJx0LLzUp2HMQvFcRtxEfBTAA6zBo+IGTyAWvoAOGIv+kfTYkyYD+Z7mx5ro9j2080ErxP9JLlWZ76TG2sADOwXWBXqxt1iP9I7jd6QHNB0I/7Jjbbr9oPn2itukxzxoc/HKg6zV0uWG/IJ6wvyAxCn9+1Ji+f1a9dtwXJeg27eLVhfkgFdnr4Wv976vJoHWthXolrRJ/2GktGB+AOoL7jfGNdcR9lGteL6W73fV2ZmM8QCNcrrxd9HYy4cM9xRThuP6yPyAxK+h+71xzXUEmqwE4FnFd1fh99rnDhZSB2cd4PrE8DzGXm4y3J/EL9sMv0bxxD3Pq/dr3qMqxfNX/ohXbh3cic+WHcDcWlfLg9DnXXgZsC65mLT2Tw7uxWd1B6Ch1tXyILRJaZU7c+Z6nEfPGXuZGc+1JTc//t2toQX8vqQ8zAHjtK6WB+fyzWE4PnNZZzHmAGB/ui6OayD6WsaNaD74/k7NaeU5n1+0Jlxra/VO+wfPrXrMGuk6PDZ00LoyhxmtzdtDc3sAnvOcVp6XofW25s21dlW0fuIYwKvHrAWAfzsM7T+x5l0Vp/V/WbR+6dpH9bkV+cu6WHmedGF/63qCdXCOWTwRZ71jLYCl8ByHU84LtQ5d/2vSpWsf/WzEVEoXK89zPIFJ5hp5DHgasBYA8nwYTjnjGrro/MYzbw/N7QGobUmXabDzFuC6pTHNXPP/tc421j7O9WglPJNfNGdcdzVvD83tATk9eQ3otY8Z2t+45v9rnW2sfZxrBtpLnV/OgfYxw/I3e9zam7QGWot/pXl7geVvcPTG/W9/134COLGSxA==
+ <layer name="Background" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WSwrCMBCGk67MEdQzqKA7Hwt1q0v1DOrKx1Y9lXoGHyCCC4/jBDp0kjbWZ8S0H3w4fdCSnzFTxt4jyxnLgXke1AXfov+b1Y6L/v0ug+sskTU3fWkW8rhFfl0H19nmak2v6eeTQA/W2gcHXK2RoeG868h1j8AxV2vTPSmvQferOJME3YviTBJ0L4rTJmWPsYoXfIPQbxHZu1W4VgPrYMP7/PvpXhSnLWgOTU3sbfxvdyCT7hdyWcCzl+DqAW2gZ9HTxN7W+4j2kmucRTiLoSb2NvZL1MxwjYsIZyH7Wea14Gpv4yygM0PedxTm55/Ec17uPMsmVxFkoedA9/++of7FfLDBNaIvVhFzYWSobc+HX4DZrKHegFsW5EQzi5oZrjHJhN3B+T14AOcZ1Sk4+2It35+SkvL/3ACygFCd4BUAAA==
+  </data>
+ </layer>
+ <layer name="collision" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WTW4TQRCFe8JffAAjww0iBecMtrlCPLlCbK6QmBtwCO6AIyHxuyL2BlZswDkD8QGoIvU0b8rVMzYIRUi09KnHnu6eeW+qqrtIKe0Jd4JeuSsU7l4bPGcbomfrGi8DnhR5+g3s2rrCY5s7DOjZmAthIXwXfgRcC2thmao5V/Q/+gey5r6worVeCXN7xtLm9ey/ufNi0ED0/mBXbw7MF507Dji0MfBFddwvNoFe1YQ57AP6a/KR/ViQJ2tbI+cF610EmvxYxNIuTb9r3zxgnaVwEsQLe3DptCEmMAdxAR8wF/0l+bEiT/btuV4fe+Lbp1StB68w/ndySb9r9BxtpcWLzyOGfYFfiBfvh97T8YOOPFMYCU879XzbN/2HpGub9s3eZ2WkVPdl23XQVLPGyoVpi3xBHuHb+5oAVJN+e3jJ9+fUH4sXY6EUTjr1fHu9V/mCHGiqs0emt+n+rp6kVH3TpeGbegNN7AXXSYD6gt+L4Fr7U/FiIkyFZ52beVOn8549v63OjmxOE/Ao5xs/Fw2xd2VE2qGJr7lOAtW3pt+r4Fr7M/HiXJgJz7UvboDOgYx5lG7e/biBsdXBUQtcn5imGOM9dp3RDk1Lp++K5nEu4Dev6/dr3qMGTuev/LFYOW1gYnFWtoC1va9RDMKfh+l2YF9yY/Tdzxo4tzibtgAPva9RDMIbTavcmXPXc3Du3BrN5z0qtz6+3WngBeK9LKo8zIF53tcoBo/tmd1UP3NFZzHWAHBGOSrqNRD91Ob1aD3E/cStGeU5n1+8J1xrp+6ejx/8H9Vj9sjXYd2Dl526D95X1jCy58CXtn20F4zpuzV9juv7HKYqtr1urrWzooonHgOa6jF7AfBtu6n6JtG6s2Kz/pfkS9s+6s+tyF/2xef4V/OF49vXE7wH51ikE+Oie+wFKE3nQdrUPHbv4ev/lHxp20dfBGMGzhef4+pLTifoZ66Rx6DJA/YCIM+7aVOzXr+RIvhWeCd87tT5QrTto7napr4MU5y3g2R9oBMMM9f8faOzTbSPcz2aWTxovHitynvx44Pwca/uh+//Fshfr5NjOrqeOJ1NHrAXAO22zi/b4OOY8fHt959ob/IeeC/+lda0F5xnrtvm/W9/1n4CgdfDFeAVAAA=
   </data>
  </layer>
 </map>
