@@ -9,10 +9,13 @@ import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
+import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
+import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
+import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
 	public float climbSpeed = 0.1f;
@@ -22,10 +25,10 @@ public class Player extends Entity {
 	protected boolean wasGoingRight = false;
 	
 	public Player(int health, Level level) throws SlickException {
-		this.health = health;
 		super.init(level);
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
+		this.addComponent(new LifeComponent(this, health));
 		this.acceleration = new Vector2f(0.06f, 0);
 		this.maxVelocity = new Vector2f(0.1f, 10f);
 		this.position = new Vector2(280.0f, 300.0f);
@@ -86,6 +89,13 @@ public class Player extends Entity {
 			velocity.set(new Vector2f(velocity.getX(), 0));
 		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
+		}
+		
+		try {
+			Hud.getInstance().setPlayerHealth(((LifeComponent)getComponent(Component.LIFE)).getHealth());
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		super.update(input, delta);

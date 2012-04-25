@@ -259,7 +259,15 @@ public class TileEnvironment {
 		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
 		
 		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
-	}	
+	}
+	
+	public boolean isOnHidableSurface(Entity ent) {
+		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
+		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
+		
+		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
+	}
 	
 	/**
 	 * Handles collisions between Entities and Tiles.

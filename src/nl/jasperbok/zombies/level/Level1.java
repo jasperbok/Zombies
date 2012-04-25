@@ -38,12 +38,12 @@ public class Level1 extends Level {
 		this.ID = 2;
 		
 		// Creating the Player.
-		Player player = new Player(100, this);
-		player.setPosition(4200, 250); // Start at the turret.
+		Player player = new Player(5, this);
+		//player.setPosition(4200, 250); // Start at the turret.
 		//player.setPosition(4500, 600); // Start at the door.
 		//player.setPosition(3800, 800); // Walking animation glitch position.
 		//player.setPosition(1800, 660); // Start at crane controls.
-		//player.setPosition(300, 320); // Regular level start.
+		player.setPosition(300, 320); // Regular level start.
 		env.setPlayer(player);
 		
 		// Add the key card.

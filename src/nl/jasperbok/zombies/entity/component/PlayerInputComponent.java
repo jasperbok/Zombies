@@ -39,8 +39,9 @@ public class PlayerInputComponent extends Component {
 					if (owner.velocity.x < 0.0f) owner.velocity.x = 0.0f;
 				}
 			}
-			if (input.isKeyDown(Input.KEY_Q)) {
+			if (input.isKeyPressed(Input.KEY_Q) && ((LifeComponent)owner.getComponent(Component.LIFE)).getHealth() != 0) {
 				try {
+					((LifeComponent)owner.getComponent(Component.LIFE)).takeDamage(1);
 					owner.level.env.addAttractor(owner.boundingBox, "BloodMark");
 				} catch (SlickException e) {
 					e.printStackTrace();
