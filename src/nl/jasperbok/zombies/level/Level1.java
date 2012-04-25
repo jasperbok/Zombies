@@ -37,15 +37,6 @@ public class Level1 extends Level {
 		super("level1");
 		this.ID = 2;
 		
-		// Creating the Player.
-		Player player = new Player(5, this);
-		//player.setPosition(4200, 250); // Start at the turret.
-		//player.setPosition(4500, 600); // Start at the door.
-		//player.setPosition(3800, 800); // Walking animation glitch position.
-		//player.setPosition(1800, 660); // Start at crane controls.
-		player.setPosition(300, 320); // Regular level start.
-		env.setPlayer(player);
-		
 		// Add the key card.
 		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
 		item.setPosition(2560, 320);
@@ -69,11 +60,6 @@ public class Level1 extends Level {
 		env.addMob(crateZombie);
 		crateZombie.addBlockingPointLeft(2290);
 		
-		// Creating a Switch and AutoTurret.
-		Switch turretSwitch = new Switch(this, false, new Vector2f(4275, 230));
-		env.addEntity(new AutoTurret(this, true, turretSwitch, new Vector2f(4075, 279)));
-		env.addEntity(turretSwitch);
-		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
 		env.addEntity(crane);
@@ -87,7 +73,7 @@ public class Level1 extends Level {
 			zl.addBlockingPointRight(600);
 			env.addMob(zl);
 		}
-		env.mobDirector.addAttractor(env.getPlayer(), 50, true);
+		env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();

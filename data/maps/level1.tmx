@@ -159,11 +159,17 @@
   </data>
  </layer>
  <objectgroup color="#0055ff" name="entities" width="70" height="20">
-  <object name="turret_1" type="AutoTurret" x="4000" y="240" width="160" height="160">
+  <object name="turret_1" type="AutoTurret" x="4070" y="277" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
    </properties>
   </object>
   <object name="door_1" type="Door" x="4640" y="960" width="80" height="240"/>
+  <object name="switch_1" type="Switch" x="4280" y="235" width="29" height="84">
+   <properties>
+    <property name="target" value="turret_1"/>
+   </properties>
+  </object>
+  <object name="player" type="Player" x="897" y="389" width="66" height="151"/>
  </objectgroup>
 </map>

@@ -1,6 +1,7 @@
 package nl.jasperbok.zombies.level;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import nl.jasperbok.zombies.entity.Attractor;
 import nl.jasperbok.zombies.entity.Entity;
@@ -33,7 +34,9 @@ public class TileEnvironment {
 	int collisionLayer;
 	
 	// Entity variables.
+	private int nextEntId = 0;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
+	private HashMap<String, Entity> namedEntities = new HashMap<String, Entity>();
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
 	private ArrayList<Mob> mobs = new ArrayList<Mob>();
 	private ArrayList<Entity> attractors = new ArrayList<Entity>();
@@ -66,7 +69,9 @@ public class TileEnvironment {
 		this.collisionLayer = map.getLayerIndex("collision");
 		this.mobDirector = new MobDirector(mobs);
 		
-		MapLoader.loadEntities(map);
+		MapLoader.loadEntities(this, level, map);
+		
+		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
@@ -76,6 +81,47 @@ public class TileEnvironment {
 				}
 			}
 		}*/
+	}
+	
+	public Entity spawnEntity(Entity ent) {
+		ent.id = this.nextEntId;
+		this.entities.add(ent);
+		this.allEntities.add(ent); // Remove this when we use a single entity array.
+		if (ent.name != "") {
+			this.namedEntities.put(ent.name, ent);
+		}
+		this.nextEntId++;
+		return ent;
+	}
+	
+	/**
+	 * Returns the Entity with the given name.
+	 * 
+	 * @param name The name of the Entity you're looking for.
+	 * @return An Entity if an Entity with the given name exists, otherwise
+	 * null.
+	 */
+	public Entity getEntityByName(String name) {
+		if (this.namedEntities.containsKey(name)){
+			return this.namedEntities.get(name);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Returns the Entity with the given id.
+	 * 
+	 * @param id The id of the Entity you're looking for.
+	 * @return An Entity if an Entity with the given id exists, otherwise null.
+	 */
+	public Entity getEntityById(int id) {
+		for (Entity ent: entities) {
+			if (ent.id == id) {
+				return ent;
+			}
+		}
+		return null;
 	}
 	
 	public ArrayList<Entity> getAllEntities() {
@@ -334,6 +380,13 @@ public class TileEnvironment {
 		for (Usable obj: usableEntities) {
 			if (obj.canBeUsed(rect)) return obj;
 		}
+		for (Entity ent: entities) {
+			if (ent instanceof Usable) {
+				if (((Usable)ent).canBeUsed(rect)) {
+					return (Usable)ent;
+				}
+			}
+		}
 		return null;
 	}
 	
@@ -341,13 +394,11 @@ public class TileEnvironment {
 		allEntities = new ArrayList<Entity>();
 		allEntities.addAll(entities);
 		allEntities.addAll(mobs);
-		allEntities.add(player);
+		//allEntities.add(player);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		// Render the background and the environment.
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
-		// Render the actual level where the entities collide with.
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
 		
 		// Render all the attractors.
@@ -359,9 +410,6 @@ public class TileEnvironment {
 		for (Entity ent: allEntities) {
 			ent.render(container, g);
 		}
-		
-		// Render the foreground.
-		//map.render(0,  0, 3);
 		
 		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {
@@ -408,7 +456,7 @@ public class TileEnvironment {
 	 * @return The player.
 	 */
 	public Player getPlayer() {
-		return player;
+		return (Player)this.getEntityByName("player");
 	}
 	
 	/**

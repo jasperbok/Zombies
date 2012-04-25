@@ -67,7 +67,7 @@ public class Item extends Entity {
 		boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
 		this.isOnGround = level.env.isOnGround(this, false);
 		
-		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
+		if (level.env.getEntityByName("player").touches(this)) {
 			level.env.getPlayer().inventory.add(collect());
 		}
 	}

@@ -1,5 +1,7 @@
 package nl.jasperbok.zombies.level;
 
+import java.util.HashMap;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -29,8 +31,7 @@ public class Level2 extends Level {
 
 	public Level2() throws SlickException {
 		super("level2");
-		Player player = new Player(100, this);
-		player.setPosition(100, 100);
+		Player player = new Player(this, new Vector2f(100, 100));
 		env.setPlayer(player);
 		
 		camera.setTarget(env.getPlayer());
@@ -42,9 +43,9 @@ public class Level2 extends Level {
 		
 		env.addEntity(new BreakableFloor(this, 2480, 720));
 		
-		Switch powerSwitch = new Switch(this, false, new Vector2f(320, 1190));
-		Switch firstDoorSwitch = new Switch(this, false, new Vector2f(2100, 1190));
-		Switch unpoweredSwitch = new Switch(this, false, new Vector2f(2990, 1190), powerSwitch);
+		Switch powerSwitch = new Switch(this, false, new Vector2f(320, 1190), new HashMap<String, String>());
+		Switch firstDoorSwitch = new Switch(this, false, new Vector2f(2100, 1190), new HashMap<String, String>());
+		Switch unpoweredSwitch = new Switch(this, false, new Vector2f(2990, 1190), powerSwitch, new HashMap<String, String>());
 		
 		env.addEntity(powerSwitch);
 		env.addEntity(firstDoorSwitch);

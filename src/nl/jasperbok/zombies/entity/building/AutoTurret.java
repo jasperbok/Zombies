@@ -65,7 +65,7 @@ public class AutoTurret extends Entity implements Observer {
 		this.anims.put("offFlipped", turretOffFlipped);
 		this.currentAnim = this.anims.get("off");
 		
-		this.onOffSwitch.registerObserver(this);
+		if (this.onOffSwitch != null) this.onOffSwitch.registerObserver(this);
 	}
 	
 	/**
