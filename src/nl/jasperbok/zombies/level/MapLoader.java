@@ -8,7 +8,7 @@ public class MapLoader {
 	public MapLoader() throws SlickException {
 	}
 	
-	public Tile[][] loadTiles(TiledMap map) throws SlickException {
+	public static Tile[][] loadTiles(TiledMap map) throws SlickException {
 		int mapWidth = map.getWidth();
 		int mapHeight = map.getHeight();
 		int tileWidth = map.getTileWidth();
