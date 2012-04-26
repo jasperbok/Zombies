@@ -11,6 +11,7 @@ import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.mob.MobDirector;
+import nl.jasperbok.zombies.sound.SoundManager;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.GameContainer;
@@ -33,6 +34,8 @@ public class TileEnvironment {
 	private Tile[][] tiles;
 	int backgroundLayer;
 	int collisionLayer;
+	
+	public SoundManager sounds;
 	
 	// Entity variables.
 	private int nextEntId = 0;
@@ -67,6 +70,8 @@ public class TileEnvironment {
 		MapLoader.loadEntities(this, level, map);
 		
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
+		
+		sounds = new SoundManager();
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {

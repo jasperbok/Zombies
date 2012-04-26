@@ -20,6 +20,14 @@ public class PlayerInputComponent extends Component {
 	public void update(Input input, int delta) {
 		if (owner.playerControlled) {
 			// Handle player input.
+			if (input.isKeyPressed(input.KEY_C)) {
+				try {
+					owner.level.env.sounds.playSFX("zombiegroan1");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (!((Player)owner).isHidden()) {
 					owner.velocity.set(owner.velocity.getX() + owner.acceleration.getX(), owner.velocity.getY());

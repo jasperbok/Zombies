@@ -55,6 +55,7 @@ public class Level1 extends Level {
 		//craneLights[0].setColor(new Color(100, 100, 100));
 		//craneLights[1].setColor(new Color(100, 100, 100));
 		
+		env.sounds.loadSFX("zombiegroan1");
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
