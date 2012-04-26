@@ -3,8 +3,6 @@ package nl.jasperbok.zombies.entity.building;
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -39,6 +37,7 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 		super.init(level);
 		this.settings = settings;
 		this.zIndex = -2;
+		
 		Animation onAnim = new Animation();
 		Animation offAnim = new Animation();
 		onAnim.addFrame(new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84), 5000);
@@ -46,6 +45,7 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 		this.anims.put("on", onAnim);
 		this.anims.put("off", offAnim);
 		this.currentAnim = this.anims.get("off");
+		
 		this.state = initialState;
 		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
