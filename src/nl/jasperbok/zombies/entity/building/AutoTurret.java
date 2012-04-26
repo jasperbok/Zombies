@@ -123,6 +123,8 @@ public class AutoTurret extends Entity implements Observer {
 				}
 			}
 		}
+		
+		super.update(input, delta);
 	}
 	
 	public void notify(Observable observable, String message) {

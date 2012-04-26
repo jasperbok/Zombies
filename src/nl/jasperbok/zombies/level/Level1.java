@@ -11,10 +11,7 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
-import nl.jasperbok.zombies.entity.building.ItemRequiredSwitch;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
-import nl.jasperbok.zombies.entity.building.Switch;
-import nl.jasperbok.zombies.entity.item.Item;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
@@ -37,29 +34,6 @@ public class Level1 extends Level {
 		super("level1");
 		this.ID = 2;
 		
-		// Add the key card.
-		Item item = new Item(this, Item.KEY_CARD, new Vector2f(0, 0), 32, 32);
-		item.setPosition(2560, 320);
-		env.addEntity(item);
-		
-		// Add the zombie guarding the key card.
-		Zombie guardZombie = new Zombie(this, 2700, 250);
-		guardZombie.addBlockingPointRight(4080);
-		env.addMob(guardZombie);
-		
-		ItemRequiredSwitch itemRequiredSwitch = new ItemRequiredSwitch(this, new Vector2f(4550, 1060));
-		env.addEntity(itemRequiredSwitch);
-		itemRequiredSwitch.addRequirement(Item.KEY_CARD, 1);
-		
-		// Add the door.
-		Door door = new Door(this, itemRequiredSwitch, new Vector2f(4640, 960));
-		env.addEntity(door);
-		
-		// Creating a Zombie.
-		crateZombie = new Zombie(this, (float)(2400), 660);
-		env.addMob(crateZombie);
-		crateZombie.addBlockingPointLeft(2290);
-		
 		camera.setTarget(env.getPlayer());
 		MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
 		env.addEntity(crane);
@@ -67,12 +41,6 @@ public class Level1 extends Level {
 		env.addEntity(crate);
 		env.addEntity(new WoodenCrate(this, 2720, 1040));
 		env.addEntity(new WoodenCrate(this, 3520, 1040));
-		
-		for (int i = 0; i < 2; i++) {
-			Zombie zl = new Zombie(this, (float)(10 + i * 30), 80f);
-			zl.addBlockingPointRight(600);
-			env.addMob(zl);
-		}
 		env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
@@ -95,10 +63,11 @@ public class Level1 extends Level {
 		//System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
 		//System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
 		
+		/*
 		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
 			crateZombie.position.x = 100000000;
 		}
-		
+		*/
 		super.update(container, game, delta);
 	}
 	

@@ -37,11 +37,6 @@ public class WoodenCrate extends Entity implements Usable {
 		this.addComponent(new GravityComponent(this));
 		this.addComponent(new DraggableComponent(this));
 	}
-	
-	protected void updateBoundingBox() {
-		this.boundingBox.setBounds(this.position.getX(), this.position.getY(), 80, 80);
-		useBox.setBounds(position.getX() - 30, position.getY(), 140, 80);
-	}
 
 	public void update(Input input, int delta){
 		this.isOnGround = level.env.isOnGround(this, false);

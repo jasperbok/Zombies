@@ -77,12 +77,6 @@ public class Player extends Entity {
 		this.currentAnim = this.anims.get("idle");
 	}
 	
-	protected void updateBoundingBox() {
-		if (this.currentAnim != null) {
-			this.boundingBox.setBounds(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		}
-	}
-	
 	public void update(Input input, int delta) {
 		updateBoundingBox();
 		

@@ -1,67 +1,68 @@
 package nl.jasperbok.zombies.entity.item;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Inventory {
-	private ArrayList<Integer> items;
+	private HashMap<String, Integer> items = new HashMap<String, Integer>();
 	
 	public Inventory() {
-		this.items = new ArrayList<Integer>();
 	}
 	
 	/**
 	 * Adds an item to the inventory.
 	 * 
-	 * @param itemId
+	 * @param itemName
 	 */
-	public void add(int itemId) {
-		items.add(itemId);
+	public void add(String itemName) {
+		if (this.items.containsKey(itemName)) {
+			this.items.put(itemName, this.items.get(itemName) + 1);
+		} else {
+			this.items.put(itemName, 1);
+		}
 	}
 	
 	/**
 	 * Removes an item from the inventory.
 	 * 
-	 * @param itemId
+	 * @param itemName
 	 */
-	public void remove(int itemId) {
-		if (items.contains(itemId)) {
-			items.remove((Integer)itemId);
+	public void remove(String itemName) {
+		if (this.items.containsKey(itemName)) {
+			if (this.items.get(itemName) > 1) {
+				this.items.put(itemName, this.items.get(itemName) - 1);
+			} else {
+				this.items.remove(itemName);
+			}
 		}
 	}
 	
 	/**
 	 * Checks if the inventory contains an item.
 	 * 
-	 * @param itemId
+	 * @param itemName
 	 * @return
 	 */
-	public boolean contains(int itemId) {
-		return items.contains((Integer)itemId);
+	public boolean contains(String itemName) {
+		return this.items.containsKey(itemName);
 	}
 	
 	/**
 	 * Returns the amount of times an item id is present inside the inventory.
-	 * @param itemId
+	 * @param itemName
 	 * @return
 	 */
-	public int containsAmount(int itemId) {
-		int i = 0;
-		for (Integer item : items) {
-			if (item == itemId) {
-				i++;
-			}
+	public int containsAmount(String itemName) {
+		if (this.items.containsKey(itemName)) {
+			return this.items.get(itemName);
+		} else {
+			return 0;
 		}
-		return i;
 	}
 	
 	/**
 	 * Logs all the items inside the inventory.
 	 */
 	public void log() {
-		int i = 0;
-		for (int itemId : items) {
-			System.out.println("inventory-slot: " + i + " item-id: " + itemId);
-			i++;
-		}
+		// Bleargh
 	}
 }

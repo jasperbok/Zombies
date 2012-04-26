@@ -112,9 +112,15 @@ public abstract class Entity extends RenderObject {
 		updateBoundingBox();
 	}
 	
-	protected void updateBoundingBox() {
-		boundingBox.setX(position.getX());
-		boundingBox.setY(position.getY());
+	public void updateBoundingBox() {
+		if (this.currentAnim != null) {
+			this.boundingBox.setBounds(
+					this.position.x,
+					this.position.y,
+					this.currentAnim.getWidth(),
+					this.currentAnim.getHeight()
+					);
+		}
 	}
 	
 	/**
@@ -136,6 +142,9 @@ public abstract class Entity extends RenderObject {
 		for (Component comp: components) {
 			comp.update(input, delta);
 		}
+		
+		this.updateBoundingBox();
+		this.updateRenderPosition();
 	}
 	
 	/**
