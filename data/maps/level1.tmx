@@ -170,7 +170,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="4434" y="1030" width="75" height="150"/>
+  <object name="player" type="Player" x="4331" y="224" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
     <property name="requires" value="key_card"/>

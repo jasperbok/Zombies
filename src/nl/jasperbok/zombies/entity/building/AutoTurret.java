@@ -99,10 +99,10 @@ public class AutoTurret extends Entity {
 				float xPos = 0;
 				float xVel = 0;
 				if (facingLeft) {
-					xPos = position.getX();
+					xPos = position.getX() - 10; // Compensate for bullet length
 					xVel = -1f;
 				} else {
-					xPos = position.getX() + this.currentAnim.getWidth();
+					xPos = position.getX() + this.currentAnim.getWidth() + 10; // Compensate for bullet length
 					xVel = 1f;
 				}
 				float yPos = position.getY() + 17;
