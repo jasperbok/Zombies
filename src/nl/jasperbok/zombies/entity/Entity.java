@@ -69,6 +69,7 @@ public abstract class Entity extends RenderObject {
 	public boolean isClimbing = false;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
+	public int zIndex = 0;
 	
 	public Entity.Type type = Entity.Type.NONE;
 	public Entity.Type checkAgainst = Entity.Type.NONE;

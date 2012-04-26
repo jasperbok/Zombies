@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity.building;
 
 import java.util.HashMap;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -24,9 +25,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	private boolean canBeUsed = true;
 	private Rectangle useBox;
 	
-	private Image switchedOnImage;
-	private Image switchedOffImage;
-	
 	public Switch onOffSwitch;
 	
 	public Switch(Level level, boolean initialState, Switch onOffSwitch, HashMap<String, String> settings) throws SlickException {
@@ -40,10 +38,16 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	public Switch(Level level, boolean initialState, HashMap<String, String> settings) throws SlickException {
 		super.init(level);
 		this.settings = settings;
-		this.switchedOnImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84);
-		this.switchedOffImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(29, 121, 29, 84);
+		this.zIndex = -2;
+		Animation onAnim = new Animation();
+		Animation offAnim = new Animation();
+		onAnim.addFrame(new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84), 5000);
+		offAnim.addFrame(new Image("/data/sprites/entity/building/buildings.png").getSubImage(29, 121, 29, 84), 5000);
+		this.anims.put("on", onAnim);
+		this.anims.put("off", offAnim);
+		this.currentAnim = this.anims.get("off");
 		this.state = initialState;
-		this.useBox = new Rectangle(this.position.x, this.position.y, switchedOnImage.getWidth(), switchedOnImage.getHeight());
+		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 
 	/**
@@ -58,6 +62,8 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 					(user.inventory.contains(this.settings.get("requires")))
 				) {
 				this.state = !this.state;
+				if (this.state) this.currentAnim = this.anims.get("on");
+				if (!this.state) this.currentAnim = this.anims.get("off");
 				if (this.settings.get("target") != "") {
 					try {
 						if (this.state == true) {
@@ -75,8 +81,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	}
 	
 	public void update(Input input, int delta) {
-		//System.out.println("Switch "+ this.name +" pos: " + this.position.y);
-		//System.out.println("Switch "+ this.name +" vel: " + this.velocity.y);
 		super.update(input, delta);
 	}
 
@@ -88,14 +92,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	 */
 	public boolean canBeUsed(Rectangle rect) {
 		return rect.intersects(useBox);
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (state) {
-			switchedOnImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-		} else {
-			switchedOffImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-		}
 	}
 
 	public void notify(Observable observable, String message) {

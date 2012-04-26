@@ -7,14 +7,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import nl.jasperbok.zombies.entity.Player;
-import nl.jasperbok.zombies.entity.building.AutoTurret;
-import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
 import nl.jasperbok.zombies.entity.object.Crate;
-import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 public class Level1 extends Level {
 	/**
@@ -39,8 +35,6 @@ public class Level1 extends Level {
 		env.addEntity(crane);
 		crate = new Crate(this, new Vector2f(2160, 660), crane);
 		env.addEntity(crate);
-		env.addEntity(new WoodenCrate(this, 2720, 1040));
-		env.addEntity(new WoodenCrate(this, 3520, 1040));
 		env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
@@ -54,8 +48,6 @@ public class Level1 extends Level {
 		//craneLights[1].rotate(80);
 		//craneLights[0].setColor(new Color(100, 100, 100));
 		//craneLights[1].setColor(new Color(100, 100, 100));
-		
-		env.sounds.loadSFX("zombiegroan1");
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

@@ -1,6 +1,8 @@
 package nl.jasperbok.zombies.level;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import nl.jasperbok.zombies.entity.Attractor;
@@ -27,15 +29,12 @@ public class TileEnvironment {
 	
 	// Map variables.
 	private TiledMap map;
-	private String mapName;
 	private int tileWidth;
 	private int tileHeight;
 	private Level level;
 	private Tile[][] tiles;
 	int backgroundLayer;
 	int collisionLayer;
-	
-	public SoundManager sounds;
 	
 	// Entity variables.
 	private int nextEntId = 0;
@@ -47,7 +46,10 @@ public class TileEnvironment {
 	private ArrayList<Entity> garbage = new ArrayList<Entity>();
 	
 	// Utilities.
+	public SoundManager sounds;
 	public MobDirector mobDirector;
+	
+	private boolean sortNow = false;
 	
 	/**
 	 * Class constructor.
@@ -58,20 +60,17 @@ public class TileEnvironment {
 	public TileEnvironment(String mapName, Level level) throws SlickException {
 		// Load the map and all related variables.
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
-		this.mapName = mapName;
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
 		this.level = level;
 		this.tiles = MapLoader.loadTiles(map);
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
+		this.sounds = new SoundManager();
 		this.mobDirector = new MobDirector(this.getAllMobs());
 		
 		MapLoader.loadEntities(this, level, map);
-		
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
-		
-		sounds = new SoundManager();
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
@@ -94,6 +93,7 @@ public class TileEnvironment {
 			this.namedEntities.put(ent.name, ent);
 		}
 		this.nextEntId++;
+		this.sortNow = true;
 		return ent;
 	}
 	
@@ -146,6 +146,14 @@ public class TileEnvironment {
 		}
 		return ents;
 	}
+	
+	private void sortEntities() {
+		Collections.sort(this.entities, new Comparator<Entity>() {
+			public int compare(Entity one, Entity two) {
+				return one.zIndex - two.zIndex;
+			}
+		});
+	}
 	/*
 	public ArrayList<Entity> getAllZombies() {
 		ArrayList<Entity> ents = new ArrayList<Entity>();
@@ -161,9 +169,14 @@ public class TileEnvironment {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
-		checkForTileCollisions();
 		updateTriggers(container, delta);
+		checkForTileCollisions();
 		emptyGarbage();
+		
+		if (sortNow) {
+			this.sortEntities();
+			this.sortNow = false;
+		}
 	}
 	
 	private void updateTriggers(GameContainer container, int delta) {

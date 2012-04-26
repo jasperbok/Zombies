@@ -27,6 +27,9 @@ public class Trigger {
 		this.size = size;
 		this.repeat = repeat;
 		this.settings = settings;
+		if (this.settings.get("repeatDelay") != "") {
+			this.activationDelay = Integer.parseInt(this.settings.get("repeatDelay"));
+		}
 	}
 	
 	public void update(GameContainer container, int delta) {
@@ -48,7 +51,7 @@ public class Trigger {
 	
 	public void activate() {
 		if (this.settings.get("sfx") != "") {
-			//this.level.env.sounds.play(this.sfx);
+			this.level.env.sounds.playSFX(this.settings.get("sfx"));
 		}
 		
 		if (this.settings.get("message") != "") {
