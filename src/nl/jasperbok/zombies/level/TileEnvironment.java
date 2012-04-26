@@ -67,7 +67,7 @@ public class TileEnvironment {
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
 		this.sounds = new SoundManager();
-		this.mobDirector = new MobDirector(this.getAllMobs());
+		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		
 		MapLoader.loadEntities(this, level, map);
 		Camera.getInstance().setTarget(this.getEntityByName("player"));

@@ -33,7 +33,7 @@ public class Level extends BasicGameState implements GameState {
 	public TileEnvironment env;
 	
 	// Lighting
-	private boolean doLighting = false;
+	public boolean doLighting = true;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
     protected FrameBufferObject fboLight;
@@ -90,7 +90,7 @@ public class Level extends BasicGameState implements GameState {
 	        
 	        fboLight.render(1.0f);
 			
-	        GL11.glEnable(GL11.GL_BLEND);
+	        //GL11.glEnable(GL11.GL_BLEND);
 	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
         }
         
@@ -110,19 +110,20 @@ public class Level extends BasicGameState implements GameState {
 			//GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		}
+		
 		env.render(container, g);
 		
 		if (doLighting) {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
-	        GL11.glDisable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_BLEND);
 		}
 	}
 	
 	public void renderScene(GameContainer container, Graphics g) throws SlickException
     {
-        //# Clear the color buffer
+		//# Clear the color buffer
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
+        //GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT);
 
         //# Use less-than or equal depth testing
         GL11.glDepthFunc(GL11.GL_LEQUAL);

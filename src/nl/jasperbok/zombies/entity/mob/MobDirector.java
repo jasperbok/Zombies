@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.level.Level;
+import nl.jasperbok.zombies.sound.SoundManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -36,9 +38,13 @@ public class MobDirector {
 	private int distanceCheckingTimeoutCeil = 0;
 	private int distanceCheckingTimer = 10;
 	
+	private Level level;
+	private SoundManager sounds;
+	
 	private HashMap<Mob, List> trackingMobs;
 	
-	public MobDirector() {
+	public MobDirector(Level level) {
+		this.level = level;
 		try {
 			init();
 		} catch (IOException e) {
@@ -49,7 +55,9 @@ public class MobDirector {
 		attractorGarbage = new LoopingList<MobAttractor>();
 	}
 	
-	public MobDirector(List<Mob> mobs) {
+	public MobDirector(Level level, SoundManager soundManager, List<Mob> mobs) {
+		this.level = level;
+		this.sounds = soundManager;
 		try {
 			init();
 		} catch (IOException e) {
@@ -63,7 +71,10 @@ public class MobDirector {
 	
 	public void init() throws IOException {
 		trackingMobs = new HashMap<Mob, List>();
-		wavEffect = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("data/sound/sfx/zombiegroan1.wav"));
+
+		sounds.loadSFX("zombie_groan1");
+		sounds.loadSFX("zombie_groan2");
+		sounds.loadSFX("zombie_horde");
 	}
 	
 	/**
@@ -101,6 +112,10 @@ public class MobDirector {
 				distanceCheckingTimer = distanceCheckingTimeoutCeil;
 			} else {
 				distanceCheckingTimer--;
+			}
+			
+			if (Math.random() * 20000 > 19999) {
+				sounds.playSFX("zombie_groan1", 0, 0);
 			}
 			
 			for (MobAttractor attractor : attractors) {

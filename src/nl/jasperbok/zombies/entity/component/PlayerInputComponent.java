@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.entity.component;
 
+import nl.jasperbok.zombies.StateManager;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
@@ -22,7 +23,13 @@ public class PlayerInputComponent extends Component {
 			// Handle player input.
 			if (input.isKeyPressed(input.KEY_C)) {
 				try {
-					owner.level.env.sounds.playSFX("zombiegroan1");
+					//owner.level.env.sounds.playSFX("zombie_groan1");
+					if (owner.level.doLighting == false) {
+						owner.level.doLighting = true;
+					} else {
+						owner.level.doLighting = false;
+					}
+					//StateManager.getInstance().setState(2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

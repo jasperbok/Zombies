@@ -32,14 +32,13 @@ public class Level2 extends Level {
 
 	public Level2() throws SlickException {
 		super("level2");
-		Player player = new Player(this, new Vector2f(100, 100));
-		env.setPlayer(player);
+		this.ID = 3;
 		
 		camera.setTarget(env.getPlayer());
 		
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
-		
+		/*
 		env.addMob(new Zombie(this, 320, 1200));
 		
 		env.addEntity(new BreakableFloor(this, 2480, 720));
@@ -57,8 +56,9 @@ public class Level2 extends Level {
 		
 		env.addEntity(firstDoor);
 		env.addEntity(finalDoor);
+		*/
 		
-		env.sounds.loadSFX("zombiegroan1");
+		env.sounds.loadSFX("zombie_groan1");
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

@@ -1,5 +1,7 @@
 package nl.jasperbok.zombies.gui;
 
+import nl.jasperbok.zombies.StateManager;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -64,7 +66,8 @@ public class MainMenu extends BasicGameState implements GameState {
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_ENTER)) {
 			if (this.selectedItem == "start") {
-				game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				//game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+				((StateManager)game.getCurrentState()).setState(1);
 			} else if (this.selectedItem == "quit") {
 				container.exit();
 			}
