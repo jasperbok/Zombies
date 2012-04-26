@@ -213,5 +213,4 @@ public class Level extends BasicGameState implements GameState {
 	public int getID() {
 		return ID;
 	}
-  
 }
