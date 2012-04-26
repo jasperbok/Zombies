@@ -66,6 +66,10 @@ public class Trigger {
 			this.level.env.getEntityByName(this.settings.get("target")).call("");
 		}
 		
+		if (this.settings.get("goToLevel") != "") {
+			this.level.reInit(this.settings.get("goToLevel"));
+		}
+		
 		this.active = false;
 	}
 	

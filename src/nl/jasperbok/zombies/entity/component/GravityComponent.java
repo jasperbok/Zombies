@@ -31,7 +31,6 @@ public class GravityComponent extends Component {
 				float yVel = owner.velocity.getY() + gravity;
 				if (yVel > maxGravity) yVel = maxGravity;
 				owner.velocity.set(owner.velocity.getX(), yVel);
-				System.out.println(this.getClass().toString() + ".update: " + owner.getClass().toString() + ": " + yVel);
 			}
 		}
 	}
