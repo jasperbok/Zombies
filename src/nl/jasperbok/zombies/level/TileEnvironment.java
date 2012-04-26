@@ -1,6 +1,8 @@
 package nl.jasperbok.zombies.level;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import nl.jasperbok.zombies.entity.Attractor;
@@ -27,7 +29,6 @@ public class TileEnvironment {
 	
 	// Map variables.
 	private TiledMap map;
-	private String mapName;
 	private int tileWidth;
 	private int tileHeight;
 	private Level level;
@@ -35,26 +36,20 @@ public class TileEnvironment {
 	int backgroundLayer;
 	int collisionLayer;
 	
-	public SoundManager sounds;
-	
 	// Entity variables.
 	private int nextEntId = 0;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
 	private HashMap<String, Entity> namedEntities = new HashMap<String, Entity>();
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
-	private ArrayList<Mob> mobs = new ArrayList<Mob>();
 	private ArrayList<Entity> attractors = new ArrayList<Entity>();
 	private ArrayList<Entity> garbage = new ArrayList<Entity>();
-	/**
-	 * Contains all the entities in the environment. This variable is made
-	 * so we only have to loop over one ArrayList instead of several.
-	 */
-	private ArrayList<Entity> allEntities = new ArrayList<Entity>();
-	private Player player;
 	
 	// Utilities.
+	public SoundManager sounds;
 	public MobDirector mobDirector;
+	
+	private boolean sortNow = false;
 	
 	/**
 	 * Class constructor.
@@ -65,7 +60,6 @@ public class TileEnvironment {
 	public TileEnvironment(String mapName, Level level) throws SlickException {
 		// Load the map and all related variables.
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
-		this.mapName = mapName;
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
 		this.level = level;
@@ -73,10 +67,9 @@ public class TileEnvironment {
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
 		this.sounds = new SoundManager();
-		this.mobDirector = new MobDirector(level, sounds, mobs);
+		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		
 		MapLoader.loadEntities(this, level, map);
-		
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
 		// Neat loop to debug stuff in the map.
@@ -96,11 +89,11 @@ public class TileEnvironment {
 	public Entity spawnEntity(Entity ent) {
 		ent.id = this.nextEntId;
 		this.entities.add(ent);
-		this.allEntities.add(ent); // Remove this when we use a single entity array.
 		if (ent.name != "") {
 			this.namedEntities.put(ent.name, ent);
 		}
 		this.nextEntId++;
+		this.sortNow = true;
 		return ent;
 	}
 	
@@ -144,14 +137,22 @@ public class TileEnvironment {
 		return ents;
 	}
 	
-	public ArrayList<Entity> getAllMobs() {
-		ArrayList<Entity> ents = new ArrayList<Entity>();
+	public ArrayList<Mob> getAllMobs() {
+		ArrayList<Mob> ents = new ArrayList<Mob>();
 		for (Entity ent: entities) {
 			if (ent instanceof Mob) {
-				ents.add(ent);
+				ents.add((Mob)ent);
 			}
 		}
 		return ents;
+	}
+	
+	private void sortEntities() {
+		Collections.sort(this.entities, new Comparator<Entity>() {
+			public int compare(Entity one, Entity two) {
+				return one.zIndex - two.zIndex;
+			}
+		});
 	}
 	/*
 	public ArrayList<Entity> getAllZombies() {
@@ -168,10 +169,14 @@ public class TileEnvironment {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
-		checkForTileCollisions();
 		updateTriggers(container, delta);
+		checkForTileCollisions();
 		emptyGarbage();
-		//checkForCollisions();
+		
+		if (sortNow) {
+			this.sortEntities();
+			this.sortNow = false;
+		}
 	}
 	
 	private void updateTriggers(GameContainer container, int delta) {
@@ -181,12 +186,11 @@ public class TileEnvironment {
 	}
 	
 	private void updateEntities(Input input, int delta) {
-		for (Entity ent: allEntities) {
+		for (Entity ent: this.entities) {
 			ent.update(input, delta);
-			ent.updateRenderPosition();
 		}
 		
-		// Render all the attractors.
+		// Update all the attractors.
 		for (Entity att: attractors) {
 			att.update(input, delta);
 		}
@@ -201,7 +205,7 @@ public class TileEnvironment {
 	public ArrayList<Entity> checkForEntityCollision(Entity checkingEntity) {
 		ArrayList<Entity> colliding = new ArrayList<Entity>();
 		
-		for (Entity entity : allEntities) {
+		for (Entity entity : entities) {
 			if (checkingEntity != entity && checkingEntity.touches(entity)) {
 				colliding.add(entity);
 			}
@@ -245,7 +249,7 @@ public class TileEnvironment {
 		
 		boolean onEntity = false;
 		// This should probably go in the hittest section...
-		for (Entity entity: allEntities) {
+		for (Entity entity: entities) {
 			if (entity != ent && entity.isTopSolid) {
 				Rectangle topBox = new Rectangle(entity.position.getX(), entity.position.getY(), entity.boundingBox.getWidth(), 10);
 				if (topBox.contains(ent.boundingBox.getCenterX() - 10, ent.boundingBox.getMaxY()) || topBox.contains(ent.boundingBox.getCenterX() + 10, ent.boundingBox.getMaxY())) {
@@ -288,8 +292,8 @@ public class TileEnvironment {
 	/**
 	 * Handles collisions between Entities and Tiles.
 	 */
-	private void checkForTileCollisions() {		
-		for (Entity ent: allEntities) {
+	private void checkForTileCollisions() {
+		for (Entity ent: entities) {
 			try {
 				// Floor collisions.
 				int entLeftX = (int)(ent.boundingBox.getCenterX() - 10);
@@ -345,38 +349,16 @@ public class TileEnvironment {
 	 * velocity.
 	 */
 	private void moveEntities(int delta) {
-		for (Entity ent: allEntities) {
+		for (Entity ent: entities) {
 			ent.setPosition(ent.position.x + (ent.velocity.x * delta), ent.position.y + (ent.velocity.y * delta));
 		}
-	}
-	
-	/**
-	 * Add an entity to the list of entities.
-	 * 
-	 * @param ent The entity to add to the list.
-	 */
-	public void addEntity(Entity ent) {
-		entities.add(ent);
-		if (ent instanceof Usable) usableEntities.add((Usable) ent);
-		updateEntityList();
-	}
-	
-	/**
-	 * Add a mob to the list of mobs.
-	 * 
-	 * @param mob The mob to add to the list.
-	 */
-	public void addMob(Mob mob) {
-		mobs.add(mob);
-		updateEntityList();
-		mobDirector.refresh(mobs);
 	}
 	
 	public void addAttractor(Rectangle bbox, String type) throws SlickException {		
 		switch (type) {
 		case "BloodMark":
 			BloodMark bm = new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20);
-			addEntity(bm);
+			spawnEntity(bm);
 			this.mobDirector.addAttractor(bm, 60, false);
 			break;
 		}
@@ -407,13 +389,6 @@ public class TileEnvironment {
 		return null;
 	}
 	
-	private void updateEntityList() {
-		allEntities = new ArrayList<Entity>();
-		allEntities.addAll(entities);
-		allEntities.addAll(mobs);
-		//allEntities.add(player);
-	}
-	
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
@@ -424,13 +399,13 @@ public class TileEnvironment {
 		}
 		
 		// Render all the entities.
-		for (Entity ent: allEntities) {
+		for (Entity ent: entities) {
 			ent.render(container, g);
 		}
 		
 		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {
-			for (Entity ent: allEntities) {
+			for (Entity ent: entities) {
 				g.draw(ent.boundingBox);
 			}
 		}
@@ -445,6 +420,10 @@ public class TileEnvironment {
 		garbage.add(entity);
 	}
 	
+	public void addEntity(Entity ent) {
+		this.spawnEntity(ent);
+	}
+	
 	/**
 	 * Clears the garbage array.
 	 * @param entity
@@ -452,19 +431,11 @@ public class TileEnvironment {
 	public void emptyGarbage() {
 		for (Entity entity : garbage) {
 			if (entities.contains(entity)) entities.remove(entity);
-			if (mobs.contains(entity)) mobs.remove((Mob)entity);
 			if (attractors.contains(entity)) attractors.remove(entity);
 			if (usableEntities.contains(entity)) usableEntities.remove(entity);
-			if (allEntities.contains(entity)) allEntities.remove(entity);
 			entity = null;
 		}
 		garbage.clear();
-	}
-	
-	/** GETTERS AND SETTERS **/
-	
-	public String getMapName() {
-		return mapName;
 	}
 	
 	/**
@@ -474,15 +445,5 @@ public class TileEnvironment {
 	 */
 	public Player getPlayer() {
 		return (Player)this.getEntityByName("player");
-	}
-	
-	/**
-	 * Sets the entity representing the player in the environment.
-	 * 
-	 * @param player The player.
-	 */
-	public void setPlayer(Player player) {
-		this.player = player;
-		updateEntityList();
 	}
 }

@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity;
 
 import java.util.HashMap;
 
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.GameContainer;
@@ -20,11 +21,15 @@ public class Trigger {
 	
 	public Level level = null;
 	
-	public Trigger(Level level, Boolean repeat, Vector2f pos, Vector2f size) {
+	public Trigger(Level level, Boolean repeat, Vector2f pos, Vector2f size, HashMap<String, String> settings) {
 		this.level = level;
 		this.pos = pos;
 		this.size = size;
 		this.repeat = repeat;
+		this.settings = settings;
+		if (this.settings.get("repeatDelay") != "") {
+			this.activationDelay = Integer.parseInt(this.settings.get("repeatDelay"));
+		}
 	}
 	
 	public void update(GameContainer container, int delta) {
@@ -46,7 +51,15 @@ public class Trigger {
 	
 	public void activate() {
 		if (this.settings.get("sfx") != "") {
-			//this.level.env.sounds.play(this.sfx);
+			this.level.env.sounds.playSFX(this.settings.get("sfx"));
+		}
+		
+		if (this.settings.get("message") != "") {
+			if (this.settings.get("messageDuration") != "") {
+				PlayerSpeech.getInstance().addMessage(this.settings.get("message"), Integer.parseInt(this.settings.get("messageDuration")));
+			} else {
+				PlayerSpeech.getInstance().addMessage(this.settings.get("message"));
+			}
 		}
 		
 		if (this.settings.get("target") != "") {

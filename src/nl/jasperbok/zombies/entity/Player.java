@@ -26,6 +26,7 @@ public class Player extends Entity {
 	
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
+		this.zIndex = -1;
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, 5));
@@ -75,12 +76,6 @@ public class Player extends Entity {
 		
 		// Set the initial animation.
 		this.currentAnim = this.anims.get("idle");
-	}
-	
-	protected void updateBoundingBox() {
-		if (this.currentAnim != null) {
-			this.boundingBox.setBounds(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		}
 	}
 	
 	public void update(Input input, int delta) {

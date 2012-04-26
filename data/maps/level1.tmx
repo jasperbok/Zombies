@@ -170,6 +170,45 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="897" y="389" width="66" height="151"/>
+  <object name="player" type="Player" x="4434" y="1030" width="75" height="150"/>
+  <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
+   <properties>
+    <property name="requires" value="key_card"/>
+    <property name="target" value="door_1"/>
+   </properties>
+  </object>
+  <object name="key_card" type="Item" x="2632" y="292" width="47" height="37">
+   <properties>
+    <property name="type" value="key_card"/>
+   </properties>
+  </object>
+  <object name="start_zombie_1" type="Zombie" x="88" y="406" width="75" height="150">
+   <properties>
+    <property name="max-right" value="640"/>
+   </properties>
+  </object>
+  <object name="guard_zombie" type="Zombie" x="2758" y="245" width="75" height="150">
+   <properties>
+    <property name="max-right" value="3920"/>
+   </properties>
+  </object>
+  <object name="crate_zombie" type="Zombie" x="2542" y="1045" width="75" height="150">
+   <properties>
+    <property name="max-left" value="2290"/>
+   </properties>
+  </object>
+  <object name="crate_1" type="WoodenCrate" x="2748" y="1109" width="80" height="80"/>
+  <object name="crate_2" type="WoodenCrate" x="3615" y="1112" width="80" height="80"/>
+ </objectgroup>
+ <objectgroup color="#ff5500" name="triggers" width="70" height="20">
+  <object type="Trigger" x="3942" y="221" width="101" height="172">
+   <properties>
+    <property name="message" value="Maybe this message is a bit long but hey I can type a long message if I want to, bitch! :D"/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="5000"/>
+    <property name="sound" value="zombiegroan1"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

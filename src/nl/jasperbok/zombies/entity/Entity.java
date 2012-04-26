@@ -69,6 +69,7 @@ public abstract class Entity extends RenderObject {
 	public boolean isClimbing = false;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
+	public int zIndex = 0;
 	
 	public Entity.Type type = Entity.Type.NONE;
 	public Entity.Type checkAgainst = Entity.Type.NONE;
@@ -112,9 +113,15 @@ public abstract class Entity extends RenderObject {
 		updateBoundingBox();
 	}
 	
-	protected void updateBoundingBox() {
-		boundingBox.setX(position.getX());
-		boundingBox.setY(position.getY());
+	public void updateBoundingBox() {
+		if (this.currentAnim != null) {
+			this.boundingBox.setBounds(
+					this.position.x,
+					this.position.y,
+					this.currentAnim.getWidth(),
+					this.currentAnim.getHeight()
+					);
+		}
 	}
 	
 	/**
@@ -136,6 +143,9 @@ public abstract class Entity extends RenderObject {
 		for (Component comp: components) {
 			comp.update(input, delta);
 		}
+		
+		this.updateBoundingBox();
+		this.updateRenderPosition();
 	}
 	
 	/**

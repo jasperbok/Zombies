@@ -1,14 +1,14 @@
 package nl.jasperbok.zombies.entity.building;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Observable;
@@ -24,34 +24,30 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	private boolean state;
 	private boolean canBeUsed = true;
 	private Rectangle useBox;
-	private ArrayList<Observer> observers;
-	
-	private Image switchedOnImage;
-	private Image switchedOffImage;
 	
 	public Switch onOffSwitch;
 	
-	public Switch(Level level, Vector2f position) throws SlickException {
-		this(level, false, position, new HashMap<String, String>());
-	}
-	
-	public Switch(Level level, boolean initialState, Vector2f position, Switch onOffSwitch, HashMap<String, String> settings) throws SlickException {
-		this(level, initialState, position, settings);
+	public Switch(Level level, boolean initialState, Switch onOffSwitch, HashMap<String, String> settings) throws SlickException {
+		this(level, initialState, settings);
 		
 		this.onOffSwitch = onOffSwitch;
 		this.onOffSwitch.registerObserver(this);
 		this.canBeUsed = false;
 	}
 
-	public Switch(Level level, boolean initialState, Vector2f position, HashMap<String, String> settings) throws SlickException {
+	public Switch(Level level, boolean initialState, HashMap<String, String> settings) throws SlickException {
 		super.init(level);
 		this.settings = settings;
-		this.position = position;
-		this.switchedOnImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84);
-		this.switchedOffImage = new Image("/data/sprites/entity/building/buildings.png").getSubImage(29, 121, 29, 84);
+		this.zIndex = -2;
+		Animation onAnim = new Animation();
+		Animation offAnim = new Animation();
+		onAnim.addFrame(new Image("/data/sprites/entity/building/buildings.png").getSubImage(0, 121, 29, 84), 5000);
+		offAnim.addFrame(new Image("/data/sprites/entity/building/buildings.png").getSubImage(29, 121, 29, 84), 5000);
+		this.anims.put("on", onAnim);
+		this.anims.put("off", offAnim);
+		this.currentAnim = this.anims.get("off");
 		this.state = initialState;
-		this.observers = new ArrayList<Observer>();
-		this.useBox = new Rectangle(position.getX(), position.getY(), switchedOnImage.getWidth(), switchedOnImage.getHeight());
+		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 
 	/**
@@ -61,20 +57,31 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	 */
 	public void use(Entity user) {
 		if (canBeUsed) {
-			this.state = !this.state;
-			if (this.settings.get("target") != "") {
-				try {
-					if (this.state == true) {
-						((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "on");
-					} else {
-						((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "off");
+			if (
+					this.settings.get("requires") == "" ||
+					(user.inventory.contains(this.settings.get("requires")))
+				) {
+				this.state = !this.state;
+				if (this.state) this.currentAnim = this.anims.get("on");
+				if (!this.state) this.currentAnim = this.anims.get("off");
+				if (this.settings.get("target") != "") {
+					try {
+						if (this.state == true) {
+							((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "on");
+						} else {
+							((Observer)this.level.env.getEntityByName(this.settings.get("target"))).notify(this, "off");
+						}
 					}
-				}
-				finally {
-					
+					finally {
+						
+					}
 				}
 			}
 		}
+	}
+	
+	public void update(Input input, int delta) {
+		super.update(input, delta);
 	}
 
 	/**
@@ -85,14 +92,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 	 */
 	public boolean canBeUsed(Rectangle rect) {
 		return rect.intersects(useBox);
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		if (state) {
-			switchedOnImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-		} else {
-			switchedOffImage.draw((int)renderPosition.getX(), (int)renderPosition.getY());
-		}
 	}
 
 	public void notify(Observable observable, String message) {
