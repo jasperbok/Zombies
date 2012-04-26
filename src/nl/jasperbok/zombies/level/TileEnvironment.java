@@ -35,7 +35,7 @@ public class TileEnvironment {
 	int backgroundLayer;
 	int collisionLayer;
 	
-	SoundManager sounds;
+	public SoundManager sounds;
 	
 	// Entity variables.
 	private int nextEntId = 0;

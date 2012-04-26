@@ -110,7 +110,6 @@ public class Player extends Entity {
 		if (isHidden()) {
 			this.currentAnim = this.anims.get("hide");
 		} else if (isClimbing) {
-			System.out.println(this.getClass().toString() + ".update: not hidden");
 			this.currentAnim = this.anims.get("climb");
 			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
 				this.currentAnim.stop();
