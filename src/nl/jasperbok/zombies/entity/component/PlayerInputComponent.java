@@ -1,11 +1,11 @@
 package nl.jasperbok.zombies.entity.component;
 
-import nl.jasperbok.zombies.StateManager;
+import java.util.ArrayList;
+
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
-import nl.jasperbok.zombies.gui.PlayerSpeech;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -21,7 +21,7 @@ public class PlayerInputComponent extends Component {
 	public void update(Input input, int delta) {
 		if (owner.playerControlled) {
 			// Handle player input.
-			if (input.isKeyPressed(input.KEY_C)) {
+			if (input.isKeyPressed(Input.KEY_C)) {
 				try {
 					//owner.level.env.sounds.playSFX("zombie_groan1");
 					if (owner.level.doLighting == false) {
@@ -85,16 +85,20 @@ public class PlayerInputComponent extends Component {
 					owner.velocity = new Vector2f(0, 0);
 					((Player)owner).switchHide();
 				} else {
-					Usable target = owner.level.env.getUsableEntity(owner.boundingBox);
-					if (target != null) {
-						target.use(owner);
+					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(this.owner.boundingBox);
+					for (Entity usable: usables) {
+						System.out.println("I can use " + usable.name);
+						usable.use(this.owner);
 					}
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_SPACE)){
-				Entity target = (Entity) owner.level.env.getUsableEntity(owner.boundingBox);
-				if (target != null && target instanceof WoodenCrate) {
-					owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
+				ArrayList<Entity> targets = owner.level.env.getUsableEntities(owner.boundingBox);
+				for (Entity target: targets) {
+					if (target != null && target instanceof WoodenCrate) {
+						owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
+						break;
+					}
 				}
 			}
 			if (input.isMousePressed(0)) {

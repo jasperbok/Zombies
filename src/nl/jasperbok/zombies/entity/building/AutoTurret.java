@@ -1,8 +1,6 @@
 package nl.jasperbok.zombies.entity.building;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -14,12 +12,7 @@ import nl.jasperbok.zombies.entity.Observable;
 import nl.jasperbok.zombies.entity.object.projectile.Bullet;
 import nl.jasperbok.zombies.level.Level;
 
-public class AutoTurret extends Entity implements Observer {
-
-	/**
-	 * A reference to the Switch that controls this AutoTurret.
-	 */
-	private Switch onOffSwitch;
+public class AutoTurret extends Entity {
 	/**
 	 * Indicates whether the AutoTurret is facing left or right.
 	 */
@@ -48,7 +41,6 @@ public class AutoTurret extends Entity implements Observer {
 		this.gravityAffected = false;
 		this.position = position;
 		this.facingLeft = facingLeft;
-		this.onOffSwitch = onOffSwitch;
 		this.firing = false;
 		
 		Animation turretOn = new Animation();
@@ -64,8 +56,6 @@ public class AutoTurret extends Entity implements Observer {
 		this.anims.put("onFlipped", turretOnFlipped);
 		this.anims.put("offFlipped", turretOffFlipped);
 		this.currentAnim = this.anims.get("off");
-		
-		if (this.onOffSwitch != null) this.onOffSwitch.registerObserver(this);
 	}
 	
 	/**
@@ -127,7 +117,7 @@ public class AutoTurret extends Entity implements Observer {
 		super.update(input, delta);
 	}
 	
-	public void notify(Observable observable, String message) {
+	public void call (String message) {
 		if (message == "on") {
 			this.switchOn();
 		} else if (message == "off") {

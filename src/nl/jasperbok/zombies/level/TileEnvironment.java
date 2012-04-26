@@ -44,6 +44,7 @@ public class TileEnvironment {
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
 	private ArrayList<Entity> attractors = new ArrayList<Entity>();
 	private ArrayList<Entity> garbage = new ArrayList<Entity>();
+	private ArrayList<Entity> deferredSpawn = new ArrayList<Entity>();
 	
 	// Utilities.
 	public SoundManager sounds;
@@ -88,7 +89,7 @@ public class TileEnvironment {
 	
 	public Entity spawnEntity(Entity ent) {
 		ent.id = this.nextEntId;
-		this.entities.add(ent);
+		this.deferredSpawn.add(ent);
 		if (ent.name != "") {
 			this.namedEntities.put(ent.name, ent);
 		}
@@ -165,6 +166,26 @@ public class TileEnvironment {
 		return ents;
 	}
 	*/
+	
+	/**
+	 * Returns the first Usable who's 'use activation field' lies within the
+	 * given rectangle.
+	 * 
+	 * @param rect The rectangle where the Usable should react on.
+	 * @return Reference to the first Usable within the given rectangle.
+	 */
+	public ArrayList<Entity> getUsableEntities(Rectangle rect) {
+		ArrayList<Entity> usables = new ArrayList<Entity>();
+
+		for (Entity ent: entities) {
+			if (ent.canBeUsed(rect)) {
+				usables.add(ent);
+			}
+		}
+		
+		return usables;
+	}
+	
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
@@ -172,6 +193,13 @@ public class TileEnvironment {
 		updateTriggers(container, delta);
 		checkForTileCollisions();
 		emptyGarbage();
+		
+		if (this.deferredSpawn.size() > 0) {
+			for (Entity ent: this.deferredSpawn) {
+				this.entities.add(ent);
+			}
+			this.deferredSpawn = new ArrayList<Entity>();
+		}
 		
 		if (sortNow) {
 			this.sortEntities();
@@ -366,27 +394,6 @@ public class TileEnvironment {
 	
 	public void removeAttractor(Attractor att) {
 		attractors.remove(att);
-	}
-	
-	/**
-	 * Returns the first Usable who's 'use activation field' lies within the
-	 * given rectangle.
-	 * 
-	 * @param rect The rectangle where the Usable should react on.
-	 * @return Reference to the first Usable within the given rectangle.
-	 */
-	public Usable getUsableEntity(Rectangle rect) {
-		for (Usable obj: usableEntities) {
-			if (obj.canBeUsed(rect)) return obj;
-		}
-		for (Entity ent: entities) {
-			if (ent instanceof Usable) {
-				if (((Usable)ent).canBeUsed(rect)) {
-					return (Usable)ent;
-				}
-			}
-		}
-		return null;
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

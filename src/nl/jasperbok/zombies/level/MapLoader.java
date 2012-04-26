@@ -120,6 +120,7 @@ public class MapLoader {
 	private static void spawnSwitch(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
 		HashMap<String, String> settings = new HashMap<String, String>();
 		settings.put("target", map.getObjectProperty(layerIndex, objectIndex, "target", ""));
+		settings.put("requires", map.getObjectProperty(layerIndex, objectIndex, "requires", ""));
 		Switch newSwitch = new Switch(
 				level,
 				"true".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "false")),

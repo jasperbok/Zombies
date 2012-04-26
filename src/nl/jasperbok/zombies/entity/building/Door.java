@@ -12,7 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Door extends Entity implements Observer {
+public class Door extends Entity {
 	
 	public Door(Level level, boolean facingLeft) throws SlickException {
 		super.init(level);
@@ -43,7 +43,7 @@ public class Door extends Entity implements Observer {
 		//---
 	}
 
-	public void notify(Observable observable, String message) {
+	public void call(String message) {
 		if (message == "on") {
 			level.env.removeEntity(this);
 		}

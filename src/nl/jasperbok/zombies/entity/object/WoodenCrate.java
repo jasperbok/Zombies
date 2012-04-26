@@ -12,7 +12,7 @@ import nl.jasperbok.zombies.entity.component.DraggableComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 
-public class WoodenCrate extends Entity implements Usable {
+public class WoodenCrate extends Entity {
 	private Rectangle useBox;
 	public boolean playerControlled = false;
 
@@ -55,14 +55,12 @@ public class WoodenCrate extends Entity implements Usable {
 		super.update(input, delta);
 	}
 
-	@Override
 	public void use(Entity user) {
 		this.user = user;
 		this.playerControlled = true;
 		System.out.println("use");
 	}
 
-	@Override
 	public boolean canBeUsed(Rectangle rect) {
 		return rect.intersects(useBox);
 	}

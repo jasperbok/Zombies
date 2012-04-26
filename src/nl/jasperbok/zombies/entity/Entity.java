@@ -161,6 +161,14 @@ public abstract class Entity extends RenderObject {
 		System.out.println("Message from trigger: " + message);
 	}
 	
+	public boolean canBeUsed (Rectangle rect) {
+		return false;
+	}
+	
+	public void use (Entity user) {
+		
+	}
+	
 	/**
 	 * Kills the Entity.
 	 */

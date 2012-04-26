@@ -125,13 +125,14 @@ public class Player extends Entity {
 		}
 	}
 	
+	/*
 	private void climbObject() {
 		Entity target = (Entity) level.env.getUsableEntity(boundingBox);
 		if (target != null && target instanceof WoodenCrate) {
 			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
 		}
 	}
-	
+	*/
 	public void switchHide() {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == true) {
