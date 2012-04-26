@@ -68,9 +68,10 @@ public class TileEnvironment {
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
 		this.sounds = new SoundManager();
-		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		
 		MapLoader.loadEntities(this, level, map);
+		spawnDeffered();
+		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
 		// Neat loop to debug stuff in the map.
@@ -194,16 +195,20 @@ public class TileEnvironment {
 		checkForTileCollisions();
 		emptyGarbage();
 		
+		spawnDeffered();
+		
+		if (sortNow) {
+			this.sortEntities();
+			this.sortNow = false;
+		}
+	}
+	
+	public void spawnDeffered() {
 		if (this.deferredSpawn.size() > 0) {
 			for (Entity ent: this.deferredSpawn) {
 				this.entities.add(ent);
 			}
 			this.deferredSpawn = new ArrayList<Entity>();
-		}
-		
-		if (sortNow) {
-			this.sortEntities();
-			this.sortNow = false;
 		}
 	}
 	
