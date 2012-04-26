@@ -99,15 +99,18 @@ public class AutoTurret extends Entity {
 				float xPos = 0;
 				float xVel = 0;
 				if (facingLeft) {
-					xPos = position.getX();
+					xPos = position.getX() - 10; // Compensate for bullet length
 					xVel = -1f;
 				} else {
-					xPos = position.getX() + this.currentAnim.getWidth();
+					xPos = position.getX() + this.currentAnim.getWidth() + 10; // Compensate for bullet length
 					xVel = 1f;
 				}
 				float yPos = position.getY() + 17;
 				try {
-					level.env.addEntity(new Bullet(level, new Vector2f(xPos, yPos), new Vector2f(xVel, 0)));
+					Bullet bullet = new Bullet(this.level, new Vector2f(xVel, 0));
+					bullet.position.x = xPos;
+					bullet.position.y = yPos;
+					this.level.env.spawnEntity(bullet);
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
