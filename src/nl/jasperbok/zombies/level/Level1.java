@@ -32,6 +32,19 @@ public class Level1 extends Level {
 
 	public Level1() throws SlickException {
 		super("level1");
+		init();
+		
+		//craneLights[0] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 30, 730), 200, camera);
+		//craneLights[1] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 90, 730), 200, camera);
+		//craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30 + camera.position.getX(), 730 - camera.position.getY()));
+		//craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90 + camera.position.getX(), 730 - camera.position.getY()));
+		//craneLights[0].rotate(100);
+		//craneLights[1].rotate(80);
+		//craneLights[0].setColor(new Color(100, 100, 100));
+		//craneLights[1].setColor(new Color(100, 100, 100));
+	}
+	
+	public void init() throws SlickException {
 		this.ID = 2;
 		
 		camera.setTarget(env.getPlayer());
@@ -44,15 +57,15 @@ public class Level1 extends Level {
 		env.sounds.loadSFX("flatsh");
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
-		
-		//craneLights[0] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 30, 730), 200, camera);
-		//craneLights[1] = new FlashLight(lights, cHulls, new Vector2f(crane.armPos.x + 90, 730), 200, camera);
-		//craneLights[0].setPosition(new Vector2f(crane.armPos.getX() + 30 + camera.position.getX(), 730 - camera.position.getY()));
-		//craneLights[1].setPosition(new Vector2f(crane.armPos.getX() + 90 + camera.position.getX(), 730 - camera.position.getY()));
-		//craneLights[0].rotate(100);
-		//craneLights[1].rotate(80);
-		//craneLights[0].setColor(new Color(100, 100, 100));
-		//craneLights[1].setColor(new Color(100, 100, 100));
+	}
+	
+	public void reInit() {
+		super.reInit("level1");
+		try {
+			init();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

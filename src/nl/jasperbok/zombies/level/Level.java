@@ -43,20 +43,42 @@ public class Level extends BasicGameState implements GameState {
 	public FlashLight fl;
 	public LightSource playerLight;
 	protected int rot = 0;
+
+	protected String currentLevel;
+	protected String mapFileName;
 	
 	public Level(String mapFileName) throws SlickException {
-		env = new TileEnvironment(mapFileName, this);
-		camera = Camera.getInstance();
-		
 		lights = new ArrayList<LightSource>();
         cHulls = new ArrayList<ShadowHull>();
+        
         fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
+	}
+	
+	public void init(String mapFileName) {
+		this.mapFileName = mapFileName;
+		try {
+			env = new TileEnvironment(mapFileName, this);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		camera = Camera.getInstance();
+		
 		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
 		//lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
 		
 		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(20, 20, 20), camera);
 		lights.add(playerLight);
+	}
+	
+	public void reInit() {
+		reInit(this.currentLevel);
+	}
+	
+	public void reInit(String levelName) {
+		lights.clear();
+		cHulls.clear();
+		init(levelName);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

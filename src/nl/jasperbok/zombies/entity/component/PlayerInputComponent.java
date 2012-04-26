@@ -23,12 +23,13 @@ public class PlayerInputComponent extends Component {
 			// Handle player input.
 			if (input.isKeyPressed(input.KEY_C)) {
 				try {
+					owner.level.reInit();
 					//owner.level.env.sounds.playSFX("zombie_groan1");
-					if (owner.level.doLighting == false) {
+					/*if (owner.level.doLighting == false) {
 						owner.level.doLighting = true;
 					} else {
 						owner.level.doLighting = false;
-					}
+					}*/
 					//StateManager.getInstance().setState(2);
 				} catch (Exception e) {
 					e.printStackTrace();
