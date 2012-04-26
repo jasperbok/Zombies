@@ -17,6 +17,12 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public abstract class Entity extends RenderObject {
+	/**
+	 * constants
+	 */
+	public static final int LEFT = 1;
+	public static final int RIGHT = 2;
+	
 	public static enum Collides {
 		NEVER (0),
 		LITE (1),
@@ -67,6 +73,7 @@ public abstract class Entity extends RenderObject {
 	public boolean isFacingLeft = false;
 	public boolean wasClimbing = false;
 	public boolean isClimbing = false;
+	public int facing = 1;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
 	public int zIndex = 0;

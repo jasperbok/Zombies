@@ -257,7 +257,7 @@ public class TileEnvironment {
 		int entY = (int)(ent.boundingBox.getMaxY());
 		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
 		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
-		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		int relativeBottomY = (int)Math.floor((ent.boundingBox.getMaxY() + 3) / tileWidth);
 		
 		// Becomes true if the Entity is on a Tile that has its isBlocking property set to true.
 		boolean onAllSolidBlock =  tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;

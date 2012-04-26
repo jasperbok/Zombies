@@ -39,6 +39,8 @@ public class Player extends Entity {
 	}
 	
 	public void init() throws SlickException {
+		this.facing = Entity.RIGHT;
+		
 		SpriteSheet standSprites = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
 		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
 		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
@@ -54,8 +56,8 @@ public class Player extends Entity {
 			walkRight.addFrame(standSprites.getSprite(i, 0), 100);
 			walkLeft.addFrame(standSprites.getSprite(i, 0).getFlippedCopy(true, false), 100);
 		}
-		idleRight.addFrame(standSprites.getSprite(0, 0), 100);
-		idleLeft.addFrame(standSprites.getSprite(0, 0).getFlippedCopy(true, false), 100);
+		idleRight.addFrame(standSprites.getSprite(0, 0), 5000);
+		idleLeft.addFrame(standSprites.getSprite(0, 0).getFlippedCopy(true, false), 5000);
 		climb.addFrame(climbSprites.getSprite(0, 0), 250);
 		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
 		hide.addFrame(hideSprite.getSprite(0, 0), 5000);
@@ -65,6 +67,7 @@ public class Player extends Entity {
 		this.anims.put("idleRight", idleRight);
 		this.anims.put("idleLeft", idleLeft);
 		this.anims.put("climb", climb);
+		this.anims.put("hide", hide);
 		this.currentAnim = this.anims.get("idleRight");
 	}
 	
@@ -103,11 +106,17 @@ public class Player extends Entity {
 			}
 		} else if (isOnGround) {
 			if (velocity.getX() < 0f) {
+				this.facing = Entity.LEFT;
 				this.currentAnim = this.anims.get("walkLeft");
 			} else if (velocity.getX() > 0f) {
+				this.facing = Entity.RIGHT;
 				this.currentAnim =this.anims.get("walkRight");
 			} else if (velocity.getX() == 0f) {
-				this.currentAnim = this.anims.get("idle");
+				if (this.facing == Entity.LEFT) {
+					this.currentAnim = this.anims.get("idleLeft");
+				} else {
+					this.currentAnim = this.anims.get("idleRight");
+				}
 			}
 		} else {
 			// Not on ground and not climbing, surely the player is falling!
