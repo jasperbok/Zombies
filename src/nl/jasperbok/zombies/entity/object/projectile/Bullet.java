@@ -1,9 +1,7 @@
 package nl.jasperbok.zombies.entity.object.projectile;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -13,7 +11,6 @@ import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.level.Level;
 
 public class Bullet extends Entity {
-	private Image image;
 	
 	/**
 	 * 
@@ -22,8 +19,8 @@ public class Bullet extends Entity {
 	 * @param velocity
 	 * @throws SlickException
 	 */
-	public Bullet(Level level, Vector2f position, Vector2f velocity) throws SlickException {
-		this(level, position, velocity, 1);
+	public Bullet(Level level, Vector2f velocity) throws SlickException {
+		this(level, velocity, 1);
 	}
 	
 	/**
@@ -34,20 +31,20 @@ public class Bullet extends Entity {
 	 * @param damage
 	 * @throws SlickException
 	 */
-	public Bullet(Level level, Vector2f position, Vector2f velocity, int damage) throws SlickException {
+	public Bullet(Level level, Vector2f velocity, int damage) throws SlickException {
 		super.init(level);
-		this.position = position;
 		this.velocity = velocity;
-		this.image = new Image("data/sprites/entity/object/projectile/bullet.png");
-		if (velocity.x > 0) {
-			this.image.getFlippedCopy(true, false);
-		}
 		
 		this.addComponent(new LifeComponent(this));
 		this.addComponent(new DamagingAuraComponent(this, damage));
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		image.draw(renderPosition.x, renderPosition.y);
+		
+		Animation idle = new Animation();
+		if (this.velocity.x > 0) {
+			idle.addFrame(new Image("data/sprites/entity/object/projectile/bullet.png").getFlippedCopy(true, false), 5000);
+		} else {
+			idle.addFrame(new Image("data/sprites/entity/object/projectile/bullet.png"), 5000);
+		}
+		this.anims.put("idle", idle);
+		this.currentAnim = this.anims.get("idle");
 	}
 }

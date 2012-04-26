@@ -1,8 +1,6 @@
 package nl.jasperbok.zombies.entity.building;
 
 import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.Observable;
-import nl.jasperbok.zombies.entity.Observer;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
@@ -10,7 +8,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
 
 public class Door extends Entity {
 	

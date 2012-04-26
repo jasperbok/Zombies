@@ -107,7 +107,10 @@ public class AutoTurret extends Entity {
 				}
 				float yPos = position.getY() + 17;
 				try {
-					level.env.addEntity(new Bullet(level, new Vector2f(xPos, yPos), new Vector2f(xVel, 0)));
+					Bullet bullet = new Bullet(this.level, new Vector2f(xVel, 0));
+					bullet.position.x = xPos;
+					bullet.position.y = yPos;
+					this.level.env.spawnEntity(bullet);
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
