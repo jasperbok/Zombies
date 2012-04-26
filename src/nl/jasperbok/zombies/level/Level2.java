@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.level;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.newdawn.slick.Color;
@@ -56,6 +57,13 @@ public class Level2 extends Level {
 		
 		env.addEntity(firstDoor);
 		env.addEntity(finalDoor);
+		
+		try {
+			env.sounds.loadSFX("zombiegroan1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
