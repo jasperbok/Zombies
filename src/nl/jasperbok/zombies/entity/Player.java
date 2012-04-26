@@ -166,4 +166,8 @@ public class Player extends Entity {
 			return true;
 		}
 	}
+	
+	public void kill() {
+		this.level.reInit();
+	}
 }
