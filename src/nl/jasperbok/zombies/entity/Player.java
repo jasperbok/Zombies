@@ -8,13 +8,11 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.level.Level;
-import nl.jasperbok.zombies.math.Vector2;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
-import nl.jasperbok.zombies.entity.object.WoodenCrate;
 import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
@@ -41,41 +39,33 @@ public class Player extends Entity {
 	}
 	
 	public void init() throws SlickException {
-		// Fix the walking animations.
-		SpriteSheet walkSprites = new SpriteSheet("data/sprites/entity/walkingwalking.png", 75, 150);
-		Animation walkRight = new Animation();
-		for (int i = 0; i < 8; i++) {
-			walkRight.addFrame(walkSprites.getSprite(i, 0), 150);
-		}
-		Animation walkLeft = new Animation();
-		for (int i = 0; i < 8; i++) {
-			walkLeft.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
-		}
-		
-		// Fix the idle animation.
-		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
-		Animation idle = new Animation();
-		idle.addFrame(idleSprites.getSprite(0, 0), 500);
-		
-		// Fix the climb animation.
+		SpriteSheet standSprites = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
 		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
+		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
+		
+		Animation walkRight = new Animation();
+		Animation walkLeft = new Animation();
+		Animation idleLeft = new Animation();
+		Animation idleRight = new Animation();
 		Animation climb = new Animation();
+		Animation hide = new Animation();
+		
+		for (int i = 0; i < 8; i++) {
+			walkRight.addFrame(standSprites.getSprite(i, 0), 100);
+			walkLeft.addFrame(standSprites.getSprite(i, 0).getFlippedCopy(true, false), 100);
+		}
+		idleRight.addFrame(standSprites.getSprite(0, 0), 100);
+		idleLeft.addFrame(standSprites.getSprite(0, 0).getFlippedCopy(true, false), 100);
 		climb.addFrame(climbSprites.getSprite(0, 0), 250);
 		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
+		hide.addFrame(hideSprite.getSprite(0, 0), 5000);
 		
-		// Fix the hide animation.
-		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
-		Animation hide = new Animation();
-		hide.addFrame(hideSprite.getSprite(0, 0), 250);
-		
-		this.anims.put("walkLeft", walkLeft);
 		this.anims.put("walkRight", walkRight);
-		this.anims.put("idle", idle);
+		this.anims.put("walkLeft", walkLeft);
+		this.anims.put("idleRight", idleRight);
+		this.anims.put("idleLeft", idleLeft);
 		this.anims.put("climb", climb);
-		this.anims.put("hide", hide);
-		
-		// Set the initial animation.
-		this.currentAnim = this.anims.get("idle");
+		this.currentAnim = this.anims.get("idleRight");
 	}
 	
 	public void update(Input input, int delta) {
