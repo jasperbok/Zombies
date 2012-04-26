@@ -46,16 +46,20 @@ public class Player extends Entity {
 		Animation walkRight = new Animation();
 		for (int i = 0; i < 8; i++) {
 			walkRight.addFrame(walkSprites.getSprite(i, 0), 150);
+			this.facing = Entity.RIGHT;
 		}
 		Animation walkLeft = new Animation();
 		for (int i = 0; i < 8; i++) {
 			walkLeft.addFrame(walkSprites.getSprite(i, 0).getFlippedCopy(true, false), 150);
+			this.facing = Entity.LEFT;
 		}
 		
 		// Fix the idle animation.
 		SpriteSheet idleSprites = new SpriteSheet("data/sprites/entity/girl_stand.png", 51, 166);
-		Animation idle = new Animation();
-		idle.addFrame(idleSprites.getSprite(0, 0), 500);
+		Animation idleRight = new Animation();
+		idleRight.addFrame(idleSprites.getSprite(0, 0), 500);
+		Animation idleLeft = new Animation();
+		idleLeft.addFrame(idleSprites.getSprite(0, 0).getFlippedCopy(true, false), 500);
 		
 		// Fix the climb animation.
 		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
@@ -70,7 +74,8 @@ public class Player extends Entity {
 		
 		this.anims.put("walkLeft", walkLeft);
 		this.anims.put("walkRight", walkRight);
-		this.anims.put("idle", idle);
+		this.anims.put("idleLeft", idleLeft);
+		this.anims.put("idleRight", idleRight);
 		this.anims.put("climb", climb);
 		this.anims.put("hide", hide);
 		
@@ -117,7 +122,11 @@ public class Player extends Entity {
 			} else if (velocity.getX() > 0f) {
 				this.currentAnim =this.anims.get("walkRight");
 			} else if (velocity.getX() == 0f) {
-				this.currentAnim = this.anims.get("idle");
+				if (this.facing == Entity.LEFT) {
+					this.currentAnim = this.anims.get("idleLeft");
+				} else {
+					this.currentAnim = this.anims.get("idleRight");
+				}
 			}
 		} else {
 			// Not on ground and not climbing, surely the player is falling!
