@@ -72,13 +72,12 @@ public class TileEnvironment {
 		this.tiles = MapLoader.loadTiles(map);
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
-		this.mobDirector = new MobDirector(mobs);
+		this.sounds = new SoundManager();
+		this.mobDirector = new MobDirector(level, sounds, mobs);
 		
 		MapLoader.loadEntities(this, level, map);
 		
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
-		
-		sounds = new SoundManager();
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {

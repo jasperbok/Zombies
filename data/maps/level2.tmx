@@ -205,4 +205,7 @@
    H4sIAAAAAAAAC+2WTW4TQRCFe8JffAAjww0iBecMtrlCPLlCbK6QmBtwCO6AIyHxuyL2BlZswDkD8QGoIvU0b8rVMzYIRUi09KnHnu6eeW+qqrtIKe0Jd4JeuSsU7l4bPGcbomfrGi8DnhR5+g3s2rrCY5s7DOjZmAthIXwXfgRcC2thmao5V/Q/+gey5r6worVeCXN7xtLm9ey/ufNi0ED0/mBXbw7MF507Dji0MfBFddwvNoFe1YQ57AP6a/KR/ViQJ2tbI+cF610EmvxYxNIuTb9r3zxgnaVwEsQLe3DptCEmMAdxAR8wF/0l+bEiT/btuV4fe+Lbp1StB68w/ndySb9r9BxtpcWLzyOGfYFfiBfvh97T8YOOPFMYCU879XzbN/2HpGub9s3eZ2WkVPdl23XQVLPGyoVpi3xBHuHb+5oAVJN+e3jJ9+fUH4sXY6EUTjr1fHu9V/mCHGiqs0emt+n+rp6kVH3TpeGbegNN7AXXSYD6gt+L4Fr7U/FiIkyFZ52beVOn8549v63OjmxOE/Ao5xs/Fw2xd2VE2qGJr7lOAtW3pt+r4Fr7M/HiXJgJz7UvboDOgYx5lG7e/biBsdXBUQtcn5imGOM9dp3RDk1Lp++K5nEu4Dev6/dr3qMGTuev/LFYOW1gYnFWtoC1va9RDMKfh+l2YF9yY/Tdzxo4tzibtgAPva9RDMIbTavcmXPXc3Du3BrN5z0qtz6+3WngBeK9LKo8zIF53tcoBo/tmd1UP3NFZzHWAHBGOSrqNRD91Ob1aD3E/cStGeU5n1+8J1xrp+6ejx/8H9Vj9sjXYd2Dl526D95X1jCy58CXtn20F4zpuzV9juv7HKYqtr1urrWzooonHgOa6jF7AfBtu6n6JtG6s2Kz/pfkS9s+6s+tyF/2xef4V/OF49vXE7wH51ikE+Oie+wFKE3nQdrUPHbv4ev/lHxp20dfBGMGzhef4+pLTifoZ66Rx6DJA/YCIM+7aVOzXr+RIvhWeCd87tT5QrTto7napr4MU5y3g2R9oBMMM9f8faOzTbSPcz2aWTxovHitynvx44Pwca/uh+//Fshfr5NjOrqeOJ1NHrAXAO22zi/b4OOY8fHt959ob/IeeC/+lda0F5xnrtvm/W9/1n4CgdfDFeAVAAA=
   </data>
  </layer>
+ <objectgroup name="objects" width="70" height="20">
+  <object name="player" type="Player" x="2027" y="509" width="118" height="200"/>
+ </objectgroup>
 </map>

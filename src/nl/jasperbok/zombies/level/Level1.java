@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import nl.jasperbok.zombies.StateManager;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Door;
@@ -75,6 +76,7 @@ public class Level1 extends Level {
 		}
 		env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 		
+		env.sounds.loadSFX("flatsh");
 		bgMusic = new Music("data/sound/music/stil.ogg");
 		bgMusic.loop();
 		
@@ -86,8 +88,6 @@ public class Level1 extends Level {
 		//craneLights[1].rotate(80);
 		//craneLights[0].setColor(new Color(100, 100, 100));
 		//craneLights[1].setColor(new Color(100, 100, 100));
-		
-		env.sounds.loadSFX("zombiegroan1");
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -96,8 +96,9 @@ public class Level1 extends Level {
 		//System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
 		//System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
 		
-		if (crateZombie.boundingBox.intersects(crate.boundingBox) && crate.velocity.y > 0) {
-			crateZombie.position.x = 100000000;
+		if (crateZombie.touches(crate) && crate.velocity.y > 0) {
+			env.sounds.playSFX("flatsh");
+			crateZombie.kill();
 		}
 		
 		super.update(container, game, delta);
