@@ -206,7 +206,7 @@
     <property name="message" value="Maybe this message is a bit long but hey I can type a long message if I want to, bitch! :D"/>
     <property name="repeat" value="true"/>
     <property name="repeatDelay" value="5000"/>
-    <property name="sound" value="zombiegroan1"/>
+    <property name="sound" value="zombie_groan1"/>
     <property name="target" value="player"/>
    </properties>
   </object>

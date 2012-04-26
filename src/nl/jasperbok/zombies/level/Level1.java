@@ -7,10 +7,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import nl.jasperbok.zombies.StateManager;
-import nl.jasperbok.zombies.entity.Player;
-import nl.jasperbok.zombies.entity.building.AutoTurret;
-import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
