@@ -61,11 +61,10 @@ public class Level1 extends Level {
 		//System.out.println(this.getClass().toString() + ".update: player_x" + this.env.getPlayer().position.x);
 		//System.out.println(this.getClass().toString() + ".update: player_y" + this.env.getPlayer().position.y);
 		
-		if (crateZombie.touches(crate) && crate.velocity.y > 0) {
+		if (this.env.getEntityByName("crate_zombie").touches(crate) && crate.velocity.y > 0) {
 			env.sounds.playSFX("flatsh");
 			crateZombie.kill();
 		}
-		
 		super.update(container, game, delta);
 	}
 	
