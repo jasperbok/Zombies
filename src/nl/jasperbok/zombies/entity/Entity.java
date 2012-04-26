@@ -139,6 +139,19 @@ public abstract class Entity extends RenderObject {
 	}
 	
 	/**
+	 * Notifies the Entity.
+	 * 
+	 * This would actually be called notify, but that's already a function
+	 * inside Object which cannot be overridden.
+	 * 
+	 * @param message The message to send to the Entity.
+	 */
+	public void call(String message) {
+		System.out.println("Entity activated, but no subclass implements the call() method!");
+		System.out.println("Message from trigger: " + message);
+	}
+	
+	/**
 	 * Kills the Entity.
 	 */
 	public void kill() {

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import nl.jasperbok.zombies.entity.Attractor;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.object.BloodMark;
@@ -39,6 +40,7 @@ public class TileEnvironment {
 	// Entity variables.
 	private int nextEntId = 0;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
+	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
 	private HashMap<String, Entity> namedEntities = new HashMap<String, Entity>();
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
 	private ArrayList<Mob> mobs = new ArrayList<Mob>();
@@ -86,6 +88,10 @@ public class TileEnvironment {
 				}
 			}
 		}*/
+	}
+	
+	public void addTrigger(Trigger trigger) {
+		this.triggers.add(trigger);
 	}
 	
 	public Entity spawnEntity(Entity ent) {
@@ -164,8 +170,15 @@ public class TileEnvironment {
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
 		checkForTileCollisions();
+		updateTriggers(container, delta);
 		emptyGarbage();
 		//checkForCollisions();
+	}
+	
+	private void updateTriggers(GameContainer container, int delta) {
+		for (Trigger trigger: this.triggers) {
+			trigger.update(container, delta);
+		}
 	}
 	
 	private void updateEntities(Input input, int delta) {

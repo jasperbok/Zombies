@@ -65,6 +65,9 @@ public class MapLoader {
 				case "Switch" :
 					MapLoader.spawnSwitch(env, level, map, i, j);
 					break;
+				case "Trigger" :
+					MapLoader.addTrigger(env, level, map, i, j);
+					break;
 				}
 			}
 		}
@@ -102,5 +105,10 @@ public class MapLoader {
 				);
 		newSwitch.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(newSwitch);
+	}
+	
+	private static void addTrigger(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		HashMap<String, String> settings = new HashMap<String, String>();
+		settings.put("target", map.getObjectProperty(layerIndex, objectIndex, "target", ""));
 	}
 }

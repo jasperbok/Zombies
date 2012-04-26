@@ -53,30 +53,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 		this.observers = new ArrayList<Observer>();
 		this.useBox = new Rectangle(position.getX(), position.getY(), switchedOnImage.getWidth(), switchedOnImage.getHeight());
 	}
-	
-	/**
-	 * Register an object that implements the Observer interface as an
-	 * observer at this Switch.
-	 * 
-	 * @param observer The Observer object.
-	 */
-	public void registerObserver(Observer observer) {
-		this.observers.add(observer);
-		if (this.state == true) {
-			observer.notify(this, "on");
-		} else {
-			observer.notify(this, "off");
-		}
-	}
-	
-	/**
-	 * Unregister an Observer.
-	 * 
-	 * @param observer The Observer.
-	 */
-	public void unregisterObserver(Observer observer) {
-		this.observers.remove(observer);
-	}
 
 	/**
 	 * Switches the state of the Switch.
@@ -99,16 +75,6 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 				}
 			}
 		}
-		/*
-		for (Observer observer: observers) {
-			if (this.state == true) {
-				observer.notify(this, "on");
-			} else {
-				observer.notify(this, "off");
->>>>>>> d97f605c40ec0b41e74d318437fc8b923c0f7a28
-			}
-		}
-		*/
 	}
 
 	/**
@@ -131,10 +97,21 @@ public class Switch extends Entity implements Usable, Observable, Observer {
 
 	public void notify(Observable observable, String message) {
 		if (message == "on") {
-			System.out.println(this.getClass().toString() + ".notify: canbeused");
 			canBeUsed = true;
 		} else if (message == "off") {
 			canBeUsed = false;
 		}
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unregisterObserver(Observer observer) {
+		// TODO Auto-generated method stub
+		
 	}
 }
