@@ -3,6 +3,7 @@ package nl.jasperbok.zombies.level;
 import java.util.HashMap;
 
 import nl.jasperbok.zombies.entity.Player;
+import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.Switch;
 
@@ -110,5 +111,13 @@ public class MapLoader {
 	private static void addTrigger(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
 		HashMap<String, String> settings = new HashMap<String, String>();
 		settings.put("target", map.getObjectProperty(layerIndex, objectIndex, "target", ""));
+		settings.put("sfx", map.getObjectProperty(layerIndex, objectIndex, "sound", ""));
+		Trigger trigger = new Trigger(
+					level,
+					"true".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "false")),
+					new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex)),
+					new Vector2f(map.getObjectWidth(layerIndex, objectIndex), map.getObjectHeight(layerIndex, objectIndex))
+				);
+		env.addTrigger(trigger);
 	}
 }
