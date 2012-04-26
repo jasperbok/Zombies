@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 
 public class Switch extends Entity {
@@ -48,6 +49,7 @@ public class Switch extends Entity {
 		if (this.settings.get("requires") == "" ||
 				(user.inventory.contains(this.settings.get("requires")))
 			) {
+			if (this.settings.get("successMessage") != "") PlayerSpeech.getInstance().addMessage(this.settings.get("successMessage"));
 			this.state = !this.state;
 			if (this.state) this.currentAnim = this.anims.get("on");
 			if (!this.state) this.currentAnim = this.anims.get("off");
@@ -63,6 +65,8 @@ public class Switch extends Entity {
 					
 				}
 			}
+		} else {
+			if (this.settings.get("failureMessage") != "") PlayerSpeech.getInstance().addMessage(this.settings.get("failureMessage"));
 		}
 	}
 

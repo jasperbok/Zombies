@@ -170,14 +170,16 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="4331" y="224" width="75" height="150"/>
+  <object name="player" type="Player" x="4419" y="1030" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
+    <property name="failureMessage" value="I require a key card to open this door."/>
     <property name="requires" value="key_card"/>
+    <property name="successMessage" value="I opened it!"/>
     <property name="target" value="door_1"/>
    </properties>
   </object>
-  <object name="key_card" type="Item" x="2632" y="292" width="47" height="37">
+  <object name="key_card" type="Item" x="4259" y="1101" width="47" height="37">
    <properties>
     <property name="type" value="key_card"/>
    </properties>
@@ -208,6 +210,11 @@
     <property name="repeatDelay" value="5000"/>
     <property name="sound" value="zombie_groan1"/>
     <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="level_transition" type="Trigger" x="4736" y="876" width="518" height="315">
+   <properties>
+    <property name="goToLevel" value="2"/>
    </properties>
   </object>
  </objectgroup>

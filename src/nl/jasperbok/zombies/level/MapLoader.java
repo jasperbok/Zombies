@@ -121,6 +121,8 @@ public class MapLoader {
 		HashMap<String, String> settings = new HashMap<String, String>();
 		settings.put("target", map.getObjectProperty(layerIndex, objectIndex, "target", ""));
 		settings.put("requires", map.getObjectProperty(layerIndex, objectIndex, "requires", ""));
+		settings.put("successMessage", map.getObjectProperty(layerIndex, objectIndex, "successMessage", ""));
+		settings.put("failureMessage", map.getObjectProperty(layerIndex, objectIndex, "failureMessage", ""));
 		Switch newSwitch = new Switch(
 				level,
 				"true".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "false")),
@@ -171,6 +173,7 @@ public class MapLoader {
 		settings.put("repeatDelay", map.getObjectProperty(layerIndex, objectIndex, "repeatDelay", ""));
 		settings.put("message", map.getObjectProperty(layerIndex, objectIndex, "message", ""));
 		settings.put("messageDuration", map.getObjectProperty(layerIndex, objectIndex, "messageDuration", ""));
+		settings.put("goToLevel", map.getObjectProperty(layerIndex, objectIndex, "goToLevel", ""));
 		Trigger trigger = new Trigger(
 					level,
 					"true".equals(map.getObjectProperty(layerIndex, objectIndex, "repeat", "false")),
