@@ -214,7 +214,7 @@
   </object>
   <object name="level_transition" type="Trigger" x="4736" y="876" width="518" height="315">
    <properties>
-    <property name="goToLevel" value="2"/>
+    <property name="goToLevel" value="level2"/>
    </properties>
   </object>
  </objectgroup>
