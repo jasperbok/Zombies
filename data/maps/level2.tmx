@@ -209,7 +209,7 @@
  </tileset>
  <layer name="bg" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WSQoCMRQF/6p7oZ5APUHrGTylEyj0wnlopwtaG0UkNDYKsZNXUKtsfooEvpkQQohQaKRmTWylvif5L9r06GD3pcs0MVvgEle4xk3ib0YfZPToYf+tyxZ3uMcDHiPr4mJOgwJPeMYLXtXlyU0tRGAMedPjL52VnFVlVLM/VraP5DW7yy9x7SMPJhF3ce0jVRh82C7mxkKI8LkDeISt8OAVAAA=
+   H4sIAAAAAAAAC+3WOwrCQBhF4b9KCuMK1BUY1+AqNQoKFr4fibpCTyOIDMGgMGbmfnCqNJMLCWMmIiKh6KRmGXVT3yf5Lz326NPgZZd5YramDW1pR/vE3xl9GLJHTqO3XQ50pBOd6RLZLi5LNiipoivd6K5dRII14fsuvmxR86ypacv+N3X3kVXL3uWXXPeRp1nEu7juI02MP9wu5o1FJHwPwlcIhuAVAAA=
   </data>
  </layer>
  <layer name="background" width="70" height="20">
@@ -219,7 +219,7 @@
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
@@ -248,6 +248,7 @@
   <object name="door_1" type="Door" x="642" y="482" width="80" height="240"/>
   <object name="door_switch1" type="Switch" x="570" y="582" width="29" height="84">
    <properties>
+    <property name="initial_state" value="on"/>
     <property name="target" value="door_1"/>
    </properties>
   </object>
@@ -303,7 +304,7 @@
     <property name="target" value="player"/>
    </properties>
   </object>
-  <object name="sound_trigger" type="Trigger" x="2397" y="797" width="236" height="79">
+  <object name="sound_trigger" type="Trigger" x="2402" y="800" width="236" height="79">
    <properties>
     <property name="repeat" value="false"/>
     <property name="sound" value="floor_crash"/>
@@ -330,6 +331,29 @@
    <properties>
     <property name="successMessage" value="It seems the power is back on."/>
     <property name="target" value="door_switch3"/>
+   </properties>
+  </object>
+  <object name="breakableFloor" type="BreakableFloor" x="2400" y="720" width="240" height="80"/>
+  <object name="turret_left" type="AutoTurret" x="2306" y="1240" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="turret_right" type="AutoTurret" x="2609" y="1240" width="135" height="121">
+   <properties>
+    <property name="direction" value="right"/>
+   </properties>
+  </object>
+  <object name="switch_turret_left" type="Switch" x="2510" y="1217" width="21" height="37">
+   <properties>
+    <property name="initial_state" value="off"/>
+    <property name="target" value="turret_left"/>
+   </properties>
+  </object>
+  <object name="switch_turret_right" type="Switch" x="2510" y="1216" width="21" height="37">
+   <properties>
+    <property name="initial_state" value="on"/>
+    <property name="target" value="turret_right"/>
    </properties>
   </object>
  </objectgroup>

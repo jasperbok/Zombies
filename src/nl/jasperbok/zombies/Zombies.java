@@ -25,7 +25,7 @@ public class Zombies extends StateBasedGame {
 
 	public void initStatesList(GameContainer container) throws SlickException {
 		//addState(new StateManager(container, this));
-		addState(new MergedLevel("level1"));
+		addState(new MergedLevel("level2"));
 		//addState(new Level2());
 	}
 }
