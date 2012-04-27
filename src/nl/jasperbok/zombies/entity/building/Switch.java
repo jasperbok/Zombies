@@ -20,6 +20,7 @@ public class Switch extends Entity {
 	private boolean state;
 	private Rectangle useBox;
 	private boolean firstUpdate = true;
+	private boolean active = true;
 	
 	public Switch onOffSwitch;
 
@@ -27,6 +28,7 @@ public class Switch extends Entity {
 		super.init(level);
 		this.settings = settings;
 		this.zIndex = -2;
+		this.active = "true".equals(this.settings.get("active"));
 		
 		Animation onAnim = new Animation();
 		Animation offAnim = new Animation();
@@ -82,7 +84,7 @@ public class Switch extends Entity {
 	 * @param rect The Rectangle to check.
 	 */
 	public boolean canBeUsed(Rectangle rect) {
-		return rect.intersects(useBox);
+		return rect.intersects(useBox) && this.active;
 	}
 	
 	public void update(Input input, int delta) {
@@ -103,5 +105,16 @@ public class Switch extends Entity {
 		}
 		super.update(input, delta);
 		this.useBox.setBounds(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
+	}
+	
+	public void call(String message) {
+		switch (message) {
+		case "on" :
+			this.active = true;
+			break;
+		case "off" :
+			this.active = false;
+			break;
+		}
 	}
 }

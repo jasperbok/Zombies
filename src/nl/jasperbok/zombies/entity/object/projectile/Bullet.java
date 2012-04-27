@@ -47,8 +47,10 @@ public class Bullet extends Entity {
 	public void update(Input input, int delta) {
 		super.update(input, delta);
 		
-		if (startX - this.position.x > this.range || this.position.x - startX > this.range) {
-			this.kill();
+		if (range != -1) {
+			if (startX - this.position.x > this.range || this.position.x - startX > this.range) {
+				this.kill();
+			}
 		}
 	}
 }

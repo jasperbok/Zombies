@@ -170,7 +170,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="4339" y="233" width="75" height="150"/>
+  <object name="player" type="Player" x="4374" y="183" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
     <property name="requires" value="key_card"/>
@@ -199,7 +199,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
-  <object type="Trigger" x="331" y="386" width="77" height="168">
+  <object type="Trigger" x="355" y="368" width="77" height="168">
    <properties>
     <property name="repeat" value="false"/>
     <property name="sound" value="battle"/>
