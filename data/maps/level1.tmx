@@ -236,10 +236,5 @@
     <property name="target" value="player"/>
    </properties>
   </object>
-  <object name="levelTrigger" type="Trigger" x="4742" y="1018" width="67" height="144">
-   <properties>
-    <property name="goToLevel" value="level2"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

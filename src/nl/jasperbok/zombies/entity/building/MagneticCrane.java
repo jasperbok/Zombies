@@ -112,6 +112,7 @@ public class MagneticCrane extends Entity implements Usable {
 		if (sliderPos.x < maxLeftPos) sliderPos.x = maxLeftPos;
 		if (sliderPos.x > maxRightPos) sliderPos.x = maxRightPos;
 		armPos.x = sliderPos.getX() + slider.getWidth() / 2 - arm.getWidth() / 2;
+		super.update(input, delta);
 	}
 	
 	private void handleInput(Input input) {
@@ -170,8 +171,8 @@ public class MagneticCrane extends Entity implements Usable {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		rail.draw(renderPosition.getX(), renderPosition.getY());
-		arm.draw(renderPosition.getX() + armPos.x - position.getX(), renderPosition.getY() + armPos.y - position.getY());
-		slider.draw(renderPosition.getX() + sliderPos.x - position.getX(), renderPosition.getY() + sliderPos.y - position.getY());
+		rail.draw(renderPosition.x, renderPosition.y);
+		arm.draw(renderPosition.x + armPos.x - position.x, renderPosition.y + armPos.y - position.y);
+		slider.draw(renderPosition.x + sliderPos.x - position.x, renderPosition.y + sliderPos.y - position.getY());
 	}
 }

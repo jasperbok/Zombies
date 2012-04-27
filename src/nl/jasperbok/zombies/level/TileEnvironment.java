@@ -5,13 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import nl.jasperbok.zombies.entity.Attractor;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
-import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.mob.MobDirector;
 import nl.jasperbok.zombies.sound.SoundManager;
 import nl.timcommandeur.zombies.screen.Camera;
@@ -400,20 +398,6 @@ public class TileEnvironment {
 		for (Entity ent: entities) {
 			ent.setPosition(ent.position.x + (ent.velocity.x * delta), ent.position.y + (ent.velocity.y * delta));
 		}
-	}
-	
-	public void addAttractor(Rectangle bbox, String type) throws SlickException {		
-		switch (type) {
-		case "BloodMark":
-			BloodMark bm = new BloodMark(level, bbox.getCenterX(), bbox.getCenterY() - 20);
-			spawnEntity(bm);
-			this.mobDirector.addAttractor(bm, 60, false);
-			break;
-		}
-	}
-	
-	public void removeAttractor(Attractor att) {
-		attractors.remove(att);
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
