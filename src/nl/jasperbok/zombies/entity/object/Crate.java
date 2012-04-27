@@ -37,6 +37,7 @@ public class Crate extends Entity {
 		this.image = new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255));
 		this.crane = crane;
 		this.boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
+		this.isSolid = true;
 	}
 
 	public void update(Input input, int delta) {
