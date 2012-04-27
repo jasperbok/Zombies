@@ -55,6 +55,7 @@ public abstract class Entity extends RenderObject {
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	public int health = 5;
 	public boolean isBlocking = true;
+	public boolean isSolid = false;
 	public boolean isTopSolid = false;
 	public boolean isMovable = true;
 	public boolean playerControlled = false;
