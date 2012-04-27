@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity.object.projectile;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -13,6 +14,7 @@ import nl.jasperbok.zombies.level.Level;
 public class Bullet extends Entity {
 	
 	private int range = -1;
+	private int startX;
 	
 	/**
 	 * 
@@ -25,6 +27,7 @@ public class Bullet extends Entity {
 	public Bullet(Level level, Vector2f position, Vector2f velocity, int damage, int range) throws SlickException {
 		super.init(level);
 		this.position = position;
+		this.startX = (int)position.x;
 		this.velocity = velocity;
 		this.range = range;
 		
@@ -39,5 +42,13 @@ public class Bullet extends Entity {
 		}
 		this.anims.put("idle", idle);
 		this.currentAnim = this.anims.get("idle");
+	}
+	
+	public void update(Input input, int delta) {
+		super.update(input, delta);
+		
+		if (startX - this.position.x > this.range || this.position.x - startX > this.range) {
+			this.kill();
+		}
 	}
 }

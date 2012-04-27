@@ -21,7 +21,7 @@ public class BloodMark extends Entity {
 	 */
 	public BloodMark(Level level) throws SlickException {
 		super.init(level);
-		gravityAffected = false;
+		this.zIndex = -2;
 		
 		// Load the animation.
 		Animation idle = new Animation();
