@@ -67,7 +67,7 @@ public class Level extends BasicGameState implements GameState {
 		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
 		//lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
 		
-		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(20, 20, 20), camera);
+		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(70, 70, 70), camera);
 		lights.add(playerLight);
 	}
 	

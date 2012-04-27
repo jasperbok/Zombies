@@ -324,13 +324,13 @@
   <object name="turret_left" type="AutoTurret" x="2306" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
-    <property name="range" value="330"/>
+    <property name="range" value="250"/>
    </properties>
   </object>
   <object name="turret_right" type="AutoTurret" x="2609" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="right"/>
-    <property name="range 320" value=""/>
+    <property name="range" value="200"/>
    </properties>
   </object>
   <object name="switch_turret_left" type="Switch" x="2510" y="1217" width="21" height="37">
