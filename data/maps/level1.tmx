@@ -171,7 +171,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="3961" y="955" width="75" height="150"/>
+  <object name="player" type="Player" x="352" y="370" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
     <property name="failureMessage" value="I need  a key card to open this door."/>
@@ -201,7 +201,6 @@
   </object>
   <object name="wood_crate_1" type="WoodenCrate" x="2809" y="1112" width="80" height="80"/>
   <object name="wood_crate_2" type="WoodenCrate" x="3651" y="1112" width="80" height="80"/>
-  <object name="wood_crate_3" type="WoodenCrate" x="4145" y="1030" width="160" height="160"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
   <object type="Trigger" x="355" y="368" width="77" height="168">
