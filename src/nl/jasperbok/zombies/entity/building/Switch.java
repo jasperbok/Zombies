@@ -19,6 +19,7 @@ public class Switch extends Entity {
 	 */
 	private boolean state;
 	private Rectangle useBox;
+	private boolean firstUpdate = true;
 	
 	public Switch onOffSwitch;
 
@@ -37,19 +38,6 @@ public class Switch extends Entity {
 		
 		this.state = initialState;
 		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		
-		if (this.settings.get("target") != "") {
-			try {
-				if (this.state == true) {
-					this.level.env.getEntityByName(this.settings.get("target")).call("on");
-				} else {
-					this.level.env.getEntityByName(this.settings.get("target")).call("off");
-				}
-			}
-			finally {
-				
-			}
-		}
 	}
 
 	/**
@@ -93,6 +81,21 @@ public class Switch extends Entity {
 	}
 	
 	public void update(Input input, int delta) {
+		if (firstUpdate) {
+			this.firstUpdate = false;
+			if (this.settings.get("target") != "") {
+				try {
+					if (this.state == true) {
+						this.level.env.getEntityByName(this.settings.get("target")).call("on");
+					} else {
+						this.level.env.getEntityByName(this.settings.get("target")).call("off");
+					}
+				}
+				finally {
+					
+				}
+			}
+		}
 		super.update(input, delta);
 		this.useBox.setBounds(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
