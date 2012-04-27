@@ -195,6 +195,21 @@ public class TileEnvironment {
 		
 		spawnDeffered();
 		
+		for (Entity ent1 : entities) {
+			for (Entity ent2 : entities) {
+				if (ent1 != ent2 && ent1.isSolid == false && ent2.isSolid == true && ent1.touches(ent2)) {
+					System.out.println(ent1.boundingBox.getMaxX() + " " + ent2.boundingBox.getMinX());
+					if (ent1.boundingBox.getMaxX() > ent2.boundingBox.getMinX() && ent1.position.x < ent2.position.x) {
+						ent1.position.x -= 1;
+						ent1.velocity.x = -0.06f;
+					} else if (ent1.boundingBox.getMinX() < ent2.boundingBox.getMaxX() && ent1.position.x > ent2.position.x) {
+						ent1.position.x += 1;
+						ent1.velocity.x = 0.06f;
+					}
+				}
+			}
+		}
+		
 		if (sortNow) {
 			this.sortEntities();
 			this.sortNow = false;

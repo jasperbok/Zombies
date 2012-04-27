@@ -16,6 +16,7 @@ public class Door extends Entity {
 		this.isBlocking = true;
 		this.initAnimation(facingLeft);
 		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
+		this.isSolid = true;
 	}
 	
 	public void initAnimation(boolean facingLeft) throws SlickException {
@@ -35,7 +36,7 @@ public class Door extends Entity {
 		// Ugly quickfix
 		//---
 		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
-			level.env.getPlayer().position.x -= 1;
+			//level.env.getPlayer().position.x -= 1;
 		}
 		//---
 	}
