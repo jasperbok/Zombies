@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="80" tileheight="80">
  <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/tiles.png" width="1600" height="1600"/>
+  <image source="src/tiles.png" width="1600" height="1600"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -64,10 +64,10 @@
   </tile>
  </tileset>
  <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
+  <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
  </tileset>
  <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
   <tile id="7">
    <properties>
     <property name="blocked" value="true"/>
@@ -110,13 +110,13 @@
   </tile>
  </tileset>
  <tileset firstgid="434" name="boxes" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/boxes.png" trans="ffffff" width="1300" height="1200"/>
+  <image source="src/boxes.png" trans="ffffff" width="1300" height="1200"/>
  </tileset>
  <tileset firstgid="674" name="Turret" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/turret_on.png" width="160" height="160"/>
+  <image source="src/turret_on.png" width="160" height="160"/>
  </tileset>
  <tileset firstgid="678" name="BrokenVentilation" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/brokenVentilationTiles.png" width="480" height="320"/>
+  <image source="src/brokenVentilationTiles.png" width="480" height="320"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -149,63 +149,188 @@
   </tile>
  </tileset>
  <tileset firstgid="702" name="HiddingWall" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/hidding_wall.png" width="240" height="160"/>
+  <image source="src/hidding_wall.png" width="240" height="160"/>
   <tile id="0">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
-    <property name="hideable" value="true"/>
+    <property name="hidding" value="true"/>
    </properties>
   </tile>
  </tileset>
  <tileset firstgid="708" name="Background" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/level1Background.png" width="5600" height="1600"/>
+  <image source="src/level1Background.png" width="2560" height="1440"/>
  </tileset>
- <tileset firstgid="2108" name="WallSprites" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/logosWallSprites.png" width="1600" height="1600"/>
+ <tileset firstgid="1284" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="src/logosWallSprites.png" width="1600" height="1600"/>
  </tileset>
- <tileset firstgid="2508" name="CableTiles" tilewidth="80" tileheight="80">
-  <image source="../../../../Desktop/levelsTiled/src/powercables.png" width="320" height="320"/>
+ <tileset firstgid="1684" name="CableTiles" tilewidth="80" tileheight="80">
+  <image source="src/powercables.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="1700" name="BloodText" tilewidth="80" tileheight="80">
+  <image source="src/bloodescape.png" width="443" height="255"/>
+ </tileset>
+ <tileset firstgid="1715" name="SavePoint" tilewidth="80" tileheight="80">
+  <image source="src/checkpoint.png" width="400" height="320"/>
+ </tileset>
+ <tileset firstgid="1735" name="WeakenedFloor" tilewidth="80" tileheight="80">
+  <image source="src/weakenedFloor.png" width="80" height="80"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="1736" name="WallSprites2" tilewidth="80" tileheight="80">
+  <image source="src/wallCracksBloodRedLight.png" width="1280" height="563"/>
  </tileset>
  <layer name="bg" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Tqw0AIABDwVr2n4vPSCgEEhIMuUuerGwCAADAUkvSH3aqXWyA3fAj4GMTAVgKdOAVAAA=
+   H4sIAAAAAAAAC+2WSQoCMRQF/6p7oZ5APUHrGTylEyj0wnlopwtaG0UkNDYKsZNXUKtsfooEvpkQQohQaKRmTWylvif5L9r06GD3pcs0MVvgEle4xk3ib0YfZPToYf+tyxZ3uMcDHiPr4mJOgwJPeMYLXtXlyU0tRGAMedPjL52VnFVlVLM/VraP5DW7yy9x7SMPJhF3ce0jVRh82C7mxkKI8LkDeISt8OAVAAA=
   </data>
  </layer>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WSwrCMBCGk67MEdQzqKA7Hwt1q0v1DOrKx1Y9lXoGHyCCC4/jBDp0kjbWZ8S0H3w4fdCSnzFTxt4jyxnLgXke1AXfov+b1Y6L/v0ug+sskTU3fWkW8rhFfl0H19nmak2v6eeTQA/W2gcHXK2RoeG868h1j8AxV2vTPSmvQferOJME3YviTBJ0L4rTJmWPsYoXfIPQbxHZu1W4VgPrYMP7/PvpXhSnLWgOTU3sbfxvdyCT7hdyWcCzl+DqAW2gZ9HTxN7W+4j2kmucRTiLoSb2NvZL1MxwjYsIZyH7Wea14Gpv4yygM0PedxTm55/Ec17uPMsmVxFkoedA9/++of7FfLDBNaIvVhFzYWSobc+HX4DZrKHegFsW5EQzi5oZrjHJhN3B+T14AOcZ1Sk4+2It35+SkvL/3ACygFCd4BUAAA==
+   H4sIAAAAAAAAC+2WSwrCMBCGk4K5g3oGFXTla6FudamewXqG6jFEcOEl1DOol3ICHTpJG+urKab94MPpg5b8jJky9h1VzlgNrPOoboQ2w9+qdtwM73cZXGeLrHkUSrOQx2Py6zq4zglXa3pNP18E5rDWBbjkao2sDOddR67bB9dcrU33lHwG3a/SLBJ0L0qzSNC9KE2btD3GOl70DUK/RWTv9uBaHxyAQ+/376d7UZq2oDmMNLG38b89hUxmGeQSwLM34PYFbaBnMdfE3tb7iPaSa+xFPIuVJvY29kvSzHCNg4hnIftZ5hVwtbdxFtCZIe/bCfPzd+I9D0+eZZOjiLLQc6D7/8JQ5zEfbHBM6IttwlzwDbXt+ZAHmM0J6jN4YVFONLOkmeEa3UrcK5y/gXdwUFHtgf0Ma/n+kpKS/+cBIbqKIOAVAAA=
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
- <objectgroup name="objects" width="70" height="20">
-  <object name="player" type="Player" x="2027" y="509" width="118" height="200"/>
+ <objectgroup name="ObjectLayer" width="70" height="20">
+  <object name="turret_1" type="AutoTurret" x="1370" y="594" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="switch_1" type="Switch" x="1206" y="630" width="29" height="84">
+   <properties>
+    <property name="target" value="turret_1"/>
+   </properties>
+  </object>
+  <object name="turret_1" type="AutoTurret" x="1370" y="594" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="turret_1"/>
+   </properties>
+  </object>
+  <object name="player" type="Player" x="161" y="491" width="75" height="150"/>
+  <object name="door_1" type="Door" x="642" y="482" width="80" height="240"/>
+  <object name="door_switch1" type="Switch" x="570" y="582" width="29" height="84">
+   <properties>
+    <property name="target" value="door_1"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="1842" y="485" width="76" height="236">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="sea-fury__monster"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="door_switch2" type="Switch" x="2018" y="1230" width="29" height="84">
+   <properties>
+    <property name="target" value="door_2"/>
+   </properties>
+  </object>
+  <object name="door_2" type="Door" x="1918" y="1118" width="80" height="240"/>
+  <object name="door_3" type="Door" x="3039" y="1121" width="80" height="240"/>
+  <object name="door_switch3" type="Switch" x="2982" y="1212" width="29" height="84">
+   <properties>
+    <property name="failureMessage" value="Looks like the switch is unpowered..."/>
+    <property name="requires" value="key_card"/>
+    <property name="target" value="door_3"/>
+   </properties>
+  </object>
+  <object name="zombie_right" type="Zombie" x="3124" y="1205" width="75" height="150"/>
+  <object name="zombie_right2" type="Zombie" x="3161" y="1205" width="75" height="150"/>
+  <object name="zombie_left1" type="Zombie" x="1803" y="1191" width="75" height="150"/>
+  <object name="zombie_left2" type="Zombie" x="1691" y="1182" width="75" height="150"/>
+  <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="turret_1"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="2403" y="648" width="76" height="67">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="metal_crackling"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="2476" y="652" width="76" height="67">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="metal_crackling"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="2561" y="655" width="76" height="67">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="metal_crackling"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="2397" y="797" width="236" height="79">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="floor_crash"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="1970" y="1121" width="76" height="236">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="zombieHorde"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="3006" y="1124" width="76" height="236">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="zombieHorde"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="zombie_switch_guard" type="Zombie" x="203" y="1194" width="75" height="150"/>
+  <object name="box" type="WoodenCrate" x="880" y="640" width="80" height="80"/>
+  <object name="power_switch" type="Switch" x="106" y="1199" width="26" height="58">
+   <properties>
+    <property name="successMessage" value="It seems the power is back on."/>
+    <property name="target" value="door_switch3"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

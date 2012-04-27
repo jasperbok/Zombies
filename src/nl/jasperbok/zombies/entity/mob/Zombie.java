@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity.mob;
 
 import java.util.ArrayList;
 
+import nl.jasperbok.zombies.entity.component.DamagingAuraComponent;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
@@ -27,6 +28,7 @@ public class Zombie extends Mob {
 		
 		this.addComponent(new LifeComponent(this, 1));
 		this.addComponent(new GravityComponent(0.01f, this));
+		this.addComponent(new DamagingAuraComponent(this, 0, 5));
 		this.blockingPointsLeft = new ArrayList<Vector2f>();
 		this.blockingPointsRight = new ArrayList<Vector2f>();
 

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="80" tileheight="80">
+ <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
+  <image source="src/tiles.png" width="1600" height="1600"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="climable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="climable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="climable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
+  <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
+ </tileset>
+ <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
+  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <tile id="7">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="434" name="boxes" tilewidth="80" tileheight="80">
+  <image source="src/boxes.png" trans="ffffff" width="1300" height="1200"/>
+ </tileset>
+ <tileset firstgid="674" name="Turret" tilewidth="80" tileheight="80">
+  <image source="src/turret_on.png" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="678" name="BrokenVentilation" tilewidth="80" tileheight="80">
+  <image source="src/brokenVentilationTiles.png" width="480" height="320"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="background" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3Wt1JCURiF0QvvY2OOhTk3KmYbc2zMsTHnGQEx+6yuxk6kYmDgfDOrP/8u7twoCoVCoVAo9FdPsShKZpGKFfp1hSvbJr8KUWU8iqqopoZa6qingUaaaKYlnp83pP+5PVOgXdrc2k4HnXTRTQ+99NHPAIN52qUYG3LrMCMkGGWMcSaYZIppZspol1m3zjHPAossscwKq6yxzkYZ7bLp1i222WGXPfY54JAjjjkpoV0qcny3Tt16xjkXXHLFNTfccsc9DzyWyDatOXZJujNFmmcyvPDKG+988MkX3yWyS6KM/4tCoVCoGPoBihNX7uAVAAA=
+  </data>
+ </layer>
+ <layer name="collision" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WbU7CQBCGt8U/HkDLFUzwEHoHj6X897ug4reSII3eQDiDehXfDTthrN0tMwUV0zd5Uja705l9d0obGWNi0FBcV9hvbXxXiI2JBDkoj1RrihhS0113wR5og8x830vbQeOhW2fje7GMpqs5Y4TUYXVKtKGIIRX5MjZfa87M1BMaj9y6liJny9U8ZoQ0VOaZR7+kZnIudu+0Zw55QuM0F1+kfiyr5TWXmzQqyeNT1X7JP0PP8YQBeDLTZ4bXSr7kz3Eg9ILrDbyDD4fVqtH3SxVZX3iv2L1bT14c/Ay5uC/rCyRx19/whfcEvSc02HcG7adMUl9muacmR2gt74mq/1V/yRcu33mTys67qi+UP8ndu8GgOf4d40OyNvSNU3Vf+fhtZXwSWGfnUk++orW+2ory+zRvX7Tx/9kX/oxL423MPhr/AByCI3AMTqLl94Wk9eUUHqSgA7rgDJwrfZlFm5F/roovPklq47pAnT1wCa7ANbhxtafhUFXurSXx5RZ13oF78AAeQV/oi0Q7AV8W+e25DNSqVavWT+gTn7vdqOAVAAA=
+  </data>
+ </layer>
+ <objectgroup color="#0055ff" name="entities" width="70" height="20">
+  <object name="turret_1" type="AutoTurret" x="4070" y="277" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="door_1" type="Door" x="4640" y="960" width="80" height="240"/>
+  <object name="switch_1" type="Switch" x="4280" y="235" width="29" height="84">
+   <properties>
+    <property name="target" value="turret_1"/>
+   </properties>
+  </object>
+  <object name="player" type="Player" x="4339" y="207" width="75" height="150"/>
+  <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
+   <properties>
+    <property name="requires" value="key_card"/>
+    <property name="target" value="door_1"/>
+   </properties>
+  </object>
+  <object name="key_card" type="Item" x="2632" y="292" width="47" height="37">
+   <properties>
+    <property name="type" value="key_card"/>
+   </properties>
+  </object>
+  <object name="start_zombie_1" type="Zombie" x="24" y="402" width="75" height="150">
+   <properties>
+    <property name="max-right" value="640"/>
+   </properties>
+  </object>
+  <object name="guard_zombie" type="Zombie" x="2758" y="245" width="75" height="150">
+   <properties>
+    <property name="max-right" value="3920"/>
+   </properties>
+  </object>
+  <object name="crate_zombie" type="Zombie" x="2542" y="1045" width="75" height="150">
+   <properties>
+    <property name="max-left" value="2290"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff5500" name="triggers" width="70" height="20">
+  <object type="Trigger" x="3942" y="221" width="101" height="172">
+   <properties>
+    <property name="message" value="Maybe this message is a bit long but hey I can type a long message if I want to, bitch! :D"/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="500"/>
+    <property name="sound" value="groan"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="122" y="377" width="77" height="168">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="battle"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="3122" y="485" width="69" height="152">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="monster_movement"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="1522" y="1029" width="77" height="168">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="male_scream"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="2650" y="1037" width="77" height="168">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="metal_crash"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
