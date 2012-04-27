@@ -38,6 +38,11 @@ public class Switch extends Entity {
 		
 		this.state = initialState;
 		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
+		if (this.state) {
+			System.out.println("active");
+		} else {
+			System.out.println("not active");
+		}
 	}
 
 	/**

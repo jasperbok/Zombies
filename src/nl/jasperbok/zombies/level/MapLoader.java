@@ -138,7 +138,7 @@ public class MapLoader {
 		settings.put("failureMessage", map.getObjectProperty(layerIndex, objectIndex, "failureMessage", ""));
 		Switch newSwitch = new Switch(
 				level,
-				"true".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "false")),
+				"on".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "off")),
 				settings
 				);
 		newSwitch.position.x = map.getObjectX(layerIndex, objectIndex);
