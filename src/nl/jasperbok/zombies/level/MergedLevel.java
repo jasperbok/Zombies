@@ -43,9 +43,17 @@ public class MergedLevel extends Level {
 				env.addEntity(crane);
 				crate = new Crate(this, new Vector2f(2160, 660), crane);
 				env.addEntity(crate);
-				env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
+				//env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 				
 				env.sounds.loadSFX("flatsh");
+				bgMusic = new Music("data/sound/music/stil.ogg");
+				bgMusic.loop();
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			break;
+		case "level2":
+			try {
 				bgMusic = new Music("data/sound/music/stil.ogg");
 				bgMusic.loop();
 			} catch (SlickException e) {

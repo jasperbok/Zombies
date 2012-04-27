@@ -72,13 +72,13 @@ public class Level extends BasicGameState implements GameState {
 	}
 	
 	public void reInit() {
+		fl.kill();
 		reInit(this.currentLevel);
 	}
 	
 	public void reInit(String levelName) {
 		lights.clear();
 		cHulls.clear();
-		init(levelName);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

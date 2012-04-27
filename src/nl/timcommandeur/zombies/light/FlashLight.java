@@ -168,4 +168,9 @@ public class FlashLight {
 	public float vecAngle(Vec2 v) {
         return (float) Math.atan2(v.y, v.x);
     }
+	
+	public void kill() {
+		this.flashLightHulls = null;
+		this.flashLightLight = null;
+	}
 }
