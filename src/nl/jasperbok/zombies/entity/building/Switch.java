@@ -37,6 +37,19 @@ public class Switch extends Entity {
 		
 		this.state = initialState;
 		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
+		
+		if (this.settings.get("target") != "") {
+			try {
+				if (this.state == true) {
+					this.level.env.getEntityByName(this.settings.get("target")).call("on");
+				} else {
+					this.level.env.getEntityByName(this.settings.get("target")).call("off");
+				}
+			}
+			finally {
+				
+			}
+		}
 	}
 
 	/**
@@ -45,7 +58,6 @@ public class Switch extends Entity {
 	 * @param user The Entity that uses the Switch.
 	 */
 	public void use(Entity user) {
-		System.out.println(this.settings.get("requires"));
 		if (this.settings.get("requires") == "" ||
 				(user.inventory.contains(this.settings.get("requires")))
 			) {
