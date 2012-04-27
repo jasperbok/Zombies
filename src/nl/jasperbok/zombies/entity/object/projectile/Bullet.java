@@ -12,28 +12,21 @@ import nl.jasperbok.zombies.level.Level;
 
 public class Bullet extends Entity {
 	
-	/**
-	 * 
-	 * @param level
-	 * @param position
-	 * @param velocity
-	 * @throws SlickException
-	 */
-	public Bullet(Level level, Vector2f velocity) throws SlickException {
-		this(level, velocity, 1);
-	}
+	private int range = -1;
 	
 	/**
 	 * 
 	 * @param level
-	 * @param position
 	 * @param velocity
 	 * @param damage
+	 * @param range
 	 * @throws SlickException
 	 */
-	public Bullet(Level level, Vector2f velocity, int damage) throws SlickException {
+	public Bullet(Level level, Vector2f position, Vector2f velocity, int damage, int range) throws SlickException {
 		super.init(level);
+		this.position = position;
 		this.velocity = velocity;
+		this.range = range;
 		
 		this.addComponent(new LifeComponent(this));
 		this.addComponent(new DamagingAuraComponent(this, damage));
