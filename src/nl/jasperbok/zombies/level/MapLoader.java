@@ -98,11 +98,14 @@ public class MapLoader {
 	}
 	
 	private static void spawnTurret(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		HashMap<String, String> settings = new HashMap<String, String>();
+		settings.put("range", map.getObjectProperty(layerIndex, objectIndex, "range", "-1"));
 		AutoTurret turret = new AutoTurret(
 				level,
 				"left".equals(map.getObjectProperty(layerIndex, objectIndex, "direction", "left")),
 				null,
-				new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex))
+				new Vector2f(map.getObjectX(layerIndex, objectIndex), map.getObjectY(layerIndex, objectIndex)),
+				settings
 				);
 		turret.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(turret);
