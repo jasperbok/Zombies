@@ -321,7 +321,7 @@ public class TileEnvironment {
 	 */
 	public boolean isOnClimableSurface(Entity ent) {
 		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
-		int relativeBottomY = (int)Math.floor(ent.boundingBox.getMaxY() / tileWidth);
+		int relativeBottomY = (int)Math.floor((ent.boundingBox.getMaxY() + 2) / tileWidth);
 		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
 		
 		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;

@@ -174,7 +174,8 @@ public class MapLoader {
 	}
 	
 	private static void spawnWoodenCrate(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
-		WoodenCrate crate = new WoodenCrate(level);
+		float size = (float)(int)Math.ceil(map.getObjectHeight(layerIndex, objectIndex) / map.getTileHeight());
+		WoodenCrate crate = new WoodenCrate(level, size);
 		crate.position.x = map.getObjectX(layerIndex, objectIndex);
 		crate.position.y = map.getObjectY(layerIndex, objectIndex);
 		crate.name = map.getObjectName(layerIndex, objectIndex);

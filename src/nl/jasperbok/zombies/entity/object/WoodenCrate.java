@@ -24,13 +24,13 @@ public class WoodenCrate extends Entity {
 	 * @param level The level the crate is part of.
 	 * @throws SlickException
 	 */
-	public WoodenCrate(Level level) throws SlickException {
+	public WoodenCrate(Level level, float size) throws SlickException {
 		super.init(level);
 		this.isBlocking = true;
 		
 		// Loading the animation.
 		Animation idle = new Animation();
-		idle.addFrame(new Image("data/sprites/entity/object/wooden_crate.png"), 5000);
+		idle.addFrame(new Image("data/sprites/entity/object/wooden_crate.png").getScaledCopy(size), 5000);
 		this.anims.put("idle", idle);
 		this.currentAnim = this.anims.get("idle");
 		

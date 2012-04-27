@@ -143,7 +143,7 @@ public abstract class Entity extends RenderObject {
 	 */
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		if (this.currentAnim != null) {
-			this.currentAnim.draw((int)this.renderPosition.x, (int)this.renderPosition.y);
+			g.drawAnimation(this.currentAnim, (int)this.renderPosition.x, (int)this.renderPosition.y);
 		}
 	}
 	
