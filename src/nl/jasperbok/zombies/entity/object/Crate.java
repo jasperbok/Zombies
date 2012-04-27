@@ -1,8 +1,7 @@
 package nl.jasperbok.zombies.entity.object;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -17,7 +16,6 @@ import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.math.Vector2;
 
 public class Crate extends Entity {
-	private Image image;
 	public boolean draggedByMagnet = false;
 	private MagneticCrane crane;
 
@@ -30,14 +28,17 @@ public class Crate extends Entity {
 	 */
 	public Crate(Level level, Vector2f pos, MagneticCrane crane) throws SlickException {
 		super.init(level);
-		this.addComponent(new GravityComponent(0.05f, this));
-		this.gravityAffected = false;
+		this.addComponent(new GravityComponent(0.03f, this));
 		this.position = pos;
 		this.velocity = new Vector2(0.0f, 0.0f);
-		this.image = new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255));
+		
+		Animation idle = new Animation();
+		idle.addFrame(new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255)), 5000);
+		this.anims.put("idle", idle);
+		this.currentAnim = this.anims.get("idle");
+		
 		this.crane = crane;
-		this.boundingBox = new Rectangle(position.x, position.y, image.getWidth(), image.getHeight());
-		//this.isSolid = true;
+		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 
 	public void update(Input input, int delta) {
@@ -58,7 +59,7 @@ public class Crate extends Entity {
 		if (draggedByMagnet) {
 			if (crane.magnetActive) {
 				Vector2f armPosCopy = crane.armPos.copy();
-				this.position = new Vector2f(armPosCopy.x + crane.arm.getWidth() / 2 - image.getWidth() / 2, crane.armPos.copy().y + crane.arm.getHeight());
+				this.position = new Vector2f(armPosCopy.x + crane.arm.getWidth() / 2 - this.currentAnim.getWidth() / 2, crane.armPos.copy().y + crane.arm.getHeight());
 			} else {
 				draggedByMagnet = false;
 				// Enable the GravityComponent.
@@ -71,9 +72,5 @@ public class Crate extends Entity {
 		
 		// Update components.
 		super.update(input, delta);
-	}
-	
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		image.draw(renderPosition.getX(), renderPosition.getY());
 	}
 }

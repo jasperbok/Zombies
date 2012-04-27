@@ -42,7 +42,7 @@ public class MergedLevel extends Level {
 				MagneticCrane crane = new MagneticCrane(this, new Vector2f(2160, 560));
 				env.addEntity(crane);
 				crate = new Crate(this, new Vector2f(2160, 660), crane);
-				env.addEntity(crate);
+				env.spawnEntity(crate);
 				//env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 				
 				env.sounds.loadSFX("flatsh");
