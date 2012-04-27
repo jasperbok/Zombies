@@ -65,6 +65,7 @@ public class MapLoader {
 					break;
 				case "BreakableFloor" :
 					MapLoader.spawnBreakableFloor(env, level, map, i, j);
+					break;
 				case "Door" :
 					MapLoader.spawnDoor(env, level, map, i, j);
 					break;
