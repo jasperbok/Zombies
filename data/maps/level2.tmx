@@ -222,7 +222,7 @@
    H4sIAAAAAAAAC+1WW24TQRCcNTj4AkYGThDJcc4Q+wzxcoXYZyA+Aj/8gATicQQQjoTE8wMR+wrBvkISH4Bp3KUtt3tnvfARITFSaWZ3p3u2arp7JgshNCJuOb3gdkRmvlWBbXaBt7b4eOPgICtHL4G6rR1xX237Djo65yxiFvEz4srBdcQqYh4KmyW9R38n+mxFLMjX+4iprjFXu46+mxotjhLw/h+oq82+6iK2QwddnQNdhMdetg3wFU6wYR3QX5OOrMeMNFmpjzItmO/M4WTnIpbqNNnXnmrAPPOIh068sAbnhhtiAjaIC+gA2x+hwLn6XZAmLV3X8mNNbGNf0Arz/ySXZF+9daTlGi82jxisC/RCvFg95JvMv1AwF2jaUv5d4rVLu9D/WShC2NRlVz9owlli5Uy5ebogj7D3tiYAwklyAVry9yn1lwrmAt0+NApdkAOpOnuofFPf62oSQrGnc4Vtog04sRZcJwHUFzzPnLH0zWyNS1p/bHg2df2qOjtQmxSgUZluvC4a9mup8LiDE4+5TgKiy4qeF85Y+nvZGk3NL8GEeB7JnLD+9+MEhloHBxXg+sRIxRifsasS7uA0N/yWZMdnD57Zrz2vW6qNnIUPDM/f+aOxcpLAKFvHWV4B+La6ejEIfe6Gm8H3vQJlc+TfHyVwqnE2rgA0tLp6MQhtJK3K7px178Fl91bPns+oMv/YuxNHC8R7rs8pwM7q6sXgsa7ZDpt3Lu8uxhwA3FEOs80aiH6sdh3yh7gfGZ9envP9xWrCtXZsvtn4wXuvHrNGtg7LGfxkb1MHqytzGOg60AU8xIdXwzrBf88+bY6Lr24oYtvy5lo7yYp44jlAqh6zFgD2th2KPfH8TrLt+p+TLmL7NvJ4F/E04pkCMWTvrchf1sXm+EvVhePb1hP8B+eYxxPzvG+sBZArz/2wzXlo/sPW/zHpIrash+CF9uLncfBrG+tic1x0KeMJ9ErGyGMgpQFrASDP22Gbs4w/xiL4KeJzY82bwRqI7XPVAnitvXcGoLaJLv3g5+2B9ly3LPolY95f727jneNcjyYaDxIvlqvgS9Tja8S3xqYethe8Ui0srM86QP5anhzT3nhkeKY0YC0AtJu6v9SF5WLj254/3tlkNbBa/CstdRacloyr7P63v2u/ALrzQVzgFQAA
   </data>
  </layer>
- <objectgroup name="ObjectLayer" width="70" height="20">
+ <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
   <object name="turret_1" type="AutoTurret" x="1370" y="594" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>

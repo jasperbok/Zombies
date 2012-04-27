@@ -5,6 +5,7 @@ import java.util.HashMap;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
+import nl.jasperbok.zombies.entity.building.BreakableFloor;
 import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.item.Item;
@@ -62,6 +63,8 @@ public class MapLoader {
 				case "AutoTurret" :
 					MapLoader.spawnTurret(env, level, map, i, j);
 					break;
+				case "BreakableFloor" :
+					MapLoader.spawnBreakableFloor(env, level, map, i, j);
 				case "Door" :
 					MapLoader.spawnDoor(env, level, map, i, j);
 					break;
@@ -85,6 +88,13 @@ public class MapLoader {
 				}
 			}
 		}
+	}
+	
+	private static void spawnBreakableFloor(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		BreakableFloor floor = new BreakableFloor(level);
+		floor.position.x = map.getObjectX(layerIndex, objectIndex);
+		floor.position.y = map.getObjectY(layerIndex, objectIndex);
+		env.spawnEntity(floor);
 	}
 	
 	private static void spawnDoor(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
