@@ -148,14 +148,65 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="702" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="src/logosWallSprites.png" width="1600" height="1600"/>
+ </tileset>
+ <tileset firstgid="1102" name="CableTiles" tilewidth="80" tileheight="80">
+  <image source="src/powercables.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="1118" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="src/wallCracksBloodRedLight.png" width="1280" height="563"/>
+ </tileset>
+ <layer name="bg" width="70" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztljkOgkAUQAeBg3kFCwvPoYVLqYVLqYVLo55APYGiXsHlCi6JJ9BnooXEZiYKZPgvecUQfgIvEwalBEEQBBspeJ/rIuuS9/3eNJB/vXsu1KDOupHiLuF98qbL9V6Ku2SduJ9AEKLB9GwoM1PBKtYs/FaYng1NZlrYxo6FXUzPhj4zAxziyMIu/yRwlVrjBrdu3E/ze8bshwlONffFjhZ7PODRwi4zesxxodnlRIszXvBq0OWmPxIpS3qsMNDscn+2YMbBjME3yHeS3yYufPlnTgwP1Uwicg==
+  </data>
+ </layer>
  <layer name="Background" width="70" height="20">
   <data encoding="base64" compression="zlib">
-   eJztlk0OgjAQhVtugZ5BTHTnzwLd6hI8A3gG8OoOSSc8JjQ1/pRY+iUvDG0DmZdhBqU+I9VKLUhL3ccro8xcU3GfmfMhw3muIefcCL3o7k9wDR3O86yHMe7J9TlQUK4l6aaHMVNZ1kOny7sm3fUwtp2JvAf2K5fmBPYil+YE9iKXfLJJlNom/T8I/ot0tbujvT3pQDom338/9iKXfIE+5EJc2/xtX8iT6w98aejZLenxgnwgvSiEuLZlHWEthYj0ohLi2uZ6GZsZISK9aIS4tnkWjM2MEJFesA/Y/0tLPMV88IX04zEyF2pL7Hs+TAF6I+dCa4l9zodIJBL5d56Kyk0X
+   eJztll8OgjAMxjfCJdAziIm++ecBfdWoD+AZwDMIV7ckaygNc4jJCGO/5MvKWEj6pbQT4j8iKcQCtJRNvFKK1Rqx51iddxnMc01yTpSoF/Xziayug3meZTum7/j+HEgh1wz0lO0YyTX7rlPnXYBesh3rzniGQfuVSVPmFgrxAN3DfudpLzJpTtBeZJJNNoEQ26C5g9C7SF27O3i3Bx1Ax+D7t3Be/wLtRSbZgvqQMGFt4799AU+uBl+G8IZvl6Cqh2zAvUiZsLZ5HdFachHuRc6EtY310jUzXIR78WbC2sZZ0DUzXIR7gT7Q/p9p4jHmgy24H1XHXCg0se35MAbUGz4XSk1scz54PB7P1PkA0EtOlw==
   </data>
  </layer>
  <layer name="Level" width="70" height="20">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
+ <objectgroup name="ObjectLayer" width="70" height="20">
+  <object name="zombie1" type="Zombie" x="1427" y="1354" width="75" height="150"/>
+  <object name="zombie2" type="Zombie" x="1324" y="1358" width="75" height="150"/>
+  <object name="zombie3" type="Zombie" x="2052" y="567" width="75" height="150"/>
+  <object name="zombie4" type="Zombie" x="2136" y="564" width="75" height="150"/>
+  <object name="zombie5" type="Zombie" x="1770" y="548" width="75" height="150"/>
+  <object name="zombie6" type="Zombie" x="1821" y="561" width="75" height="150"/>
+  <object name="turret" type="AutoTurret" x="1927" y="597" width="135" height="121">
+   <properties>
+    <property name="direction" value="right"/>
+   </properties>
+  </object>
+  <object name="turret_activation" type="Switch" x="2097" y="145" width="29" height="84">
+   <properties>
+    <property name="target" value="turret"/>
+   </properties>
+  </object>
+  <object name="key_card" type="Item" x="1788" y="648" width="47" height="37">
+   <properties>
+    <property name="type" value="key_card"/>
+   </properties>
+  </object>
+  <object name="door_switch2" type="Switch" x="2503" y="1382" width="29" height="84">
+   <properties>
+    <property name="requires" value="key_card"/>
+    <property name="target" value="door2"/>
+   </properties>
+  </object>
+  <object name="door1" type="Door" x="1600" y="1282" width="80" height="240"/>
+  <object name="door2" type="Door" x="2561" y="1282" width="80" height="240"/>
+  <object name="door_switch1" type="Switch" x="1539" y="1385" width="29" height="84">
+   <properties>
+    <property name="target" value="door1"/>
+   </properties>
+  </object>
+  <object name="box" type="WoodenCrate" x="961" y="1039" width="80" height="80"/>
+ </objectgroup>
 </map>
