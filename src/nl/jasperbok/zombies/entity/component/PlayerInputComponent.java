@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Usable;
+import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 import org.newdawn.slick.Input;
@@ -64,7 +65,11 @@ public class PlayerInputComponent extends Component {
 			if (input.isKeyPressed(Input.KEY_Q) && ((LifeComponent)owner.getComponent(Component.LIFE)).getHealth() != 0) {
 				try {
 					((LifeComponent)owner.getComponent(Component.LIFE)).takeDamage(1);
-					owner.level.env.addAttractor(owner.boundingBox, "BloodMark");
+					BloodMark bm = new BloodMark(owner.level);
+					bm.position.x = this.owner.position.x;
+					bm.position.y = this.owner.position.y;
+					owner.level.env.spawnEntity(bm);
+					owner.level.env.mobDirector.addAttractor(bm, 60, false);
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}

@@ -7,7 +7,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.component.DraggableComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
@@ -15,6 +14,9 @@ import nl.jasperbok.zombies.level.Level;
 public class WoodenCrate extends Entity {
 	private Rectangle useBox;
 	public boolean playerControlled = false;
+	
+	private int delayTimer = 0;
+	private boolean canBeUnUsed = false;
 
 	/**
 	 * WoodenCrate constructor creates a new crate.
@@ -42,13 +44,22 @@ public class WoodenCrate extends Entity {
 	public void update(Input input, int delta){
 		this.isOnGround = level.env.isOnGround(this, false);
 		this.useBox.setBounds(this.position.x - 30, this.position.y, this.currentAnim.getWidth() + 60, this.currentAnim.getHeight());
-		updateBoundingBox();
 		
 		if (playerControlled) {
 			this.velocity = user.velocity.copy();
-			if (input.isKeyPressed(Input.KEY_E)) {
-				playerControlled = false;
-				user = null;
+			if (input.isKeyDown(Input.KEY_E) && this.canBeUnUsed) {
+				this.playerControlled = false;
+				this.user = null;
+				this.canBeUnUsed = false;
+				this.delayTimer = 0;
+			}
+		}
+		
+		if (!this.canBeUnUsed && playerControlled) {
+			this.delayTimer += delta;
+			if (this.delayTimer > 200) {
+				this.canBeUnUsed = true;
+				this.delayTimer = 0;
 			}
 		}
 		
@@ -58,10 +69,9 @@ public class WoodenCrate extends Entity {
 	public void use(Entity user) {
 		this.user = user;
 		this.playerControlled = true;
-		System.out.println("use");
 	}
 
 	public boolean canBeUsed(Rectangle rect) {
-		return rect.intersects(useBox);
+		return rect.intersects(useBox) && !playerControlled;
 	}
 }

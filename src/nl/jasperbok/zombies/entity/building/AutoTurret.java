@@ -7,8 +7,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.Observer;
-import nl.jasperbok.zombies.entity.Observable;
 import nl.jasperbok.zombies.entity.object.projectile.Bullet;
 import nl.jasperbok.zombies.level.Level;
 

@@ -170,7 +170,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="4419" y="1030" width="75" height="150"/>
+  <object name="player" type="Player" x="1834" y="706" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
     <property name="failureMessage" value="I require a key card to open this door."/>
@@ -179,7 +179,7 @@
     <property name="target" value="door_1"/>
    </properties>
   </object>
-  <object name="key_card" type="Item" x="4259" y="1101" width="47" height="37">
+  <object name="key_card" type="Item" x="2605" y="325" width="47" height="37">
    <properties>
     <property name="type" value="key_card"/>
    </properties>
