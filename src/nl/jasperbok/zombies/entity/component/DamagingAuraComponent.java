@@ -51,7 +51,7 @@ public class DamagingAuraComponent extends Component {
 			}
 			
 			// If the owner has a life component it should take the internal damage.
-			if (owner.hasComponent(Component.LIFE)) {
+			if (owner.hasComponent(Component.LIFE) && colliding.get(0).hasComponent(Component.LIFE)) {
 				LifeComponent internalLifeComponent = (LifeComponent) owner.getComponent(Component.LIFE);
 				internalLifeComponent.takeDamage(internalDamage);
 			}

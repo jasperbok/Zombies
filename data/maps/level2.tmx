@@ -152,32 +152,32 @@
   <image source="src/hidding_wall.png" width="240" height="160"/>
   <tile id="0">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
-    <property name="hidding" value="true"/>
+    <property name="hideable" value="true"/>
    </properties>
   </tile>
  </tileset>
@@ -207,14 +207,9 @@
  <tileset firstgid="1736" name="WallSprites2" tilewidth="80" tileheight="80">
   <image source="src/wallCracksBloodRedLight.png" width="1280" height="563"/>
  </tileset>
- <layer name="bg" width="70" height="20">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WOwrCQBhF4b9KCuMK1BUY1+AqNQoKFr4fibpCTyOIDMGgMGbmfnCqNJMLCWMmIiKh6KRmGXVT3yf5Lz326NPgZZd5YramDW1pR/vE3xl9GLJHTqO3XQ50pBOd6RLZLi5LNiipoivd6K5dRII14fsuvmxR86ypacv+N3X3kVXL3uWXXPeRp1nEu7juI02MP9wu5o1FJHwPwlcIhuAVAAA=
-  </data>
- </layer>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WWw4BMRSG20mme8AakPDk9oBXHrEGrAHLEImH2QTWgE05jTnpaU2Na0VnvuSLM5fMpH+OnmHsPQqcsSJY4qoux1bi34JxXInv9xlcZ5WsuRtLs5DHPfLrO7jOPtdres08nwVGsNYxOOF6jUwt531HrnsGzrle2+7JeQ26X6WZJehelGaWoHtRmi6pBYzVA/UNQr9FZO824VoLbIOd4PPvp3tRmq6gOXQNsbfxvz2ATIZfyGUBz16Cqwd0gZmFZMSV2NtmH9Fe8o2NuGZBc5gaYm9jvyTNDN/YitssZD/LvBZc722cBXRmyPvWwv78tXjO7Z1nuSQSKgszB7r/jy31L+aDC6KEvlglzIWZpXY9H34BZrODeg8emMqJZpY0M3yjEd56hPMn8Ay2Q90m2PpiLd+fk5Pz/1wA7t75/uAVAAA=
+   H4sIAAAAAAAAC+2WS07DMBCGx5GaLoADlMIJoEWCFW0RKmxh2XKGljOUHgMqFYkF7zdIwBmAS/FbxMrEJDgtwiUmv/QpEzsv/xrPhOhnKgmiWVAWYVwJqAbHknZeDa53WWqdS2zNzQDuhTzfYEfXpda5KaIxn9PH/4NaWGsb7IhorNRJGHddct1dsCuicdI1uYimikTTYKaY/h5er0xkVWX4MQfmmS8Dn+gYnIBTcAbO/XCe1yITWdUC/FgEFc2XC3AJrsA1uGG+8FpkwqaWPaIVL/wH4f8iMndrmKuDBljzRn/+ITy4BXfgHjyAR+YLr0UmbIn70NRQua329hY82R7DF5N6ePYe6KfAhnQvWhoqt/U84rnkmuSe173oaKjcVvkS1zNc0xC+7I8I7xmDMe7/jqFv/mYbOvI/c6LHUHuc1/92QjyJ/mBD0hfdj35MX+gmxLb7wySkvHlC/AxeKPSJexbXM0xaT7k/Dv7IPlotfOUV42/gHTQKUWqg/ouxfH+uXLmyrw+tARq64BUAAA==
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
@@ -223,17 +218,13 @@
   </data>
  </layer>
  <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
-  <object name="turret_1" type="AutoTurret" x="1370" y="594" width="135" height="121">
-   <properties>
-    <property name="direction" value="left"/>
-   </properties>
-  </object>
   <object name="switch_1" type="Switch" x="1206" y="630" width="29" height="84">
    <properties>
+    <property name="initial_state" value="on"/>
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="turret_1" type="AutoTurret" x="1370" y="594" width="135" height="121">
+  <object name="turret_1" type="AutoTurret" x="1458" y="596" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
    </properties>
@@ -248,7 +239,6 @@
   <object name="door_1" type="Door" x="642" y="482" width="80" height="240"/>
   <object name="door_switch1" type="Switch" x="570" y="582" width="29" height="84">
    <properties>
-    <property name="initial_state" value="on"/>
     <property name="target" value="door_1"/>
    </properties>
   </object>
@@ -269,14 +259,11 @@
   <object name="door_switch3" type="Switch" x="2982" y="1212" width="29" height="84">
    <properties>
     <property name="failureMessage" value="Looks like the switch is unpowered..."/>
-    <property name="requires" value="key_card"/>
     <property name="target" value="door_3"/>
    </properties>
   </object>
-  <object name="zombie_right" type="Zombie" x="3124" y="1205" width="75" height="150"/>
-  <object name="zombie_right2" type="Zombie" x="3161" y="1205" width="75" height="150"/>
+  <object name="zombie_right" type="Zombie" x="3134" y="1202" width="75" height="150"/>
   <object name="zombie_left1" type="Zombie" x="1803" y="1191" width="75" height="150"/>
-  <object name="zombie_left2" type="Zombie" x="1691" y="1182" width="75" height="150"/>
   <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
    <properties>
     <property name="repeat" value="false"/>
@@ -326,8 +313,8 @@
    </properties>
   </object>
   <object name="zombie_switch_guard" type="Zombie" x="203" y="1194" width="75" height="150"/>
-  <object name="box" type="WoodenCrate" x="880" y="640" width="80" height="80"/>
-  <object name="power_switch" type="Switch" x="106" y="1199" width="26" height="58">
+  <object name="box" type="WoodenCrate" x="947" y="556" width="160" height="160"/>
+  <object name="power_switch" type="Switch" x="108" y="1196" width="26" height="55">
    <properties>
     <property name="successMessage" value="It seems the power is back on."/>
     <property name="target" value="door_switch3"/>
@@ -337,11 +324,13 @@
   <object name="turret_left" type="AutoTurret" x="2306" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
+    <property name="range" value="330"/>
    </properties>
   </object>
   <object name="turret_right" type="AutoTurret" x="2609" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="right"/>
+    <property name="range 320" value=""/>
    </properties>
   </object>
   <object name="switch_turret_left" type="Switch" x="2510" y="1217" width="21" height="37">
@@ -354,6 +343,16 @@
    <properties>
     <property name="initial_state" value="on"/>
     <property name="target" value="turret_right"/>
+   </properties>
+  </object>
+  <object name="beginningTrigger" type="Trigger" x="650" y="1232" width="101" height="94">
+   <properties>
+    <property name="message" value="I think I can hide from zombies in the wall here."/>
+   </properties>
+  </object>
+  <object name="unpowered_message" type="Trigger" x="2957" y="1220" width="38" height="79">
+   <properties>
+    <property name="message" value="It looks like this switch is not powered."/>
    </properties>
   </object>
  </objectgroup>

@@ -29,7 +29,7 @@ public class Player extends Entity {
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, 5));
 		this.acceleration = new Vector2f(0.06f, 0);
-		this.maxVelocity = new Vector2f(0.4f, 10f);
+		this.maxVelocity = new Vector2f(0.3f, 10f);
 		this.position = pos;
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
