@@ -41,7 +41,6 @@ public class Crate extends Entity {
 	}
 
 	public void update(Input input, int delta) {
-		boundingBox.setBounds(position.x, position.y, image.getWidth(), image.getHeight());
 		this.isOnGround = level.env.isOnGround(this, false);
 		
 		if (crane.magnetActive && !draggedByMagnet) {

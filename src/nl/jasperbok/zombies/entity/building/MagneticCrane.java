@@ -74,7 +74,7 @@ public class MagneticCrane extends Entity implements Usable {
 		Camera.getInstance().setTarget(this, new Vector2f(0, 400));
 		
 		// Create the crane light when the crane is used.
-		craneLight = new LightSource(new Vector2f(armPos.getX() + 30, 730), 400, 1, new Color(200, 200, 200), camera);
+		craneLight = new LightSource(new Vector2f(armPos.x + 30, 730), 400, 1, new Color(200, 200, 200), camera);
 		Level.lights.add(craneLight);
 		level.fl.switchOnOff();
 	}
