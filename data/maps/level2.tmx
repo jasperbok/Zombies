@@ -214,7 +214,7 @@
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
@@ -324,13 +324,13 @@
   <object name="turret_left" type="AutoTurret" x="2306" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
-    <property name="range" value="330"/>
+    <property name="range" value="250"/>
    </properties>
   </object>
   <object name="turret_right" type="AutoTurret" x="2609" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="right"/>
-    <property name="range 320" value=""/>
+    <property name="range" value="200"/>
    </properties>
   </object>
   <object name="switch_turret_left" type="Switch" x="2510" y="1217" width="21" height="37">
