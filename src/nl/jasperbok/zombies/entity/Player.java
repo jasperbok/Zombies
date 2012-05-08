@@ -18,6 +18,8 @@ import nl.jasperbok.zombies.gui.Hud;
 public class Player extends Entity {
 	public float climbSpeed = 0.1f;
 	
+	public boolean isCrawling = false;
+	
 	// Status variables.
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
@@ -44,6 +46,7 @@ public class Player extends Entity {
 		SpriteSheet standSprites = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
 		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
 		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
+		SpriteSheet crawlSprite = new SpriteSheet("data/sprites/entity/crawl.png", 150, 75);
 		
 		Animation walkRight = new Animation();
 		Animation walkLeft = new Animation();
@@ -51,6 +54,8 @@ public class Player extends Entity {
 		Animation idleRight = new Animation();
 		Animation climb = new Animation();
 		Animation hide = new Animation();
+		Animation crawlLeft = new Animation();
+		Animation crawlRight = new Animation();
 		
 		for (int i = 0; i < 8; i++) {
 			walkRight.addFrame(standSprites.getSprite(i, 0), 100);
@@ -61,6 +66,10 @@ public class Player extends Entity {
 		climb.addFrame(climbSprites.getSprite(0, 0), 250);
 		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
 		hide.addFrame(hideSprite.getSprite(0, 0), 5000);
+		crawlLeft.addFrame(crawlSprite.getSprite(0, 0), 250);
+		crawlLeft.addFrame(crawlSprite.getSprite(1, 0), 250);
+		crawlRight.addFrame((crawlSprite.getSprite(0, 0)).getFlippedCopy(true, false), 250);
+		crawlRight.addFrame((crawlSprite.getSprite(1, 0)).getFlippedCopy(true, false), 250);
 		
 		this.anims.put("walkRight", walkRight);
 		this.anims.put("walkLeft", walkLeft);
@@ -68,6 +77,8 @@ public class Player extends Entity {
 		this.anims.put("idleLeft", idleLeft);
 		this.anims.put("climb", climb);
 		this.anims.put("hide", hide);
+		this.anims.put("crawlLeft", crawlLeft);
+		this.anims.put("crawlRight", crawlRight);
 		this.currentAnim = this.anims.get("idleRight");
 	}
 	
@@ -103,6 +114,20 @@ public class Player extends Entity {
 				this.currentAnim.stop();
 			} else if (this.currentAnim.isStopped()) {
 				this.currentAnim.start();
+			}
+		} else if (standing && isCrawling) {
+			if (vel.getX() < 0f) {
+				this.facing = Entity.LEFT;
+				this.currentAnim = this.anims.get("crawlLeft");
+			} else if (vel.getX() > 0f) {
+				this.facing = Entity.RIGHT;
+				this.currentAnim =this.anims.get("crawlRight");
+			} else if (vel.getX() == 0f) {
+				if (this.facing == Entity.LEFT) {
+					this.currentAnim = this.anims.get("crawlLeft");
+				} else {
+					this.currentAnim = this.anims.get("crawlRight");
+				}
 			}
 		} else if (standing) {
 			if (vel.getX() < 0f) {

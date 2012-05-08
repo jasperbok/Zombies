@@ -37,6 +37,12 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			
+			if (input.isKeyDown(Input.KEY_S) && ((Player)owner).isClimbing == false && ((Player)owner).isFalling == false && ((Player)owner).isHidden() == false) {
+				((Player)owner).isCrawling = true;
+			} else {
+				((Player)owner).isCrawling = false;
+			}
+			
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (!((Player)owner).isHidden()) {
 					owner.vel.set(owner.vel.getX() + owner.accel.getX(), owner.vel.getY());
