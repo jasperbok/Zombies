@@ -82,7 +82,7 @@ public class MergedLevel extends Level {
 		
 		switch (this.currentLevel) {
 		case "level1":
-			if (this.env.getEntityByName("crate_zombie").touches(crate) && crate.velocity.y > 0) {
+			if (this.env.getEntityByName("crate_zombie").touches(crate) && crate.vel.y > 0) {
 				env.sounds.playSFX("flatsh");
 				this.env.getEntityByName("crate_zombie").kill();
 			}

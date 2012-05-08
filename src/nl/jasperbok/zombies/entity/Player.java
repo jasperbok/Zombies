@@ -28,8 +28,8 @@ public class Player extends Entity {
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, 5));
-		this.acceleration = new Vector2f(0.06f, 0);
-		this.maxVelocity = new Vector2f(0.3f, 10f);
+		this.accel = new Vector2f(0.06f, 0);
+		this.maxVel = new Vector2f(0.3f, 10f);
 		this.position = pos;
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
@@ -77,10 +77,10 @@ public class Player extends Entity {
 		wasClimbing = isClimbing;
 		isClimbing = false;
 		
-		this.isOnGround = level.env.isOnGround(this, false);
+		this.standing = level.env.isOnGround(this, false);
 		if (wasClimbing && level.env.isOnClimableSurface(this)) {
 			isClimbing = true;
-			velocity.set(new Vector2f(velocity.getX(), 0));
+			vel.set(new Vector2f(vel.getX(), 0));
 		} else if (!level.env.isOnClimableSurface(this)) {
 			isClimbing = false;
 		}
@@ -104,14 +104,14 @@ public class Player extends Entity {
 			} else if (this.currentAnim.isStopped()) {
 				this.currentAnim.start();
 			}
-		} else if (isOnGround) {
-			if (velocity.getX() < 0f) {
+		} else if (standing) {
+			if (vel.getX() < 0f) {
 				this.facing = Entity.LEFT;
 				this.currentAnim = this.anims.get("walkLeft");
-			} else if (velocity.getX() > 0f) {
+			} else if (vel.getX() > 0f) {
 				this.facing = Entity.RIGHT;
 				this.currentAnim =this.anims.get("walkRight");
-			} else if (velocity.getX() == 0f) {
+			} else if (vel.getX() == 0f) {
 				if (this.facing == Entity.LEFT) {
 					this.currentAnim = this.anims.get("idleLeft");
 				} else {

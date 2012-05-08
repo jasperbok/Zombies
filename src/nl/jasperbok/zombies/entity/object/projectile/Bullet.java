@@ -28,14 +28,14 @@ public class Bullet extends Entity {
 		super.init(level);
 		this.position = position;
 		this.startX = (int)position.x;
-		this.velocity = velocity;
+		this.vel = velocity;
 		this.range = range;
 		
 		this.addComponent(new LifeComponent(this));
 		this.addComponent(new DamagingAuraComponent(this, damage));
 		
 		Animation idle = new Animation();
-		if (this.velocity.x > 0) {
+		if (this.vel.x > 0) {
 			idle.addFrame(new Image("data/sprites/entity/object/projectile/bullet.png").getFlippedCopy(true, false), 5000);
 		} else {
 			idle.addFrame(new Image("data/sprites/entity/object/projectile/bullet.png"), 5000);

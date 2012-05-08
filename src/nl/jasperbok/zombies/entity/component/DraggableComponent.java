@@ -13,7 +13,7 @@ public class DraggableComponent extends Component {
 	
 	public void update(Input input, int delta) {
 		if (owner.user != null) {
-			owner.velocity = owner.user.velocity.copy();
+			owner.vel = owner.user.vel.copy();
 			
 			// Check if the user wants to stop dragging.
 			if (input.isKeyPressed(Input.KEY_E)) {

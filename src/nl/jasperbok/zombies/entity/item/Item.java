@@ -33,7 +33,7 @@ public class Item extends Entity {
 	public void update(Input input, int delta) {
 		super.update(input, delta);
 		
-		this.isOnGround = level.env.isOnGround(this, false);
+		this.standing = level.env.isOnGround(this, false);
 		
 		if (level.env.getEntityByName("player").touches(this)) {
 			level.env.getPlayer().inventory.add(collect());

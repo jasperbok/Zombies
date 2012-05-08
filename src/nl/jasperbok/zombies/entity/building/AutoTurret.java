@@ -24,7 +24,7 @@ public class AutoTurret extends Entity {
 	/**
 	 * Delta time between successive shots.
 	 */
-	private int fireRate = 150;
+	private int fireRate = 500;
 	/**
 	 * Delta counter that counts the time since the last shot.
 	 */

@@ -24,7 +24,7 @@ public class Zombie extends Mob {
 	public Zombie(Level level) throws SlickException {
 		super.init(level);
 		
-		this.maxVelocity = new Vector2f(10, 0);
+		this.maxVel = new Vector2f(10, 0);
 		
 		this.addComponent(new LifeComponent(this, 1));
 		this.addComponent(new GravityComponent(0.01f, this));
@@ -57,22 +57,22 @@ public class Zombie extends Mob {
 
 		// Stop when touching a left blocking point.
 		for (Vector2f pl : blockingPointsLeft) {
-			if (position.x + velocity.x < pl.x) {
-				velocity.x = 0;
+			if (position.x + vel.x < pl.x) {
+				vel.x = 0;
 			}
 		}
 		
 		// Stop when touching a right blocking point.
 		for (Vector2f pr : blockingPointsRight) {
-			if (position.x + velocity.x > pr.x) {
-				velocity.x = 0;
+			if (position.x + vel.x > pr.x) {
+				vel.x = 0;
 			}
 		}
 		
 		// Determine the animation.
-		if (velocity.x < 0) {
+		if (vel.x < 0) {
 			this.currentAnim = this.anims.get("walkLeft");
-		} else if (velocity.x > 0) {
+		} else if (vel.x > 0) {
 			this.currentAnim = this.anims.get("walkRight");
 		} else {
 			this.currentAnim = this.anims.get("idle");

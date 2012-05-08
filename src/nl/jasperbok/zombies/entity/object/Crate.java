@@ -30,7 +30,7 @@ public class Crate extends Entity {
 		super.init(level);
 		this.addComponent(new GravityComponent(0.03f, this));
 		this.position = pos;
-		this.velocity = new Vector2(0.0f, 0.0f);
+		this.vel = new Vector2(0.0f, 0.0f);
 		
 		Animation idle = new Animation();
 		idle.addFrame(new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255)), 5000);
@@ -42,7 +42,7 @@ public class Crate extends Entity {
 	}
 
 	public void update(Input input, int delta) {
-		this.isOnGround = level.env.isOnGround(this, false);
+		this.standing = level.env.isOnGround(this, false);
 		
 		if (crane.magnetActive && !draggedByMagnet) {
 			Rectangle hitBox = new Rectangle(crane.armPos.getX(), crane.armPos.getY() + crane.arm.getHeight(), crane.arm.getWidth(), 20);

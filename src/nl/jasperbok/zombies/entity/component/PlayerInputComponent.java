@@ -39,27 +39,27 @@ public class PlayerInputComponent extends Component {
 			
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (!((Player)owner).isHidden()) {
-					owner.velocity.set(owner.velocity.getX() + owner.acceleration.getX(), owner.velocity.getY());
-					if (owner.velocity.getX() > owner.maxVelocity.getX()) {
-						owner.velocity.set(owner.maxVelocity.getX(), owner.velocity.getY());
+					owner.vel.set(owner.vel.getX() + owner.accel.getX(), owner.vel.getY());
+					if (owner.vel.getX() > owner.maxVel.getX()) {
+						owner.vel.set(owner.maxVel.getX(), owner.vel.getY());
 					}
 				}
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
 				if (!((Player)owner).isHidden()) {
-					owner.velocity.set(owner.velocity.getX() - owner.acceleration.getX(), owner.velocity.getY());
-					if (owner.velocity.getX() < -owner.maxVelocity.getX()) {
-						owner.velocity.set(-owner.maxVelocity.getX(), owner.velocity.getY());
+					owner.vel.set(owner.vel.getX() - owner.accel.getX(), owner.vel.getY());
+					if (owner.vel.getX() < -owner.maxVel.getX()) {
+						owner.vel.set(-owner.maxVel.getX(), owner.vel.getY());
 					}
 				}
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
-				if (owner.velocity.x < 0.0f) {
-					owner.velocity.x += owner.acceleration.getX() * 2;
-					if (owner.velocity.x > 0.0f) owner.velocity.x = 0.0f;
-				} else if (owner.velocity.x > 0.0f) {
-					owner.velocity.x -= owner.acceleration.getX() * 2;
-					if (owner.velocity.x < 0.0f) owner.velocity.x = 0.0f;
+				if (owner.vel.x < 0.0f) {
+					owner.vel.x += owner.accel.getX() * 2;
+					if (owner.vel.x > 0.0f) owner.vel.x = 0.0f;
+				} else if (owner.vel.x > 0.0f) {
+					owner.vel.x -= owner.accel.getX() * 2;
+					if (owner.vel.x < 0.0f) owner.vel.x = 0.0f;
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_Q) && ((LifeComponent)owner.getComponent(Component.LIFE)).getHealth() != 0) {
@@ -77,18 +77,18 @@ public class PlayerInputComponent extends Component {
 			if (input.isKeyDown(Input.KEY_W)){
 				if (owner.level.env.isOnClimableSurface(owner)) {
 					owner.isClimbing = true;
-					owner.velocity.set(owner.velocity.getX(), -((Player)owner).climbSpeed);
+					owner.vel.set(owner.vel.getX(), -((Player)owner).climbSpeed);
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
 				if (owner.level.env.isOnClimableSurface(owner)) {
 					owner.isClimbing = true;
-					owner.velocity.set(owner.velocity.getX(), ((Player)owner).climbSpeed);
+					owner.vel.set(owner.vel.getX(), ((Player)owner).climbSpeed);
 				}
 			}
 			if (input.isKeyPressed(Input.KEY_E)) {
 				if (owner.level.env.isOnHideableSurface(owner)) {
-					owner.velocity = new Vector2f(0, 0);
+					owner.vel = new Vector2f(0, 0);
 					((Player)owner).switchHide();
 				} else {
 					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(this.owner.boundingBox);

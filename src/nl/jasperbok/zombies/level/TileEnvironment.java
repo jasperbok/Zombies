@@ -201,10 +201,10 @@ public class TileEnvironment {
 					System.out.println(ent1.boundingBox.getMaxX() + " " + ent2.boundingBox.getMinX());
 					if (ent1.boundingBox.getMaxX() > ent2.boundingBox.getMinX() && ent1.position.x < ent2.position.x) {
 						ent1.position.x -= 1;
-						ent1.velocity.x = -0.06f;
+						ent1.vel.x = -0.06f;
 					} else if (ent1.boundingBox.getMinX() < ent2.boundingBox.getMaxX() && ent1.position.x > ent2.position.x) {
 						ent1.position.x += 1;
-						ent1.velocity.x = 0.06f;
+						ent1.vel.x = 0.06f;
 					}
 				}
 			}
@@ -353,12 +353,12 @@ public class TileEnvironment {
 				if (tiles[relativeLeftX][relativeBottomY].isBlocking) {
 					ent.setPosition(ent.position.getX(), + tiles[relativeLeftX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
-					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
+					if (ent.vel.getY() > 0) ent.vel.set(ent.vel.getX(), 0);
 				//} else if (tiles[relativeRightX][relativeBottomY].isBlocking || (tiles[relativeRightX][relativeBottomY].isBlocking && !ent.isClimbing)) {
 				} else if (tiles[relativeRightX][relativeBottomY].isBlocking) {
 					ent.setPosition(ent.position.getX(), + tiles[relativeRightX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
 					// The entity is standing on something solid, so change his y velocity to 0 or less.
-					if (ent.velocity.getY() > 0) ent.velocity.set(ent.velocity.getX(), 0);
+					if (ent.vel.getY() > 0) ent.vel.set(ent.vel.getX(), 0);
 				}
 				
 				// Left side collisions.
@@ -396,7 +396,7 @@ public class TileEnvironment {
 	 */
 	private void moveEntities(int delta) {
 		for (Entity ent: entities) {
-			ent.setPosition(ent.position.x + (ent.velocity.x * delta), ent.position.y + (ent.velocity.y * delta));
+			ent.setPosition(ent.position.x + (ent.vel.x * delta), ent.position.y + (ent.vel.y * delta));
 		}
 	}
 	

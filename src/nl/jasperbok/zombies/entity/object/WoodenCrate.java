@@ -46,11 +46,11 @@ public class WoodenCrate extends Entity {
 	}
 
 	public void update(Input input, int delta){
-		this.isOnGround = level.env.isOnGround(this, false);
+		this.standing = level.env.isOnGround(this, false);
 		this.useBox.setBounds(this.position.x - 30, this.position.y, this.currentAnim.getWidth() + 60, this.currentAnim.getHeight());
 		
 		if (playerControlled) {
-			this.velocity = user.velocity.copy();
+			this.vel = user.vel.copy();
 			if (input.isKeyDown(Input.KEY_E) && this.canBeUnUsed) {
 				this.playerControlled = false;
 				this.user = null;
@@ -58,7 +58,7 @@ public class WoodenCrate extends Entity {
 				this.delayTimer = 0;
 			}
 		} else {
-			this.velocity.x = 0;
+			this.vel.x = 0;
 		}
 		
 		if (!this.canBeUnUsed && playerControlled) {

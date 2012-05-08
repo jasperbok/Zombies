@@ -142,16 +142,16 @@ public class MobDirector {
 				}
 			}
 			
-			if (v.x > mob.maxVelocity.x) {
-				v.x = mob.maxVelocity.x;
-			} else if (v.x < -mob.maxVelocity.x) {
-				v.x = -mob.maxVelocity.x;
+			if (v.x > mob.maxVel.x) {
+				v.x = mob.maxVel.x;
+			} else if (v.x < -mob.maxVel.x) {
+				v.x = -mob.maxVel.x;
 			}
 			
-			mob.velocity.x += v.x;
-			mob.velocity.y += v.y;
+			mob.vel.x += v.x;
+			mob.vel.y += v.y;
 			
-			mob.velocity.x /= 50;
+			mob.vel.x /= 50;
 			
 			//System.out.println("v.x" + mob.velocity.x);
 		}

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -48,12 +49,33 @@ public abstract class Entity extends RenderObject {
 	public String name = "";
 	public HashMap<String, String> settings = new HashMap<String, String>();
 	
-	public Vector2f velocity = new Vector2f(0.0f, 0.0f);
-	public Vector2f acceleration = new Vector2f(0f, 0f);
-	public Vector2f maxVelocity = new Vector2f(0f, 0f);
+	public Vector2f size = new Vector2f(0, 0);
+	public Vector2f offset = new Vector2f(0, 0);
 	
 	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
+	
+	public Vector2f last = new Vector2f(0, 0);
+	public Vector2f vel = new Vector2f(0, 0);
+	public Vector2f accel = new Vector2f(0, 0);
+	public Vector2f maxVel = new Vector2f(0, 0);
+	public Vector2f friction = new Vector2f(0, 0);
+	public int zIndex = 0;
+	public int gravityFactor = 1;
+	public boolean standing = false;
+	public int bounciness = 0;
+	public float minBounceVelocity = 5f;
+	
+	public HashMap<String, Animation> anims = new HashMap<String, Animation>();
+	public Image animSheet;
+	public Animation currentAnim = null;
 	public int health = 5;
+	
+	public Entity.Type type = Entity.Type.NONE;
+	public Entity.Type checkAgainst = Entity.Type.NONE;
+	public Entity.Collides collides = Entity.Collides.NEVER;
+	
+	public boolean killed = false;
+	
 	public boolean isBlocking = true;
 	public boolean isSolid = false;
 	public boolean isTopSolid = false;
@@ -63,25 +85,16 @@ public abstract class Entity extends RenderObject {
 	public Entity user = null;
 	public Inventory inventory;
 	
-	public HashMap<String, Animation> anims = new HashMap<String, Animation>();
-	public Animation currentAnim = null;
-	
 	// Status variables.
 	public boolean wasFalling = false;
 	public boolean isFalling = false;
 	public boolean wasOnGround = false;
-	public boolean isOnGround = false;
 	public boolean isFacingLeft = false;
 	public boolean wasClimbing = false;
 	public boolean isClimbing = false;
 	public int facing = 1;
 	
 	public Vector2 drawPosition = new Vector2(0.0f, 0.0f);
-	public int zIndex = 0;
-	
-	public Entity.Type type = Entity.Type.NONE;
-	public Entity.Type checkAgainst = Entity.Type.NONE;
-	public Entity.Collides collides = Entity.Collides.NEVER;
 	
 	protected ArrayList<Component> components;
 	public Level level;
@@ -291,23 +304,23 @@ public abstract class Entity extends RenderObject {
 		if (weak != null) {
 			Entity strong = top == weak ? bottom : top;
 			
-			weak.velocity.y = strong.velocity.y;
+			weak.vel.y = strong.vel.y;
 			
 			// On a platform?
 			float nudgeX = 0;
 			if (weak == top) {
-				weak.isOnGround = true;
-				nudgeX = strong.velocity.x;
+				weak.standing = true;
+				nudgeX = strong.vel.x;
 			}
 			
 			weak.setPosition(weak.position.x + nudgeX, weak.position.y + nudge);
 		}
 		
 		// Bottom Entity is standing, just move the top one.
-		else if (bottom.isOnGround) {
+		else if (bottom.standing) {
 			top.setPosition(top.position.x, top.position.y - nudge);
-			top.isOnGround = true;
-			top.velocity.y = 0;
+			top.standing = true;
+			top.vel.y = 0;
 		}
 		
 		// Normal collision, both move.
