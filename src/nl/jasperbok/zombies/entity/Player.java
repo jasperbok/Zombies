@@ -191,6 +191,12 @@ public class Player extends Entity {
 	}
 	
 	public void kill() {
-		this.level.reInit();
+		try {
+			this.level.env.addEntity(new PlayerCorpse(this.level, (int)this.position.x, (int)this.position.y));
+			this.level.env.removeEntity(this);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

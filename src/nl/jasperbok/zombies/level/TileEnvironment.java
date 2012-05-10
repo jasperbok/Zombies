@@ -72,10 +72,13 @@ public class TileEnvironment {
 		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
-		Entity player = this.getEntityByName("player");
-		((MergedLevel)this.level).checkPoint.put("x", (int)player.position.x);
-		((MergedLevel)this.level).checkPoint.put("y", (int)player.position.y);
-		((MergedLevel)this.level).checkPoint.put("hp", player.health);
+		// If there is no checkpoint for this level yet, create one
+		// at the player's starting position.
+		if ( !((MergedLevel)this.level).checkPoint.containsKey(mapName) ) {
+			Entity player = this.getEntityByName("player");
+			this.setCheckpoint((int)player.position.x, (int)player.position.y, player.health);
+			((MergedLevel)this.level).checkPoint.put(mapName, 1);
+		}
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {

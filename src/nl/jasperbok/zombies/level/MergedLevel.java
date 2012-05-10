@@ -67,10 +67,13 @@ public class MergedLevel extends Level {
 			break;
 		}
 		
-		Entity player = this.env.getEntityByName("player");
-		player.position.x = this.checkPoint.get("x");
-		player.position.y = this.checkPoint.get("y");
-		player.health = this.checkPoint.get("hp");
+		if (this.checkPoint.containsKey(this.currentLevel)) {
+			System.out.println("it contains it! ");
+			Entity player = this.env.getEntityByName("player");
+			player.position.x = this.checkPoint.get("x");
+			player.position.y = this.checkPoint.get("y");
+			player.health = this.checkPoint.get("hp");
+		}
 	}
 	
 	public void reInit() {

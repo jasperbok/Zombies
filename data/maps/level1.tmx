@@ -148,9 +148,15 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="702" name="BackgroundSprites3" tilewidth="80" tileheight="80">
+  <image source="src/bq_s_tileset.png" width="1000" height="1000"/>
+ </tileset>
+ <tileset firstgid="846" name="BackgroundSprites2" tilewidth="80" tileheight="80">
+  <image source="src/wallCracksBloodRedLight.png" width="1280" height="563"/>
+ </tileset>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Wt1JCURiF0QvvY2OOhTk3KmYbc2zMsTHnGQEx+6yuxk6kYmDgfDOrP/8u7twoCoVCoVAo9FdPsShKZpGKFfp1hSvbJr8KUWU8iqqopoZa6qingUaaaKYlnp83pP+5PVOgXdrc2k4HnXTRTQ+99NHPAIN52qUYG3LrMCMkGGWMcSaYZIppZspol1m3zjHPAossscwKq6yxzkYZ7bLp1i222WGXPfY54JAjjjkpoV0qcny3Tt16xjkXXHLFNTfccsc9DzyWyDatOXZJujNFmmcyvPDKG+988MkX3yWyS6KM/4tCoVCoGPoBihNX7uAVAAA=
+   H4sIAAAAAAAAC+3WN0/DUBiFYSf8HhZ6HehlBAIkMNFTWOgpMNBTQCIJofNTEH2ijjBSVspKkXiXDCA5sRVbtsg90jP5xrnfsXxlSRIREdEjMzlG7+B3Tq2SdGaVv37HtfsU1/9rbpj51mRzn5tsP9mcNYskRWXELEbvzrjIdZJkRPJ4b/JRgEIUoRglKEUZylGBSp3esXiK2RMG9VLNrDWoRR3q0YBGNKEZhzjCMU407uZAwf3UrFGyVklauE8r2mBDOzrQCTscuMAlrnBt8Lls55vCgS506/h90cOcvehDPwYwiCE44YIbHgyr7OSB9Y94wrNGfTrpwgU3PDr2MsJ+RzGGcUxgElPwwgc/AphWOdsL61/xhneNevHShQ9+BDLoJTfNuTXLfucwjwUsYgnLCCKEMCJYwaqK+T5Y+4kvfP/5ndqzKnnGBekihDAiGfRSlaaXKP8VQxzrSGADm9jCNnawiz3sa/Tc1Z5VyTNOq9iy+LtIRERExAz5AafVP7fgFQAA
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
@@ -201,6 +207,17 @@
   </object>
   <object name="wood_crate_1" type="WoodenCrate" x="2809" y="1112" width="80" height="80"/>
   <object name="wood_crate_2" type="WoodenCrate" x="3651" y="1112" width="80" height="80"/>
+  <object name="start_zombie_1" type="Zombie" x="76" y="402" width="75" height="150">
+   <properties>
+    <property name="max-right" value="640"/>
+   </properties>
+  </object>
+  <object name="start_zombie_1" type="Zombie" x="130" y="402" width="75" height="150">
+   <properties>
+    <property name="max-right" value="640"/>
+   </properties>
+  </object>
+  <object name="checkpoint" type="Checkpoint" x="928" y="798" width="320" height="270"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
   <object type="Trigger" x="334" y="380" width="77" height="168">
