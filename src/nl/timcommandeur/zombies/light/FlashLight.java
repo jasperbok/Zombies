@@ -26,6 +26,7 @@ public class FlashLight {
 	protected int height = 30;
 	protected int width = 60;
 	protected int currentAngle;
+	protected Vector2f angleDisplacement = new Vector2f(0, 0);
 	protected boolean on = true;
 	
 	public Vector2f position;
@@ -93,10 +94,20 @@ public class FlashLight {
 	}
 	
 	public void setPosition(float x, float y) {
-		setPosition(new Vector2f(x, y));
+		setPosition(new Vector2f(x, y), 0);
+	}
+	
+	public void setPosition(float x, float y, float displacementDistance) {
+		setPosition(new Vector2f(x, y), displacementDistance);
 	}
 	
 	public void setPosition(Vector2f position) {
+		this.setPosition(position, 0);
+	}
+	
+	public void setPosition(Vector2f position, float displacementDistance) {
+		position.x = position.x + (this.angleDisplacement.x * displacementDistance);
+		position.y = position.y + (this.angleDisplacement.y * displacementDistance);
 		this.position = position;
 		flashLightLight.setPosition(position);
 		for (ShadowHull hull : flashLightHulls) {
@@ -114,10 +125,10 @@ public class FlashLight {
 		createHulls();
 	}
 	
-	public void rotate(int angle) {
-		currentAngle = angle;
+	public void rotate(double angle) {
+		currentAngle = (int) angle;
 		for (ShadowHull hull : flashLightHulls) {
-			hull.rotate(angle, 10, 30);
+			hull.rotate((float) angle, 10, 30);
 		}
 	}
 	
@@ -128,8 +139,17 @@ public class FlashLight {
 	
 	public void pointToMouse(GameContainer container) {
 		Camera camera = Camera.getInstance();
-		Vec2 to = new Vec2(container.getInput().getAbsoluteMouseX() - 600, container.getInput().getAbsoluteMouseY() - 400);
-		int angle = (int) (vecAngle(new Vec2(to.x, to.y)) / Math.PI * 180);
+		int difX = container.getInput().getAbsoluteMouseX() - 600;
+		int difY = container.getInput().getAbsoluteMouseY() - 400;
+		Vec2 to = new Vec2(difX, difY);
+		double angleInRadians = vecAngle(new Vec2(to.x, to.y));
+		double angle = angleInRadians / Math.PI * 180;
+		this.angleDisplacement.x = (float) (Math.cos(angleInRadians));
+		this.angleDisplacement.y = (float) (Math.sin(angleInRadians));
+		
+		System.out.println(this.getClass().toString() + ".pointToMouse: x " + (float) difX / Math.abs(difX));
+		System.out.println(this.getClass().toString() + ".pointToMouse: y " + (float) difY / Math.abs(difY));
+		
 		this.rotate(angle);
 	}
 	
