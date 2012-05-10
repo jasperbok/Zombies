@@ -132,9 +132,15 @@ public class Player extends Entity {
 			if (vel.getX() < 0f) {
 				this.facing = Entity.LEFT;
 				this.currentAnim = this.anims.get("walkLeft");
+				if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
+					this.level.env.sounds.playSFX("footstep");
+				}
 			} else if (vel.getX() > 0f) {
 				this.facing = Entity.RIGHT;
 				this.currentAnim =this.anims.get("walkRight");
+				if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
+					this.level.env.sounds.playSFX("footstep");
+				}
 			} else if (vel.getX() == 0f) {
 				if (this.facing == Entity.LEFT) {
 					this.currentAnim = this.anims.get("idleLeft");

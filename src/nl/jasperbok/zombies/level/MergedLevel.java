@@ -34,6 +34,7 @@ public class MergedLevel extends Level {
 		this.ID = 2;
 		
 		this.currentLevel = levelName;
+		this.loadSFX();
 		
 		switch (levelName) {
 		case "level1":
@@ -45,7 +46,6 @@ public class MergedLevel extends Level {
 				env.spawnEntity(crate);
 				//env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 				
-				env.sounds.loadSFX("flatsh");
 				bgMusic = new Music("data/sound/music/stil.ogg");
 				bgMusic.loop();
 			} catch (SlickException e) {
@@ -61,6 +61,12 @@ public class MergedLevel extends Level {
 			}
 			break;
 		}
+	}
+	
+	public void loadSFX() {
+		env.sounds.loadSFX("flatsh");
+		env.sounds.loadSFX("turret");
+		env.sounds.loadSFX("footstep");
 	}
 	
 	public void reInit() {
