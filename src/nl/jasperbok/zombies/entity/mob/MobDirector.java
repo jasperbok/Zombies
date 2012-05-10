@@ -115,7 +115,7 @@ public class MobDirector {
 			}
 			
 			if (Math.random() * 20000 > 19999) {
-				sounds.playSFX("zombie_groan1", 0, 0);
+				sounds.playSFX("zombie_groan1");
 			}
 			
 			for (MobAttractor attractor : attractors) {

@@ -58,6 +58,7 @@ public class TileEnvironment {
 	 */
 	public TileEnvironment(String mapName, Level level) throws SlickException {
 		// Load the map and all related variables.
+		this.sounds = new SoundManager();
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
@@ -65,7 +66,6 @@ public class TileEnvironment {
 		this.tiles = MapLoader.loadTiles(map);
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
-		this.sounds = new SoundManager();
 		
 		MapLoader.loadEntities(this, level, map);
 		spawnDeffered();
