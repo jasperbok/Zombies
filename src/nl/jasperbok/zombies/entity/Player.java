@@ -1,6 +1,5 @@
 package nl.jasperbok.zombies.entity;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -35,50 +34,23 @@ public class Player extends Entity {
 		this.position = pos;
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
+		
+		this.facing = Entity.RIGHT;
 		this.animSheet = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
 		this.addAnim("walkRight", 100, new int[]{0, 1, 2, 3, 4, 5, 6, 7});
-		this.init();
+		this.addAnim("walkLeft", 100, new int[]{15, 14, 13, 12, 11, 10, 9, 8});
+		this.addAnim("idleRight", 5000, new int[]{0});
+		this.addAnim("idleLeft", 5000, new int[]{15});
+		this.animSheet = new SpriteSheet("data/sprites/entity/player_climb.png", 75, 147);
+		this.addAnim("climb", 250, new int[]{0, 1});
+		this.animSheet = new SpriteSheet("data/sprites/entity/player_hide.png", 75, 150);
+		this.addAnim("hide", 5000, new int[]{0});
+		this.animSheet = new SpriteSheet("data/sprites/entity/player_crawl.png", 140, 75);
+		this.addAnim("crawlLeft", 250, new int[]{0, 1});
+		this.addAnim("crawlRight", 250, new int[]{2, 3});
+		this.currentAnim = this.anims.get("idleRight");
 		
 		inventory = new Inventory();
-	}
-	
-	public void init() throws SlickException {
-		this.facing = Entity.RIGHT;
-		
-		SpriteSheet standSprites = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
-		SpriteSheet climbSprites = new SpriteSheet("data/sprites/entity/girl_climb_sprite.png", 56, 147);
-		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
-		SpriteSheet crawlSprite = new SpriteSheet("data/sprites/entity/crawl.png", 150, 75);
-		
-		Animation walkLeft = new Animation();
-		Animation idleLeft = new Animation();
-		Animation idleRight = new Animation();
-		Animation climb = new Animation();
-		Animation hide = new Animation();
-		Animation crawlLeft = new Animation();
-		Animation crawlRight = new Animation();
-		
-		for (int i = 0; i < 8; i++) {
-			walkLeft.addFrame(standSprites.getSprite(i, 0).getFlippedCopy(true, false), 100);
-		}
-		idleRight.addFrame(standSprites.getSprite(0, 0), 5000);
-		idleLeft.addFrame(standSprites.getSprite(0, 0).getFlippedCopy(true, false), 5000);
-		climb.addFrame(climbSprites.getSprite(0, 0), 250);
-		climb.addFrame(climbSprites.getSprite(0, 0).getFlippedCopy(true, false), 250);
-		hide.addFrame(hideSprite.getSprite(0, 0), 5000);
-		crawlLeft.addFrame(crawlSprite.getSprite(0, 0), 250);
-		crawlLeft.addFrame(crawlSprite.getSprite(1, 0), 250);
-		crawlRight.addFrame((crawlSprite.getSprite(0, 0)).getFlippedCopy(true, false), 250);
-		crawlRight.addFrame((crawlSprite.getSprite(1, 0)).getFlippedCopy(true, false), 250);
-		
-		this.anims.put("walkLeft", walkLeft);
-		this.anims.put("idleRight", idleRight);
-		this.anims.put("idleLeft", idleLeft);
-		this.anims.put("climb", climb);
-		this.anims.put("hide", hide);
-		this.anims.put("crawlLeft", crawlLeft);
-		this.anims.put("crawlRight", crawlRight);
-		this.currentAnim = this.anims.get("idleRight");
 	}
 	
 	public void update(Input input, int delta) {
