@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -66,7 +67,7 @@ public abstract class Entity extends RenderObject {
 	public float minBounceVelocity = 5f;
 	
 	public HashMap<String, Animation> anims = new HashMap<String, Animation>();
-	public Image animSheet;
+	public SpriteSheet animSheet = null;
 	public Animation currentAnim = null;
 	public int health = 5;
 	
@@ -103,6 +104,25 @@ public abstract class Entity extends RenderObject {
 		this.level = level;
 		this.boundingBox = new Rectangle(0, 0, 0, 0);
 		components = new ArrayList<Component>();
+	}
+	
+	/**
+	 * Adds an animation to the Entity's list of animations.
+	 * 
+	 * @param name The name of the animation.
+	 * @param duration The duration of each frame.
+	 * @param sequence A list of
+	 */
+	public void addAnim(String name, int duration, int[] sequence) {
+		if (this.animSheet != null) {
+			Animation anim = new Animation();
+			for (int i = 0; i < sequence.length; i++) {
+				anim.addFrame(this.animSheet.getSprite(sequence[i], 0), duration);
+			}
+			this.anims.put(name, anim);
+		} else {
+			System.out.println("No animation sheet set.");
+		}
 	}
 	
 	public void addComponent(Component component) {

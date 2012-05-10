@@ -47,6 +47,7 @@ public class TileEnvironment {
 	// Utilities.
 	public SoundManager sounds;
 	public MobDirector mobDirector;
+	public HashMap<String, Integer> checkPoint = new HashMap<String, Integer>();
 	
 	private boolean sortNow = false;
 	
@@ -447,6 +448,13 @@ public class TileEnvironment {
 			entity = null;
 		}
 		garbage.clear();
+	}
+	
+	public void setCheckpoint(int x, int y, int hp) {
+		this.checkPoint.put("x", x);
+		this.checkPoint.put("y", y);
+		this.checkPoint.put("hp", hp);
+		System.out.println("saved");
 	}
 	
 	/**

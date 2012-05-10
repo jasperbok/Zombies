@@ -6,6 +6,7 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
 import nl.jasperbok.zombies.entity.building.BreakableFloor;
+import nl.jasperbok.zombies.entity.building.Checkpoint;
 import nl.jasperbok.zombies.entity.building.Door;
 import nl.jasperbok.zombies.entity.building.Switch;
 import nl.jasperbok.zombies.entity.item.Item;
@@ -66,6 +67,9 @@ public class MapLoader {
 				case "BreakableFloor" :
 					MapLoader.spawnBreakableFloor(env, level, map, i, j);
 					break;
+				case "Checkpoint" :
+					MapLoader.spawnCheckpoint(env, level, map, i, j);
+					break;
 				case "Door" :
 					MapLoader.spawnDoor(env, level, map, i, j);
 					break;
@@ -96,6 +100,13 @@ public class MapLoader {
 		floor.position.x = map.getObjectX(layerIndex, objectIndex);
 		floor.position.y = map.getObjectY(layerIndex, objectIndex);
 		env.spawnEntity(floor);
+	}
+	
+	private static void spawnCheckpoint(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		Checkpoint cp = new Checkpoint(level);
+		cp.position.x = map.getObjectX(layerIndex, objectIndex);
+		cp.position.y = map.getObjectY(layerIndex, objectIndex);
+		env.spawnEntity(cp);
 	}
 	
 	private static void spawnDoor(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {

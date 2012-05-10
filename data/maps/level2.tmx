@@ -355,5 +355,6 @@
     <property name="message" value="It looks like this switch is not powered."/>
    </properties>
   </object>
+  <object name="checkpoint" type="Checkpoint" x="322" y="423" width="198" height="193"/>
  </objectgroup>
 </map>

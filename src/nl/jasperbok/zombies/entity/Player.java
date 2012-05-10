@@ -35,6 +35,8 @@ public class Player extends Entity {
 		this.position = pos;
 		this.playerControlled = true;
 		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
+		this.animSheet = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
+		this.addAnim("walkRight", 100, new int[]{0, 1, 2, 3, 4, 5, 6, 7});
 		this.init();
 		
 		inventory = new Inventory();
@@ -48,7 +50,6 @@ public class Player extends Entity {
 		SpriteSheet hideSprite = new SpriteSheet("data/sprites/entity/girl_hide.png", 75, 150);
 		SpriteSheet crawlSprite = new SpriteSheet("data/sprites/entity/crawl.png", 150, 75);
 		
-		Animation walkRight = new Animation();
 		Animation walkLeft = new Animation();
 		Animation idleLeft = new Animation();
 		Animation idleRight = new Animation();
@@ -58,7 +59,6 @@ public class Player extends Entity {
 		Animation crawlRight = new Animation();
 		
 		for (int i = 0; i < 8; i++) {
-			walkRight.addFrame(standSprites.getSprite(i, 0), 100);
 			walkLeft.addFrame(standSprites.getSprite(i, 0).getFlippedCopy(true, false), 100);
 		}
 		idleRight.addFrame(standSprites.getSprite(0, 0), 5000);
@@ -71,7 +71,6 @@ public class Player extends Entity {
 		crawlRight.addFrame((crawlSprite.getSprite(0, 0)).getFlippedCopy(true, false), 250);
 		crawlRight.addFrame((crawlSprite.getSprite(1, 0)).getFlippedCopy(true, false), 250);
 		
-		this.anims.put("walkRight", walkRight);
 		this.anims.put("walkLeft", walkLeft);
 		this.anims.put("idleRight", idleRight);
 		this.anims.put("idleLeft", idleLeft);
