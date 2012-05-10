@@ -114,8 +114,8 @@ public class MobDirector {
 				distanceCheckingTimer--;
 			}
 			
-			if (Math.random() * 20000 > 19999) {
-				sounds.playSFX("zombie_groan1");
+			if (Math.random() * 10000 > 9999) {
+				sounds.playSFX("zombie_groan1", mob.position, this.level.env.getEntityByName("player").position);
 			}
 			
 			for (MobAttractor attractor : attractors) {
