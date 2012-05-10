@@ -1,5 +1,8 @@
 package nl.jasperbok.zombies.level;
 
+import java.util.HashMap;
+
+import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;
@@ -21,6 +24,8 @@ public class MergedLevel extends Level {
 	public MagneticCrane crane;
 	public Zombie zombie;
 	public Crate crate;
+	
+	public HashMap<String, Integer> checkPoint = new HashMap<String, Integer>();
 	
 	private Music bgMusic;
 	
@@ -61,6 +66,11 @@ public class MergedLevel extends Level {
 			}
 			break;
 		}
+		
+		Entity player = this.env.getEntityByName("player");
+		player.position.x = this.checkPoint.get("x");
+		player.position.y = this.checkPoint.get("y");
+		player.health = this.checkPoint.get("hp");
 	}
 	
 	public void reInit() {
