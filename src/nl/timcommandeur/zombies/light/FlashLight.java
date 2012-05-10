@@ -145,10 +145,8 @@ public class FlashLight {
 		double angle = angleInRadians / Math.PI * 180;
 		this.angleDisplacement.x = (float) (Math.cos(angleInRadians));
 		this.angleDisplacement.y = (float) (Math.sin(angleInRadians));
-		
 		//System.out.println(this.getClass().toString() + ".pointToMouse: x " + (float) difX / Math.abs(difX));
 		//System.out.println(this.getClass().toString() + ".pointToMouse: y " + (float) difY / Math.abs(difY));
-		
 		this.rotate(angle);
 	}
 	
@@ -161,9 +159,9 @@ public class FlashLight {
 	public void createHulls() {
 		// The drawing is orientated so that the flashlight will be pointing from left to right.
 		//
-		Vec2 centerLeft = new Vec2(-4, 30);
-		Vec2 topRight = new Vec2(20, 38);
-		Vec2 bottomRight = new Vec2(20, 22);
+		Vec2 centerLeft = new Vec2(-14, 30);
+		Vec2 topRight = new Vec2(30, 50);
+		Vec2 bottomRight = new Vec2(30, 10);
 		
 		Vec2 points2[] = {centerLeft, bottomRight, centerLeft};
 		ShadowHull hull2 = new ShadowHull(new Vec2(400, 400), Arrays.asList(points2), 0.1f, Color.black);
