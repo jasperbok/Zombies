@@ -1,7 +1,5 @@
 package nl.jasperbok.zombies.entity.building;
 
-import java.util.HashMap;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -23,7 +21,6 @@ public class Checkpoint extends Entity {
 	}
 	
 	public void use (Entity user) {
-		Entity player = this.level.env.getEntityByName("player");
-		this.level.env.setCheckpoint((int)player.boundingBox.getMinX(), (int)player.boundingBox.getMinY(), player.health);
+		this.level.env.setCheckpoint((int)user.boundingBox.getMinX(), (int)user.boundingBox.getMinY(), user.health);
 	}
 }

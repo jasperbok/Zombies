@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="80" tileheight="80">
+<map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="80" tileheight="80">
  <tileset firstgid="1" name="TileSheet" tilewidth="80" tileheight="80">
   <image source="src/tiles.png" width="1600" height="1600"/>
   <tile id="0">
@@ -34,7 +34,7 @@
   </tile>
   <tile id="22">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="23">
@@ -49,12 +49,12 @@
   </tile>
   <tile id="41">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="42">
    <properties>
-    <property name="climbable" value="true"/>
+    <property name="climable" value="true"/>
    </properties>
   </tile>
   <tile id="43">
@@ -63,34 +63,31 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="401" name="Boxes" tilewidth="80" tileheight="80">
-  <image source="src/boxes.png" width="1300" height="1200"/>
-  <tile id="203">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="219">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="220">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="236">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
+ <tileset firstgid="401" name="ventilation shaft" tilewidth="80" tileheight="80">
+  <image source="src/ventilationShaftTiles.png" trans="ffffff" width="240" height="240"/>
  </tileset>
- <tileset firstgid="641" name="flashlightTile" tilewidth="80" tileheight="80">
-  <image source="src/Flashlight.png" width="80" height="80"/>
- </tileset>
- <tileset firstgid="642" name="Blockade" tilewidth="80" tileheight="80">
-  <image source="src/blockade.png" width="480" height="320"/>
+ <tileset firstgid="410" name="Blockade" tilewidth="80" tileheight="80">
+  <image source="src/blockade.png" trans="ffffff" width="480" height="320"/>
+  <tile id="7">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
   <tile id="12">
    <properties>
     <property name="blocked" value="true"/>
@@ -112,12 +109,187 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="666" name="VentilationShaft" tilewidth="80" tileheight="80">
-  <image source="src/ventilationShaftTiles.png" width="240" height="240"/>
+ <tileset firstgid="434" name="boxes" tilewidth="80" tileheight="80">
+  <image source="src/boxes.png" trans="ffffff" width="1300" height="1200"/>
  </tileset>
- <layer name="Tile Layer 1" width="32" height="18">
+ <tileset firstgid="674" name="Turret" tilewidth="80" tileheight="80">
+  <image source="src/turret_on.png" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="678" name="BrokenVentilation" tilewidth="80" tileheight="80">
+  <image source="src/brokenVentilationTiles.png" width="480" height="320"/>
+  <tile id="0">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="702" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="src/logosWallSprites.png" width="1600" height="1600"/>
+ </tileset>
+ <tileset firstgid="1102" name="CableTiles" tilewidth="80" tileheight="80">
+  <image source="src/powercables.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="1118" name="WallSprites" tilewidth="80" tileheight="80">
+  <image source="src/wallCracksBloodRedLight.png" width="1280" height="563"/>
+ </tileset>
+ <tileset firstgid="1230" name="HiddingWall" tilewidth="80" tileheight="80">
+  <image source="src/hidding_wall.png" width="240" height="160"/>
+  <tile id="0">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="hidding" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="bg" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3S6wnCMBiF4VhdQesKok6gTqAu5f1+v+ufuoPdwU7lW2gkhIJpEYvQwEO+/ginp01GCGEhG3PXmZyTcsiL3y8n2IsoJZhfEWn/tD/PVjJk/6Ty/6H/BdeYbqb9A/cQtjKX/TOoWmb3zP5w/979NX6WG7CVuUZuHY0v5cv+D42f5QVsZW6S20IbHXTRQx8DDLX3MsmXfZ8KT4T/C9WIrDEmmGKGueF3cZRZ7etGsCBriRXW2GAbI1/2jWpH1h4HHHHC2TBfXYWEvQAnrCb0AAkAAA==
+   H4sIAAAAAAAAA+2XUQ6CMBBEBxOO6AHRMyBnMJ7BcAY08VsbQmyXWbBolLV9yXwBSfu67RYgk8lk1sW2iHu/emT3yJ4kFZiD22acBn1Anv8jvpeG5CSSCr4X6cClFUmFCqEb6eEqkgo1Qi9WPVQYr3HMt/KbI8ZuLFLjOQ8Z2Vemng2c0btZ6noNsPuEFubC7zMDHXo3lmtG66UszIfWb50byzWj9VIW5sPvM3LelmuG9VEtzIffZ2RNsf1nBdZHtTAfLcKamtt/sXTLpvU2cqxuHBeE8566k8l32P5jZ/OrlMVv3LD/uW9njjLy3/0TsDsLizs/D9DXXNaZVk9WuAP1mdAm4BUAAA==
   </data>
  </layer>
+ <layer name="Background" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+WWOU7DQBSGnyNfInAGQIKOpQBaKIEbsBZAwy4CDXsNtEkkoAUUqIEqcIbAGQIX4H+yn3iejBcZJTjhlz7Fy3jk92VmPES/S94h6gLdzs9xj0+v/5s3znv99p0cqbNP1Tzqo13w+Zj67fRIneNO8FjfM6//h0yh1mkw4wSPJQsh1zs9XPciWHKCx0XcK4FyAv5TtJfHGMz2sl7F0Y4pUrDWtwi4XQU8kOdJ1qI42jFcp+nmIwRuWwWv5HmStSiOVqY/RzSQ+9mD6L0Ij91B3BsCw2AkF94P12lz86XYdIm2wDbYAe/keeI1qojzEii73nplo1XRHkYNZGzL3J6Ak8kILzUKdyM5Rs0n4BScgU/yfO2i/1uc34F7UHDsNDPFlEiNeizp1KnRjTwjfcj8qfuIF84TfDyDF7cJRSdIJQU2P7bvQ91oI06kH3ZSo0YnWUg1BTY/5jyx7V/0GNFOsuillgLTj82RDT1GsjpOJPUUmN8R01EYeozM4rk5MP9H60dc9H/G8Hcyag/GmN8RPYai0PNmDc+tg42MeuHY3DDLeOcVsOo27sXeKDiGksw/vZYcoM9DcJRhLxzTDVPAO++BfTd4XbsTksw/vZaco88LcJlxL0lj8xfmSo8tQXIFH9fgpkO82BLlyvTVLvkGHxbb2OAVAAA=
+  </data>
+ </layer>
+ <layer name="Level" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA9WY700bQRDFxwlKB8456QDJAYUOAEEHEJkOAEEHgVrAaYGQFohR/n4mrsFxA9mR5+men3cXOxEfsuJpzXn27ubnmbdn73bMXiW9TtoI7Yneirbi+H7SWdJ55ri/vjKz66Rh0m1Bw9A+rcV6aEhxbzplbVS06mAmO6GBKMfI7/eIckBOAzruXJjNKCPwOaK1WA9x7tsV7VS0Khtw8bWHoTMR+OTqBjkgJ9QP8/Bbepb0fIV5zVpGtfxHmZw0FrW0ysAa5/EihNzQH5DWDdc61gyEiatr5T7SfjqK8/SsvQfkx0x03CV9trYOwQe1siqX7cJ1fCiLQWfRR9gPUF/aP13L99CXVBRfk76ttXy24hp9a5kvMx6SfiWNQ8qllGNpHEStfLKZeIBFjgd7AfuM68ZaNq514YR7/554/Ej6udaygv/2rT2n+iufazPyLfnw5l8w8cH9cC/v1Xhwr5135r3Sa9rZvCQ18n9NiMU52S+0R3cj95rAqMQNs3LJ+Sn6orRPgwfzQe14TTsbvxR8tLG6z8JrryK2FofYTuU8zgtif2LVakz573Xme+Cajqvn6jMMNLEZm27MyHUocj+ZhH7bzGuvKfbWFp+BbmLuxflP0/Xeifw9/h9ecSDK7fW5XsV93NiiRygj7il9fxi5rtOxxhb3oBEx8fV9itXzId4/T58/2MyjLjszNqx7m///OOkkZpZyAivlMor5zlqPKDFSFrljXcqroWtAY4nvRf5NgcmYNA15PVw+ovdJFzGzlBNYKZdx3MODtR6RY1TipYx4H0K9aC+x+pE/c2EmUxI89ZTyBgeuFRzP+TEzUh/mfKZU2/CIHCPlpTUPZsvuO08hMNqtiFlAftw9Ov2t9Gy+TPyycQ3Fc01wHYI31wR77XHhM4cQl3uPWUAe6x7dlXqZUr2zF3j9YA+YZGqEvRRxWmu6pgkWPWIysfm+VT7IhXPk1zuSZ40Bs4CcuXu0Pouil9gL4I/e/+s27wnMA595Li63ponr9YkJ+rfEErlw/vz6UPKsMWAW0GXUZc0/9Ttd7ncU5oHPXH9DYPH5sUf15BrsbX5vHwv3ktOJ5FljwCwgDN1vrp5A/BzAeWKP6mf4oXb0e/Jj38svJM8aA2XBQz2gtB//i8BhLHk2MWN/zkm/J5fi+PcF3bcfY5AbT7VP/q/C+ANhja4Y4BUAAA==
+  </data>
+ </layer>
+ <objectgroup name="ObjectLayer" width="70" height="20">
+  <object name="turret" type="AutoTurret" x="3451" y="836" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+   </properties>
+  </object>
+  <object name="laser_switch1" type="Switch" x="1527" y="1400" width="29" height="84">
+   <properties>
+    <property name="target" value="laser3"/>
+   </properties>
+  </object>
+  <object name="zombie2" type="Zombie" x="901" y="1342" width="75" height="150"/>
+  <object name="player" type="Player" x="112" y="1323" width="75" height="150"/>
+  <object name="laser1" type="Laser" x="319" y="1120" width="80" height="80"/>
+  <object name="laser2" type="Laser" x="559" y="1119" width="80" height="80"/>
+  <object name="laser2" type="Laser" x="641" y="1120" width="80" height="80"/>
+  <object name="laser1" type="Laser" x="240" y="1120" width="80" height="80"/>
+  <object name="laser_trigger" type="Trigger" x="601" y="1276" width="80" height="240">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="laser2"/>
+   </properties>
+  </object>
+  <object name="laser_trigger" type="Trigger" x="401" y="1279" width="80" height="240">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="laser1"/>
+   </properties>
+  </object>
+  <object name="locked_door" type="Door" x="-6" y="1279" width="80" height="240"/>
+  <object name="box" type="WoodenCrate" x="1198" y="1439" width="80" height="80"/>
+  <object name="box" type="WoodenCrate" x="1358" y="1439" width="80" height="80"/>
+  <object name="laser3" type="Laser" x="1600" y="1361" width="80" height="160"/>
+  <object name="laser4" type="Laser" x="1995" y="1116" width="80" height="80"/>
+  <object name="laser4" type="Laser" x="2077" y="1116" width="80" height="80"/>
+  <object name="laser4" type="Laser" x="2159" y="1116" width="80" height="80"/>
+  <object name="laser_switch2" type="Switch" x="1924" y="1391" width="29" height="84">
+   <properties>
+    <property name="target" value="laser4"/>
+   </properties>
+  </object>
+  <object name="zombie3" type="Zombie" x="2310" y="1348" width="75" height="150"/>
+  <object name="laser5" type="Laser" x="1921" y="797" width="80" height="160"/>
+  <object name="laser_trigger2" type="Trigger" x="2316" y="879" width="80" height="80">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="laser5"/>
+   </properties>
+  </object>
+  <object name="laser_trigger3" type="Trigger" x="2559" y="879" width="80" height="80">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="laser5"/>
+   </properties>
+  </object>
+  <object name="zombie4" type="Zombie" x="2201" y="790" width="75" height="150"/>
+  <object name="zombie4" type="Zombie" x="2704" y="794" width="75" height="150"/>
+  <object name="zombie5" type="Zombie" x="2704" y="794" width="75" height="150"/>
+  <object name="laser6" type="Laser" x="2159" y="240" width="80" height="80"/>
+  <object name="laser6" type="Laser" x="2238" y="240" width="80" height="80"/>
+  <object name="laser6" type="Laser" x="2320" y="240" width="80" height="80"/>
+  <object name="laser_switch3" type="Switch" x="2770" y="351" width="29" height="84">
+   <properties>
+    <property name="target" value="laser6"/>
+   </properties>
+  </object>
+  <object name="box" type="WoodenCrate" x="3073" y="875" width="80" height="80"/>
+  <object name="laser7" type="Laser" x="3523" y="649" width="80" height="80"/>
+  <object name="laser7" type="Laser" x="3441" y="646" width="80" height="80"/>
+  <object name="laser_switch4" type="Switch" x="3288" y="836" width="29" height="84">
+   <properties>
+    <property name="target" value="laser7"/>
+   </properties>
+  </object>
+  <object name="turret_trigger" type="Trigger" x="2959" y="879" width="80" height="80">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="target" value="turret"/>
+   </properties>
+  </object>
+  <object name="door_switch" type="Switch" x="3630" y="830" width="29" height="84">
+   <properties>
+    <property name="target" value="exit_door"/>
+   </properties>
+  </object>
+  <object name="exit_door" type="Door" x="3679" y="716" width="80" height="240"/>
+ </objectgroup>
 </map>

@@ -114,11 +114,16 @@ public abstract class Entity extends RenderObject {
 	 * @param sequence A list of
 	 */
 	public void addAnim(String name, int duration, int[] sequence) {
+		addAnim(name, duration, sequence, true);
+	}
+	
+	public void addAnim(String name, int duration, int[] sequence, boolean loop) {
 		if (this.animSheet != null) {
 			Animation anim = new Animation();
 			for (int i = 0; i < sequence.length; i++) {
 				anim.addFrame(this.animSheet.getSprite(sequence[i], 0), duration);
 			}
+			anim.setLooping(loop);
 			this.anims.put(name, anim);
 		} else {
 			System.out.println("No animation sheet set.");

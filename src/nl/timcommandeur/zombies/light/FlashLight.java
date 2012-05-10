@@ -3,7 +3,6 @@ package nl.timcommandeur.zombies.light;
 import java.util.Arrays;
 import java.util.List;
 
-import nl.jasperbok.zombies.entity.Entity;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.Color;
@@ -146,6 +145,8 @@ public class FlashLight {
 		double angle = angleInRadians / Math.PI * 180;
 		this.angleDisplacement.x = (float) (Math.cos(angleInRadians));
 		this.angleDisplacement.y = (float) (Math.sin(angleInRadians));
+		//System.out.println(this.getClass().toString() + ".pointToMouse: x " + (float) difX / Math.abs(difX));
+		//System.out.println(this.getClass().toString() + ".pointToMouse: y " + (float) difY / Math.abs(difY));
 		this.rotate(angle);
 	}
 	

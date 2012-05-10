@@ -47,7 +47,6 @@ public class TileEnvironment {
 	// Utilities.
 	public SoundManager sounds;
 	public MobDirector mobDirector;
-	public HashMap<String, Integer> checkPoint = new HashMap<String, Integer>();
 	
 	private boolean sortNow = false;
 	
@@ -72,6 +71,14 @@ public class TileEnvironment {
 		spawnDeffered();
 		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
+		
+		// If there is no checkpoint for this level yet, create one
+		// at the player's starting position.
+		if ( !((MergedLevel)this.level).checkPoint.containsKey(mapName) ) {
+			Entity player = this.getEntityByName("player");
+			this.setCheckpoint((int)player.position.x, (int)player.position.y, player.health);
+			((MergedLevel)this.level).checkPoint.put(mapName, 1);
+		}
 		
 		// Neat loop to debug stuff in the map.
 		/*for (int x = 0; x < map.getWidth(); x++) {
@@ -451,9 +458,9 @@ public class TileEnvironment {
 	}
 	
 	public void setCheckpoint(int x, int y, int hp) {
-		this.checkPoint.put("x", x);
-		this.checkPoint.put("y", y);
-		this.checkPoint.put("hp", hp);
+		((MergedLevel)this.level).checkPoint.put("x", x);
+		((MergedLevel)this.level).checkPoint.put("y", y);
+		((MergedLevel)this.level).checkPoint.put("hp", hp);
 		System.out.println("saved");
 	}
 	

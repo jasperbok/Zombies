@@ -162,6 +162,7 @@
   <object name="turret_1" type="AutoTurret" x="4070" y="277" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
+    <property name="range" value="560"/>
    </properties>
   </object>
   <object name="door_1" type="Door" x="4640" y="960" width="80" height="240"/>
@@ -170,21 +171,20 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="1834" y="706" width="75" height="150"/>
+  <object name="player" type="Player" x="297" y="386" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
-    <property name="failureMessage" value="I require a key card to open this door."/>
+    <property name="failureMessage" value="I need  a key card to open this door."/>
     <property name="requires" value="key_card"/>
-    <property name="successMessage" value="I opened it!"/>
     <property name="target" value="door_1"/>
    </properties>
   </object>
-  <object name="key_card" type="Item" x="2605" y="325" width="47" height="37">
+  <object name="key_card" type="Item" x="2632" y="292" width="47" height="37">
    <properties>
     <property name="type" value="key_card"/>
    </properties>
   </object>
-  <object name="start_zombie_1" type="Zombie" x="88" y="406" width="75" height="150">
+  <object name="start_zombie_1" type="Zombie" x="24" y="402" width="75" height="150">
    <properties>
     <property name="max-right" value="640"/>
    </properties>
@@ -199,20 +199,72 @@
     <property name="max-left" value="2290"/>
    </properties>
   </object>
-  <object name="crate_1" type="WoodenCrate" x="2748" y="1109" width="80" height="80"/>
-  <object name="crate_2" type="WoodenCrate" x="3615" y="1112" width="80" height="80"/>
+  <object name="wood_crate_1" type="WoodenCrate" x="2809" y="1112" width="80" height="80"/>
+  <object name="wood_crate_2" type="WoodenCrate" x="3651" y="1112" width="80" height="80"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
-  <object type="Trigger" x="3942" y="221" width="101" height="172">
+  <object type="Trigger" x="334" y="380" width="77" height="168">
    <properties>
-    <property name="message" value="Maybe this message is a bit long but hey I can type a long message if I want to, bitch! :D"/>
-    <property name="repeat" value="true"/>
-    <property name="repeatDelay" value="5000"/>
-    <property name="sound" value="zombie_groan1"/>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="battle"/>
     <property name="target" value="player"/>
    </properties>
   </object>
-  <object name="level_transition" type="Trigger" x="4736" y="876" width="518" height="315">
+  <object type="Trigger" x="3122" y="485" width="69" height="152">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="monster_movement"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="1522" y="1029" width="77" height="168">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="male_scream"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="drag_message" type="Trigger" x="2650" y="1037" width="77" height="168">
+   <properties>
+    <property name="message" value="Some objects can be dragged around by pressing E."/>
+    <property name="messageDuration" value="4000"/>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="metal_crash"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="4261" y="306" width="76" height="88">
+   <properties>
+    <property name="message" value="Activate switches by pressing E."/>
+    <property name="messageDuration" value="3000"/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="5000"/>
+   </properties>
+  </object>
+  <object name="using_objects_message" type="Trigger" x="1794" y="700" width="127" height="173">
+   <properties>
+    <property name="message" value="Use objects using the E button. You can turn the magnet of a crane on or off with SPACE."/>
+    <property name="messageDuration" value="6000"/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="6000"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="2024" y="1007" width="109" height="167">
+   <properties>
+    <property name="message" value="That Zombie is in my way, I should do something about that."/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="5000"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="2956" y="1098" width="76" height="88">
+   <properties>
+    <property name="message" value="You can climb on some objects by pressing SPACE."/>
+    <property name="messageDuration" value="3000"/>
+    <property name="repeat" value="true"/>
+    <property name="repeatDelay" value="5000"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="4770" y="918" width="364" height="270">
    <properties>
     <property name="goToLevel" value="level2"/>
    </properties>
