@@ -37,10 +37,15 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			
-			if (input.isKeyDown(Input.KEY_S) && ((Player)owner).isClimbing == false && ((Player)owner).isFalling == false && ((Player)owner).isHidden() == false) {
-				((Player)owner).isCrawling = true;
-			} else {
-				((Player)owner).isCrawling = false;
+			if (((Player)owner).isClimbing == false && ((Player)owner).isFalling == false && ((Player)owner).isHidden() == false) {
+				if (input.isKeyDown(Input.KEY_S)) {
+					((Player)owner).isCrawling = true;
+				} else {
+					((Player)owner).isCrawling = false;
+				}
+				if (input.isKeyPressed(Input.KEY_S)) {
+					((Player)owner).position.y += 75;
+				}
 			}
 			
 			if (input.isKeyDown(Input.KEY_D)) {
