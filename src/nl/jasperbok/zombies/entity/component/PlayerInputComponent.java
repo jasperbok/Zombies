@@ -113,7 +113,8 @@ public class PlayerInputComponent extends Component {
 				ArrayList<Entity> targets = owner.level.env.getUsableEntities(owner.boundingBox);
 				for (Entity target: targets) {
 					if (target != null && target instanceof WoodenCrate) {
-						owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
+						((Player)owner).climbOnObject(target);
+						//owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
 						break;
 					}
 				}
