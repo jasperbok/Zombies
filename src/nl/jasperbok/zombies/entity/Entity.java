@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -284,24 +283,85 @@ public abstract class Entity extends RenderObject {
 				);
 	}
 	
+	public void check (Entity other) {}
+	public void collideWith (Entity other, String axis) {}
+	public void ready () {}
+	
 	//
 	// STATIC COLLISION FUNCTIONS
 	//
 	
 	public static void checkPair(Entity a, Entity b) {
+		// Do these entities want to check?
+		if (a.checkAgainst == b.type) {
+			a.check(b);
+		}
 		
+		if (b.checkAgainst == a.type){
+			b.check(a);
+		}
+		
+		// If this pair allows collisions, solve it! At least one entity must
+		// collide ACTIVE or FIXED, while the other one must not collide NEVER.
+		if (
+				((a.collides == Entity.Collides.ACTIVE || a.collides == Entity.Collides.FIXED) && b.collides != Entity.Collides.NEVER) ||
+				((b.collides == Entity.Collides.ACTIVE || b.collides == Entity.Collides.FIXED) && a.collides != Entity.Collides.NEVER)
+		) {
+			Entity.solveCollision(a, b);
+		}
 	}
 	
 	public static void solveCollision(Entity a, Entity b) {
 		Entity weak = null;
 		
-		if (a.collides == Entity.Collides.LITE || b.collides == Entity.Collides.FIXED) {
+		if (
+				a.collides == Entity.Collides.LITE ||
+				b.collides == Entity.Collides.FIXED
+		) {
 			weak = a;
-		} else if (b.collides == Entity.Collides.LITE || a.collides == Entity.Collides.FIXED) {
+		}
+		else if (
+				b.collides == Entity.Collides.LITE || 
+				a.collides == Entity.Collides.FIXED
+		) {
 			weak = b;
 		}
 		
 		// The rest of this function requires that every Entity has it's previous position stored.
+		// The current implementation is based on the current crappy framework and should be
+		// reworked if we implement the 'last' property of entities.
+		
+		// Vertical collision.
+		if (
+				(a.boundingBox.getMinX() - a.vel.x + a.boundingBox.getWidth()) > (b.boundingBox.getMinX() - b.vel.x) &&
+				(a.boundingBox.getMinX() - a.vel.x) < (b.boundingBox.getMinX() - b.vel.x + b.boundingBox.getWidth())
+		) {
+			// Which one is on top?
+			if (a.boundingBox.getMinY() - a.vel.y < b.boundingBox.getMinY() - b.vel.y) {
+				Entity.seperateOnYAxis(a, b, weak);
+			}
+			else {
+				Entity.seperateOnYAxis(b, a, weak);
+			}
+			a.collideWith(b, "y");
+			b.collideWith(a, "y");
+		}
+		
+		// Horizontal collision.
+		if (
+				(a.boundingBox.getMinY() - a.vel.y + a.boundingBox.getHeight()) > (b.boundingBox.getMinY() - b.vel.y) &&
+				(a.boundingBox.getMinY() - a.vel.y) < (b.boundingBox.getMinY() - b.vel.y + b.boundingBox.getHeight())
+		) {
+			// Which one is on the left?
+			if (a.boundingBox.getMinX() - a.vel.x < b.boundingBox.getMinX() - b.vel.x) {
+				Entity.seperateOnXAxis(a, b, weak);
+			}
+			else {
+				Entity.seperateOnXAxis(b, a, weak);
+			}
+			a.collideWith(b, "x");
+			b.collideWith(a, "x");
+		}
 	}
 	
 	public static void seperateOnXAxis(Entity left, Entity right, Entity weak) {

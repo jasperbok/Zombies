@@ -26,6 +26,9 @@ public class Player extends Entity {
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
 		this.zIndex = -1;
+		this.type = Entity.Type.A;
+		this.checkAgainst = Entity.Type.B;
+		this.collides = Entity.Collides.ACTIVE;
 		this.addComponent(new GravityComponent(0.01f, this));
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, 5));

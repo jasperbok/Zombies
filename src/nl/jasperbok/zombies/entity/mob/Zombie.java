@@ -2,14 +2,13 @@ package nl.jasperbok.zombies.entity.mob;
 
 import java.util.ArrayList;
 
+import nl.jasperbok.zombies.entity.Entity;
 import nl.jasperbok.zombies.entity.component.DamagingAuraComponent;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -25,6 +24,10 @@ public class Zombie extends Mob {
 		super.init(level);
 		
 		this.maxVel = new Vector2f(10, 0);
+		
+		//this.type = Entity.Type.B;
+		//this.checkAgainst = Entity.Type.A;
+		//this.collides = Entity.Collides.ACTIVE;
 		
 		this.addComponent(new LifeComponent(this, 1));
 		this.addComponent(new GravityComponent(0.01f, this));
