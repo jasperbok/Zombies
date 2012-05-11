@@ -5,7 +5,9 @@ import nl.jasperbok.zombies.entity.Entity;
 import org.newdawn.slick.Input;
 
 public class GravityComponent extends Component {
-	
+	/**
+	 * Settings for the gravity component.
+	 */
 	private float gravity;
 	private float maxGravity;
 	private boolean applyGravity = true;
@@ -21,6 +23,9 @@ public class GravityComponent extends Component {
 		this.owner = owner;
 	}
 	
+	/**
+	 * Switches the gravity on or off.
+	 */
 	public void toggleGravity() {
 		applyGravity = !applyGravity;
 	}

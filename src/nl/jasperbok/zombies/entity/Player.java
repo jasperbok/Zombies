@@ -16,10 +16,14 @@ import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
 	public float climbSpeed = 0.1f;
-	
+	/**
+	 * Variables for states the player can be in.
+	 */
 	public boolean isCrawling = false;
-	
-	// Status variables.
+	private boolean isClimbingObject = false;
+	/**
+	 * Status variables.
+	 */
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
 	
@@ -41,6 +45,8 @@ public class Player extends Entity {
 		this.addAnim("walkLeft", 100, new int[]{15, 14, 13, 12, 11, 10, 9, 8});
 		this.addAnim("idleRight", 5000, new int[]{0});
 		this.addAnim("idleLeft", 5000, new int[]{15});
+		this.animSheet = new SpriteSheet("data/sprites/entity/player_climb_on_object.png", 110, 240);
+		this.addAnim("climbOnObject", 100, new int[]{0, 1, 2, 3, 4});
 		this.animSheet = new SpriteSheet("data/sprites/entity/player_climb.png", 75, 147);
 		this.addAnim("climb", 250, new int[]{0, 1});
 		this.animSheet = new SpriteSheet("data/sprites/entity/player_hide.png", 75, 150);
@@ -79,6 +85,12 @@ public class Player extends Entity {
 		// Decide what animation should be played.
 		if (isHidden()) {
 			this.currentAnim = this.anims.get("hide");
+		} else if (this.isClimbingObject) {
+			if (this.currentAnim.getFrame() == 4) {
+				this.isClimbingObject = false;
+				this.position.y -= 2;
+				((GravityComponent)this.getComponent(Component.GRAVITY)).toggleGravity();
+			}
 		} else if (isClimbing) {
 			this.currentAnim = this.anims.get("climb");
 			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
@@ -134,6 +146,23 @@ public class Player extends Entity {
 		}
 	}
 	*/
+	
+	/**
+	 * Makes the player climb on top of an object.
+	 * 
+	 * @param target
+	 */
+	public void climbOnObject(Entity target) {
+		((GravityComponent)this.getComponent(Component.GRAVITY)).toggleGravity();
+		this.position.y -= target.boundingBox.getHeight();
+		this.currentAnim = this.anims.get("climbOnObject");
+		this.isClimbingObject = true;
+	}
+	
+	/**
+	 * Hides the player if the player was not hidden and unhides if the player was hidden.
+	 * The tiles behind the player must be hideable.
+	 */
 	public void switchHide() {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == true) {
@@ -143,6 +172,9 @@ public class Player extends Entity {
 		}
 	}
 	
+	/**
+	 * Hides the player if the current tiles are hideable and the player is not hidden.
+	 */
 	public void hide() {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == true) {
@@ -151,6 +183,9 @@ public class Player extends Entity {
 		}
 	}
 	
+	/**
+	 * Unhides the player if the player is hidden.
+	 */
 	public void unHide() {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == false) {
@@ -159,6 +194,11 @@ public class Player extends Entity {
 		}
 	}
 	
+	/**
+	 * Returns if the player is hidden or not.
+	 * 
+	 * @return
+	 */
 	public boolean isHidden() {
 		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
 		if (lifeComponent.getDamageable() == true) {
@@ -168,6 +208,9 @@ public class Player extends Entity {
 		}
 	}
 	
+	/**
+	 * Kills the player and removes its instance.
+	 */
 	public void kill() {
 		try {
 			this.level.env.addEntity(new PlayerCorpse(this.level, (int)this.position.x, (int)this.position.y));
