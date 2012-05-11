@@ -29,7 +29,7 @@ public class WoodenCrate extends Entity {
 	public WoodenCrate(Level level, float size) throws SlickException {
 		super.init(level);
 		this.isBlocking = true;
-		this.type = Entity.Type.B;
+		this.type = Entity.Type.NONE;
 		this.checkAgainst = Entity.Type.BOTH;
 		this.collides = Entity.Collides.ACTIVE;
 		

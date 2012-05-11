@@ -5,7 +5,6 @@ import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -28,17 +27,6 @@ public class Door extends Entity {
 		}
 		this.anims.put("door", door);
 		this.currentAnim = this.anims.get("door");
-	}
-	
-	public void update(Input input, int delta) {
-		super.update(input, delta);
-		
-		// Ugly quickfix
-		//---
-		if (level.env.getPlayer().boundingBox.intersects(boundingBox)) {
-			//level.env.getPlayer().position.x -= 1;
-		}
-		//---
 	}
 
 	public void call(String message) {
