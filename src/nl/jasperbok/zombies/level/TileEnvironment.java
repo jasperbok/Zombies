@@ -197,6 +197,7 @@ public class TileEnvironment {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		moveEntities(delta);
+		checkEntities();
 		updateTriggers(container, delta);
 		checkForTileCollisions();
 		emptyGarbage();
@@ -221,6 +222,27 @@ public class TileEnvironment {
 		if (sortNow) {
 			this.sortEntities();
 			this.sortNow = false;
+		}
+	}
+	
+	public void checkEntities() {
+		for (int i = 0; i < this.entities.size(); i++) {
+			Entity entity = this.entities.get(i);
+			
+			// Skip this Entity if it doesn't check.
+			if (
+					entity.type == Entity.Type.NONE &&
+					entity.checkAgainst == Entity.Type.NONE &&
+					entity.collides == Entity.Collides.NEVER
+			) {
+				continue;
+			}
+			
+			for (int j = i+1; j < this.entities.size(); j++) {
+				if (entity.touches(this.entities.get(j))) {
+					Entity.checkPair(entity, this.entities.get(j));
+				}
+			}
 		}
 	}
 	
