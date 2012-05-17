@@ -196,7 +196,6 @@ public class TileEnvironment {
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
-		moveEntities(delta);
 		checkEntities();
 		updateTriggers(container, delta);
 		checkForTileCollisions();
@@ -322,20 +321,7 @@ public class TileEnvironment {
 				onTopSolidBlock = true;
 			}
 		}
-		
-		boolean onEntity = false;
-		// This should probably go in the hittest section...
-		for (Entity entity: entities) {
-			if (entity != ent && entity.isTopSolid) {
-				Rectangle topBox = new Rectangle(entity.position.getX(), entity.position.getY(), entity.boundingBox.getWidth(), 10);
-				if (topBox.contains(ent.boundingBox.getCenterX() - 10, ent.boundingBox.getMaxY()) || topBox.contains(ent.boundingBox.getCenterX() + 10, ent.boundingBox.getMaxY())) {
-					//ent.setPosition(ent.position.getX(), entity.boundingBox.getMinY() - ent.boundingBox.getHeight());
-					onEntity = true;
-					break;
-				}
-			}
-		}
-		return onAllSolidBlock || onClimableTile || onTopSolidBlock || onEntity;
+		return onAllSolidBlock || onClimableTile || onTopSolidBlock;
 	}
 	
 	/**
@@ -417,16 +403,6 @@ public class TileEnvironment {
 			} catch (ArrayIndexOutOfBoundsException e) {
 				
 			}
-		}
-	}
-	
-	/**
-	 * Updates the position of all entities in the level according to their
-	 * velocity.
-	 */
-	private void moveEntities(int delta) {
-		for (Entity ent: entities) {
-			ent.setPosition(ent.position.x + (ent.vel.x * delta), ent.position.y + (ent.vel.y * delta));
 		}
 	}
 	

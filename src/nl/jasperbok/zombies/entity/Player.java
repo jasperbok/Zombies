@@ -180,6 +180,7 @@ public class Player extends Entity {
 	public void climbOnObject(Entity target) {
 		((GravityComponent)this.getComponent(Component.GRAVITY)).toggleGravity();
 		this.position.y -= target.boundingBox.getHeight();
+		this.position.x = target.position.x;
 		this.currentAnim = this.anims.get("climbOnObject");
 		this.isClimbingObject = true;
 	}

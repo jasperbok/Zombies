@@ -207,26 +207,9 @@
   </object>
   <object name="wood_crate_1" type="WoodenCrate" x="2809" y="1112" width="80" height="80"/>
   <object name="wood_crate_2" type="WoodenCrate" x="3651" y="1112" width="80" height="80"/>
-  <object name="start_zombie_1" type="Zombie" x="76" y="402" width="75" height="150">
-   <properties>
-    <property name="max-right" value="640"/>
-   </properties>
-  </object>
-  <object name="start_zombie_1" type="Zombie" x="130" y="402" width="75" height="150">
-   <properties>
-    <property name="max-right" value="640"/>
-   </properties>
-  </object>
-  <object name="checkpoint" type="Checkpoint" x="928" y="798" width="320" height="270"/>
+  <object name="checkpoint" type="Checkpoint" x="4800" y="910" width="320" height="270"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
-  <object type="Trigger" x="334" y="380" width="77" height="168">
-   <properties>
-    <property name="repeat" value="false"/>
-    <property name="sound" value="battle"/>
-    <property name="target" value="player"/>
-   </properties>
-  </object>
   <object type="Trigger" x="3122" y="485" width="69" height="152">
    <properties>
     <property name="repeat" value="false"/>
@@ -281,7 +264,7 @@
     <property name="repeatDelay" value="5000"/>
    </properties>
   </object>
-  <object type="Trigger" x="4770" y="918" width="364" height="270">
+  <object type="Trigger" x="5194" y="921" width="91" height="273">
    <properties>
     <property name="goToLevel" value="level2"/>
    </properties>

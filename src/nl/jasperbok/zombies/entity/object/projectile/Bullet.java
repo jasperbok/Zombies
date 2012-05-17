@@ -31,6 +31,10 @@ public class Bullet extends Entity {
 		this.vel = velocity;
 		this.range = range;
 		
+		this.type = Entity.Type.NONE;
+		this.checkAgainst = Entity.Type.BOTH;
+		this.collides = Entity.Collides.ACTIVE;
+		
 		this.addComponent(new LifeComponent(this));
 		this.addComponent(new DamagingAuraComponent(this, damage));
 		
@@ -52,5 +56,10 @@ public class Bullet extends Entity {
 				this.kill();
 			}
 		}
+	}
+	
+	public void check(Entity other) {
+		other.receiveDamage(1);
+		this.kill();
 	}
 }
