@@ -196,7 +196,6 @@ public class TileEnvironment {
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
-		moveEntities(delta);
 		checkEntities();
 		updateTriggers(container, delta);
 		checkForTileCollisions();
@@ -404,16 +403,6 @@ public class TileEnvironment {
 			} catch (ArrayIndexOutOfBoundsException e) {
 				
 			}
-		}
-	}
-	
-	/**
-	 * Updates the position of all entities in the level according to their
-	 * velocity.
-	 */
-	private void moveEntities(int delta) {
-		for (Entity ent: entities) {
-			ent.setPosition(ent.position.x + (ent.vel.x * delta), ent.position.y + (ent.vel.y * delta));
 		}
 	}
 	

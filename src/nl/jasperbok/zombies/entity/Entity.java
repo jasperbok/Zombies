@@ -188,7 +188,9 @@ public abstract class Entity extends RenderObject {
 		for (Component comp: components) {
 			comp.update(input, delta);
 		}
-		
+		this.last = this.position.copy();
+		this.position.x = this.position.x + this.vel.x * delta;
+		this.position.y = this.position.y + this.vel.y * delta;
 		this.updateBoundingBox();
 		this.updateRenderPosition();
 	}
@@ -333,11 +335,11 @@ public abstract class Entity extends RenderObject {
 		
 		// Vertical collision.
 		if (
-				(a.boundingBox.getMinX() - a.vel.x + a.boundingBox.getWidth()) > (b.boundingBox.getMinX() - b.vel.x) &&
-				(a.boundingBox.getMinX() - a.vel.x) < (b.boundingBox.getMinX() - b.vel.x + b.boundingBox.getWidth())
+				(a.last.x + a.boundingBox.getWidth()) > (b.last.x) &&
+				(a.last.x) < (b.last.x + b.boundingBox.getWidth())
 		) {
 			// Which one is on top?
-			if (a.boundingBox.getMinY() - a.vel.y < b.boundingBox.getMinY() - b.vel.y) {
+			if (a.last.y < b.last.y) {
 				Entity.seperateOnYAxis(a, b, weak);
 			}
 			else {
@@ -349,11 +351,11 @@ public abstract class Entity extends RenderObject {
 		
 		// Horizontal collision.
 		if (
-				(a.boundingBox.getMinY() - a.vel.y + a.boundingBox.getHeight()) > (b.boundingBox.getMinY() - b.vel.y) &&
-				(a.boundingBox.getMinY() - a.vel.y) < (b.boundingBox.getMinY() - b.vel.y + b.boundingBox.getHeight())
+				(a.last.y + a.boundingBox.getHeight()) > (b.last.y) &&
+				(a.last.y) < (b.last.y + b.boundingBox.getHeight())
 		) {
 			// Which one is on the left?
-			if (a.boundingBox.getMinX() - a.vel.x < b.boundingBox.getMinX() - b.vel.x) {
+			if (a.last.x < b.last.x) {
 				Entity.seperateOnXAxis(a, b, weak);
 			}
 			else {
