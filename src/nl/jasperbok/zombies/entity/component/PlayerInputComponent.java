@@ -37,6 +37,8 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			
+			/* CROUCHING CODE
+			 * UNCOMMENT TO ENABLE CROUCHING BY PRESSING "S"
 			if (((Player)owner).isClimbing == false && ((Player)owner).isFalling == false && ((Player)owner).isHidden() == false) {
 				if (input.isKeyDown(Input.KEY_S)) {
 					((Player)owner).isCrawling = true;
@@ -46,7 +48,7 @@ public class PlayerInputComponent extends Component {
 				if (input.isKeyPressed(Input.KEY_S)) {
 					((Player)owner).position.y += 75;
 				}
-			}
+			}*/
 			
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (!((Player)owner).isHidden()) {
@@ -100,7 +102,8 @@ public class PlayerInputComponent extends Component {
 			if (input.isKeyPressed(Input.KEY_E)) {
 				if (owner.level.env.isOnHideableSurface(owner)) {
 					owner.vel = new Vector2f(0, 0);
-					((Player)owner).switchHide();
+					((Player)owner).hide();
+					this.owner.level.fl.turnOff();
 				} else {
 					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(this.owner.boundingBox);
 					for (Entity usable: usables) {
@@ -108,6 +111,9 @@ public class PlayerInputComponent extends Component {
 						usable.use(this.owner);
 					}
 				}
+			} else if (!input.isKeyDown(Input.KEY_E) && ((Player)owner).isHidden()) {
+				((Player)owner).unHide();
+				this.owner.level.fl.turnOn();
 			}
 			if (input.isKeyPressed(Input.KEY_SPACE)){
 				ArrayList<Entity> targets = owner.level.env.getUsableEntities(owner.boundingBox);
@@ -120,7 +126,9 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			if (input.isMousePressed(0)) {
-				owner.level.fl.switchOnOff();
+				if (!((Player)owner).isHidden()) {
+					owner.level.fl.switchOnOff();
+				}
 			}
 		}
 	}

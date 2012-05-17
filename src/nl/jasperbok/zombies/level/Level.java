@@ -64,7 +64,7 @@ public class Level extends BasicGameState implements GameState {
 		}
 		camera = Camera.getInstance();
 		
-		fl = new FlashLight(lights, cHulls, new Vector2f(200, 200), camera);
+		fl = new FlashLight(this, lights, cHulls, new Vector2f(200, 200), camera);
 		//lights.add(new LightSource(new Vector2f(200, 200), 200, 0, new Color(150, 0, 0), camera));
 		
 		playerLight = new LightSource(new Vector2f(0, 0), 90, 1.0f, new Color(70, 70, 70), camera);
@@ -91,7 +91,7 @@ public class Level extends BasicGameState implements GameState {
 		//fl.pointToMouse(container);
 		//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 		
-		playerLight.setPosition(env.getEntityByName("player").position.x + env.getEntityByName("player").boundingBox.getWidth() / 2, env.getEntityByName("player").position.y + env.getEntityByName("player").boundingBox.getHeight() / 2);
+		playerLight.setPosition(env.getEntityByName("player").position.x + env.getEntityByName("player").boundingBox.getWidth() / 2, env.getEntityByName("player").position.y + env.getEntityByName("player").boundingBox.getHeight() / 2 - 20);
 		
 		/*System.out.println("player.position.y: " + env.getPlayer().position.y);
 		System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);

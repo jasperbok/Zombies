@@ -212,12 +212,12 @@
  </tileset>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2WSU7DMBSGnUp1F8ABSuEE0CLBhk6LMuxAYmo5Q8sZgGMAUhddMM8gAWdoewLgBMAl+C1i5dk02AEp0JBf+hTHzxner+eXMPYzpR3GhkHG8cZZl5x7TGvnOXd9lCXznCA5V1yoF+J8hhyjLpnnrKOOaUyf/w+qItcaWHfUsVTdZ75fNZ+yWyfyboANRx37rYnF2AC8HQRDlh4L0X5l4jc1jZzyAfKi12TACBgl1+9xxvbBATgER+CYe3Hai0z8da0i77Ue3o1hbhxkwRzhBD6cgjNwDi64Gpe9yESYmkwwNpXw/kHov4io3QJiRVAC5YT9fZdSHpfw4Qpcgxtwy9W47EUmwhL1oaIha1vu7QV4shjAF1tt4t5bYNuCMKR7UdWQta3XEa2lqEn0Qt2LuoasbVkvvb4ZX4nuk+/Ef0NN+LITELmvbNfTvE3xJje/cxhq4T3aoAO6XN3jtP/XfMaCliGXfqwXkdMjeALP3Otr+neh4TMW7EbQF6EX5PUK3vhHrdxh7h48MM8nMb+M914BJVBO2X8fgvhi8jgs5ZOfaWO+A7qglFQpgGLAMc271xoaF8+PFStW/+sdG4djBOAVAAA=
+   H4sIAAAAAAAAC+2WSU7DMBSGnUp1F8ABSuEE0CLBhk6LMuxAYmo5Q8sZgGMAUhddMM8gAWdoewLgBMAl+C1i5dk02AEp0JBf+hTHzxner+eXMPYzpR3GhkHG8cZZl5x7TGvnOXd9lCXznCA5V1yoF+J8hhyjLpnnrKOOaUyf/w+qItcaWHfUsVTdZ75fNZ+yWyfyboANRx37rYnF2AC8HQRDlh4L0X5l4jc1jZzyAfKi12TACBgl1+9xxvbBATgER+CYe3Hai0z8da0i77Ue3o1hbhxkwRzhBD6cgjNwDi64Gpe9yESYmkwwNpXw/kHov4io3QJiRVAC5YT9fZdSHpfw4Qpcgxtwy9W47EUmwhL1oaIha1vu7QV4shjAF1tt4t5bYNuCMKR7UdWQta3XEa2lqEn0Qt2LuoasbVkvvb4ZX4nuk+/Ef0NN+LITELmvbNfTvE3xJje/cxhq4T3aoAO6XN3jtP/XfMaCliGXfqwXkdMjeALP3Otr+neh4TMW7EbQF6EX5PUK3vhHrdxh7h48MM8nMb+M914BJVBO2X8fgvhi8jgs5ZOfaWO+A7qglFQpgGLAMc271xoaF8+PFStW/+sdG4djBOAVAAA=
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2WTW4TQRCFewwOvoCRgRNEcpwzxD5DbK4Q+wzER2DDBiQQP0cA4UhI/K6IfYXgXCHEB6AL19M8l6t7PLAAJFr61GNPd8+8N1XVXYQQGpEbTi/cjBTmXhU8Zxe8Z8sarxwOijS9DHVbO3JX5/YdOjrmLDKPfIt8d7iOrCKLUM65pP/R34prtiJLWuttZKbPWOi8jv43M14cZfDeH9T1Zl99kblDh66OgS+iY6/YBnpFE+awD+ivyUf2Y06erHSNlBesd+5osmMRS3WafNeeesA6R5H7TrywB+dGG2ICcxAX8AFzv4aSc113SZ609LlWH3tiG68FrzD+V3JJvqv3HGkjjRebRwz7Ar8QL9YPuSfjLxTWAk9bqr9LunZpF/o+SyWETV92XQdNNEusnKk2zxfkEb69rQlANEkuwEu+P6P+SmEt8O1do/QFOZCrs4eqN3e/rifwRb7VQrFNvIEm9oLrJEB9we+5cy19s1hzFcqYmhidTX1+VZ0d6Jwc8CjlGz+XfUFuXya0QxNfc50E4suKfi+da+nvFGuaml/ClHQeyZiwfvfjDEOtg4MKuD4xuRhDvKwUTzs0LYy+S5rHew9+87p2v26pN7IX3jM6f+aPxspJhnGxjrNRBVjb+urFIPy5Hf4M3FJj5N0fZDjVOJtUAA+tr14MwhtJq9SZs+45OHVu9ebzHpVaH9/uxPEC8T7S3zkwz/rqxeCxPrMdNs9c3lmMNQCcUQ6LzRqIfqLzOrQe4n5s1vTynM8v1hOutRNzz8YP/vfqMXtk67DswY/2Nn2wvrKGgT4HvkCHrOHVsE7w/+c1bY7LWt1QxrbVzbV2WpTxxGNArh6zFwDfth3Kb+KtOy226/+IfJG5r6OON5HHkScKYsieW5G/7IvN8efqC8e3rSd4D84xTyfGeffYCzBSnfthW/PQvIet/xPyReayH8Iz7WWdh8GvbeyLzXHxJaUT9BLXyGOQ84C9AMjzdtjWLNfvYxH8EPnYWOtm2AOZ+1S9AC+19/YA1DbxpR/8vD3QnuuWpZ+45u/rnW28fZzr0VTjQeLFahU+RT8+R740Nv2wvfBCvbDYNeuA/LU6Oaa967HRmfOAvQBVZ4e/DavFxrfdf7y9yXpgvfhXWm4vOE1cV837336v/QDwwvHL4BUAAA==
+   H4sIAAAAAAAAC+2WTW4TQRCFewwOvoCRgRNEcpwzxD5DbK4Q+wzER2DDBiQQP0cA4UhI/K6IfYXgXCHEB6AL19M8l6t7PLAAJFr61GNPd8+8N1XVXYQQGpEbTi/cjBTmXhU8Zxe8Z8sarxwOijS9DHVbO3JX5/YdOjrmLDKPfIt8d7iOrCKLUM65pP/R34prtiJLWuttZKbPWOi8jv43M14cZfDeH9T1Zl99kblDh66OgS+iY6/YBnpFE+awD+ivyUf2Y06erHSNlBesd+5osmMRS3WafNeeesA6R5H7TrywB+dGG2ICcxAX8AFzv4aSc113SZ609LlWH3tiG68FrzD+V3JJvqv3HGkjjRebRwz7Ar8QL9YPuSfjLxTWAk9bqr9LunZpF/o+SyWETV92XQdNNEusnKk2zxfkEb69rQlANEkuwEu+P6P+SmEt8O1do/QFOZCrs4eqN3e/rifwRb7VQrFNvIEm9oLrJEB9we+5cy19s1hzFcqYmhidTX1+VZ0d6Jwc8CjlGz+XfUFuXya0QxNfc50E4suKfi+da+nvFGuaml/ClHQeyZiwfvfjDEOtg4MKuD4xuRhDvKwUTzs0LYy+S5rHew9+87p2v26pN7IX3jM6f+aPxspJhnGxjrNRBVjb+urFIPy5Hf4M3FJj5N0fZDjVOJtUAA+tr14MwhtJq9SZs+45OHVu9ebzHpVaH9/uxPEC8T7S3zkwz/rqxeCxPrMdNs9c3lmMNQCcUQ6LzRqIfqLzOrQe4n5s1vTynM8v1hOutRNzz8YP/vfqMXtk67DswY/2Nn2wvrKGgT4HvkCHrOHVsE7w/+c1bY7LWt1QxrbVzbV2WpTxxGNArh6zFwDfth3Kb+KtOy226/+IfJG5r6OON5HHkScKYsieW5G/7IvN8efqC8e3rSd4D84xTyfGeffYCzBSnfthW/PQvIet/xPyReayH8Iz7WWdh8GvbeyLzXHxJaUT9BLXyGOQ84C9AMjzdtjWLNfvYxH8EPnYWOtm2AOZ+1S9AC+19/YA1DbxpR/8vD3QnuuWpZ+45u/rnW28fZzr0VTjQeLFahU+RT8+R740Nv2wvfBCvbDYNeuA/LU6Oaa967HRmfOAvQBVZ4e/DavFxrfdf7y9yXpgvfhXWm4vOE1cV837336v/QDwwvHL4BUAAA==
   </data>
  </layer>
  <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
@@ -266,7 +266,6 @@
    </properties>
   </object>
   <object name="zombie_right" type="Zombie" x="3134" y="1202" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="1803" y="1191" width="75" height="150"/>
   <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
    <properties>
     <property name="repeat" value="false"/>
@@ -361,6 +360,5 @@
   <object name="zombie_right" type="Zombie" x="3190" y="1206" width="75" height="150"/>
   <object name="zombie_right" type="Zombie" x="3254" y="1206" width="75" height="150"/>
   <object name="zombie_left1" type="Zombie" x="1747" y="1199" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="1679" y="1191" width="75" height="150"/>
  </objectgroup>
 </map>
