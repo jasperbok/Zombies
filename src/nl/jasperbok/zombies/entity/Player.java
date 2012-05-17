@@ -1,5 +1,9 @@
 package nl.jasperbok.zombies.entity;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -26,6 +30,12 @@ public class Player extends Entity {
 	 */
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
+	/**
+	 * Arm variables.
+	 */
+	protected Image armImageLeft;
+	protected Image armImageRight;
+	protected Vector2f armPos;
 	
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
@@ -59,6 +69,11 @@ public class Player extends Entity {
 		this.addAnim("crawlRight", 250, new int[]{2, 3});
 		this.currentAnim = this.anims.get("idleRight");
 		
+		// Init the arm.
+		this.armImageLeft = new Image("data/sprites/entity/arm1.png", new Color(255, 255, 255)).getFlippedCopy(true, true);
+		this.armImageRight = new Image("data/sprites/entity/arm1.png", new Color(255, 255, 255)).getFlippedCopy(true, false);
+		this.armPos = this.position.copy();
+		
 		inventory = new Inventory();
 	}
 	
@@ -67,6 +82,13 @@ public class Player extends Entity {
 		
 		wasClimbing = isClimbing;
 		isClimbing = false;
+		
+		// Position and rotate the arm.
+		int armAngle = (int) this.level.fl.getAngleInDegrees();
+		this.armImageLeft.setCenterOfRotation(8, 24);
+		this.armImageRight.setCenterOfRotation(10, 20);
+		this.armImageLeft.setRotation(armAngle);
+		this.armImageRight.setRotation(armAngle);
 		
 		this.standing = level.env.isOnGround(this, false);
 		if (wasClimbing && level.env.isOnClimableSurface(this)) {
@@ -221,6 +243,26 @@ public class Player extends Entity {
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Renders the Player to the screen.
+	 * 
+	 * Uses the Entity's renderPosition field.
+	 * 
+	 * @param container The GameContainer this Entity is part of.
+	 * @param g The Graphics object the Entity should draw itself on.
+	 * @throws SlickException
+	 */
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		if (this.currentAnim != null) {
+			g.drawAnimation(this.currentAnim, (int)this.renderPosition.x, (int)this.renderPosition.y);
+			if (this.facing == Entity.LEFT) {
+				g.drawImage(this.armImageLeft, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
+			} else {
+				g.drawImage(this.armImageRight, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
+			}
 		}
 	}
 }
