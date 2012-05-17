@@ -3,6 +3,7 @@ package nl.timcommandeur.zombies.light;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.jasperbok.zombies.level.Level;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.Color;
@@ -14,6 +15,7 @@ import LightTest.Vec2;
 
 public class FlashLight {
 	
+	public Level level;
 	public LightSource flashLightLight;
 	public List<LightSource> lights;
 	public List<ShadowHull> hulls;
@@ -30,19 +32,20 @@ public class FlashLight {
 	
 	public Vector2f position;
 	
-	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position) {
-		this(lights, hulls, position, null);
+	public FlashLight(Level level, List<LightSource> lights, List<ShadowHull> hulls, Vector2f position) {
+		this(level, lights, hulls, position, null);
 	}
 	
-	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, Camera camera) {
-		this(lights, hulls, position, 800, camera);
+	public FlashLight(Level level, List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, Camera camera) {
+		this(level, lights, hulls, position, 800, camera);
 	}
 	
-	public FlashLight(List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, float radius, Camera camera) {
+	public FlashLight(Level level, List<LightSource> lights, List<ShadowHull> hulls, Vector2f position, float radius, Camera camera) {
 		this.lights = lights;
 		this.hulls = hulls;
 		this.radius = radius;
 		this.camera = camera;
+		this.level = level;
 		
 		init();
 		setPosition(position);
@@ -76,11 +79,13 @@ public class FlashLight {
 	public void turnOn() {
 		on = true;
 		setColor(new Color(170, 170, 170));
+		this.level.playerLight.setColor(new Color(0, 0, 0));
 	}
 	
 	public void turnOff() {
 		on = false;
 		setColor(new Color(0, 0, 0, 0));
+		this.level.playerLight.setColor(new Color(250, 250, 250));
 	}
 	
 	public void setColor(Color c)
@@ -138,8 +143,8 @@ public class FlashLight {
 	
 	public void pointToMouse(GameContainer container) {
 		Camera camera = Camera.getInstance();
-		int difX = container.getInput().getAbsoluteMouseX() - 600;
-		int difY = container.getInput().getAbsoluteMouseY() - 400;
+		int difX = container.getInput().getAbsoluteMouseX() - 660;
+		int difY = container.getInput().getAbsoluteMouseY() - 450;
 		Vec2 to = new Vec2(difX, difY);
 		double angleInRadians = vecAngle(new Vec2(to.x, to.y));
 		double angle = angleInRadians / Math.PI * 180;

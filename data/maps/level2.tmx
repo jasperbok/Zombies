@@ -227,7 +227,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="turret_1" type="AutoTurret" x="1446" y="592" width="135" height="121">
+  <object name="turret_1" type="AutoTurret" x="1446" y="560" width="160" height="160">
    <properties>
     <property name="direction" value="left"/>
    </properties>
@@ -266,7 +266,6 @@
    </properties>
   </object>
   <object name="zombie_right" type="Zombie" x="3134" y="1202" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="1803" y="1191" width="75" height="150"/>
   <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
    <properties>
     <property name="repeat" value="false"/>
@@ -316,7 +315,7 @@
    </properties>
   </object>
   <object name="zombie_switch_guard" type="Zombie" x="203" y="1194" width="75" height="150"/>
-  <object name="box" type="WoodenCrate" x="963" y="636" width="80" height="80"/>
+  <object name="box" type="WoodenCrate" x="963" y="632" width="80" height="80"/>
   <object name="power_switch" type="Switch" x="108" y="1196" width="26" height="55">
    <properties>
     <property name="successMessage" value="It seems the power is back on."/>
@@ -358,5 +357,8 @@
     <property name="message" value="It looks like this switch is not powered."/>
    </properties>
   </object>
+  <object name="zombie_right" type="Zombie" x="3190" y="1206" width="75" height="150"/>
+  <object name="zombie_right" type="Zombie" x="3254" y="1206" width="75" height="150"/>
+  <object name="zombie_left1" type="Zombie" x="1747" y="1199" width="75" height="150"/>
  </objectgroup>
 </map>

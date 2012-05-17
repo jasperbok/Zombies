@@ -65,6 +65,14 @@ public class MergedLevel extends Level {
 				e.printStackTrace();
 			}
 			break;
+		default:
+			try {
+				bgMusic = new Music("data/sound/music/stil.ogg");
+				bgMusic.loop();
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+			break;
 		}
 		
 		if (this.checkPoint.containsKey(this.currentLevel)) {
