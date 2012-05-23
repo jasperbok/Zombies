@@ -27,6 +27,7 @@ public class FlashLight {
 	protected int height = 30;
 	protected int width = 60;
 	protected int currentAngle;
+	protected double currentAngleInRadians;
 	protected Vector2f angleDisplacement = new Vector2f(0, 0);
 	protected boolean on = true;
 	
@@ -147,6 +148,7 @@ public class FlashLight {
 		int difY = container.getInput().getAbsoluteMouseY() - 450;
 		Vec2 to = new Vec2(difX, difY);
 		double angleInRadians = vecAngle(new Vec2(to.x, to.y));
+		this.currentAngleInRadians = angleInRadians;
 		double angle = angleInRadians / Math.PI * 180;
 		this.angleDisplacement.x = (float) (Math.cos(angleInRadians));
 		this.angleDisplacement.y = (float) (Math.sin(angleInRadians));
@@ -185,6 +187,14 @@ public class FlashLight {
         flashLightHulls.add(hull2);
         flashLightHulls.add(hull3);
         flashLightHulls.add(hull4);
+	}
+	
+	public double getAngleInRadians() {
+		return this.currentAngleInRadians;
+	}
+	
+	public float getAngleInDegrees() {
+		return this.currentAngle;
 	}
 	
 	public float vecAngle(Vec2 v) {
