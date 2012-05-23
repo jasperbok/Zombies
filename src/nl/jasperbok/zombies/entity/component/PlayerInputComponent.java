@@ -2,14 +2,14 @@ package nl.jasperbok.zombies.entity.component;
 
 import java.util.ArrayList;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.Player;
-import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class PlayerInputComponent extends Component {
@@ -37,33 +37,14 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			
-			/* CROUCHING CODE
-			 * UNCOMMENT TO ENABLE CROUCHING BY PRESSING "S"
-			if (((Player)owner).isClimbing == false && ((Player)owner).isFalling == false && ((Player)owner).isHidden() == false) {
-				if (input.isKeyDown(Input.KEY_S)) {
-					((Player)owner).isCrawling = true;
-				} else {
-					((Player)owner).isCrawling = false;
-				}
-				if (input.isKeyPressed(Input.KEY_S)) {
-					((Player)owner).position.y += 75;
-				}
-			}*/
-			
 			if (input.isKeyDown(Input.KEY_D)) {
 				if (!((Player)owner).isHidden()) {
-					owner.vel.set(owner.vel.getX() + owner.accel.getX(), owner.vel.getY());
-					if (owner.vel.getX() > owner.maxVel.getX()) {
-						owner.vel.set(owner.maxVel.getX(), owner.vel.getY());
-					}
+					owner.vel.x = 0.5f;
 				}
 			}
 			if (input.isKeyDown(Input.KEY_A)) {
 				if (!((Player)owner).isHidden()) {
-					owner.vel.set(owner.vel.getX() - owner.accel.getX(), owner.vel.getY());
-					if (owner.vel.getX() < -owner.maxVel.getX()) {
-						owner.vel.set(-owner.maxVel.getX(), owner.vel.getY());
-					}
+					owner.vel.x = -0.5f;
 				}
 			}
 			if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
@@ -87,10 +68,11 @@ public class PlayerInputComponent extends Component {
 					e.printStackTrace();
 				}
 			}
+			/*
 			if (input.isKeyDown(Input.KEY_W)){
 				if (owner.level.env.isOnClimableSurface(owner)) {
 					owner.isClimbing = true;
-					owner.vel.set(owner.vel.getX(), -((Player)owner).climbSpeed);
+					owner.vel.y = -((Player)owner).climbSpeed;
 				}
 			}
 			if (input.isKeyDown(Input.KEY_S)){
@@ -99,18 +81,19 @@ public class PlayerInputComponent extends Component {
 					owner.vel.set(owner.vel.getX(), ((Player)owner).climbSpeed);
 				}
 			}
+			*/
 			if (input.isKeyPressed(Input.KEY_E)) {
-				if (owner.level.env.isOnHideableSurface(owner)) {
-					owner.vel = new Vector2f(0, 0);
-					((Player)owner).hide();
-					this.owner.level.fl.turnOff();
-				} else {
-					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(this.owner.boundingBox);
+				//if (owner.level.env.isOnHideableSurface(owner)) {
+					//owner.vel = new Vector2f(0, 0);
+					//((Player)owner).hide();
+					//this.owner.level.fl.turnOff();
+				//} else {
+					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(new Rectangle(this.owner.position.x, this.owner.position.y, this.owner.size.x, this.owner.size.y));
 					for (Entity usable: usables) {
 						System.out.println("I can use " + usable.name);
 						usable.use(this.owner);
 					}
-				}
+				//}
 			} else if (!input.isKeyDown(Input.KEY_E) && ((Player)owner).isHidden()) {
 				((Player)owner).unHide();
 				this.owner.level.fl.turnOn();

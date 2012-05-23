@@ -1,17 +1,14 @@
 package nl.jasperbok.zombies.entity.building;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.component.Component;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.object.projectile.Bullet;
 import nl.jasperbok.zombies.level.Level;
 
@@ -41,7 +38,6 @@ public class AutoTurret extends Entity {
 	 */
 	public AutoTurret(Level level, boolean facingLeft, Switch onOffSwitch, Vector2f position, HashMap<String, String> settings) throws SlickException {
 		super.init(level);
-		this.gravityAffected = false;
 		this.position = position;
 		this.facingLeft = facingLeft;
 		this.firing = false;
@@ -111,7 +107,7 @@ public class AutoTurret extends Entity {
 				}
 				float yPos = this.position.y + 17;
 				try {
-					Bullet bullet = new Bullet(this.level, new Vector2f(xPos, yPos), new Vector2f(xVel, 0), 1, Integer.parseInt(this.settings.get("range")));
+					Bullet bullet = new Bullet(this.level, xPos, yPos, new Vector2f(xVel, 0), 1, Integer.parseInt(this.settings.get("range")));
 					this.level.env.spawnEntity(bullet);
 					this.level.env.sounds.playSFX("turret", new Vector2f(this.position.x, this.position.y), new Vector2f(this.level.env.getEntityByName("player").position.x, this.level.env.getEntityByName("player").position.y));
 				} catch (SlickException e) {

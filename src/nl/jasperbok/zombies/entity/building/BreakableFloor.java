@@ -1,27 +1,23 @@
 package nl.jasperbok.zombies.entity.building;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.level.Level;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.SpriteSheet;
 
 public class BreakableFloor extends Entity {
 	
 	public BreakableFloor(Level level) throws SlickException {
 		super.init(level);
-		Animation breakableFloor = new Animation();
-		breakableFloor.addFrame(new Image("data/sprites/entity/building/breakablefloor.png"), 5000);
-		this.anims.put("breakableFloor", breakableFloor);
-		this.currentAnim = this.anims.get("breakableFloor");
-		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		this.isBlocking = true;
+		
+		this.animSheet = new SpriteSheet("data/sprites/entity/building/breakablefloor.png", 240, 80);
+		this.addAnim("idle", 100, new int[]{0});
+		this.currentAnim = this.anims.get("idle");
 		
 		this.components.add(new LifeComponent(this, 1));
 	}
@@ -30,7 +26,8 @@ public class BreakableFloor extends Entity {
 		super.update(input, delta);
 		
 		Player player = level.env.getPlayer();
-		if (player.position.x <  boundingBox.getMaxX() && player.position.x > boundingBox.getMinX() && Math.abs(boundingBox.getMinY() - player.boundingBox.getMaxY()) < 6) {
+		if (this.touches(player)) {
+		//if (player.position.x < this.position.x + this.size.x && player.position.x > this.position.x && Math.abs(this.position.y - player.position.y + player.size.y) < 6) {
 			// break the platform.
 			((LifeComponent)getComponent(Component.LIFE)).takeDamage(1);
 		}

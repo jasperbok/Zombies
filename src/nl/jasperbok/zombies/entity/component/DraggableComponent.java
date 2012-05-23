@@ -1,6 +1,6 @@
 package nl.jasperbok.zombies.entity.component;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.Usable;
 
 import org.newdawn.slick.Input;

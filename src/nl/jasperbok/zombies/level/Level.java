@@ -29,6 +29,7 @@ import nl.jasperbok.zombies.gui.PlayerSpeech;
 public class Level extends BasicGameState implements GameState {
 	protected static int ID;
 	public Camera camera;
+	public float gravity = 1;
 	
 	public TileEnvironment env;
 	

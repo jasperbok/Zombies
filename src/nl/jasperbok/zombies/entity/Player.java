@@ -3,9 +3,9 @@ package nl.jasperbok.zombies.entity;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
@@ -26,21 +26,24 @@ public class Player extends Entity {
 	 */
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
+	protected boolean isHidden = false;
 	
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
+		
+		this.position = pos;
+		this.friction = new Vector2f(0.1f, 0.1f);
+		this.maxVel = new Vector2f(0.3f, 10f);
 		this.zIndex = -1;
+		
 		this.type = Entity.Type.A;
 		this.checkAgainst = Entity.Type.B;
 		this.collides = Entity.Collides.ACTIVE;
-		this.addComponent(new GravityComponent(0.01f, this));
+		
 		this.addComponent(new PlayerInputComponent(this));
-		this.addComponent(new LifeComponent(this, 5));
-		this.accel = new Vector2f(0.06f, 0);
-		this.maxVel = new Vector2f(0.3f, 10f);
-		this.position = pos;
+		//this.addComponent(new LifeComponent(this, 5));
+		
 		this.playerControlled = true;
-		this.boundingBox = new Rectangle(position.x, position.y, 10, 10);
 		
 		this.facing = Entity.RIGHT;
 		this.animSheet = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
@@ -63,30 +66,17 @@ public class Player extends Entity {
 	}
 	
 	public void update(Input input, int delta) {
-		updateBoundingBox();
-		
-		wasClimbing = isClimbing;
-		isClimbing = false;
-		
-		this.standing = level.env.isOnGround(this, false);
-		if (wasClimbing && level.env.isOnClimableSurface(this)) {
-			isClimbing = true;
-			vel.set(new Vector2f(vel.getX(), 0));
-		} else if (!level.env.isOnClimableSurface(this)) {
-			isClimbing = false;
-		}
+		super.update(input, delta);
 		
 		try {
-			Hud.getInstance().setPlayerHealth(((LifeComponent)getComponent(Component.LIFE)).getHealth());
+			Hud.getInstance().setPlayerHealth(this.health);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		super.update(input, delta);
-		
 		// Decide what animation should be played.
-		if (isHidden()) {
+		if (this.isHidden) {
 			this.currentAnim = this.anims.get("hide");
 		} else if (this.isClimbingObject) {
 			if (this.currentAnim.getFrame() == 4) {
@@ -141,15 +131,6 @@ public class Player extends Entity {
 		}
 	}
 	
-	/*
-	private void climbObject() {
-		Entity target = (Entity) level.env.getUsableEntity(boundingBox);
-		if (target != null && target instanceof WoodenCrate) {
-			this.setPosition(target.position.getX(), target.position.getY() - this.boundingBox.getHeight());
-		}
-	}
-	*/
-	
 	/**
 	 * Makes the player climb on top of an object.
 	 * 
@@ -168,34 +149,21 @@ public class Player extends Entity {
 	 * The tiles behind the player must be hideable.
 	 */
 	public void switchHide() {
-		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
-		if (lifeComponent.getDamageable() == true) {
-			hide();
-		} else {
-			unHide();
-		}
+		this.isHidden = !this.isHidden;
 	}
 	
 	/**
 	 * Hides the player if the current tiles are hideable and the player is not hidden.
 	 */
 	public void hide() {
-		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
-		if (lifeComponent.getDamageable() == true) {
-			lifeComponent.setDamageable(false);
-			System.out.println("Player.hide: hiding");
-		}
+		this.isHidden = true;
 	}
 	
 	/**
 	 * Unhides the player if the player is hidden.
 	 */
 	public void unHide() {
-		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
-		if (lifeComponent.getDamageable() == false) {
-			lifeComponent.setDamageable(true);
-			System.out.println("Player.hide: unhiding");
-		}
+		this.isHidden = false;
 	}
 	
 	/**
@@ -204,12 +172,7 @@ public class Player extends Entity {
 	 * @return
 	 */
 	public boolean isHidden() {
-		LifeComponent lifeComponent = (LifeComponent)getComponent(Component.LIFE);
-		if (lifeComponent.getDamageable() == true) {
-			return false;
-		} else {
-			return true;
-		}
+		return this.isHidden;
 	}
 	
 	/**

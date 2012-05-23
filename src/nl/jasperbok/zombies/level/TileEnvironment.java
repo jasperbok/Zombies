@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.CollisionMap;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
@@ -30,7 +31,6 @@ public class TileEnvironment {
 	private int tileWidth;
 	private int tileHeight;
 	private Level level;
-	private Tile[][] tiles;
 	int backgroundLayer;
 	int collisionLayer;
 	
@@ -47,6 +47,7 @@ public class TileEnvironment {
 	// Utilities.
 	public SoundManager sounds;
 	public MobDirector mobDirector;
+	public CollisionMap collisionMap;
 	
 	private boolean sortNow = false;
 	
@@ -63,14 +64,18 @@ public class TileEnvironment {
 		this.tileWidth = map.getTileWidth();
 		this.tileHeight = map.getTileHeight();
 		this.level = level;
-		this.tiles = MapLoader.loadTiles(map);
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
 		
 		MapLoader.loadEntities(this, level, map);
 		spawnDeffered();
 		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
+		this.collisionMap = new CollisionMap(this.map);
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
+		
+		//this.collisionMap.trace(400, 560, 80, 400, 1, 1).printInfo();
+		//this.collisionMap.trace(560, 400, 320, -80, 1, 1).printInfo();
+		this.collisionMap.trace(400, 719, 160, 80, 1, 1).printInfo();
 		
 		// If there is no checkpoint for this level yet, create one
 		// at the player's starting position.
@@ -196,9 +201,8 @@ public class TileEnvironment {
 	public void update(GameContainer container, int delta) throws SlickException {
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
-		checkEntities();
 		updateTriggers(container, delta);
-		checkForTileCollisions();
+		checkEntities();
 		emptyGarbage();
 		
 		spawnDeffered();
@@ -287,123 +291,6 @@ public class TileEnvironment {
 		}
 		
 		return colliding;
-	}
-	
-	/**
-	 * Checks whether an entity is on something solid with his feet.
-	 * 
-	 * We don't actually check the whole bottom side of the Entity, but only
-	 * two points: one 10px to the left of his center point and one 10px to
-	 * the right. If either or both of these points overlaps a solid object
-	 * true is returned, otherwise false.
-	 * 
-	 * @param ent The entity to check.
-	 * @return boolean True if the entity is on top of something solid.
-	 */
-	public boolean isOnGround(Entity ent, boolean resolveCollision) {
-		int entY = (int)(ent.boundingBox.getMaxY());
-		int relativeLeftX = (int)Math.floor((ent.boundingBox.getCenterX() - 10) / tileWidth);
-		int relativeRightX = (int)Math.floor((ent.boundingBox.getCenterX() + 10) / tileWidth);
-		int relativeBottomY = (int)Math.floor((ent.boundingBox.getMaxY() + 3) / tileWidth);
-		
-		// Becomes true if the Entity is on a Tile that has its isBlocking property set to true.
-		boolean onAllSolidBlock =  tiles[relativeLeftX][relativeBottomY].isBlocking || tiles[relativeRightX][relativeBottomY].isBlocking;
-		
-		// Becomes true if the Entity is on a Tile that has its isClimable property set to true.
-		boolean onClimableTile = tiles[relativeLeftX][relativeBottomY].isClimable || tiles[relativeRightX][relativeBottomY].isClimable;
-		
-		// Becomes true if the Entity is anywhere on the top 10 pixels of a Tile that has its isTopSolid property set to true.
-		boolean onTopSolidBlock = false;
-		if (entY % tileHeight <= 10) {
-			if (tiles[relativeLeftX][relativeBottomY].isTopSolid) {
-				onTopSolidBlock = true;
-			} else if (tiles[relativeRightX][relativeBottomY].isTopSolid) {
-				onTopSolidBlock = true;
-			}
-		}
-		return onAllSolidBlock || onClimableTile || onTopSolidBlock;
-	}
-	
-	/**
-	 * Checks whether an Entity is on a Tile that has its isClimable property set to true.
-	 * 
-	 * To decide whether the Entity is a climable tile, two points are checked
-	 * for collisions with a Tile with its isClimable property set to true.
-	 * First the Entity's lowest center point is checked. Second the point
-	 * that lies 20px below its top center point is checked.
-	 * 
-	 * @param ent The Entity to check.
-	 * @return boolean True if the Entity's feet are on something climable.
-	 */
-	public boolean isOnClimableSurface(Entity ent) {
-		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
-		int relativeBottomY = (int)Math.floor((ent.boundingBox.getMaxY() + 2) / tileWidth);
-		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 20) / tileHeight);
-		
-		return tiles[relativeX][relativeBottomY].isClimable || tiles[relativeX][relativeTopY].isClimable;
-	}
-	
-	public boolean isOnHideableSurface(Entity ent) {
-		int relativeX = (int)Math.floor(ent.boundingBox.getCenterX() / tileWidth);
-		int relativeBottomY = (int)Math.floor((ent.boundingBox.getMaxY() - 10) / tileWidth);
-		int relativeTopY = (int)Math.floor((ent.boundingBox.getMinY() + 50) / tileHeight);
-		
-		return tiles[relativeX][relativeBottomY].isHideable || tiles[relativeX][relativeTopY].isHideable;
-	}
-	
-	/**
-	 * Handles collisions between Entities and Tiles.
-	 */
-	private void checkForTileCollisions() {
-		for (Entity ent: entities) {
-			try {
-				// Floor collisions.
-				int entLeftX = (int)(ent.boundingBox.getCenterX() - 10);
-				int entRightX = (int)(ent.boundingBox.getCenterX() + 10);
-				int entY = (int)(ent.boundingBox.getMaxY());
-				int relativeLeftX = (int)Math.floor(entLeftX / tileWidth);
-				int relativeRightX = (int)Math.floor(entRightX / tileWidth);
-				int relativeBottomY = (int)Math.floor(entY / tileWidth);
-				
-				//if (tiles[relativeLeftX][relativeBottomY].isBlocking || (tiles[relativeLeftX][relativeBottomY].isClimable && !ent.isClimbing)) {
-				if (tiles[relativeLeftX][relativeBottomY].isBlocking) {
-					ent.setPosition(ent.position.getX(), + tiles[relativeLeftX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
-					// The entity is standing on something solid, so change his y velocity to 0 or less.
-					if (ent.vel.getY() > 0) ent.vel.set(ent.vel.getX(), 0);
-				//} else if (tiles[relativeRightX][relativeBottomY].isBlocking || (tiles[relativeRightX][relativeBottomY].isBlocking && !ent.isClimbing)) {
-				} else if (tiles[relativeRightX][relativeBottomY].isBlocking) {
-					ent.setPosition(ent.position.getX(), + tiles[relativeRightX][relativeBottomY].position.getY() - ent.boundingBox.getHeight() + 1);
-					// The entity is standing on something solid, so change his y velocity to 0 or less.
-					if (ent.vel.getY() > 0) ent.vel.set(ent.vel.getX(), 0);
-				}
-				
-				// Left side collisions.
-				int relLeftX = (int)Math.floor(ent.boundingBox.getMinX() / tileWidth);
-				int relTopLeftY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
-				int relBottomLeftY = (int)(Math.floor((ent.boundingBox.getMaxY() - 10) / tileHeight));
-				if (tiles[relLeftX][relBottomLeftY].isBlocking) {
-					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
-				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
-					//System.out.println("Collision on a side");
-					ent.setPosition(tiles[relLeftX][relBottomLeftY].position.getX() + tiles[relLeftX][relBottomLeftY].width, ent.position.getY());
-				} else if (tiles[relLeftX][relTopLeftY].isBlocking) {
-					//System.out.println("Collision on a side");
-					ent.setPosition(tiles[relLeftX][relTopLeftY].position.getX() + tiles[relLeftX][relTopLeftY].width, ent.position.getY());
-				}
-				
-				// Right side collisions.
-				int relRightX = (int)Math.floor(ent.boundingBox.getMaxX() / tileWidth);
-				int relTopRightY = (int)(Math.floor((ent.boundingBox.getMinY() + 10) / tileHeight));
-				int relBottomRightY = (int)(Math.floor((ent.boundingBox.getMaxY() - 10) / tileHeight));
-				if (tiles[relRightX][relBottomRightY].isBlocking) {
-					ent.setPosition(tiles[relRightX][relBottomRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
-				} else if (tiles[relRightX][relTopRightY].isBlocking) {
-					ent.setPosition(tiles[relRightX][relTopRightY].position.getX() - ent.boundingBox.getWidth(), ent.position.getY());
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-				
-			}
-		}
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {

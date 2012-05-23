@@ -2,7 +2,7 @@ package nl.jasperbok.zombies.entity.mob;
 
 import java.util.ArrayList;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.component.DamagingAuraComponent;
 import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.GravityComponent;

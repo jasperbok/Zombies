@@ -1,6 +1,6 @@
 package nl.jasperbok.zombies.level;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 
 public class Tile extends Entity {
 	public int id;

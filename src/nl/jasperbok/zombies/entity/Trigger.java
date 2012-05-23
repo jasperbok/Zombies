@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.entity;
 
 import java.util.HashMap;
 
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 

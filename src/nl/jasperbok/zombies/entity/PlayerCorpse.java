@@ -4,6 +4,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.level.Level;
 
 public class PlayerCorpse extends Entity {
