@@ -10,6 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.engine.Entity;
+import nl.jasperbok.engine.Timer;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
@@ -19,7 +20,10 @@ import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
-	public float climbSpeed = 0.1f;
+	public boolean canClimb = false;
+	public boolean isClimbing = false;
+	public int momentumDirectionY = 0;
+	public Timer ladderReleaseTimer;
 	/**
 	 * Variables for states the player can be in.
 	 */
