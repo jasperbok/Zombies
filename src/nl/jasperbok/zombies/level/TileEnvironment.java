@@ -48,6 +48,7 @@ public class TileEnvironment {
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
 	private ArrayList<Entity> garbage = new ArrayList<Entity>();
 	private ArrayList<Entity> deferredSpawn = new ArrayList<Entity>();
+	public ArrayList<Mob> mobs = new ArrayList<Mob>();
 	
 	// Utilities.
 	public SoundManager sounds;
@@ -123,6 +124,9 @@ public class TileEnvironment {
 		}
 		this.nextEntId++;
 		this.sortNow = true;
+		if (ent instanceof Mob) {
+			mobs.add((Mob) ent);
+		}
 		return ent;
 	}
 	
@@ -337,6 +341,7 @@ public class TileEnvironment {
 		for (Entity entity : garbage) {
 			if (entities.contains(entity)) entities.remove(entity);
 			if (usableEntities.contains(entity)) usableEntities.remove(entity);
+			if (mobs.contains(entity)) mobs.remove(entity);
 			entity = null;
 		}
 		garbage.clear();

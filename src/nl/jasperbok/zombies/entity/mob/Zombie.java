@@ -92,6 +92,17 @@ public class Zombie extends Mob {
 			level.env.getEntityByName("player").receiveDamage(200);
 		}
 		
+		// Check if a zombie collides with another mob.
+		for (Mob mob : this.level.env.mobs) {
+			if (mob != this && this.touchesFromCenter(mob, 7, 0)) {
+				if (this.position.x + this.size.x / 2 < mob.position.x + mob.size.x / 2) {
+					this.position.x--;
+				} else if (this.position.x + this.size.x / 2 >= mob.position.x + mob.size.x / 2) {
+					this.position.x++;
+				}
+			}
+		}
+		
 		if (this.vel.x > this.maxVel.x) {
 			this.vel.x = this.maxVel.x;
 		} else if (this.vel.x < -this.maxVel.x) {

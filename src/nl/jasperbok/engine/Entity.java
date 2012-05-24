@@ -324,6 +324,41 @@ public abstract class Entity extends RenderObject {
 	}
 	
 	/**
+	 * Checks if the entity collides from the given x and y distance to the center.
+	 * 
+	 * @param other
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean touchesFromCenter(Entity other, float x, float y) {
+		Vector2f thisCenter = this.getCenter();
+		Vector2f otherCenter = other.getCenter();
+		if (x != 0 && y != 0) {
+			return !(
+				thisCenter.x - x >= otherCenter.x + x ||
+				thisCenter.x + x <= otherCenter.x - x ||
+				thisCenter.y - y >= otherCenter.y + y ||
+				thisCenter.y + y <= otherCenter.y - y
+				);
+		} else if (y != 0) {
+			return !(
+				thisCenter.y - y >= otherCenter.y + y ||
+				thisCenter.y + y <= otherCenter.y - y
+				);
+		} else {
+			return !(
+				thisCenter.x - x >= otherCenter.x + x ||
+				thisCenter.x + x <= otherCenter.x - x
+				);
+		}
+	}
+	
+	public Vector2f getCenter() {
+		return new Vector2f(this.position.x + this.size.x / 2, this.position.y + this.size.y / 2);
+	}
+	
+	/**
 	 * Calculates the distance between the center points of this and
 	 * another Entity.
 	 * 

@@ -360,6 +360,7 @@
   <object name="zombie_right" type="Zombie" x="3190" y="1206" width="75" height="150"/>
   <object name="zombie_right" type="Zombie" x="3254" y="1206" width="75" height="150"/>
   <object name="zombie_left1" type="Zombie" x="1747" y="1199" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="491" y="548" width="75" height="150"/>
+  <object name="zombie_left1" type="Zombie" x="450" y="550" width="75" height="150"/>
+  <object name="zombie_left1" type="Zombie" x="486" y="551" width="75" height="150"/>
  </objectgroup>
 </map>
