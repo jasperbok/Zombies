@@ -1,6 +1,6 @@
 package nl.jasperbok.zombies.entity.mob;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 
 public class MobAttractor extends Entity {
 	public Entity object;

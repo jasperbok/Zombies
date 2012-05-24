@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import LightTest.Vec2;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.math.Vector2;
 

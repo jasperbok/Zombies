@@ -2,7 +2,7 @@ package nl.jasperbok.zombies.entity.component;
 
 import java.util.ArrayList;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 
 import org.newdawn.slick.Input;
 

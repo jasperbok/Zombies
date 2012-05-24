@@ -1,4 +1,4 @@
-package nl.jasperbok.zombies.entity;
+package nl.jasperbok.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import nl.jasperbok.zombies.entity.RenderObject;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.level.Level;
@@ -57,7 +58,7 @@ public abstract class Entity extends RenderObject {
 	public Vector2f last = new Vector2f(0, 0);
 	public Vector2f vel = new Vector2f(0, 0);
 	public Vector2f accel = new Vector2f(0, 0);
-	public Vector2f maxVel = new Vector2f(0, 0);
+	public Vector2f maxVel = new Vector2f(3, 3);
 	public Vector2f friction = new Vector2f(0, 0);
 	public int zIndex = 0;
 	public int gravityFactor = 1;
@@ -189,10 +190,70 @@ public abstract class Entity extends RenderObject {
 			comp.update(input, delta);
 		}
 		this.last = this.position.copy();
-		this.position.x = this.position.x + this.vel.x * delta;
-		this.position.y = this.position.y + this.vel.y * delta;
-		this.updateBoundingBox();
+		this.vel.y += this.level.gravity * delta * this.gravityFactor;
+		
+		this.vel.x = this.getNewVelocity(this.vel.x, this.accel.x, this.friction.x, this.maxVel.x);
+		this.vel.y = this.getNewVelocity(this.vel.y, this.accel.y, this.friction.y, this.maxVel.y);
+		
+		//this.position.x = this.position.x + this.vel.x * delta;
+		//this.position.y = this.position.y + this.vel.y * delta;
+		
+		// Set the size of the Entity.
+		if (this.currentAnim != null) {
+			this.size.x = this.currentAnim.getCurrentFrame().getWidth();
+			this.size.y = this.currentAnim.getCurrentFrame().getHeight();
+		} else {
+			this.size.x = 0;
+			this.size.y = 0;
+		}
+		
+		//this.updateBoundingBox();
+		
+		float mx = this.vel.x * delta;
+		float my = this.vel.y * delta;
+		this.handleMovementTrace(this.level.env.collisionMap.trace((int)this.position.x, (int)this.position.y, mx, my, (int)this.size.x, (int)this.size.y));
+		
 		this.updateRenderPosition();
+	}
+	
+	private float getNewVelocity(float vel, float accel, float friction, float max) {
+		if (accel != 0) {
+			float newVel = vel + accel;
+			if (newVel > max) {return max;}
+			else if (newVel < -max) {return -max;}
+			else {return newVel;}
+		}
+		else if (friction != 0) {
+			if (vel - friction > 0) {
+				return (vel - friction);
+			}
+			else if (vel + friction < 0) {
+				return (vel + friction);
+			}
+			else {
+				return 0;
+			}
+		}
+		if (vel > max) {return max;}
+		else if (vel < -max) {return -max;}
+		else {return vel;}
+	}
+	
+	public void handleMovementTrace(Resolve res) {
+		this.standing = false;
+		
+		if (res.collision.get("y")) {
+			if (this.vel.y > 0) {
+				this.standing = true;
+			}
+			this.vel.y = 0;
+		}
+		
+		if (res.collision.get("x")) {
+			this.vel.x = 0;
+		}
+		
+		this.position = res.pos.copy();
 	}
 	
 	/**
@@ -252,10 +313,10 @@ public abstract class Entity extends RenderObject {
 	 */
 	public boolean touches(Entity other) {
 		return !(
-				this.position.x >= other.position.x + other.boundingBox.getWidth() ||
-				this.position.x + this.boundingBox.getWidth() <= other.position.x ||
-				this.position.y >= other.position.y + other.boundingBox.getHeight() ||
-				this.position.y + this.boundingBox.getHeight() <= other.position.y
+				this.position.x >= other.position.x + other.size.x ||
+				this.position.x + this.size.x <= other.position.x ||
+				this.position.y >= other.position.y + other.size.y ||
+				this.position.y + this.size.y <= other.position.y
 				);
 	}
 	
@@ -267,8 +328,8 @@ public abstract class Entity extends RenderObject {
 	 * @return The distance between the Entities.
 	 */
 	public float distanceTo(Entity other) {
-		float xDistance = this.boundingBox.getCenterX() - other.boundingBox.getCenterX();
-		float yDistance = this.boundingBox.getCenterY() - other.boundingBox.getCenterY();
+		float xDistance = this.position.x + this.size.x / 2 - other.position.x + other.size.x / 2;
+		float yDistance = this.position.y + this.size.y / 2 - other.position.y + other.size.y / 2;
 		return (float)Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 	}
 	
@@ -280,8 +341,8 @@ public abstract class Entity extends RenderObject {
 	 */
 	public float angleTo(Entity other) {
 		return (float)Math.atan2(
-				(other.position.y + other.boundingBox.getHeight() / 2) - (this.position.y + this.boundingBox.getHeight() / 2),
-				(other.position.x + other.boundingBox.getWidth() / 2) - (this.position.x + this.boundingBox.getWidth() / 2)
+				(other.position.y + other.size.y / 2) - (this.position.y + this.size.y / 2),
+				(other.position.x + other.size.x / 2) - (this.position.x + this.size.x / 2)
 				);
 	}
 	
@@ -295,11 +356,17 @@ public abstract class Entity extends RenderObject {
 	
 	public static void checkPair(Entity a, Entity b) {
 		// Do these entities want to check?
-		if (a.checkAgainst == b.type) {
+		if (
+				a.checkAgainst == b.type ||
+				(a.checkAgainst == Entity.Type.BOTH && (b.type == Entity.Type.A || b.type == Entity.Type.B))
+		) {
 			a.check(b);
 		}
 		
-		if (b.checkAgainst == a.type){
+		if (
+				b.checkAgainst == a.type ||
+				(b.checkAgainst == Entity.Type.BOTH && (a.type == Entity.Type.A || a.type == Entity.Type.B))
+		) {
 			b.check(a);
 		}
 		
@@ -335,8 +402,8 @@ public abstract class Entity extends RenderObject {
 		
 		// Vertical collision.
 		if (
-				(a.last.x + a.boundingBox.getWidth()) > (b.last.x) &&
-				(a.last.x) < (b.last.x + b.boundingBox.getWidth())
+				(a.last.x + a.size.x) > (b.last.x) &&
+				(a.last.x) < (b.last.x + b.size.x)
 		) {
 			// Which one is on top?
 			if (a.last.y < b.last.y) {
@@ -351,8 +418,8 @@ public abstract class Entity extends RenderObject {
 		
 		// Horizontal collision.
 		if (
-				(a.last.y + a.boundingBox.getHeight()) > (b.last.y) &&
-				(a.last.y) < (b.last.y + b.boundingBox.getHeight())
+				(a.last.y + a.size.y) > (b.last.y) &&
+				(a.last.y) < (b.last.y + b.size.y)
 		) {
 			// Which one is on the left?
 			if (a.last.x < b.last.x) {
@@ -367,53 +434,91 @@ public abstract class Entity extends RenderObject {
 	}
 	
 	public static void seperateOnXAxis(Entity left, Entity right, Entity weak) {
-		float nudge = (left.position.x + left.boundingBox.getWidth() - right.position.x);
+		float nudge = (left.position.x + left.size.x - right.position.x);
 		
 		// There is a weak Entity, so just move that one.
 		if (weak != null) {
-			if (weak == left) {
-				weak.setPosition(weak.position.x - nudge, weak.position.y);
-			} else {
-				weak.setPosition(weak.position.x + nudge, weak.position.y);
-			}
+			Entity strong = (weak == left ? right : left);
+			weak.vel.x = -weak.vel.x * weak.bounciness + strong.vel.x;
+			
+			Resolve resWeak = weak.level.env.collisionMap.trace(
+					(int)weak.position.x, (int)weak.position.y, weak == left ? (float)-nudge : (float)nudge, 0, (int)weak.size.x, (int)weak.size.y
+				);
+			weak.position.x = resWeak.pos.x;
 		}
 		
+		// Normal collision, move both.
 		else {
-			left.setPosition(left.position.x - nudge / 2, left.position.y);
-			right.setPosition(right.position.x + nudge / 2, right.position.y);
+			float v2 = (left.vel.x - right.vel.x) / 2;
+			left.vel.x = -v2;
+			right.vel.x = v2;
+			
+			Resolve resLeft = left.level.env.collisionMap.trace(
+					(int)left.position.x, (int)left.position.y, -nudge / 2, 0, (int)left.size.x, (int)left.size.y
+				);
+			left.position.x = (float)Math.floor(resLeft.pos.x);
+			
+			Resolve resRight = right.level.env.collisionMap.trace(
+					(int)right.position.x, (int)right.position.y, nudge / 2, 0, (int)right.size.x, (int)right.size.y
+				);
+			right.position.x = (float)Math.ceil(resRight.pos.x);
 		}
 	}
 	
 	public static void seperateOnYAxis(Entity top, Entity bottom, Entity weak) {
-		float nudge = (top.position.y + top.boundingBox.getHeight() - bottom.position.y);
+		float nudge = (top.position.y + top.size.y - bottom.position.y);
 		
 		// There is a weak Entity, so just move that one.
 		if (weak != null) {
 			Entity strong = top == weak ? bottom : top;
 			
-			weak.vel.y = strong.vel.y;
+			weak.vel.y = -weak.vel.y * weak.bounciness + strong.vel.y;
 			
 			// On a platform?
 			float nudgeX = 0;
-			if (weak == top) {
+			if (weak == top && Math.abs(weak.vel.y - strong.vel.y) < weak.minBounceVelocity) {
 				weak.standing = true;
-				nudgeX = strong.vel.x;
+				nudgeX = strong.vel.x; // *delta?
 			}
 			
-			weak.setPosition(weak.position.x + nudgeX, weak.position.y + nudge);
+			Resolve resWeak = weak.level.env.collisionMap.trace(
+					(int)weak.position.x, (int)weak.position.y, nudgeX, weak == top ? (float)-nudge : (float)nudge, (int)weak.size.x, (int)weak.size.y
+				);
+			weak.position = resWeak.pos.copy();
 		}
 		
 		// Bottom Entity is standing, just move the top one.
-		else if (bottom.standing) {
-			top.setPosition(top.position.x, top.position.y - nudge);
-			top.standing = true;
-			top.vel.y = 0;
+		else if (top.level.gravity != 0 && (bottom.standing || top.vel.y > 0)) {
+			Resolve resTop = top.level.env.collisionMap.trace(
+					(int)top.position.x, (int)top.position.y, 0, -(top.position.y + top.size.y - bottom.position.y), (int)top.size.x, (int)top.size.y
+			);
+			top.position.y = resTop.pos.y;
+			
+			if (top.bounciness > 0 && top.vel.y > top.minBounceVelocity) {
+				top.vel.y *= -top.bounciness;
+			} else {
+				top.standing = true;
+				top.vel.y = 0;
+			}
 		}
 		
 		// Normal collision, both move.
 		else {
-			bottom.setPosition(bottom.position.x, bottom.position.y + nudge / 2);
-			top.setPosition(top.position.x, top.position.y - nudge / 2);
+			float v2 = (top.vel.y - bottom.vel.y) / 2;
+			top.vel.y = -v2;
+			bottom.vel.y = v2;
+			
+			float nudgeX = bottom.vel.x; // *delta?
+			
+			Resolve resTop = top.level.env.collisionMap.trace(
+					(int)top.position.x, (int)top.position.y, nudgeX, -nudge / 2, (int)top.size.x, (int)top.size.y
+			);
+			top.position.y = resTop.pos.y;
+			
+			Resolve resBottom = top.level.env.collisionMap.trace(
+					(int)bottom.position.x, (int)bottom.position.y, 0, nudge / 2, (int)bottom.size.x, (int)bottom.size.y
+			);
+			bottom.position.y = resBottom.pos.y;
 		}
 	}
 }

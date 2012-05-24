@@ -2,7 +2,7 @@ package nl.jasperbok.zombies.level;
 
 import java.util.HashMap;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.building.Elevator;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.mob.Zombie;

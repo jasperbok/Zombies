@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
@@ -41,9 +41,7 @@ public class Crate extends Entity {
 		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 
-	public void update(Input input, int delta) {
-		this.standing = level.env.isOnGround(this, false);
-		
+	public void update(Input input, int delta) {		
 		if (crane.magnetActive && !draggedByMagnet) {
 			Rectangle hitBox = new Rectangle(crane.armPos.getX(), crane.armPos.getY() + crane.arm.getHeight(), crane.arm.getWidth(), 20);
 			if (hitBox.intersects(this.boundingBox)) {

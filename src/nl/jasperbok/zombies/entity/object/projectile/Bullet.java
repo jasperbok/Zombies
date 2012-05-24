@@ -6,9 +6,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.entity.Entity;
-import nl.jasperbok.zombies.entity.component.DamagingAuraComponent;
-import nl.jasperbok.zombies.entity.component.LifeComponent;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.level.Level;
 
 public class Bullet extends Entity {
@@ -24,19 +22,21 @@ public class Bullet extends Entity {
 	 * @param range
 	 * @throws SlickException
 	 */
-	public Bullet(Level level, Vector2f position, Vector2f velocity, int damage, int range) throws SlickException {
+	public Bullet(Level level, float x, float y, Vector2f vel, int damage, int range) throws SlickException {
 		super.init(level);
-		this.position = position;
-		this.startX = (int)position.x;
-		this.vel = velocity;
-		this.range = range;
+		
+		this.position.x = x;
+		this.position.y = y;
+		this.vel = vel;
+		
+		this.gravityFactor = 0;
 		
 		this.type = Entity.Type.NONE;
 		this.checkAgainst = Entity.Type.BOTH;
 		this.collides = Entity.Collides.ACTIVE;
 		
-		this.addComponent(new LifeComponent(this));
-		this.addComponent(new DamagingAuraComponent(this, damage));
+		this.startX = (int)position.x;
+		this.range = range;
 		
 		Animation idle = new Animation();
 		if (this.vel.x > 0) {
@@ -59,6 +59,7 @@ public class Bullet extends Entity {
 	}
 	
 	public void check(Entity other) {
+		System.out.println("Bullet hits something!");
 		other.receiveDamage(1);
 		this.kill();
 	}

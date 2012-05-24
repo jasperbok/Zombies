@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.level.Level;
 import nl.timcommandeur.zombies.light.LightSource;
@@ -41,7 +41,6 @@ public class MagneticCrane extends Entity implements Usable {
 	
 	public MagneticCrane(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
-		this.gravityAffected = false;
 		this.position = pos;
 		this.armVelocity = new Vector2f(0f, 0f);
 		this.armAcceleration = new Vector2f(0.01f, 0.01f);

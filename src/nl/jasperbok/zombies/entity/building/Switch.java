@@ -7,8 +7,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.level.Level;
 
@@ -24,10 +25,20 @@ public class Switch extends Entity {
 	
 	public Switch onOffSwitch;
 
-	public Switch(Level level, boolean initialState, HashMap<String, String> settings) throws SlickException {
+	public Switch(Level level, float x, float y, boolean initialState, HashMap<String, String> settings) throws SlickException {
 		super.init(level);
+		
 		this.settings = settings;
+		
+		this.size = new Vector2f(20, 20);
+		
+		this.position = new Vector2f(x, y);
+		this.accel = new Vector2f(0, 0);
+		this.friction = new Vector2f(0, 0);
+		this.maxVel = new Vector2f(0, 0);
 		this.zIndex = -2;
+		this.gravityFactor = 0;
+		
 		this.active = "true".equals(this.settings.get("active"));
 		
 		Animation onAnim = new Animation();
@@ -40,11 +51,6 @@ public class Switch extends Entity {
 		
 		this.state = initialState;
 		this.useBox = new Rectangle(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		if (this.state) {
-			System.out.println("active");
-		} else {
-			System.out.println("not active");
-		}
 	}
 
 	/**
@@ -88,6 +94,7 @@ public class Switch extends Entity {
 	}
 	
 	public void update(Input input, int delta) {
+		super.update(input, delta);
 		if (firstUpdate) {
 			this.firstUpdate = false;
 			if (this.settings.get("target") != "") {
@@ -103,7 +110,6 @@ public class Switch extends Entity {
 				}
 			}
 		}
-		super.update(input, delta);
 		this.useBox.setBounds(this.position.x, this.position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 	

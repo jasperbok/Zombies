@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 
@@ -32,8 +32,6 @@ public class Item extends Entity {
 	
 	public void update(Input input, int delta) {
 		super.update(input, delta);
-		
-		this.standing = level.env.isOnGround(this, false);
 		
 		if (level.env.getEntityByName("player").touches(this)) {
 			level.env.getPlayer().inventory.add(collect());

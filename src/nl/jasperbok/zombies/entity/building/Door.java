@@ -1,6 +1,6 @@
 package nl.jasperbok.zombies.entity.building;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;

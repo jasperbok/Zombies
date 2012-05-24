@@ -151,11 +151,11 @@ public class MapLoader {
 		settings.put("failureMessage", map.getObjectProperty(layerIndex, objectIndex, "failureMessage", ""));
 		Switch newSwitch = new Switch(
 				level,
+				map.getObjectX(layerIndex, objectIndex),
+				map.getObjectY(layerIndex, objectIndex),
 				"on".equals(map.getObjectProperty(layerIndex, objectIndex, "initial_state", "off")),
 				settings
 				);
-		newSwitch.position.x = map.getObjectX(layerIndex, objectIndex);
-		newSwitch.position.y = map.getObjectY(layerIndex, objectIndex);
 		newSwitch.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(newSwitch);
 	}

@@ -1,6 +1,6 @@
 package nl.jasperbok.zombies.entity.mob;
 
-import nl.jasperbok.zombies.entity.Entity;
+import nl.jasperbok.engine.Entity;
 
 public abstract class Mob extends Entity {
 	public int agressionRange = 50;
