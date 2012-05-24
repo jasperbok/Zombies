@@ -23,15 +23,14 @@ public class Zombie extends Mob {
 	public Zombie(Level level) throws SlickException {
 		super.init(level);
 		
-		this.maxVel = new Vector2f(10, 0);
+		this.maxVel = new Vector2f(0.15f, 0);
 		
 		//this.type = Entity.Type.B;
 		//this.checkAgainst = Entity.Type.A;
 		//this.collides = Entity.Collides.ACTIVE;
 		
-		this.addComponent(new LifeComponent(this, 1));
-		this.addComponent(new GravityComponent(0.01f, this));
-		this.addComponent(new DamagingAuraComponent(this, 0, 5));
+		this.gravityFactor = 1;
+		
 		this.blockingPointsLeft = new ArrayList<Vector2f>();
 		this.blockingPointsRight = new ArrayList<Vector2f>();
 
@@ -52,7 +51,6 @@ public class Zombie extends Mob {
 		this.anims.put("walkLeft", walkLeftAnimation);
 		this.anims.put("walkRight", walkRightAnimation);
 		this.currentAnim = this.anims.get("idle");
-		boundingBox = new Rectangle(0, 0, 4, 4);
 	}
 	
 	public void update(Input input, int delta) {
@@ -81,8 +79,29 @@ public class Zombie extends Mob {
 			this.currentAnim = this.anims.get("idle");
 		}
 		
-		updateBoundingBox();
-		super.update(input, delta);
+		// Move towards the attractors.
+		Vector2f v = new Vector2f(0, 0);
+		for (MobAttractor attractor : this.level.env.attractors) {
+			if (this.touches(attractor.object)) {
+				vel.x = 0;
+				break;
+			}
+			if (this.position.y - attractor.object.position.y < 240 && this.position.y - attractor.object.position.y > -240) {
+				v.x = ((500 * (attractor.power)) / -((this.position.x - attractor.object.position.x) * 50)) * 2;
+			}
+		}
+		this.vel = this.vel.add(v);
+		
+		// Check if the player touches the zombie.
+		if (this.touches(level.env.getEntityByName("player")) && level.env.getEntityByName("player").health > 0) {
+			level.env.getEntityByName("player").receiveDamage(200);
+		}
+		
+		if (this.vel.x > this.maxVel.x) {
+			this.vel.x = this.maxVel.x;
+		} else if (this.vel.x < -this.maxVel.x) {
+			this.vel.x = -this.maxVel.x;
+		}
 	}
 	
 	public void addBlockingPointLeft(float x) {

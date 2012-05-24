@@ -238,7 +238,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="161" y="491" width="75" height="150"/>
+  <object name="player" type="Player" x="122" y="547" width="75" height="150"/>
   <object name="door_1" type="Door" x="642" y="482" width="80" height="240"/>
   <object name="door_switch1" type="Switch" x="570" y="582" width="29" height="84">
    <properties>
@@ -360,5 +360,6 @@
   <object name="zombie_right" type="Zombie" x="3190" y="1206" width="75" height="150"/>
   <object name="zombie_right" type="Zombie" x="3254" y="1206" width="75" height="150"/>
   <object name="zombie_left1" type="Zombie" x="1747" y="1199" width="75" height="150"/>
+  <object name="zombie_left1" type="Zombie" x="491" y="548" width="75" height="150"/>
  </objectgroup>
 </map>

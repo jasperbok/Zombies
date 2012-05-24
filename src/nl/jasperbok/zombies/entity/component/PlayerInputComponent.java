@@ -63,7 +63,7 @@ public class PlayerInputComponent extends Component {
 					bm.position.x = this.owner.position.x;
 					bm.position.y = this.owner.position.y;
 					owner.level.env.spawnEntity(bm);
-					owner.level.env.mobDirector.addAttractor(bm, 60, false);
+					owner.level.env.addAttractor(bm, 60, false);
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
@@ -110,6 +110,9 @@ public class PlayerInputComponent extends Component {
 						break;
 					}
 				}
+			}
+			if (input.isKeyPressed(Input.KEY_P)) {
+				this.owner.level.togglePause();
 			}
 			if (input.isMousePressed(0)) {
 				if (!((Player)owner).isHidden()) {
