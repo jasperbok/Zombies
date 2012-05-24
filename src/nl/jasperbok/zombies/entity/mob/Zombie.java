@@ -2,17 +2,12 @@ package nl.jasperbok.zombies.entity.mob;
 
 import java.util.ArrayList;
 
-import nl.jasperbok.engine.Entity;
-import nl.jasperbok.zombies.entity.component.DamagingAuraComponent;
-import nl.jasperbok.zombies.entity.component.LifeComponent;
-import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Zombie extends Mob {
@@ -23,7 +18,7 @@ public class Zombie extends Mob {
 	public Zombie(Level level) throws SlickException {
 		super.init(level);
 		
-		this.maxVel = new Vector2f(0.15f, 0);
+		this.maxVel = new Vector2f(0.15f, 0.3f);
 		
 		//this.type = Entity.Type.B;
 		//this.checkAgainst = Entity.Type.A;

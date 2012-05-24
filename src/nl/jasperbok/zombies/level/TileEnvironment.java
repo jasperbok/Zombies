@@ -14,7 +14,6 @@ import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
 import nl.jasperbok.zombies.entity.mob.MobAttractor;
-import nl.jasperbok.zombies.entity.mob.MobDirector;
 import nl.jasperbok.zombies.sound.SoundManager;
 import nl.timcommandeur.zombies.screen.Camera;
 
@@ -76,9 +75,9 @@ public class TileEnvironment {
 		attractors = new LoopingList<MobAttractor>();
 		attractorGarbage = new LoopingList<MobAttractor>();
 		
+		this.collisionMap = new CollisionMap(this.map);
 		MapLoader.loadEntities(this, level, map);
 		spawnDeffered();
-		this.collisionMap = new CollisionMap(this.map);
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
 		//this.collisionMap.trace(400, 560, 80, 400, 1, 1).printInfo();
@@ -109,8 +108,11 @@ public class TileEnvironment {
 	
 	public Timer addTimer(float seconds) {
 		Timer timer = new Timer(seconds);
-		this.timers.add(timer);
-		return timer;
+		if (this.timers.add(timer)) {
+			return timer;
+		} else {
+			return null;
+		}
 	}
 	
 	public Entity spawnEntity(Entity ent) {
