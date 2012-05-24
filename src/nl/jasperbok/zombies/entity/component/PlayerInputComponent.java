@@ -76,11 +76,10 @@ public class PlayerInputComponent extends Component {
 					player.ladderReleaseTimer.set(0f);
 					
 					if (input.isKeyDown(Input.KEY_W)) {
-						System.out.println("Climbing up");
-						if (player.momentumDirectionY > -1) {player.momentumDirectionY--;}else{player.momentumDirectionY = -1;}
+						player.momentumDirectionY = -1;
 					}
 					else if (input.isKeyDown(Input.KEY_S)) {
-						if (player.momentumDirectionY < 1) {player.momentumDirectionY++;}else{player.momentumDirectionY = 1;}
+						player.momentumDirectionY = 1;
 					}
 				}
 			}

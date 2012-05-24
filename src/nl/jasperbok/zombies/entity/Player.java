@@ -20,15 +20,16 @@ import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
+	/**
+	 * Ladder variables.
+	 */
 	public boolean canClimb = false;
 	public boolean isClimbing = false;
 	public int momentumDirectionY = 0;
 	public Timer ladderReleaseTimer;
-	/**
-	 * Variables for states the player can be in.
-	 */
+	
 	public boolean isCrawling = false;
-	private boolean isClimbingObject = false;
+	public boolean isClimbingObject = false;
 	/**
 	 * Status variables.
 	 */
@@ -92,10 +93,20 @@ public class Player extends Entity {
 			this.ladderReleaseTimer = this.level.env.addTimer(0.5f);
 			this.firstUpdate = false;
 		}
-		super.update(input, delta);
 		
-		wasClimbing = isClimbing;
-		isClimbing = false;
+		// Do this for the ladder.
+		this.momentumDirectionY = 0;
+		if (this.isClimbing) {
+			this.gravityFactor = 0;
+		} else {
+			this.gravityFactor = 1;
+		}
+		if (!this.canClimb) this.isClimbing = false;
+		// When climbing past top of ladder, fall back.
+		if (!this.standing && !this.canClimb && this.vel.y < 0) {this.isClimbing = false;}
+		if (this.standing) this.ladderReleaseTimer.set(0);
+		
+		super.update(input, delta);
 		
 		// Position and rotate the arm.
 		int armAngle = (int) this.level.fl.getAngleInDegrees();
