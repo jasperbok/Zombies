@@ -38,6 +38,8 @@ public class Player extends Entity {
 	protected Image armImageRight;
 	protected Vector2f armPos;
 	
+	private boolean firstUpdate = true;
+	
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
 		
@@ -78,9 +80,14 @@ public class Player extends Entity {
 		this.armPos = this.position.copy();
 		
 		inventory = new Inventory();
+		//this.init();
 	}
 	
 	public void update(Input input, int delta) {
+		if (this.firstUpdate) {
+			this.ladderReleaseTimer = this.level.env.addTimer(0.5f);
+			this.firstUpdate = false;
+		}
 		super.update(input, delta);
 		
 		wasClimbing = isClimbing;
