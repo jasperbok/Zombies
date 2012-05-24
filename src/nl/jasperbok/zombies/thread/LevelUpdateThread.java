@@ -33,12 +33,12 @@ public class LevelUpdateThread extends Thread {
 			Hud.getInstance().update(delta);
 			PlayerSpeech.getInstance().update(delta);
 			//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
-			level.fl.setPosition(level.env.getEntityByName("player").position.x + level.env.getEntityByName("player").boundingBox.getWidth() / 2, level.env.getEntityByName("player").position.y + level.env.getEntityByName("player").boundingBox.getHeight() / 4, 70);
+			level.fl.setPosition(level.env.getEntityByName("player").position.x + level.env.getEntityByName("player").size.x / 2, level.env.getEntityByName("player").position.y + level.env.getEntityByName("player").size.x / 4 + 12, 65);
 			level.fl.pointToMouse(container);
 			//fl.pointToMouse(container);
 			//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
 			
-			level.playerLight.setPosition(level.env.getEntityByName("player").position.x + level.env.getEntityByName("player").boundingBox.getWidth() / 2, level.env.getEntityByName("player").position.y + level.env.getEntityByName("player").boundingBox.getHeight() / 2 - 20);
+			level.playerLight.setPosition(level.env.getEntityByName("player").position.x + level.env.getEntityByName("player").size.x / 2, level.env.getEntityByName("player").position.y + level.env.getEntityByName("player").size.y / 2 - 20);
 			
 			/*System.out.println("player.position.y: " + env.getPlayer().position.y);
 			System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);
