@@ -2,6 +2,8 @@ package nl.jasperbok.zombies.entity.mob;
 
 import java.util.ArrayList;
 
+import nl.jasperbok.engine.Entity;
+import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.level.Level;
 
 import org.newdawn.slick.Animation;
@@ -20,9 +22,9 @@ public class Zombie extends Mob {
 		
 		this.maxVel = new Vector2f(0.15f, 0.3f);
 		
-		//this.type = Entity.Type.B;
-		//this.checkAgainst = Entity.Type.A;
-		//this.collides = Entity.Collides.ACTIVE;
+		this.type = Entity.Type.B;
+		this.checkAgainst = Entity.Type.A;
+		this.collides = Entity.Collides.PASSIVE;
 		
 		this.gravityFactor = 1;
 		
@@ -88,7 +90,8 @@ public class Zombie extends Mob {
 		this.vel = this.vel.add(v);
 		
 		// Check if the player touches the zombie.
-		if (this.touches(level.env.getEntityByName("player")) && level.env.getEntityByName("player").health > 0) {
+		Player player = (Player)level.env.getEntityByName("player");
+		if (this.touches(player) && player.health > 0 && !player.isHidden) {
 			level.env.getEntityByName("player").receiveDamage(200);
 		}
 		
