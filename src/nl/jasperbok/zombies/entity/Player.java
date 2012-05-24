@@ -10,22 +10,16 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.engine.Entity;
-import nl.jasperbok.engine.Timer;
 import nl.jasperbok.zombies.level.Level;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
+import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.gui.Hud;
 
 public class Player extends Entity {
-	/**
-	 * Ladder variables.
-	 */
-	public boolean canClimb = false;
-	public boolean isClimbing = false;
-	public int momentumDirectionY = 0;
-	public Timer ladderReleaseTimer;
+	public float climbSpeed = 0.1f;
 	/**
 	 * Variables for states the player can be in.
 	 */
@@ -49,7 +43,7 @@ public class Player extends Entity {
 		
 		this.position = pos;
 		this.friction = new Vector2f(0.1f, 0.1f);
-		this.maxVel = new Vector2f(0.3f, 1f);
+		this.maxVel = new Vector2f(0.3f, 10f);
 		this.zIndex = -1;
 		
 		this.type = Entity.Type.A;
@@ -57,9 +51,9 @@ public class Player extends Entity {
 		this.collides = Entity.Collides.ACTIVE;
 		
 		this.addComponent(new PlayerInputComponent(this));
+		this.addComponent(new LifeComponent(this, 5));
 		
 		this.playerControlled = true;
-		this.ladderReleaseTimer = level.env.addTimer(0.5f);
 		
 		this.facing = Entity.RIGHT;
 		this.animSheet = new SpriteSheet("data/sprites/entity/player_walk.png", 75, 150);
@@ -89,11 +83,8 @@ public class Player extends Entity {
 	public void update(Input input, int delta) {
 		super.update(input, delta);
 		
-		// Do this for the ladder.
-		if (!this.canClimb) this.isClimbing = false;
-		// When climbing past top of ladder, fall back.
-		if (!this.standing && !this.canClimb && this.vel.y < 0) {this.isClimbing = false;}
-		if (this.standing) this.ladderReleaseTimer.set(0);
+		wasClimbing = isClimbing;
+		isClimbing = false;
 		
 		// Position and rotate the arm.
 		int armAngle = (int) this.level.fl.getAngleInDegrees();
@@ -208,7 +199,7 @@ public class Player extends Entity {
 	}
 	
 	/**
-	 * Returns whether the player is hidden or not.
+	 * Returns if the player is hidden or not.
 	 * 
 	 * @return
 	 */
