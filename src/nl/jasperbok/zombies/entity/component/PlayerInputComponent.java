@@ -125,6 +125,9 @@ public class PlayerInputComponent extends Component {
 					}
 				}
 			}
+			if (input.isKeyPressed(Input.KEY_P)) {
+				this.owner.level.togglePause();
+			}
 			if (input.isMousePressed(0)) {
 				if (!((Player)owner).isHidden()) {
 					owner.level.fl.switchOnOff();

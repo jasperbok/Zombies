@@ -26,10 +26,8 @@ import nl.timcommandeur.zombies.screen.Camera;
 import nl.jasperbok.zombies.gui.Hud;
 import nl.jasperbok.zombies.gui.MainMenu;
 import nl.jasperbok.zombies.gui.PlayerSpeech;
-import nl.jasperbok.zombies.thread.LevelRenderThread;
-import nl.jasperbok.zombies.thread.LevelUpdateThread;
 
-public class Level extends BasicGameState implements GameState {
+public class CopyOfLevel extends BasicGameState implements GameState {
 	protected static int ID;
 	public Camera camera;
 	
@@ -39,7 +37,7 @@ public class Level extends BasicGameState implements GameState {
 	public boolean doLighting = true;
     public static List<LightSource> lights;
     protected float intensity = 1.0f;
-    public FrameBufferObject fboLight;
+    protected FrameBufferObject fboLight;
     protected FrameBufferObject fboLevel;
     protected boolean addLight=true;
 	protected List<ShadowHull> cHulls;
@@ -51,13 +49,9 @@ public class Level extends BasicGameState implements GameState {
 	protected String mapFileName;
 	
 	protected boolean paused = false;
-	public boolean quit = false;
-	public MainMenu menu;
+	protected MainMenu menu;
 	
-	protected LevelRenderThread renderThread;
-	protected LevelUpdateThread updateThread;
-	
-	public Level(String mapFileName) throws SlickException {
+	public CopyOfLevel(String mapFileName) throws SlickException {
 		this.menu = new MainMenu(this);
 		
 		lights = new ArrayList<LightSource>();
@@ -65,12 +59,15 @@ public class Level extends BasicGameState implements GameState {
         
         fboLight = new FrameBufferObject(new Point(1280, 720));
 		fboLevel = new FrameBufferObject(new Point(1280, 720));
-		
-		this.renderThread = new LevelRenderThread(this);
-		this.updateThread = new LevelUpdateThread(this);
 	}
 	
 	public void init(String mapFileName) {
+		try {
+			this.menu.init();
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		this.mapFileName = mapFileName;
 		try {
@@ -98,11 +95,52 @@ public class Level extends BasicGameState implements GameState {
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		this.updateThread.run(container, game, delta);
+		if (!this.isPaused()) {
+			camera.update(container, delta);
+			Hud.getInstance().update(delta);
+			PlayerSpeech.getInstance().update(delta);
+			//fl.setPos(new Vec2(player.position.x + 10 + camera.position.x, player.position.y + 10 - camera.position.y));
+			fl.setPosition(env.getEntityByName("player").position.x + env.getEntityByName("player").boundingBox.getWidth() / 2, env.getEntityByName("player").position.y + env.getEntityByName("player").boundingBox.getHeight() / 4, 70);
+			fl.pointToMouse(container);
+			//fl.pointToMouse(container);
+			//System.out.println(container.getInput().getAbsoluteMouseX() + camera.position.x);
+			
+			playerLight.setPosition(env.getEntityByName("player").position.x + env.getEntityByName("player").boundingBox.getWidth() / 2, env.getEntityByName("player").position.y + env.getEntityByName("player").boundingBox.getHeight() / 2 - 20);
+			
+			/*System.out.println("player.position.y: " + env.getPlayer().position.y);
+			System.out.println("player.renderPosition.y: " + env.getPlayer().renderPosition.y);
+			System.out.println("camera.position.y: " + camera.position.y);*/
+			
+			env.update(container, delta);
+		} else {
+			this.menu.update(container, game, delta);
+		}
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		this.renderThread.start(container, game, g);
+		if (!this.isPaused()) {
+			//camera.translate(g);
+			
+			if (doLighting) renderScene(container, g);
+	        renderLevel(container, g);
+	        
+	        if (doLighting) {
+		        GL11.glEnable(GL11.GL_BLEND);
+		        GL11.glBlendFunc(GL11.GL_DST_ALPHA, GL11.GL_SRC_COLOR);
+		        
+		        fboLight.render(1.0f);
+				
+		        //GL11.glEnable(GL11.GL_BLEND);
+		        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_COLOR);
+	        }
+	        
+			Hud.getInstance().render(container, g);
+			PlayerSpeech.getInstance().render(container, g);
+			
+			//g.resetTransform();
+		} else {
+			this.menu.render(container, game, g);
+		}
 	}
 	
 	public void renderLevel(GameContainer container, Graphics g) throws SlickException {
@@ -238,9 +276,5 @@ public class Level extends BasicGameState implements GameState {
 			this.paused = true;
 		}
 		return this.paused;
-	}
-	
-	public void quitGame() {
-		this.quit = true;
 	}
 }
