@@ -27,7 +27,7 @@ import LightTest.LoopingList;
  * The Mobdirector is responsible for the behavior the mobs will (try) to execute.
  * It is not a physics class so it will not handle gravity, collision with surroundings, etc.
  */
-public class MobDirector {
+public class CopyOfMobDirector {
 	public List<Mob> mobs;
 	public List<MobAttractor> attractors;
 	public List<MobAttractor> attractorGarbage;
@@ -43,7 +43,7 @@ public class MobDirector {
 	
 	private HashMap<Mob, List> trackingMobs;
 	
-	public MobDirector(Level level) {
+	public CopyOfMobDirector(Level level) {
 		this.level = level;
 		try {
 			init();
@@ -55,7 +55,7 @@ public class MobDirector {
 		attractorGarbage = new LoopingList<MobAttractor>();
 	}
 	
-	public MobDirector(Level level, SoundManager soundManager, List<Mob> mobs) {
+	public CopyOfMobDirector(Level level, SoundManager soundManager, List<Mob> mobs) {
 		this.level = level;
 		this.sounds = soundManager;
 		try {
@@ -93,11 +93,26 @@ public class MobDirector {
 	 * Executes all logic to make mobs behave accordingly.
 	 */
 	public void moveMobs(GameContainer container) {
+		
+		// I think it will work without this bit.
+		// So check it out!!!
+		//---
+			for (MobAttractor attractor : attractors) {
+				attractor.update();
+			}
+		//---
+		
 		closedForDistanceChecking = new ArrayList<Mob>();
 		
 		for (Mob mob : mobs) {
 			Vector2f v = new Vector2f();
-			v = v.add(keepDistanceBetweenAllMobs(mob));
+			if (closedForDistanceChecking.contains(mob) != true && distanceCheckingTimer == 0) {
+				v = v.add(keepDistanceBetweenAllMobs(mob));
+				//closedForDistanceChecking.add(mob);
+				distanceCheckingTimer = distanceCheckingTimeoutCeil;
+			} else {
+				distanceCheckingTimer--;
+			}
 			
 			if (Math.random() * 10000 > 9999) {
 				sounds.playSFX("zombie_groan1", mob.position, this.level.env.getEntityByName("player").position);
@@ -112,10 +127,20 @@ public class MobDirector {
 					v.x = 0;
 					break;
 				}
+				
+				if (attractor.triggerAgression && mob.boundingBox.intersects(attractor.object.boundingBox)) {
+					v = new Vector2f(0, 0);
+					
+					// End the game if the mob touches an agression attractor.
+					/* un-uncomment if the game should end when the player touches a zombie
+					try {
+						container.reinit();
+					} catch (SlickException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}//*/
+				}
 			}
-			
-			mob.vel.x += v.x;
-			mob.vel.y += v.y;
 			
 			if (v.x > mob.maxVel.x) {
 				v.x = mob.maxVel.x;
@@ -123,7 +148,12 @@ public class MobDirector {
 				v.x = -mob.maxVel.x;
 			}
 			
+			mob.vel.x += v.x;
+			mob.vel.y += v.y;
+			
 			mob.vel.x /= 50;
+			
+			//System.out.println("v.x" + mob.velocity.x);
 		}
 		
 		for (MobAttractor attractor : attractorGarbage) {

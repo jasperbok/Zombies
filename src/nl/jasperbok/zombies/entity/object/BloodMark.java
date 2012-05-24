@@ -39,7 +39,7 @@ public class BloodMark extends Entity {
 		super.update(input, delta);
 		currentLifetime += delta;
 		if (this.currentLifetime > this.lifetime) {
-			this.level.env.mobDirector.removeAttractor(this);
+			this.level.env.removeAttractor(this);
 			this.kill();
 		}
 	}

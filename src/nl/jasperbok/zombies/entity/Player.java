@@ -51,7 +51,7 @@ public class Player extends Entity {
 		this.collides = Entity.Collides.ACTIVE;
 		
 		this.addComponent(new PlayerInputComponent(this));
-		//this.addComponent(new LifeComponent(this, 5));
+		this.addComponent(new LifeComponent(this, 5));
 		
 		this.playerControlled = true;
 		

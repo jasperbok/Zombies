@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 
 import nl.jasperbok.engine.CollisionMap;
 import nl.jasperbok.engine.Entity;
@@ -12,7 +11,6 @@ import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
 import nl.jasperbok.zombies.entity.mob.Mob;
-import nl.jasperbok.zombies.entity.mob.MobAttractor;
 import nl.jasperbok.zombies.entity.mob.MobDirector;
 import nl.jasperbok.zombies.sound.SoundManager;
 import nl.timcommandeur.zombies.screen.Camera;
@@ -24,9 +22,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
-import LightTest.LoopingList;
-
-public class TileEnvironment {
+public class CopyOfTileEnvironment {
 	// Settings.
 	private boolean drawBoundingBoxes = false;
 	
@@ -37,8 +33,6 @@ public class TileEnvironment {
 	private Level level;
 	int backgroundLayer;
 	int collisionLayer;
-	public List<MobAttractor> attractors;
-	public List<MobAttractor> attractorGarbage;
 	
 	// Entity variables.
 	private int nextEntId = 0;
@@ -46,11 +40,13 @@ public class TileEnvironment {
 	private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
 	private HashMap<String, Entity> namedEntities = new HashMap<String, Entity>();
 	private ArrayList<Usable> usableEntities = new ArrayList<Usable>();
+	private ArrayList<Entity> attractors = new ArrayList<Entity>();
 	private ArrayList<Entity> garbage = new ArrayList<Entity>();
 	private ArrayList<Entity> deferredSpawn = new ArrayList<Entity>();
 	
 	// Utilities.
 	public SoundManager sounds;
+	public MobDirector mobDirector;
 	public CollisionMap collisionMap;
 	
 	private boolean sortNow = false;
@@ -61,7 +57,7 @@ public class TileEnvironment {
 	 * @param mapName The name of the map to load (without .tmx).
 	 * @throws SlickException
 	 */
-	public TileEnvironment(String mapName, Level level) throws SlickException {
+	public CopyOfTileEnvironment(String mapName, Level level) throws SlickException {
 		// Load the map and all related variables.
 		this.sounds = new SoundManager();
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
@@ -70,12 +66,10 @@ public class TileEnvironment {
 		this.level = level;
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
-
-		attractors = new LoopingList<MobAttractor>();
-		attractorGarbage = new LoopingList<MobAttractor>();
 		
 		MapLoader.loadEntities(this, level, map);
 		spawnDeffered();
+		this.mobDirector = new MobDirector(level, sounds, getAllMobs());
 		this.collisionMap = new CollisionMap(this.map);
 		Camera.getInstance().setTarget(this.getEntityByName("player"));
 		
@@ -205,6 +199,7 @@ public class TileEnvironment {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		updateTriggers(container, delta);
 		checkEntities();
@@ -273,6 +268,11 @@ public class TileEnvironment {
 		for (Entity ent: this.entities) {
 			ent.update(input, delta);
 		}
+		
+		// Update all the attractors.
+		for (Entity att: attractors) {
+			att.update(input, delta);
+		}
 	}
 	
 	/**
@@ -296,6 +296,11 @@ public class TileEnvironment {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
+		
+		// Render all the attractors.
+		for (Entity att: attractors) {
+			att.render(container, g);
+		}
 		
 		// Render all the entities.
 		for (Entity ent: entities) {
@@ -330,6 +335,7 @@ public class TileEnvironment {
 	public void emptyGarbage() {
 		for (Entity entity : garbage) {
 			if (entities.contains(entity)) entities.remove(entity);
+			if (attractors.contains(entity)) attractors.remove(entity);
 			if (usableEntities.contains(entity)) usableEntities.remove(entity);
 			entity = null;
 		}
@@ -350,29 +356,5 @@ public class TileEnvironment {
 	 */
 	public Player getPlayer() {
 		return (Player)this.getEntityByName("player");
-	}
-	
-	/**
-	 * Adds an attractor to which the mobs will be attracted.
-	 * 
-	 * @param object
-	 * @param power
-	 */
-	public void addAttractor(Entity object, int power, boolean triggerAgression) {
-		MobAttractor attractor = new MobAttractor(object, power, triggerAgression);
-		attractors.add(attractor);
-	}
-	
-	/**
-	 * Removes an attractor from the list where the attractor belongs to the given object.
-	 * 
-	 * @param object
-	 */
-	public void removeAttractor(Entity object) {
-		for (MobAttractor attractor : attractors) {
-			if (attractor.object == object) {
-				attractorGarbage.add(attractor);
-			}
-		}
 	}
 }

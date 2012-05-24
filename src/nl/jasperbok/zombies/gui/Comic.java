@@ -17,6 +17,7 @@ public class Comic {
 	
 	private HashMap<String, Image> pages;
 	private String currentPageKey;
+	private boolean finished = false;
 	
 	public Comic(Level level) {
 		this.level = level;
@@ -63,7 +64,7 @@ public class Comic {
 	}
 	
 	public void quit() {
-		
+		finished = true;
 	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -76,5 +77,9 @@ public class Comic {
 		} else if (container.getInput().isKeyPressed(Input.ANY_CONTROLLER)) {
 			selectNext();
 		}
+	}
+	
+	public boolean isFinished() {
+		return finished;
 	}
 }

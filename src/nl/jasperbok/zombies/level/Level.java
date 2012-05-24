@@ -30,7 +30,13 @@ import nl.jasperbok.zombies.thread.LevelRenderThread;
 import nl.jasperbok.zombies.thread.LevelUpdateThread;
 
 public class Level extends BasicGameState implements GameState {
+	public final int MAIN_MENU = 1;
+	public final int COMIC = 2;
+	public final int PAUSE = 3;
+	public final int INGAME = 4;
+	
 	protected static int ID;
+	public int currentState = 1;
 	public Camera camera;
 	public float gravity = 1;
 	
