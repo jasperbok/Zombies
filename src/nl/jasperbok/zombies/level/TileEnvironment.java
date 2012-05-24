@@ -32,9 +32,8 @@ public class TileEnvironment {
 	
 	// Map variables.
 	private TiledMap map;
-	private int tileWidth;
-	private int tileHeight;
 	private Level level;
+	int wallLayer;
 	int backgroundLayer;
 	int collisionLayer;
 	public List<MobAttractor> attractors;
@@ -67,9 +66,8 @@ public class TileEnvironment {
 		// Load the map and all related variables.
 		this.sounds = new SoundManager();
 		this.map = new TiledMap("data/maps/" + mapName + ".tmx");
-		this.tileWidth = map.getTileWidth();
-		this.tileHeight = map.getTileHeight();
 		this.level = level;
+		this.wallLayer = map.getLayerIndex("wall");
 		this.backgroundLayer = map.getLayerIndex("background");
 		this.collisionLayer = map.getLayerIndex("collision");
 
@@ -304,6 +302,7 @@ public class TileEnvironment {
 	}
 	
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, wallLayer);
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, backgroundLayer);
 		map.render(0 - (int)Camera.getInstance().position.getX() + (int)Camera.center.x, 0 - (int)Camera.getInstance().position.getY() + (int)Camera.center.y, collisionLayer);
 		

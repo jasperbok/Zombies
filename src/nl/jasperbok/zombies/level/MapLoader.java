@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.level;
 
 import java.util.HashMap;
 
+import nl.jasperbok.zombies.entity.HidingSpace;
 import nl.jasperbok.zombies.entity.Ladder;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
@@ -74,6 +75,9 @@ public class MapLoader {
 				case "Door" :
 					MapLoader.spawnDoor(env, level, map, i, j);
 					break;
+				case "HidingSpace" :
+					MapLoader.spawnHidingSpace(env, level, map, i, j);
+					break;
 				case "Item" :
 					MapLoader.spawnItem(env, level, map, i, j);
 					break;
@@ -121,6 +125,17 @@ public class MapLoader {
 		door.position.y = map.getObjectY(layerIndex, objectIndex);
 		door.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(door);
+	}
+	
+	private static void spawnHidingSpace(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		HidingSpace hidingspace = new HidingSpace(
+				level,
+				map.getObjectX(layerIndex, objectIndex),
+				map.getObjectY(layerIndex, objectIndex),
+				map.getObjectWidth(layerIndex, objectIndex),
+				map.getObjectHeight(layerIndex, objectIndex)
+		);
+		env.spawnEntity(hidingspace);
 	}
 	
 	private static void spawnLadder(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {

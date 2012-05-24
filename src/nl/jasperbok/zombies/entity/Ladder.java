@@ -18,10 +18,10 @@ public class Ladder extends Entity {
 		this.position = new Vector2f(x, y);
 		this.maxVel = new Vector2f(0, 0);
 		this.gravityFactor = 0;
-		this.health = 999999;
+		this.invincible = true;
 		
 		this.type = Entity.Type.B;
-		this.checkAgainst = Entity.Type.BOTH;
+		this.checkAgainst = Entity.Type.A;
 		this.collides = Entity.Collides.LITE;
 	}
 	

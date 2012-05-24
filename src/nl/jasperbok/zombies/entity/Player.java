@@ -36,6 +36,7 @@ public class Player extends Entity {
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
 	protected boolean isHidden = false;
+	public boolean canHide = false;
 	/**
 	 * Arm variables.
 	 */

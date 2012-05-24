@@ -160,6 +160,14 @@
  <tileset firstgid="1230" name="BackgroundSprites3" tilewidth="80" tileheight="80">
   <image source="src/bq_s_tileset.png" width="1000" height="1000"/>
  </tileset>
+ <tileset firstgid="1374" name="main_background" tilewidth="80" tileheight="80">
+  <image source="src/levelBackground.png" width="900" height="1600"/>
+ </tileset>
+ <layer name="wall" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+XK03ZdUQBA0VPk1k1tpKlt/UyKNGmb2rZt27Zt27Ztc/7Hfpgva6ykuChqRGOa0JRkmpFCKs1pQVJAb0vSaEVr2tCWdrSnAx3pFNjbmS50pRvd6UFPetGbPvQN7O1HfwYwkEEMZghDGcZwRgT2jmQUoxnDWMYxnglMZBKTA3unMJVpTGcGM5nFbOYwl3mBvfNZwEIWsZglLGUZy1nBysDeVaxmDWtZx3o2sJFNbGZLYO9WtrGdHexkF7vZw172sT+w9wAHOcRhjnCUYxznBCc5Fdh7mjOc5RznucBFLnGZK1wN7L3GdW5wk1vc5g53ucd9HgT2PuQRj3nCU57xnBe85BWvA3vf8JZ3vOcDH/nEZ77wlW+Bvd/5wU9+8Zs//OUfUSyK0pE+FtabQctIHDEykZksZCUb2ckRC+vNSTy5yE0e8pKP/BSgIIUCewtThKIUozglKEkCpUikdGBvGcpSjvJUoCKVqEwVqlItsLc6NahJLWpTh7rUoz4NaBjY+x+n56xx4BUAAA==
+  </data>
+ </layer>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA2NgGAUDDa6wMDBcZRloVww+8AAYJg9Hw2UUjAKyQRQ0/5yH0iVAunQE56kwoN8DgTgILQxagPzWERwuoHTyEohfoYXBFCB/6ggOF0fGgXbBKBgF9AHk1g2VQD1VQFwNxDVE6j+HVi8NZoBeN9xigWAQuASkL+PwQydQvAuIu4G4hwJ/SrGSr5eWAL1ueMYCwYTATKCaWUA8G4jnYFEvBvTvbaC4BJCWZIX4X3qQhgE9AShcxFmHbriA8jws359jQaSXcyyYapAxIaAEDANlIFYBYlUgVgNi9SEULugAWz7aCORvAuLNRIQHLMz0gGHwBsh+C8TvgNgIyDfGEi74wvgj8c6mOcAWLgeB/ENAfJiE8tUKGAY/gOp/AvEvILYD8u1JTC+sjAMTNt+YMDEsXLDJDRQeBYMDAAASLU6X4BUAAA==
@@ -170,16 +178,17 @@
    H4sIAAAAAAAAA82YXW4TQRCEe4lB4gBmDTewFIKSG8QRfuQtQfYNSOTcAOcwXIIr8PMA7wTOgMQBmJa7tLWVniFGQmLk0uzP7E9/01Mz67PO7GnRs6Kj0EvRsegkji+LNkXXyXHfXhWti8rPHhQdUD2xoa3WuB56Z4Oed3UdNbRvYSaL0EqUMTqJmBEDYlrRcTCb2q7mWGc2tNUa10Mc+2lDi4b2ZQMufu1FaCMCnyxvEANiAgvents4Fx6X/UMbzmuN66FW/J+SmLQtcmmfgmucx6MQvx9z0Lzh/sc1K2Hj+09srD64XEtb6FqE+JiJlg9FH23HCazQ/m/G0mnlOV6UBXKGxw37AfLLb6d+wnVvY585kRxU5vcpt0Xfi36ElEstxlo5j1x5bztxAYuMB3sB+4xrauPYNN7eBg4zGzPI/Lflsy8i3tb5fZmYvP9nOdfiwWMN4wCxzG2I8dVkdy3qZXBBDh7amEnmvy2fPYvYWwKjGjfmy1wyP8W4qM3T4JF5pecL/BzP55zoiYXnC3iuK/c8r8jz/HWwaYn9idXKMV2rZByy89kaBprb8Ay8E3tRTyw8X9hvMXZxT3/Om4oui66CTUtgqFyzHAQfXatg7Kjf6nomG1Oodf7J5iPeB09lAnZvK9oW3QSblsBQuWY5CDbl15w7fL7oGue5PqD2WRtI56PWO6CNskC+v479lnCdcs1y8Dy4uBfwOPhlQ5+5fPxPI9eRP5nnQtxe/YLnI+QH2nOe6P1nNmbCXnslvDR/cDzzY2akPjyluUPXaCoeSxg/2tb9Yk5jA/MumMBfcB+038hzeHx6G46bvfYm+lnZQC0/ZhaQH3c/nIcHZvMS3g99zd8GvBZGHi2l//m7h/28t7v5mPk4clvzhb0WTLTPIbTLzjELyNteRL7U/PBPUl9eS//r+AHDPsbZMbXn72/Eili8jcZyVNnGmgZqMWAWkDO/7IZvulU3zm+Md+3/TMxgRnHyfA4meA5yB1w4T3its4h7aiyLyjbWNFCLAbOAPB+3EhvnN6T9n4nnWf0/hdnwc3jsIU/0m2sZcfo7aCwXlW2saaAWA2YBoXBsmCd4XvhSJsmvk3yuqP1/Uvt+wLOQlw+7sb/qN9c64vxpd2O5rGyr97YYKIta6ZNj3wqT28mYR+1/k0039uJs7YfnbBr3YW2Dn8ayrWyb1eem+zBA2cdn/1f9i/IbXXjQX+AVAAA=
   </data>
  </layer>
- <objectgroup name="ObjectLayer" width="70" height="20">
+ <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
   <object name="zombie1" type="Zombie" x="1427" y="1354" width="75" height="150"/>
   <object name="zombie2" type="Zombie" x="1324" y="1358" width="75" height="150"/>
-  <object name="zombie3" type="Zombie" x="2052" y="567" width="75" height="150"/>
-  <object name="zombie4" type="Zombie" x="2136" y="564" width="75" height="150"/>
-  <object name="zombie5" type="Zombie" x="1770" y="548" width="75" height="150"/>
-  <object name="zombie6" type="Zombie" x="1821" y="561" width="75" height="150"/>
+  <object name="zombie3" type="Zombie" x="2078" y="565" width="75" height="150"/>
+  <object name="zombie4" type="Zombie" x="2176" y="566" width="75" height="150"/>
+  <object name="zombie5" type="Zombie" x="1774" y="564" width="75" height="150"/>
+  <object name="zombie6" type="Zombie" x="1873" y="563" width="75" height="150"/>
   <object name="turret" type="AutoTurret" x="1927" y="597" width="135" height="121">
    <properties>
     <property name="direction" value="right"/>
+    <property name="range" value="400"/>
    </properties>
   </object>
   <object name="turret_activation" type="Switch" x="2097" y="145" width="29" height="84">
@@ -206,5 +215,41 @@
    </properties>
   </object>
   <object name="box" type="WoodenCrate" x="961" y="1039" width="80" height="80"/>
+  <object type="Trigger" x="2836" y="1233" width="367" height="279">
+   <properties>
+    <property name="goToLevel" value="level4"/>
+   </properties>
+  </object>
+  <object name="sound_trigger" type="Trigger" x="644" y="964" width="80" height="160">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="monster_movement"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="player" type="Player" x="24" y="1352" width="75" height="150"/>
+  <object name="sound_trigger2" type="Trigger" x="2320" y="732" width="80" height="160">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="zombieHorde"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger3" type="Trigger" x="2316" y="1124" width="80" height="160">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="sea-fury__monster"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object name="sound_trigger4" type="Trigger" x="2077" y="77" width="80" height="160">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="woman_scream"/>
+    <property name="target" value="player"/>
+   </properties>
+  </object>
+  <object type="Ladder" x="2320" y="240" width="80" height="1280"/>
+  <object type="Ladder" x="239" y="1120" width="80" height="400"/>
  </objectgroup>
 </map>
