@@ -73,6 +73,7 @@ public abstract class Entity extends RenderObject {
 	public SpriteSheet animSheet = null;
 	public Animation currentAnim = null;
 	public int health = 5;
+	public boolean invincible = false;
 	
 	public Entity.Type type = Entity.Type.NONE;
 	public Entity.Type checkAgainst = Entity.Type.NONE;
@@ -293,9 +294,11 @@ public abstract class Entity extends RenderObject {
 	 * @param amount The amount of damage to deal.
 	 */
 	public void receiveDamage(int amount) {
-		this.health -= amount;
-		if (this.health <= 0) {
-			this.kill();
+		if (!this.invincible) {
+			this.health -= amount;
+			if (this.health <= 0) {
+				this.kill();
+			}
 		}
 	}
 	
