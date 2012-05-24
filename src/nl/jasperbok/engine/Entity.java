@@ -25,9 +25,12 @@ public abstract class Entity extends RenderObject {
 	public static final int LEFT = 1;
 	public static final int RIGHT = 2;
 	
+	/**
+	 * Entity collision types.
+	 */
 	public static enum Collides {
-		NEVER (0),
-		LITE (1),
+		NEVER (0),		// The entity never collides.
+		LITE (1),		// This entity will always be weak and thus move out of the way in collisions.
 		PASSIVE (2),
 		ACTIVE (4),
 		FIXED (8);

@@ -209,6 +209,7 @@
   <object name="wood_crate_2" type="WoodenCrate" x="3651" y="1112" width="80" height="80"/>
   <object name="checkpoint" type="Checkpoint" x="4800" y="910" width="320" height="270"/>
   <object name="wood_crate_1" type="WoodenCrate" x="2807" y="1102" width="80" height="80"/>
+  <object type="Ladder" x="4400" y="400" width="80" height="800"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
   <object type="Trigger" x="3122" y="485" width="69" height="152">

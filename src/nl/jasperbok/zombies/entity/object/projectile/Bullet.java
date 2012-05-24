@@ -59,7 +59,6 @@ public class Bullet extends Entity {
 	}
 	
 	public void check(Entity other) {
-		System.out.println("Bullet hits something!");
 		other.receiveDamage(1);
 		this.kill();
 	}

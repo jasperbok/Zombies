@@ -6,16 +6,16 @@ import nl.jasperbok.zombies.level.Level;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Door extends Entity {
 	
 	public Door(Level level, boolean facingLeft) throws SlickException {
 		super.init(level);
-		this.isBlocking = true;
 		this.initAnimation(facingLeft);
-		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
-		this.isSolid = true;
+		
+		this.type = Entity.Type.B;
+		this.checkAgainst = Entity.Type.BOTH;
+		this.collides = Entity.Collides.FIXED;
 	}
 	
 	public void initAnimation(boolean facingLeft) throws SlickException {
@@ -33,5 +33,9 @@ public class Door extends Entity {
 		if (message == "on") {
 			level.env.removeEntity(this);
 		}
+	}
+	
+	public void receiveDamage() {
+		
 	}
 }

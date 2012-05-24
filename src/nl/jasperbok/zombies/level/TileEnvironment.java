@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import nl.jasperbok.engine.CollisionMap;
 import nl.jasperbok.engine.Entity;
+import nl.jasperbok.engine.Timer;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.Usable;
@@ -48,6 +49,7 @@ public class TileEnvironment {
 	public SoundManager sounds;
 	public MobDirector mobDirector;
 	public CollisionMap collisionMap;
+	public ArrayList<Timer> timers = new ArrayList<Timer>();
 	
 	private boolean sortNow = false;
 	
@@ -75,7 +77,7 @@ public class TileEnvironment {
 		
 		//this.collisionMap.trace(400, 560, 80, 400, 1, 1).printInfo();
 		//this.collisionMap.trace(560, 400, 320, -80, 1, 1).printInfo();
-		this.collisionMap.trace(400, 719, 160, 80, 1, 1).printInfo();
+		//this.collisionMap.trace(400, 719, 160, 80, 1, 1).printInfo();
 		
 		// If there is no checkpoint for this level yet, create one
 		// at the player's starting position.
@@ -97,6 +99,12 @@ public class TileEnvironment {
 	
 	public void addTrigger(Trigger trigger) {
 		this.triggers.add(trigger);
+	}
+	
+	public Timer addTimer(float seconds) {
+		Timer timer = new Timer(seconds);
+		this.timers.add(timer);
+		return timer;
 	}
 	
 	public Entity spawnEntity(Entity ent) {
@@ -167,17 +175,6 @@ public class TileEnvironment {
 			}
 		});
 	}
-	/*
-	public ArrayList<Entity> getAllZombies() {
-		ArrayList<Entity> ents = new ArrayList<Entity>();
-		for (Entity ent: entities) {
-			if (ent instanceof Zombie) {
-				ents.add(ent);
-			}
-		}
-		return ents;
-	}
-	*/
 	
 	/**
 	 * Returns the first Usable who's 'use activation field' lies within the
@@ -199,6 +196,7 @@ public class TileEnvironment {
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException {
+		updateTimers(delta);
 		mobDirector.moveMobs(container);
 		updateEntities(container.getInput(), delta);
 		updateTriggers(container, delta);
@@ -225,6 +223,12 @@ public class TileEnvironment {
 		if (sortNow) {
 			this.sortEntities();
 			this.sortNow = false;
+		}
+	}
+	
+	public void updateTimers(int delta) {
+		for (Timer timer: this.timers) {
+			timer.update(delta);
 		}
 	}
 	

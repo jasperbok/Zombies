@@ -2,6 +2,7 @@ package nl.jasperbok.zombies.level;
 
 import java.util.HashMap;
 
+import nl.jasperbok.zombies.entity.Ladder;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.Trigger;
 import nl.jasperbok.zombies.entity.building.AutoTurret;
@@ -76,6 +77,9 @@ public class MapLoader {
 				case "Item" :
 					MapLoader.spawnItem(env, level, map, i, j);
 					break;
+				case "Ladder" :
+					MapLoader.spawnLadder(env, level, map, i, j);
+					break;
 				case "Player" :
 					MapLoader.spawnPlayer(env, level, map, i, j);
 					break;
@@ -117,6 +121,17 @@ public class MapLoader {
 		door.position.y = map.getObjectY(layerIndex, objectIndex);
 		door.name = map.getObjectName(layerIndex, objectIndex);
 		env.spawnEntity(door);
+	}
+	
+	private static void spawnLadder(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {
+		Ladder ladder = new Ladder(
+				level,
+				map.getObjectX(layerIndex, objectIndex),
+				map.getObjectY(layerIndex, objectIndex),
+				map.getObjectWidth(layerIndex, objectIndex),
+				map.getObjectHeight(layerIndex, objectIndex)
+		);
+		env.spawnEntity(ladder);
 	}
 	
 	private static void spawnTurret(TileEnvironment env, Level level, TiledMap map, int layerIndex, int objectIndex) throws SlickException {

@@ -68,20 +68,23 @@ public class PlayerInputComponent extends Component {
 					e.printStackTrace();
 				}
 			}
-			/*
-			if (input.isKeyDown(Input.KEY_W)){
-				if (owner.level.env.isOnClimableSurface(owner)) {
-					owner.isClimbing = true;
-					owner.vel.y = -((Player)owner).climbSpeed;
+			
+			if (input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_S)) {
+				Player player = (Player)this.owner;
+				if (player.canClimb) {
+					player.isClimbing = true;
+					player.ladderReleaseTimer.set(0f);
+					
+					if (input.isKeyDown(Input.KEY_W)) {
+						System.out.println("Climbing up");
+						if (player.momentumDirectionY > -1) {player.momentumDirectionY--;}else{player.momentumDirectionY = -1;}
+					}
+					else if (input.isKeyDown(Input.KEY_S)) {
+						if (player.momentumDirectionY < 1) {player.momentumDirectionY++;}else{player.momentumDirectionY = 1;}
+					}
 				}
 			}
-			if (input.isKeyDown(Input.KEY_S)){
-				if (owner.level.env.isOnClimableSurface(owner)) {
-					owner.isClimbing = true;
-					owner.vel.set(owner.vel.getX(), ((Player)owner).climbSpeed);
-				}
-			}
-			*/
+			
 			if (input.isKeyPressed(Input.KEY_E)) {
 				//if (owner.level.env.isOnHideableSurface(owner)) {
 					//owner.vel = new Vector2f(0, 0);
