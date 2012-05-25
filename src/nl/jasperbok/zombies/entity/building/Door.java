@@ -13,6 +13,8 @@ public class Door extends Entity {
 		super.init(level);
 		this.initAnimation(facingLeft);
 		
+		this.invincible = true;
+		
 		this.type = Entity.Type.B;
 		this.checkAgainst = Entity.Type.BOTH;
 		this.collides = Entity.Collides.FIXED;

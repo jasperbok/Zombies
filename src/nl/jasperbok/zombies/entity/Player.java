@@ -35,7 +35,8 @@ public class Player extends Entity {
 	 */
 	protected boolean wasGoingLeft = false;
 	protected boolean wasGoingRight = false;
-	protected boolean isHidden = false;
+	public boolean isHidden = false;
+	public boolean canHide = false;
 	/**
 	 * Arm variables.
 	 */
@@ -55,7 +56,7 @@ public class Player extends Entity {
 		
 		this.type = Entity.Type.A;
 		this.checkAgainst = Entity.Type.B;
-		this.collides = Entity.Collides.ACTIVE;
+		this.collides = Entity.Collides.PASSIVE;
 		
 		this.addComponent(new PlayerInputComponent(this));
 		this.addComponent(new LifeComponent(this, 5));

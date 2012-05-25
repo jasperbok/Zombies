@@ -21,6 +21,8 @@ public class PlayerInputComponent extends Component {
 
 	public void update(Input input, int delta) {
 		if (owner.playerControlled) {
+			Player player = (Player)this.owner;
+
 			// Handle player input.
 			if (input.isKeyPressed(Input.KEY_C)) {
 				try {
@@ -70,7 +72,6 @@ public class PlayerInputComponent extends Component {
 			}
 			
 			if (input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_S)) {
-				Player player = (Player)this.owner;
 				if (player.canClimb) {
 					player.isClimbing = true;
 					player.ladderReleaseTimer.set(0f);
@@ -85,17 +86,17 @@ public class PlayerInputComponent extends Component {
 			}
 			
 			if (input.isKeyPressed(Input.KEY_E)) {
-				//if (owner.level.env.isOnHideableSurface(owner)) {
-					//owner.vel = new Vector2f(0, 0);
-					//((Player)owner).hide();
-					//this.owner.level.fl.turnOff();
-				//} else {
+				if (player.canHide) {
+					player.vel = new Vector2f(0, 0);
+					player.hide();
+					player.level.fl.turnOff();
+				} else {
 					ArrayList<Entity> usables = this.owner.level.env.getUsableEntities(new Rectangle(this.owner.position.x, this.owner.position.y, this.owner.size.x, this.owner.size.y));
 					for (Entity usable: usables) {
 						System.out.println("I can use " + usable.name);
 						usable.use(this.owner);
 					}
-				//}
+				}
 			} else if (!input.isKeyDown(Input.KEY_E) && ((Player)owner).isHidden()) {
 				((Player)owner).unHide();
 				this.owner.level.fl.turnOn();
