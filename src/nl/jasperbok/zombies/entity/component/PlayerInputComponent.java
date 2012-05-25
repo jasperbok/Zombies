@@ -59,9 +59,9 @@ public class PlayerInputComponent extends Component {
 					if (owner.vel.x < 0.0f) owner.vel.x = 0.0f;
 				}
 			}
-			if (input.isKeyPressed(Input.KEY_Q) && ((LifeComponent)owner.getComponent(Component.LIFE)).getHealth() != 0) {
+			if (input.isKeyPressed(Input.KEY_Q) && owner.health != 0) {
 				try {
-					((LifeComponent)owner.getComponent(Component.LIFE)).takeDamage(1);
+					owner.receiveDamage(1);
 					BloodMark bm = new BloodMark(owner.level);
 					bm.position.x = this.owner.position.x;
 					bm.position.y = this.owner.position.y;

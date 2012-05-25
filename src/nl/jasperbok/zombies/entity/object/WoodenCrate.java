@@ -30,6 +30,9 @@ public class WoodenCrate extends Entity {
 		this.checkAgainst = Entity.Type.BOTH;
 		this.collides = Entity.Collides.ACTIVE;
 		
+		this.size.x = size;
+		this.size.y = size;
+		
 		// Loading the animation.
 		this.animSheet = new SpriteSheet("data/sprites/entity/object/wooden_crate.png", 80, 80);
 		this.addAnim("idle", 50, new int[]{0});
