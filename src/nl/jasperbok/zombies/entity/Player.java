@@ -87,7 +87,11 @@ public class Player extends Entity {
 	}
 	
 	public void update(Input input, int delta) {
-		if (this.state == "ClimbingObject") {
+		super.update(input, delta);
+		
+		switch (this.state) {
+		// CLIMBING OBJECT
+		case "ClimbingObject" :
 			this.gravityFactor = 0; // Playing climbing animation, don't let gravity interfere.
 			if (this.currentAnim.getFrame() == 1) {
 				this.position.y -= 2;
@@ -106,23 +110,19 @@ public class Player extends Entity {
 				this.currentAnim = this.anims.get("idleRight");
 				this.state = "Standing";
 			}
-		}
-		// Not climbing an object.
-		else {
-			this.gravityFactor = 1;
-		
-			// Climbing stuff.
-			this.momentumDirectionY = 0;
-			if (this.isClimbing) {
-				this.gravityFactor = 0;
-			} else {
-				this.gravityFactor = 1;
-			}
+			break;
+		// CLIMBING LADDER
+		case "ClimbingLadder" :
+			this.gravityFactor = 0;
+			
 			if (!this.canClimb) this.isClimbing = false;
 			// When climbing past top of ladder, fall back.
 			if (!this.standing && !this.canClimb && this.vel.y < 0) {this.isClimbing = false;}
+			break;
+		default :
+			this.gravityFactor = 1;
 			
-			super.update(input, delta);
+			// Climbing stuff.
 			
 			// Position and rotate the arm.
 			int armAngle = (int) this.level.fl.getAngleInDegrees();
@@ -189,6 +189,7 @@ public class Player extends Entity {
 				// Not on ground and not climbing, surely the player is falling!
 				//currentAnimation = fallAnimation;
 			}
+			break;
 		}
 	}
 	
