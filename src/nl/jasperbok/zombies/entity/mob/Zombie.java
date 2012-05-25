@@ -91,7 +91,7 @@ public class Zombie extends Mob {
 		
 		// Check if the player touches the zombie.
 		Player player = (Player)level.env.getEntityByName("player");
-		if (this.touches(player) && player.health > 0 && !player.isHidden) {
+		if (this.touchesFromCenter(player, 8, 0) && player.health > 0 && !player.isHidden) {
 			level.env.getEntityByName("player").receiveDamage(200);
 		}
 		
