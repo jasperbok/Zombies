@@ -8,7 +8,7 @@ import nl.jasperbok.zombies.level.Level;
 
 public class Ladder extends Entity {
 
-	public float ladderSpeed = 0.3f;
+	public float ladderSpeed = 0.8f;
 
 	public Ladder(Level level, float x, float y, float sizeX, float sizeY) {
 		super.init(level);
@@ -22,7 +22,8 @@ public class Ladder extends Entity {
 		
 		this.type = Entity.Type.B;
 		this.checkAgainst = Entity.Type.A;
-		this.collides = Entity.Collides.LITE;
+		//this.collides = Entity.Collides.LITE;
+		this.collides = Entity.Collides.FIXED;
 	}
 	
 	public void update(Input input, int delta) {
@@ -37,23 +38,29 @@ public class Ladder extends Entity {
 			Player player = (Player)other;
 			player.canClimb = true;
 			
-			if (player.ladderReleaseTimer.delta() > -0.1) {
-				if (player.vel.y < 0 && player.momentumDirectionY != -1) {
-					player.isClimbing = true;
-				} else {
-					if (player.isClimbing && player.momentumDirectionY != 0) {
-						player.vel.y = this.ladderSpeed * player.momentumDirectionY;
-					} else {
-						player.momentumDirectionY = 0;
-						player.vel.y = 0;
-						player.position.y = player.last.y;
-					}
-					
-					// Player is at the bottom of a ladder, so get him off.
-					if (player.momentumDirectionY == 1 && player.position.y == player.last.y) {
-						player.momentumDirectionY = 0;
-						player.isClimbing = false;
-					}
+			if (player.position.y + player.size.y > this.position.y - 15 &&
+					player.position.y + player.size.y < this.position.y + 5) {
+				// Player is on top of ladder, stop climbing and just walk.
+				player.position.y = this.position.y + player.size.y;
+				player.standing = true;
+				player.momentumDirectionY = 0;
+				player.isClimbing = false;
+			}
+			else if (player.momentumDirectionY == 1 && player.position.y == player.last.y) {
+				// Player is touching the floor below, stop climbing.
+				player.momentumDirectionY = 0;
+				player.isClimbing = false;
+			}
+			else {
+				// Player is climbing on the ladder, calculate his speed.
+				if (player.momentumDirectionY == 1) {
+					player.vel.y = this.ladderSpeed / 5;
+				}
+				else if (player.momentumDirectionY == -1) {
+					player.vel.y = -this.ladderSpeed;
+				}
+				else {
+					player.vel.y = 0;
 				}
 			}
 		}

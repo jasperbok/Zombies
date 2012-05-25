@@ -56,8 +56,6 @@ public abstract class Entity extends RenderObject {
 	public Vector2f size = new Vector2f(0, 0);
 	public Vector2f offset = new Vector2f(0, 0);
 	
-	public Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
-	
 	public Vector2f last = new Vector2f(0, 0);
 	public Vector2f vel = new Vector2f(0, 0);
 	public Vector2f accel = new Vector2f(0, 0);
@@ -106,7 +104,6 @@ public abstract class Entity extends RenderObject {
 	
 	public void init(Level level) {
 		this.level = level;
-		this.boundingBox = new Rectangle(0, 0, 0, 0);
 		components = new ArrayList<Component>();
 	}
 	
@@ -160,18 +157,6 @@ public abstract class Entity extends RenderObject {
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
-		updateBoundingBox();
-	}
-	
-	public void updateBoundingBox() {
-		if (this.currentAnim != null) {
-			this.boundingBox.setBounds(
-					this.position.x,
-					this.position.y,
-					this.currentAnim.getWidth(),
-					this.currentAnim.getHeight()
-					);
-		}
 	}
 	
 	/**

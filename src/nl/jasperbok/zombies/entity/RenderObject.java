@@ -1,6 +1,5 @@
 package nl.jasperbok.zombies.entity;
 
-import nl.jasperbok.zombies.math.Vector2;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import org.newdawn.slick.geom.Vector2f;

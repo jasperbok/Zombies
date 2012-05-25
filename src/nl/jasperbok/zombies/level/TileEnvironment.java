@@ -217,11 +217,11 @@ public class TileEnvironment {
 		for (Entity ent1 : entities) {
 			for (Entity ent2 : entities) {
 				if (ent1 != ent2 && ent1.isSolid == false && ent2.isSolid == true && ent1.touches(ent2)) {
-					System.out.println(ent1.boundingBox.getMaxX() + " " + ent2.boundingBox.getMinX());
-					if (ent1.boundingBox.getMaxX() > ent2.boundingBox.getMinX() && ent1.position.x < ent2.position.x) {
+					//System.out.println(ent1.boundingBox.getMaxX() + " " + ent2.boundingBox.getMinX());
+					if (ent1.position.x + ent1.size.x > ent2.position.x && ent1.position.x < ent2.position.x) {
 						ent1.position.x -= 1;
 						ent1.vel.x = -0.06f;
-					} else if (ent1.boundingBox.getMinX() < ent2.boundingBox.getMaxX() && ent1.position.x > ent2.position.x) {
+					} else if (ent1.position.x < ent2.position.x + ent2.size.x && ent1.position.x > ent2.position.x) {
 						ent1.position.x += 1;
 						ent1.vel.x = 0.06f;
 					}
@@ -314,7 +314,7 @@ public class TileEnvironment {
 		// Render boundingBoxes if this setting is turned on.
 		if (drawBoundingBoxes) {
 			for (Entity ent: entities) {
-				g.draw(ent.boundingBox);
+				g.draw(new Rectangle(ent.position.x, ent.position.y, ent.size.x, ent.size.y));
 			}
 		}
 	}

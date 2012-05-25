@@ -21,6 +21,6 @@ public class Checkpoint extends Entity {
 	}
 	
 	public void use (Entity user) {
-		this.level.env.setCheckpoint((int)user.boundingBox.getMinX(), (int)user.boundingBox.getMinY(), user.health);
+		this.level.env.setCheckpoint((int)user.position.x, (int)user.position.y, user.health);
 	}
 }

@@ -5,7 +5,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.engine.Entity;
@@ -13,7 +12,6 @@ import nl.jasperbok.zombies.entity.building.MagneticCrane;
 import nl.jasperbok.zombies.entity.component.Component;
 import nl.jasperbok.zombies.entity.component.GravityComponent;
 import nl.jasperbok.zombies.level.Level;
-import nl.jasperbok.zombies.math.Vector2;
 
 public class Crate extends Entity {
 	public boolean draggedByMagnet = false;
@@ -28,9 +26,9 @@ public class Crate extends Entity {
 	 */
 	public Crate(Level level, Vector2f pos, MagneticCrane crane) throws SlickException {
 		super.init(level);
-		this.addComponent(new GravityComponent(0.03f, this));
 		this.position = pos;
-		this.vel = new Vector2(0.0f, 0.0f);
+		this.vel = new Vector2f(0.0f, 0.0f);
+		this.maxVel = new Vector2f(0.1f, 1f);
 		
 		Animation idle = new Animation();
 		idle.addFrame(new Image("data/sprites/entity/object/crate.png", new Color(255, 255, 255)), 5000);
@@ -38,13 +36,15 @@ public class Crate extends Entity {
 		this.currentAnim = this.anims.get("idle");
 		
 		this.crane = crane;
-		this.boundingBox = new Rectangle(position.x, position.y, this.currentAnim.getWidth(), this.currentAnim.getHeight());
 	}
 
 	public void update(Input input, int delta) {		
 		if (crane.magnetActive && !draggedByMagnet) {
-			Rectangle hitBox = new Rectangle(crane.armPos.getX(), crane.armPos.getY() + crane.arm.getHeight(), crane.arm.getWidth(), 20);
-			if (hitBox.intersects(this.boundingBox)) {
+			if (
+					this.position.y > crane.armPos.y + crane.arm.getHeight() &&
+					this.position.y < crane.armPos.y + crane.arm.getHeight() + 20 &&
+					(this.position.x > crane.armPos.x || this.position.x < crane.armPos.x + crane.arm.getWidth())
+			) {
 				setPosition(position.getX(), crane.armPos.getY() + crane.arm.getHeight());
 				draggedByMagnet = true;
 				// Disable the GravityComponent.
@@ -56,19 +56,15 @@ public class Crate extends Entity {
 		}
 		if (draggedByMagnet) {
 			if (crane.magnetActive) {
+				this.gravityFactor = 0;
 				Vector2f armPosCopy = crane.armPos.copy();
 				this.position = new Vector2f(armPosCopy.x + crane.arm.getWidth() / 2 - this.currentAnim.getWidth() / 2, crane.armPos.copy().y + crane.arm.getHeight());
 			} else {
+				this.gravityFactor = 1;
 				draggedByMagnet = false;
-				// Enable the GravityComponent.
-				if (this.hasComponent(Component.GRAVITY)) {
-					GravityComponent comp = (GravityComponent) this.getComponent(Component.GRAVITY);
-					comp.toggleGravity();
-				}
 			}
 		}
 		
-		// Update components.
 		super.update(input, delta);
 	}
 }

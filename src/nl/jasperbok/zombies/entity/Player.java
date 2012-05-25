@@ -10,11 +10,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 import nl.jasperbok.engine.Entity;
-import nl.jasperbok.engine.Timer;
 import nl.jasperbok.zombies.level.Level;
-import nl.jasperbok.zombies.entity.component.Component;
-import nl.jasperbok.zombies.entity.component.GravityComponent;
-import nl.jasperbok.zombies.entity.component.LifeComponent;
 import nl.jasperbok.zombies.entity.component.PlayerInputComponent;
 import nl.jasperbok.zombies.entity.item.Inventory;
 import nl.jasperbok.zombies.gui.Hud;
@@ -26,10 +22,10 @@ public class Player extends Entity {
 	public boolean canClimb = false;
 	public boolean isClimbing = false;
 	public int momentumDirectionY = 0;
-	public Timer ladderReleaseTimer;
 	
 	public boolean isCrawling = false;
 	public boolean isClimbingObject = false;
+	public Entity objectBeingClimbed;
 	/**
 	 * Status variables.
 	 */
@@ -37,6 +33,8 @@ public class Player extends Entity {
 	protected boolean wasGoingRight = false;
 	public boolean isHidden = false;
 	public boolean canHide = false;
+	
+	public String state = "";
 	/**
 	 * Arm variables.
 	 */
@@ -44,22 +42,21 @@ public class Player extends Entity {
 	protected Image armImageRight;
 	protected Vector2f armPos;
 	
-	private boolean firstUpdate = true;
-	
 	public Player(Level level, Vector2f pos) throws SlickException {
 		super.init(level);
 		
 		this.position = pos;
-		this.friction = new Vector2f(0.1f, 0.1f);
-		this.maxVel = new Vector2f(0.3f, 10f);
+		this.vel = new Vector2f(0, 0);
+		this.friction = new Vector2f(0.1f, 0);
+		this.maxVel = new Vector2f(0.2f, 0.3f);
 		this.zIndex = -1;
+		this.gravityFactor = 1;
 		
 		this.type = Entity.Type.A;
 		this.checkAgainst = Entity.Type.B;
 		this.collides = Entity.Collides.PASSIVE;
 		
 		this.addComponent(new PlayerInputComponent(this));
-		this.addComponent(new LifeComponent(this, 5));
 		
 		this.playerControlled = true;
 		
@@ -90,99 +87,108 @@ public class Player extends Entity {
 	}
 	
 	public void update(Input input, int delta) {
-		if (this.firstUpdate) {
-			this.ladderReleaseTimer = this.level.env.addTimer(0.5f);
-			this.firstUpdate = false;
-		}
-		
-		// Do this for the ladder.
-		this.momentumDirectionY = 0;
-		if (this.isClimbing) {
-			this.gravityFactor = 0;
-		} else {
-			this.gravityFactor = 1;
-		}
-		if (!this.canClimb) this.isClimbing = false;
-		// When climbing past top of ladder, fall back.
-		if (!this.standing && !this.canClimb && this.vel.y < 0) {this.isClimbing = false;}
-		if (this.standing) this.ladderReleaseTimer.set(0);
-		
-		super.update(input, delta);
-		
-		// Position and rotate the arm.
-		int armAngle = (int) this.level.fl.getAngleInDegrees();
-		this.armImageLeft.setCenterOfRotation(8, 24);
-		this.armImageRight.setCenterOfRotation(10, 20);
-		this.armImageLeft.setRotation(armAngle);
-		this.armImageRight.setRotation(armAngle);
-		/*
-		if (wasClimbing && level.env.isOnClimableSurface(this)) {
-			isClimbing = true;
-			vel.set(new Vector2f(vel.getX(), 0));
-		} else if (!level.env.isOnClimableSurface(this)) {
-			isClimbing = false;
-		}*/
-		
-		try {
-			Hud.getInstance().setPlayerHealth(this.health);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// Decide what animation should be played.
-		if (this.isHidden) {
-			this.currentAnim = this.anims.get("hide");
-		} else if (this.isClimbingObject) {
-			if (this.currentAnim.getFrame() == 4) {
-				this.isClimbingObject = false;
+		if (this.state == "ClimbingObject") {
+			this.gravityFactor = 0; // Playing climbing animation, don't let gravity interfere.
+			if (this.currentAnim.getFrame() == 1) {
 				this.position.y -= 2;
-				((GravityComponent)this.getComponent(Component.GRAVITY)).toggleGravity();
 			}
-		} else if (isClimbing) {
-			this.currentAnim = this.anims.get("climb");
-			if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
-				this.currentAnim.stop();
-			} else if (this.currentAnim.isStopped()) {
-				this.currentAnim.start();
+			else if (this.currentAnim.getFrame() == 2) {
+				this.position.y -= 2;
 			}
-		} else if (standing && isCrawling) {
-			if (vel.getX() < 0f) {
-				this.facing = Entity.LEFT;
-				this.currentAnim = this.anims.get("crawlLeft");
-			} else if (vel.getX() > 0f) {
-				this.facing = Entity.RIGHT;
-				this.currentAnim =this.anims.get("crawlRight");
-			} else if (vel.getX() == 0f) {
-				if (this.facing == Entity.LEFT) {
+			else if (this.currentAnim.getFrame() == 2) {
+				this.position.y -= 2;
+			}
+			else if (this.currentAnim.getFrame() == 4) {
+				this.isClimbingObject = false;
+				this.position.y = this.objectBeingClimbed.position.y - this.size.y -1;
+				this.position.x = this.objectBeingClimbed.position.x + 10;
+				this.standing = true;
+				this.currentAnim = this.anims.get("idleRight");
+				this.state = "Standing";
+			}
+		}
+		// Not climbing an object.
+		else {
+			this.gravityFactor = 1;
+		
+			// Climbing stuff.
+			this.momentumDirectionY = 0;
+			if (this.isClimbing) {
+				this.gravityFactor = 0;
+			} else {
+				this.gravityFactor = 1;
+			}
+			if (!this.canClimb) this.isClimbing = false;
+			// When climbing past top of ladder, fall back.
+			if (!this.standing && !this.canClimb && this.vel.y < 0) {this.isClimbing = false;}
+			
+			super.update(input, delta);
+			
+			// Position and rotate the arm.
+			int armAngle = (int) this.level.fl.getAngleInDegrees();
+			this.armImageLeft.setCenterOfRotation(8, 24);
+			this.armImageRight.setCenterOfRotation(10, 20);
+			this.armImageLeft.setRotation(armAngle);
+			this.armImageRight.setRotation(armAngle);
+			
+			// Update the HUD with the player's current health.
+			try {
+				Hud.getInstance().setPlayerHealth(this.health);
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// Decide what animation should be played.
+			if (this.isHidden) {
+				this.currentAnim = this.anims.get("hide");
+			} else if (this.isClimbingObject) {
+				
+			} else if (isClimbing) {
+				this.currentAnim = this.anims.get("climb");
+				if (!input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_S)) {
+					this.currentAnim.stop();
+				} else if (this.currentAnim.isStopped()) {
+					this.currentAnim.start();
+				}
+			} else if (standing && isCrawling) {
+				if (vel.getX() < 0f) {
+					this.facing = Entity.LEFT;
 					this.currentAnim = this.anims.get("crawlLeft");
-				} else {
-					this.currentAnim = this.anims.get("crawlRight");
+				} else if (vel.getX() > 0f) {
+					this.facing = Entity.RIGHT;
+					this.currentAnim =this.anims.get("crawlRight");
+				} else if (vel.getX() == 0f) {
+					if (this.facing == Entity.LEFT) {
+						this.currentAnim = this.anims.get("crawlLeft");
+					} else {
+						this.currentAnim = this.anims.get("crawlRight");
+					}
 				}
+			} else if (standing) {
+				if (vel.getX() < 0f) {
+					this.facing = Entity.LEFT;
+					this.currentAnim = this.anims.get("walkLeft");
+					if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
+						this.level.env.sounds.playSFX("footstep");
+					}
+				} else if (vel.getX() > 0f) {
+					this.facing = Entity.RIGHT;
+					this.currentAnim =this.anims.get("walkRight");
+					if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
+						this.level.env.sounds.playSFX("footstep");
+					}
+				} else if (vel.getX() == 0f) {
+					if (this.facing == Entity.LEFT) {
+						this.currentAnim = this.anims.get("idleLeft");
+					} else {
+						this.currentAnim = this.anims.get("idleRight");
+					}
+				}
+			} else {
+				// Not on ground and not climbing, surely the player is falling!
+				//currentAnimation = fallAnimation;
 			}
-		} else if (standing) {
-			if (vel.getX() < 0f) {
-				this.facing = Entity.LEFT;
-				this.currentAnim = this.anims.get("walkLeft");
-				if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
-					this.level.env.sounds.playSFX("footstep");
-				}
-			} else if (vel.getX() > 0f) {
-				this.facing = Entity.RIGHT;
-				this.currentAnim =this.anims.get("walkRight");
-				if (!this.level.env.sounds.isSFXPlaying("footstep") && (this.currentAnim.getFrame() == 3 || this.currentAnim.getFrame() == 7)) {
-					this.level.env.sounds.playSFX("footstep");
-				}
-			} else if (vel.getX() == 0f) {
-				if (this.facing == Entity.LEFT) {
-					this.currentAnim = this.anims.get("idleLeft");
-				} else {
-					this.currentAnim = this.anims.get("idleRight");
-				}
-			}
-		} else {
-			// Not on ground and not climbing, surely the player is falling!
-			//currentAnimation = fallAnimation;
 		}
 	}
 	
@@ -192,8 +198,8 @@ public class Player extends Entity {
 	 * @param target
 	 */
 	public void climbOnObject(Entity target) {
-		((GravityComponent)this.getComponent(Component.GRAVITY)).toggleGravity();
-		this.position.y -= target.boundingBox.getHeight();
+		this.gravityFactor = 0;
+		this.position.y -= target.size.y;
 		this.position.x = target.position.x;
 		this.currentAnim = this.anims.get("climbOnObject");
 		this.isClimbingObject = true;

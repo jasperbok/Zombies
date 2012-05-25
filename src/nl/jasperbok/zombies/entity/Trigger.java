@@ -76,9 +76,9 @@ public class Trigger {
 	
 	public boolean touches(Entity other) {
 		return !(
-				this.pos.x >= other.position.x + other.boundingBox.getWidth() ||
+				this.pos.x >= other.position.x + other.size.x ||
 				this.pos.x + this.size.x <= other.position.x ||
-				this.pos.y >= other.position.y + other.boundingBox.getHeight() ||
+				this.pos.y >= other.position.y + other.size.y ||
 				this.pos.y + this.size.y <= other.position.y
 				);
 	}

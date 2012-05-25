@@ -185,7 +185,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="297" y="386" width="75" height="150"/>
+  <object name="player" type="Player" x="3530" y="989" width="75" height="150"/>
   <object name="door_switch" type="Switch" x="4564" y="1031" width="29" height="84">
    <properties>
     <property name="failureMessage" value="I need  a key card to open this door."/>
@@ -224,7 +224,6 @@
   <object type="Ladder" x="3520" y="636" width="80" height="400"/>
   <object type="Ladder" x="2959" y="639" width="80" height="400"/>
   <object type="Ladder" x="1919" y="881" width="80" height="320"/>
-  <object type="HidingSpace" x="445" y="441" width="200" height="86"/>
  </objectgroup>
  <objectgroup color="#ff5500" name="triggers" width="70" height="20">
   <object type="Trigger" x="3122" y="485" width="69" height="152">
@@ -241,7 +240,7 @@
     <property name="target" value="player"/>
    </properties>
   </object>
-  <object name="drag_message" type="Trigger" x="2650" y="1037" width="77" height="168">
+  <object name="drag_message" type="Trigger" x="2644" y="1031" width="77" height="168">
    <properties>
     <property name="message" value="Some objects like boxes can be dragged around by pressing E."/>
     <property name="messageDuration" value="4000"/>

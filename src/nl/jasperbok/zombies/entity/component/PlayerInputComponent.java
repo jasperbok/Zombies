@@ -3,6 +3,7 @@ package nl.jasperbok.zombies.entity.component;
 import java.util.ArrayList;
 
 import nl.jasperbok.engine.Entity;
+import nl.jasperbok.engine.Resolve;
 import nl.jasperbok.zombies.entity.Player;
 import nl.jasperbok.zombies.entity.object.BloodMark;
 import nl.jasperbok.zombies.entity.object.WoodenCrate;
@@ -71,17 +72,14 @@ public class PlayerInputComponent extends Component {
 				}
 			}
 			
-			if (input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_S)) {
-				if (player.canClimb) {
-					player.isClimbing = true;
-					player.ladderReleaseTimer.set(0f);
-					
-					if (input.isKeyDown(Input.KEY_W)) {
-						player.momentumDirectionY = -1;
-					}
-					else if (input.isKeyDown(Input.KEY_S)) {
-						player.momentumDirectionY = 1;
-					}
+			if ((input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_S)) && player.canClimb) {
+				player.isClimbing = true;
+				
+				if (input.isKeyDown(Input.KEY_W)) {
+					player.momentumDirectionY = -1;
+				}
+				else if (input.isKeyDown(Input.KEY_S)) {
+					player.momentumDirectionY = 1;
 				}
 			}
 			
@@ -102,12 +100,24 @@ public class PlayerInputComponent extends Component {
 				this.owner.level.fl.turnOn();
 			}
 			if (input.isKeyPressed(Input.KEY_SPACE)){
-				ArrayList<Entity> targets = owner.level.env.getUsableEntities(owner.boundingBox);
+				ArrayList<Entity> targets = owner.level.env.getUsableEntities(new Rectangle(owner.position.x, owner.position.y, owner.size.x, owner.size.y));
 				for (Entity target: targets) {
 					if (target != null && target instanceof WoodenCrate) {
-						((Player)owner).climbOnObject(target);
-						//owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
-						break;
+						Resolve res = owner.level.env.collisionMap.trace(
+								(int)owner.position.x, 
+								(int)owner.position.y,
+								owner.size.x + 10, 
+								target.size.y + 5, 
+								(int)owner.size.x, 
+								(int)owner.size.y
+						);
+						//if (res.collision.get("y") == false) {
+							((Player)owner).climbOnObject(target);
+							((Player)owner).state = "ClimbingObject";
+							((Player)owner).objectBeingClimbed = target;
+							//owner.setPosition(target.position.getX(), target.position.getY() - owner.boundingBox.getHeight());
+							break;
+						//}
 					}
 				}
 			}

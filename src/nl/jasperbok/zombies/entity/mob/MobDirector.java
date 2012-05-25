@@ -108,7 +108,7 @@ public class MobDirector {
 				v = v.add(tendTowardsPoint(mob, new Vector2f(attractor.position.x, attractor.position.y), attractor.power));
 				
 				// If the mob is near an attractor it will stop moving.
-				if (Math.abs(mob.position.x - attractor.position.x) < mob.boundingBox.getWidth() / 2) {
+				if (Math.abs(mob.position.x - attractor.position.x) < mob.size.x / 2) {
 					v.x = 0;
 					break;
 				}
@@ -205,8 +205,8 @@ public class MobDirector {
 	protected Vector2f keepDistanceBetweenMobs(Mob mob1, Mob mob2) {
 		Vector2f v = new Vector2f(0, 0);
 		
-		float mob1Radius = mob1.boundingBox.getWidth() / 4;
-		float mob2Radius = mob2.boundingBox.getWidth() / 4;
+		float mob1Radius = mob1.size.x / 4;
+		float mob2Radius = mob2.size.x / 4;
 		
 		//System.out.println("mob2.x: " + (mob2.position.x));
 		//System.out.println("sum: " + (mob1.position.x - mob2.position.x));
