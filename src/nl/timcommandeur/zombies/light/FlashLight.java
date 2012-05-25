@@ -3,6 +3,7 @@ package nl.timcommandeur.zombies.light;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.jasperbok.engine.Entity;
 import nl.jasperbok.zombies.level.Level;
 import nl.timcommandeur.zombies.screen.Camera;
 
@@ -150,6 +151,24 @@ public class FlashLight {
 		double angleInRadians = vecAngle(new Vec2(to.x, to.y));
 		this.currentAngleInRadians = angleInRadians;
 		double angle = angleInRadians / Math.PI * 180;
+		
+		// Correct the angle so the player cannot point backwards.
+		if (this.level.env.getEntityByName("player").facing == Entity.LEFT) {
+			if (angle > -90 && angle < 0) {
+				angle = -90;
+			} else if (angle >= 0 && angle < 90) {
+				angle = 90;
+			}
+		} else if (this.level.env.getEntityByName("player").facing == Entity.RIGHT) {
+			if (angle < -90 && angle > -180) {
+				angle = 270;
+			} else if (angle <= 180 && angle > 90) {
+				angle = 90;
+			}
+		}
+		angleInRadians = angle / 180 * Math.PI;
+		this.currentAngleInRadians = angleInRadians;
+		
 		this.angleDisplacement.x = (float) (Math.cos(angleInRadians));
 		this.angleDisplacement.y = (float) (Math.sin(angleInRadians));
 		//System.out.println(this.getClass().toString() + ".pointToMouse: x " + (float) difX / Math.abs(difX));

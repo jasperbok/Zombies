@@ -27,7 +27,7 @@ public class LevelRenderThread extends Thread {
 	}
 
 	public void run(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		if (!this.level.isPaused()) {
+		if (this.level.currentState == Level.INGAME) {
 			//camera.translate(g);
 			
 			if (level.doLighting) level.renderScene(container, g);

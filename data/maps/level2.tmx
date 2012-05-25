@@ -210,14 +210,22 @@
  <tileset firstgid="1848" name="BackgroundSprites3" tilewidth="80" tileheight="80">
   <image source="src/bq_s_tileset.png" width="1000" height="1000"/>
  </tileset>
+ <tileset firstgid="1992" name="main_background" tilewidth="80" tileheight="80">
+  <image source="src/levelBackground.png" width="900" height="1600"/>
+ </tileset>
+ <layer name="wall" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+XKU2OWYQAA0Dfui8vGsm2urVq2bdu2tWzXn1m2bdvu/I/n4tydtLgoOsFJTnGaM5zlHOe5wEXSArqXuMwVrnKN69zgJre4zZ3A7l3ucZ8HPOQRj3nCU57xPLD7gpe84jVveMs73vOBj3wK7H7mC1/5xnd+8JNf/OYPfwO7/4hiUZSO9GQgI5nITBwxssTCulnJRnZykJN4cpGbPOQlX2A3PwUoSCEKU4SiFKM4JSgZ2E2gFKUpQ1nKUZ4KVKQSlQO7VahKNapTg5rUojZ1qEu9wG59GtCQRjSmCU1pRnMSaRHYTSKZlrSiNSm0oS3taE+HwG5HOtGZLnSlG93pQU960Tuw24e+9KM/AxjIIAYzhKEMC+wOZwQjGcVoxjCWcYxnAhMDu5OYzBSmMo3pzGAms5jNnMDuXOYxnwUsZBGLWcJSlrE8sLuClaxiNWtYyzrWs4GNbArsprKZLWxlG9vZwU52sZs9gd297GM/BzjIIQ5zhKMc43hg9z/hn8WX4BUAAA==
+  </data>
+ </layer>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WSU7DMBSGnUp1F8ABSuEE0CLBhk6LMuxAYmo5Q8sZgGMAUhddMM8gAWdoewLgBMAl+C1i5dk02AEp0JBf+hTHzxner+eXMPYzpR3GhkHG8cZZl5x7TGvnOXd9lCXznCA5V1yoF+J8hhyjLpnnrKOOaUyf/w+qItcaWHfUsVTdZ75fNZ+yWyfyboANRx37rYnF2AC8HQRDlh4L0X5l4jc1jZzyAfKi12TACBgl1+9xxvbBATgER+CYe3Hai0z8da0i77Ue3o1hbhxkwRzhBD6cgjNwDi64Gpe9yESYmkwwNpXw/kHov4io3QJiRVAC5YT9fZdSHpfw4Qpcgxtwy9W47EUmwhL1oaIha1vu7QV4shjAF1tt4t5bYNuCMKR7UdWQta3XEa2lqEn0Qt2LuoasbVkvvb4ZX4nuk+/Ef0NN+LITELmvbNfTvE3xJje/cxhq4T3aoAO6XN3jtP/XfMaCliGXfqwXkdMjeALP3Otr+neh4TMW7EbQF6EX5PUK3vhHrdxh7h48MM8nMb+M914BJVBO2X8fgvhi8jgs5ZOfaWO+A7qglFQpgGLAMc271xoaF8+PFStW/+sdG4djBOAVAAA=
+   H4sIAAAAAAAAA+2XW07CQBSGpyQMD+oCEF2Bgom+yO0BL2+aeAPWAKxBXYaa8OCD9wteEnUNwArUFaib8J/YSc+M1E41KVD7J196OjMtPX/OnBbG/qakxdg4SFlOnLbJ2Mekdp6x14dZMs8ZknPJhnohzhfIMeySeS5aakzn9PH/oDJyrYCqpcZSNZfxYdVywmydyLsOGpYau62JxNgIvB0FY4YeC9F+5UU/NY+csj7yotekwASYJNcfcMaOwDE4AafgjDvztBd5MejaRN5bPbybwtg0SIMlwjl8uACX4Apcc3Ve9iIvgtRsjLG5mPMNQr9FRO3mMJcHBVCMmd93LeHQgg834BbcgXuuzste5EVQoj6UNGRty729Ak9Wffhiqm3cewfsGhCEdC/KGrK29TqitRQ2iV6oe1HTkLUt66XXO+Mn0X3ym/l+qAlf9nwi95Xf60xocu9nDkKHeI426IAuV/c47f8Vl7hqef/nGcZ6Eb48gxfwyp2+pr8X6i5xI6S+CL3Bj3fwwb9q5QFjj+CJOT6J8XU89wYogGLC/P3gx5f9AdlH2fh32hjvgC4oxFVyIO8zpnn3WkPnxe9HihRp+PUJTYgtBOAVAAA=
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <objectgroup color="#5500ff" name="ObjectLayer" width="70" height="20">
@@ -227,9 +235,10 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="turret_1" type="AutoTurret" x="1446" y="560" width="160" height="160">
+  <object name="turret_1" type="AutoTurret" x="1446" y="592" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
+    <property name="range" value="400"/>
    </properties>
   </object>
   <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
@@ -238,7 +247,7 @@
     <property name="target" value="turret_1"/>
    </properties>
   </object>
-  <object name="player" type="Player" x="122" y="547" width="75" height="150"/>
+  <object name="player" type="Player" x="161" y="491" width="75" height="150"/>
   <object name="door_1" type="Door" x="642" y="482" width="80" height="240"/>
   <object name="door_switch1" type="Switch" x="570" y="582" width="29" height="84">
    <properties>
@@ -265,7 +274,6 @@
     <property name="target" value="door_3"/>
    </properties>
   </object>
-  <object name="zombie_right" type="Zombie" x="3134" y="1202" width="75" height="150"/>
   <object name="turret_trigger" type="Trigger" x="806" y="479" width="76" height="236">
    <properties>
     <property name="repeat" value="false"/>
@@ -315,7 +323,7 @@
    </properties>
   </object>
   <object name="zombie_switch_guard" type="Zombie" x="203" y="1194" width="75" height="150"/>
-  <object name="box" type="WoodenCrate" x="963" y="632" width="80" height="80"/>
+  <object name="box" type="WoodenCrate" x="898" y="555" width="160" height="160"/>
   <object name="power_switch" type="Switch" x="108" y="1196" width="26" height="55">
    <properties>
     <property name="successMessage" value="It seems the power is back on."/>
@@ -326,13 +334,13 @@
   <object name="turret_left" type="AutoTurret" x="2306" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="left"/>
-    <property name="range" value="250"/>
+    <property name="range" value="240"/>
    </properties>
   </object>
   <object name="turret_right" type="AutoTurret" x="2609" y="1240" width="135" height="121">
    <properties>
     <property name="direction" value="right"/>
-    <property name="range" value="200"/>
+    <property name="range" value="240"/>
    </properties>
   </object>
   <object name="switch_turret_left" type="Switch" x="2510" y="1217" width="21" height="37">
@@ -358,9 +366,18 @@
    </properties>
   </object>
   <object name="zombie_right" type="Zombie" x="3190" y="1206" width="75" height="150"/>
-  <object name="zombie_right" type="Zombie" x="3254" y="1206" width="75" height="150"/>
   <object name="zombie_left1" type="Zombie" x="1747" y="1199" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="450" y="550" width="75" height="150"/>
-  <object name="zombie_left1" type="Zombie" x="486" y="551" width="75" height="150"/>
+  <object type="Trigger" x="3300" y="1115" width="160" height="240">
+   <properties>
+    <property name="goToLevel" value="level3"/>
+   </properties>
+  </object>
+  <object name="turret_1" type="AutoTurret" x="1446" y="592" width="135" height="121">
+   <properties>
+    <property name="direction" value="left"/>
+    <property name="range" value="400"/>
+   </properties>
+  </object>
+  <object type="HidingSpace" x="480" y="1198" width="240" height="160"/>
  </objectgroup>
 </map>
