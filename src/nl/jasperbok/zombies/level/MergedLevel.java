@@ -52,7 +52,8 @@ public class MergedLevel extends Level {
 				//env.mobDirector.addAttractor(env.getEntityByName("player"), 50, true);
 				
 				bgMusic = new Music("data/sound/music/stil.ogg");
-				//bgMusic.loop();
+				bgMusic.setVolume(0.4f);
+				bgMusic.loop();
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -60,7 +61,8 @@ public class MergedLevel extends Level {
 		case "level2":
 			try {
 				bgMusic = new Music("data/sound/music/stil.ogg");
-				//bgMusic.loop();
+				bgMusic.setVolume(0.4f);
+				bgMusic.loop();
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
@@ -68,7 +70,8 @@ public class MergedLevel extends Level {
 		default:
 			try {
 				bgMusic = new Music("data/sound/music/stil.ogg");
-				//bgMusic.loop();
+				bgMusic.setVolume(0.4f);
+				bgMusic.loop();
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}

@@ -24,19 +24,22 @@ import nl.timcommandeur.zombies.light.ShadowHull;
 import nl.timcommandeur.zombies.screen.Camera;
 
 import nl.jasperbok.zombies.gui.Hud;
+import nl.jasperbok.zombies.gui.LevelMenu;
 import nl.jasperbok.zombies.gui.MainMenu;
+import nl.jasperbok.zombies.gui.Menu;
 import nl.jasperbok.zombies.gui.PlayerSpeech;
 import nl.jasperbok.zombies.thread.LevelRenderThread;
 import nl.jasperbok.zombies.thread.LevelUpdateThread;
 
 public class Level extends BasicGameState implements GameState {
-	public final int MAIN_MENU = 1;
-	public final int COMIC = 2;
-	public final int PAUSE = 3;
-	public final int INGAME = 4;
+	public static final int MAIN_MENU = 1;
+	public static final int COMIC = 2;
+	public static final int PAUSE = 3;
+	public static final int INGAME = 4;
+	public static final int LEVEL_SELECT = 5;
 	
 	protected static int ID;
-	public int currentState = 1;
+	public int currentState = 4;
 	public Camera camera;
 	public float gravity = 1;
 	
@@ -54,12 +57,12 @@ public class Level extends BasicGameState implements GameState {
 	public LightSource playerLight;
 	protected int rot = 0;
 
-	protected String currentLevel;
+	public String currentLevel;
 	protected String mapFileName;
 	
 	protected boolean paused = false;
 	public boolean quit = false;
-	public MainMenu menu;
+	public Menu menu;
 	
 	protected LevelRenderThread renderThread;
 	protected LevelUpdateThread updateThread;
@@ -239,6 +242,7 @@ public class Level extends BasicGameState implements GameState {
 	}
 	
 	public boolean togglePause() {
+		this.setState(Level.LEVEL_SELECT);
 		if (this.isPaused()) {
 			this.paused = false;
 		} else {
@@ -249,5 +253,20 @@ public class Level extends BasicGameState implements GameState {
 	
 	public void quitGame() {
 		this.quit = true;
+	}
+	
+	public void setState(int state) {
+		this.currentState = state;
+		switch(currentState) {
+		case Level.MAIN_MENU:
+			this.menu = new MainMenu(this);
+			break;
+		case Level.PAUSE:
+			// pause menu;
+			break;
+		case Level.LEVEL_SELECT:
+			this.menu = new LevelMenu(this);
+			break;
+		}
 	}
 }

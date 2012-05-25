@@ -261,10 +261,12 @@ public class Player extends Entity {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		if (this.currentAnim != null) {
 			g.drawAnimation(this.currentAnim, (int)this.renderPosition.x, (int)this.renderPosition.y);
-			if (this.facing == Entity.LEFT) {
-				g.drawImage(this.armImageLeft, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
-			} else {
-				g.drawImage(this.armImageRight, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
+			if (!this.isClimbing && !this.isHidden()) {
+				if (this.facing == Entity.LEFT) {
+					g.drawImage(this.armImageLeft, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
+				} else {
+					g.drawImage(this.armImageRight, this.renderPosition.x + this.currentAnim.getWidth() / 2 - 10, this.renderPosition.y + 15);
+				}
 			}
 		}
 	}

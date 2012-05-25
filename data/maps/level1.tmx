@@ -159,17 +159,17 @@
  </tileset>
  <layer name="wall" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+XKU2OWYQAA0Lf2ZSwba9k21lYt27Zt27b+zLJt27Z5/sdzce5OWlwU7WM/BzjIIQ5zhKMc4zhpAd0TnOQUpznDWc5xngtc5FJg9zJXuMo1rnODm9ziNne4G9i9x30e8JBHPOYJT3nGc14Edl/yite84S3veM8HPvKJz4HdL3zlG9/5wU9+8Zs//OVfYDeKRVE60hNHjAxkJBOZyULWWFg3G9nJQU7iyUVu8pCXfOQP7BagIIUoTBGKUozilKAkCYHdUiRSmjKUpRzlqUBFKlE5sFuFqlSjOjWoSS1qU4e61Avs1qcBDWlEY5rQlGYk0ZzkwG4KLWhJK1JpTRva0o72dAjsdqQTnelCV7rRnR70pBe9A7t96Es/+jOAgQxiMEMYyrDA7nBGMJJRjGYMYxnHeCYwMbA7iclMYSrTmM4MZjKL2cwJ7M5lHvNZwEIWsZglLGUZywO7K1jJKlazhrWsYz0b2MimwO5mtrCVbWxnBzvZxW72sDew+x9z+l3E4BUAAA==
+   H4sIAAAAAAAAA+XKU2OWYQAA0Lf2ZSwba9k21lYt27Zt27b+zLJt27Z5/sdzce5OWlwU7WM/BzjIIQ5zhKMc4zhpAd0TnOQUpznDWc5xngtc5FJg9zJXuMo1rnODm9ziNne4G9i9x30e8JBHPOYJT3nGc14Edl/yite84S3veM8HPvKJz4HdL3zlG9/5wU9+8Zs//OVfYDeKRVE60hNHjAxkJBOZyULWWFg3G9nJQU7iyUVu8pCXfOQP7BagIIUoTBGKUozilKAkCYHdUiRSmjKUpRzlqUBFKlE5sFuFqlSjOjWoSS1qU4e61Avs1qcBDWlEY5rQlGYk0ZzkwG4KLWhJK1JpTRva0o72dAjsdqQTnelCV7rRnR70pBe9A7t96Es/+jOAgQxiMEMYyrDA7nBGMJJRjGYMYxnHeCYwMbA7iclMYSrTmM4MZjKL2cwJ7M5lHvNZwEIWsZglLGUZywO7K1jJKlazhrWsYz0b2MimwO5mtrCVbWxnBzvZxW72sDew+x9z+l3E4BUAAA==
   </data>
  </layer>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WN0/DUBiFYSf8HhZ6HehlBAIkMNFTWOgpMNBTQCIJofNTEH2ijjBSVspKkXiXDCA5sRVbtsg90jP5xrnfsXxlSRIREdEjMzlG7+B3Tq2SdGaVv37HtfsU1/9rbpj51mRzn5tsP9mcNYskRWXELEbvzrjIdZJkRPJ4b/JRgEIUoRglKEUZylGBSp3esXiK2RMG9VLNrDWoRR3q0YBGNKEZhzjCMU407uZAwf3UrFGyVklauE8r2mBDOzrQCTscuMAlrnBt8Lls55vCgS506/h90cOcvehDPwYwiCE44YIbHgyr7OSB9Y94wrNGfTrpwgU3PDr2MsJ+RzGGcUxgElPwwgc/AphWOdsL61/xhneNevHShQ9+BDLoJTfNuTXLfucwjwUsYgnLCCKEMCJYwaqK+T5Y+4kvfP/5ndqzKnnGBekihDAiGfRSlaaXKP8VQxzrSGADm9jCNnawiz3sa/Tc1Z5VyTNOq9iy+LtIRERExAz5AafVP7fgFQAA
+   H4sIAAAAAAAAA+3WN0/DUBiFYSf8HhZ6HehlBAIkMNFTWOgpMNBTQCIJofNTEH2ijjBSVspKkXiXDCA5sRVbtsg90jP5xrnfsXxlSRIREdEjMzlG7+B3Tq2SdGaVv37HtfsU1/9rbpj51mRzn5tsP9mcNYskRWXELEbvzrjIdZJkRPJ4b/JRgEIUoRglKEUZylGBSp3esXiK2RMG9VLNrDWoRR3q0YBGNKEZhzjCMU407uZAwf3UrFGyVklauE8r2mBDOzrQCTscuMAlrnBt8Lls55vCgS506/h90cOcvehDPwYwiCE44YIbHgyr7OSB9Y94wrNGfTrpwgU3PDr2MsJ+RzGGcUxgElPwwgc/AphWOdsL61/xhneNevHShQ9+BDLoJTfNuTXLfucwjwUsYgnLCCKEMCJYwaqK+T5Y+4kvfP/5ndqzKnnGBekihDAiGfRSlaaXKP8VQxzrSGADm9jCNnawiz3sa/Tc1Z5VyTNOq9iy+LtIRERExAz5AafVP7fgFQAA
   </data>
  </layer>
  <layer name="collision" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WW07DMBBFnZQfFgDtFpDKImAPLAv6zzsptLyhEjSCHTRdA7AV7qgedTCxGzsRpShXOkoiz4zH106bSCkVg1bAdU3ch+S76vYt0FjkUYvr+WojIIfV0dd9cAB6IFM/19LT8PMYJCAtiO3rusO4mI7uORO4lIo+fbQVkMMq8mWqvvecqbkn/JyrmS+SVMR0HXN2dc9TgUvjBfVsquO8yHXRmqcGvF5+Zi9eNKY3VHcU+/UyMeZm5Wo558V8h17jGc/xbM1jNfeExZ5MNOwPx4bs7zv4AJ8a0roKPy9VRL7Ifaa1kydvGrmHUpTDnuTGPcVu1kRbX5fhi9xn/p8Igf4zeD2L5OtLmZohc7hi5T5X/a36S75I2fabtWi/q/rC87eN2i0Bj8nvGBs+sa5vnKrrMvN3A/PbjjgaSyzzFcXaeiua36a6fQnN/8++yHfcN59yDnHwj8AxOAGn4CxafV9Yob6cw4MEpKAPLsBloC9ltB3Zx6r4YpNPb1ID9DkEV+Aa3IBb3XtSskbZONLOivhyhz7vwQN4BE9g5OmLj/YcvtT1nbmqNGrUqNFv6AsNgPDZ4BUAAA==
+   H4sIAAAAAAAAA+2WW07DMBBFnZQfFgDtFpDKImAPLAv6zzsptLyhEjSCHTRdA7AV7qgedTCxGzsRpShXOkoiz4zH106bSCkVg1bAdU3ch+S76vYt0FjkUYvr+WojIIfV0dd9cAB6IFM/19LT8PMYJCAtiO3rusO4mI7uORO4lIo+fbQVkMMq8mWqvvecqbkn/JyrmS+SVMR0HXN2dc9TgUvjBfVsquO8yHXRmqcGvF5+Zi9eNKY3VHcU+/UyMeZm5Wo558V8h17jGc/xbM1jNfeExZ5MNOwPx4bs7zv4AJ8a0roKPy9VRL7Ifaa1kydvGrmHUpTDnuTGPcVu1kRbX5fhi9xn/p8Igf4zeD2L5OtLmZohc7hi5T5X/a36S75I2fabtWi/q/rC87eN2i0Bj8nvGBs+sa5vnKrrMvN3A/PbjjgaSyzzFcXaeiua36a6fQnN/8++yHfcN59yDnHwj8AxOAGn4CxafV9Yob6cw4MEpKAPLsBloC9ltB3Zx6r4YpNPb1ID9DkEV+Aa3IBb3XtSskbZONLOivhyhz7vwQN4BE9g5OmLj/YcvtT1nbmqNGrUqNFv6AsNgPDZ4BUAAA==
   </data>
  </layer>
  <objectgroup color="#0055ff" name="entities" width="70" height="20">
@@ -283,6 +283,13 @@
   <object type="Trigger" x="4770" y="918" width="364" height="270">
    <properties>
     <property name="goToLevel" value="level2"/>
+   </properties>
+  </object>
+  <object type="Trigger" x="4406" y="489" width="69" height="152">
+   <properties>
+    <property name="repeat" value="false"/>
+    <property name="sound" value="monster_movement"/>
+    <property name="target" value="player"/>
    </properties>
   </object>
  </objectgroup>

@@ -28,7 +28,7 @@ public class LevelUpdateThread extends Thread {
 		if (this.level.quit) {
 			container.exit();
 		}
-		if (!this.level.isPaused()) {
+		if (this.level.currentState == Level.INGAME) {
 			level.camera.update(container, delta);
 			Hud.getInstance().update(delta);
 			PlayerSpeech.getInstance().update(delta);

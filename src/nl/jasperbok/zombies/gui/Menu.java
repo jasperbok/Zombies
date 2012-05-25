@@ -1,5 +1,6 @@
 package nl.jasperbok.zombies.gui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,13 +16,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Menu {
-	private HashMap<String, MenuItem> items;
-	private String currentItemKey;
+	private ArrayList<MenuItem> items;
+	private int currentItemIndex;
 	
 	private Image background;
 	
 	public Menu(String background) {
-		this.items = new HashMap<String, MenuItem>();
+		this.items = new ArrayList<MenuItem>();
 		try {
 			this.background = new Image(background);
 		} catch (SlickException e) {
@@ -36,7 +37,7 @@ public class Menu {
 	 * @param item
 	 */
 	protected void addItem(String key, MenuItem item) {
-		items.put(key, item);
+		items.add(item);
 	}
 	
 	/**
@@ -44,28 +45,28 @@ public class Menu {
 	 * 
 	 * @param itemKey
 	 */
-	protected void select(String itemKey) {
-		if (this.items.get(this.currentItemKey) != null) {
-			this.items.get(this.currentItemKey).deselect();
+	protected void select(int item) {
+		if (this.items.get(currentItemIndex) != null) {
+			this.items.get(currentItemIndex).deselect();
 		}
-		this.items.get(itemKey).select();
-		this.currentItemKey = itemKey;
+		((MenuItem) this.items.get(item)).select();
+		this.currentItemIndex = item;
 	}
 	
 	/**
 	 * Selects the item next of the currently selected item.
 	 */
 	private void selectNext() {
-		Iterator itemIterator = items.keySet().iterator();
 		boolean itsTheNextOne = false;
-		while (itemIterator.hasNext()) {
-			Object itemKey = itemIterator.next();
+		int index = 0;
+		for (MenuItem item : items) {
 			if (itsTheNextOne) {
-				select((String) itemKey);
+				select(index);
 				return;
-			} else if (itemKey == currentItemKey) {
+			} else if (index == currentItemIndex) {
 				itsTheNextOne = true;
 			}
+			index++;
 		}
 	}
 	
@@ -73,16 +74,16 @@ public class Menu {
 	 * Selects the previous item to the currently selected item.
 	 */
 	private void selectPrevious() {
-		Iterator itemIterator = items.keySet().iterator();
-		String thePreviousKey = null;
-		while (itemIterator.hasNext()) {
-			Object itemKey = itemIterator.next();
-			if (itemKey == currentItemKey && thePreviousKey != null) {
-				select(thePreviousKey);
+		int index = 0;
+		Integer thePreviousIndex = null;
+		for (MenuItem item : items) {
+			if (index == currentItemIndex && thePreviousIndex != null) {
+				select(thePreviousIndex.intValue());
 				return;
 			} else {
-				thePreviousKey = (String) itemKey;
+				thePreviousIndex = new Integer(index);
 			}
+			index++;
 		}
 	}
 	
@@ -90,7 +91,7 @@ public class Menu {
 	 * Calls the itemAction method and gives the currently selected item key.
 	 */
 	private void activateItem() {
-		this.itemAction(this.currentItemKey);
+		this.itemAction(this.currentItemIndex);
 	}
 	
 	/**
@@ -99,17 +100,15 @@ public class Menu {
 	 * 
 	 * @param actionKey
 	 */
-	protected void itemAction(String actionKey) {
+	protected void itemAction(int actionKey) {
 		
 	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		background.draw(0, 0);
 		
-		Iterator itemIterator = items.keySet().iterator();
-		while (itemIterator.hasNext()) {
-			Object itemKey = itemIterator.next();
-			items.get(itemKey).render(arg0, arg1, arg2);
+		for (MenuItem item : items) {
+			item.render(arg0, arg1, arg2);
 		}
 	}
 
